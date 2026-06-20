@@ -11116,6 +11116,20 @@ function showGuideStep() {
 
     const step = activeGuide.steps[activeGuide.index];
     if (!step) {
+        if (activeGuide && !activeGuide.auto && activeGuide._skips > 0 && !activeGuide._fallbackShown) {
+            activeGuide._fallbackShown = true;
+            activeGuide.steps = [{
+                noHighlight: true,
+                title: guideT('Подсказка', 'Help'),
+                text: guideT(
+                    'Для этого экрана подсказка есть, но нужный элемент не найден. Экран работает — просто продолжай играть. Я не буду показывать кривую рамку.',
+                    'This screen has guide text, but the target element was not found. The screen still works — keep playing. I will not show a crooked frame.'
+                )
+            }];
+            activeGuide.index = 0;
+            showGuideStep();
+            return;
+        }
         markGuideSeen(activeGuide.screenKey);
         hideGuideOverlay();
         return;
@@ -11135,12 +11149,12 @@ function showGuideStep() {
     const target = getGuideTarget(step);
 
     if (!target) {
-        const fallback = step.fallback || 'skip';
+        const fallback = step.fallback || (activeGuide && activeGuide.auto ? 'skip' : 'text');
         if (fallback === 'text') {
-            // Show bubble text without highlight
+            // Show bubble text without highlight. Manual ❔ must never look broken.
             showGuideStepInfo(step);
         } else {
-            // Skip this step silently
+            // Skip this step silently for auto guide, then fall back to a safe text card if manual guide found nothing.
             activeGuide._skips = (activeGuide._skips || 0) + 1;
             activeGuide.index += 1;
             showGuideStep();
@@ -11251,8 +11265,26 @@ function startGuideForCurrentScreen() {
 
 function startGuide(screenKey, auto = false) {
     const steps = getGuideFlow(screenKey).slice();
-    if (!steps.length || !guideOverlay) return;
-    activeGuide = { screenKey, steps, index: 0, auto, _skips: 0 };
+    if (!guideOverlay) return;
+    if (!steps.length) {
+        if (auto) return;
+        activeGuide = {
+            screenKey,
+            steps: [{
+                noHighlight: true,
+                title: guideT('Подсказка', 'Help'),
+                text: guideT('Для этого экрана отдельный гид ещё готовится. Основные кнопки можно нажимать, а списки — листать.', 'A detailed guide for this screen is still being prepared. You can tap the main buttons and scroll lists.')
+            }],
+            index: 0,
+            auto,
+            _skips: 0,
+            _fallbackShown: true
+        };
+        guideOverlay.classList.add('show');
+        showGuideStep();
+        return;
+    }
+    activeGuide = { screenKey, steps, index: 0, auto, _skips: 0, _fallbackShown: false };
     guideOverlay.classList.add('show');
     showGuideStep();
 }
@@ -11292,6 +11324,21 @@ if (guideOverlay) {
         if (event.target === guideOverlay) nextGuideStep();
     });
 }
+if (guideFab) {
+    guideFab.onclick = (event) => {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        startGuideForCurrentScreen();
+    };
+    guideFab.style.pointerEvents = 'auto';
+}
+window.startGuideForCurrentScreen = startGuideForCurrentScreen;
+window.startGuide = startGuide;
+window.skipGuide = skipGuide;
+window.nextGuideStep = nextGuideStep;
+window.resetGuideSeen = resetGuideSeen;
 
 
 
@@ -18018,6 +18065,104 @@ body.low-performance {
 
 
 
+
+
+
+<style id="assistant-stage3-hotfix-ads-and-guide">
+/* Hotfix 3.1: rewarded-ad mock must be a real modal, not normal page text. */
+.rewarded-ad-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2400;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    background: rgba(15, 23, 42, .42);
+    pointer-events: none;
+}
+.rewarded-ad-overlay.show {
+    display: flex !important;
+    pointer-events: auto;
+}
+.rewarded-ad-card {
+    width: min(92vw, 390px);
+    max-height: calc(100vh - 38px);
+    overflow: auto;
+    border-radius: 30px;
+    padding: 22px 20px 18px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff, #f0fdf4);
+    color: #1f2937;
+    border: 1px solid rgba(255,255,255,.8);
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .28);
+}
+.rewarded-ad-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 10px;
+    display: grid;
+    place-items: center;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #dcfce7, #bfdbfe);
+    font-size: 36px;
+}
+.rewarded-ad-title {
+    margin: 4px 0 8px;
+    font-size: 24px;
+    font-weight: 1000;
+    color: #4c1d95;
+}
+.rewarded-ad-text {
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 800;
+    color: #334155;
+}
+.rewarded-ad-progress {
+    height: 12px;
+    margin: 16px 0 16px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(148,163,184,.28);
+}
+.rewarded-ad-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #22c55e, #14b8a6);
+    transition: width .25s ease;
+}
+.rewarded-ad-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.rewarded-ad-actions.single .btn,
+#rewardedAdActionBtn {
+    min-width: 190px;
+}
+#guideFab {
+    z-index: 2450 !important;
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+.guide-overlay.show ~ #guideFab,
+.guide-overlay.show + #pageScrollHint {
+    pointer-events: none;
+}
+@media (max-width: 520px) {
+    .rewarded-ad-card { width: min(94vw, 360px); padding: 18px 16px 16px; border-radius: 26px; }
+    .rewarded-ad-title { font-size: 21px; }
+    .rewarded-ad-text { font-size: 14px; }
+}
+body.low-performance .rewarded-ad-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 23, 42, .38);
+}
+</style>
 
 <style id="assistant-stage3-guide-polish">
 /* Assistant Stage 3 merge polish: keep helper light in normal mode too. */
