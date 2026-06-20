@@ -7,6 +7,7 @@
 // currentMode, normalizeMemoryMode, saveProgress, playSound, showScreen.
 
 function openParentScreen() {
+    try { initLowPerformanceMode(); } catch(e) {}
     playSound("click");
     showScreen("parentScreen");
 }
@@ -24,8 +25,29 @@ function toggleParentSetting(key) {
         currentMode = normalizeMemoryMode("calm");
     }
 
+    if (key === "lowPerformance") {
+        applyLowPerformanceMode(parentSettings.lowPerformance);
+    }
+
     saveProgress();
     renderParentSettings();
+}
+
+function applyLowPerformanceMode(enabled) {
+    document.body.classList.toggle("low-performance", !!enabled);
+    try {
+        localStorage.setItem("zooLowPerformance", enabled ? "1" : "0");
+    } catch(e) {}
+}
+
+// Called once at boot from index.html to restore saved preference
+function initLowPerformanceMode() {
+    try {
+        const saved = localStorage.getItem("zooLowPerformance");
+        const enabled = saved === "1" || (saved === null && parentSettings.lowPerformance === true);
+        parentSettings.lowPerformance = !!enabled;
+        document.body.classList.toggle("low-performance", !!enabled);
+    } catch(e) {}
 }
 
 function resetGameProgress() {
@@ -60,10 +82,18 @@ function renderParentSettings() {
         `;
     };
 
+    const lpOn = parentSettings.lowPerformance === true;
     box.innerHTML = `
         ${item("musicEnabled", "Музыка", "Можно полностью выключить музыку.")}
         ${item("timerEnabled", "Таймер", "Если выключить, игра будет спокойнее.")}
         ${item("interstitialEnabled", "Interstitial реклама", "Можно выключить полноэкранную рекламу в детском режиме.")}
+        <div class="parent-setting">
+            <div>
+                <b>⚡ Лёгкий режим</b>
+                <small>Убирает тяжёлые эффекты (blur, тени, анимации фона). Быстрее на слабых устройствах.</small>
+            </div>
+            <button class="toggle-switch ${lpOn ? "" : "off"}" onclick="toggleParentSetting('lowPerformance')">${lpOn ? "Вкл" : "Выкл"}</button>
+        </div>
         <div class="parent-setting">
             <div>
                 <b>Сброс прогресса</b>
@@ -73,3 +103,5 @@ function renderParentSettings() {
         </div>
     `;
 }
+
+try { initLowPerformanceMode(); } catch(e) {}

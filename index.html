@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="Zoo Pet World"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#4CAF50"/>
-<title>Zoo Memory 3.11</title>
+<title>Zoo Pet World</title>
 
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -980,7 +980,7 @@ h1, h2, h3 {
     .zoo-animal.lion { width: 68px; right: 52px; }
 }
 
-/* ===== Zoo Memory 3.11 polish ===== */
+/* ===== Zoo Pet World polish ===== */
 .card-panel {
     position: relative;
     overflow: hidden;
@@ -1644,7 +1644,7 @@ h1, h2, h3 {
     text-align: center;
 }
 
-/* ===== Zoo Memory 3.11 pets section ===== */
+/* ===== Zoo Pet World pets section ===== */
 .pets-list {
     width: 100%;
     display: grid;
@@ -2001,7 +2001,7 @@ h1, h2, h3 {
     filter: drop-shadow(0 14px 14px rgba(0,0,0,.18)) saturate(1.02) contrast(1.02);
 }
 
-/* ===== Zoo Memory 3.11 pet detail + drag feed ===== */
+/* ===== Zoo Pet World pet detail + drag feed ===== */
 .pet-card {
     cursor: default;
 }
@@ -4340,7 +4340,7 @@ h1, h2, h3 {
     }
 }
 
-/* ===== Zoo Memory 3.11 food shop ===== */
+/* ===== Zoo Pet World food shop ===== */
 .food-chip {
     position: relative;
     grid-template-rows: 1fr auto;
@@ -4429,7 +4429,7 @@ h1, h2, h3 {
 }
 
 
-/* ===== Zoo Memory 3.11 language button ===== */
+/* ===== Zoo Pet World language button ===== */
 .language-switch {
     width: 100%;
     margin-top: 10px;
@@ -4444,7 +4444,7 @@ h1, h2, h3 {
 }
 
 
-/* ===== Zoo Memory 3.11 full gameplay upgrade ===== */
+/* ===== Zoo Pet World full gameplay upgrade ===== */
 .profile-card {
     width: 100%;
     margin-top: 12px;
@@ -4947,7 +4947,7 @@ h1, h2, h3 {
 }
 
 
-/* ===== Zoo Memory 3.11 animated pet characters ===== */
+/* ===== Zoo Pet World animated pet characters ===== */
 .pet-detail-avatar {
     position: relative;
     width: 100%;
@@ -5429,7 +5429,7 @@ h1, h2, h3 {
 }
 
 
-/* ===== Zoo Memory 3.11 unique animal animations ===== */
+/* ===== Zoo Pet World unique animal animations ===== */
 .pet-actor.species-lion .pet-mane {
     animation: lionManeProud 1.2s infinite ease-in-out alternate;
 }
@@ -5545,7 +5545,7 @@ h1, h2, h3 {
 }
 
 
-/* ===== Zoo Memory 3.11 REAL raster sprite animals from asset sheet ===== */
+/* ===== Zoo Pet World REAL raster sprite animals from asset sheet ===== */
 #petAnimatedCharacterMount {
     position: absolute;
     inset: 0;
@@ -5685,7 +5685,7 @@ h1, h2, h3 {
 @keyframes stageBubble { from{opacity:0;transform:translateX(-50%) translateY(8px) scale(.94);} to{opacity:1;transform:translateX(-50%) translateY(0) scale(1);} }
 
 
-/* ===== Zoo Memory 3.11.1 level popup/timer fix ===== */
+/* ===== Zoo Pet World level popup/timer fix ===== */
 .overlay.show .modal {
     animation: levelWinFixed .55s cubic-bezier(.18, 1.35, .35, 1);
 }
@@ -5724,7 +5724,7 @@ h1, h2, h3 {
 }
 
 
-/* ===== Zoo Memory 3.11 skin scene upgrade ===== */
+/* ===== Zoo Pet World skin scene upgrade ===== */
 body {
     transition: background .45s ease;
 }
@@ -6092,7 +6092,7 @@ body.skin-night .zoo-animal { filter: drop-shadow(0 6px 8px rgba(0,0,0,.35)) bri
 }
 
 
-/* ===== Zoo Memory 3.11 level variation/timer fix ===== */
+/* ===== Zoo Pet World level variation/timer fix ===== */
 .board.cols-5 { grid-template-columns: repeat(5, 1fr); gap: 7px; }
 .board.cols-5 .memory-card { border-radius: 18px; padding: 5px; }
 
@@ -6106,7 +6106,7 @@ body.skin-night .zoo-animal { filter: drop-shadow(0 6px 8px rgba(0,0,0,.35)) bri
 }
 
 
-/* ===== Zoo Memory 3.11 release upgrade ===== */
+/* ===== Zoo Pet World release upgrade ===== */
 .audio-settings-card {
     border-radius: 28px;
     padding: 16px;
@@ -9050,7 +9050,7 @@ button,
 <div id="pairsModeScreen" class="screen">
     <div class="card-panel">
         <div class="topbar">
-            <button class="home-chip" onclick="goHome()">🏠 Меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <button class="home-chip" onclick="showScreen('mapScreen')">🗺️ Карта</button>
         </div>
         <div class="pairs-mode-hero">
@@ -9077,7 +9077,7 @@ button,
 <div id="petRoomScreen" class="screen">
     <div class="card-panel pet-room-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <button class="home-chip" onclick="openPets()">🐾 Мои питомцы</button>
         </div>
 
@@ -9152,7 +9152,7 @@ button,
 <div id="puzzleScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Пазл • монетки: <span id="puzzleCoins">0</span> 🪙</div>
         </div>
 
@@ -9217,7 +9217,7 @@ button,
 <div id="blockScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Zoo Block • монетки: <span id="blockCoins">0</span> 🪙</div>
         </div>
 
@@ -9277,7 +9277,7 @@ button,
 <div id="audioScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Настройки звука</div>
         </div>
 
@@ -9345,7 +9345,7 @@ button,
 <div id="profileScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Профиль</div>
         </div>
 
@@ -9385,7 +9385,7 @@ button,
 <div id="achievementsScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Достижения</div>
         </div>
 
@@ -9414,7 +9414,7 @@ button,
 <div id="mapScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip" id="mapModeChip">Карта</div>
         </div>
         <div class="title-row">
@@ -9433,7 +9433,7 @@ button,
 <div id="gameScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip" id="gameModeChip">Игра</div>
         </div>
         <div class="title-row">
@@ -9473,7 +9473,7 @@ button,
 <div id="albumScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Альбом</div>
         </div>
         <div class="title-row">
@@ -9492,7 +9492,7 @@ button,
 <div id="petsScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Мои животные</div>
         </div>
 
@@ -9520,7 +9520,7 @@ button,
     <div class="card-panel pet-detail-panel">
         <div class="top-home-row">
             <button class="home-chip" onclick="openPets()">← Мои животные</button>
-            <button class="home-chip" onclick="goHome()">🏠 Меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
         </div>
 
         <div class="pet-detail-header">
@@ -9572,7 +9572,7 @@ button,
 <div id="shadowScreen" class="screen">
     <div class="card-panel shadow-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Тени • монетки: <span id="shadowCoins">0</span> 🪙</div>
         </div>
 
@@ -9632,7 +9632,7 @@ button,
 <div id="coloringScreen" class="screen">
     <div class="card-panel coloring-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Раскраска • монетки: <span id="coloringCoins">0</span> 🪙</div>
         </div>
 
@@ -9659,6 +9659,11 @@ button,
         </div>
 
         <div class="coloring-hero">
+            <div id="coloringLoadingState" class="coloring-loading-state" style="display:none;">
+                <div class="coloring-loading-spinner">🖍️</div>
+                <div>Загружаем картинки раскраски...</div>
+                <small>Первое открытие может занять несколько секунд, дальше быстрее.</small>
+            </div>
             <div class="coloring-topbar">
                 <div id="coloringBadge" class="coloring-badge">🦁 Львенок в саванне</div>
                 <div class="coloring-actions">
@@ -9714,7 +9719,7 @@ button,
 <div id="shopScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Скины</div>
         </div>
         <div class="title-row">
@@ -9733,7 +9738,7 @@ button,
 <div id="tasksScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Задания</div>
         </div>
         <div class="title-row">
@@ -9752,7 +9757,7 @@ button,
 <div id="parentScreen" class="screen">
     <div class="card-panel">
         <div class="top-home-row">
-            <button class="home-chip" onclick="goHome()">🏠 Главное меню</button>
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
             <div class="mode-chip">Родителям</div>
         </div>
         <div class="title-row">
@@ -9837,7 +9842,7 @@ button,
 
 window.addEventListener("error", event => {
     try {
-        console.error("Zoo Memory JS error:", event.message, event.error);
+        console.error("Zoo Pet World JS error:", event.message, event.error);
         if (typeof message !== "undefined" && message) {
             message.textContent = "Ошибка игры исправляется: " + event.message;
         }
@@ -10694,15 +10699,59 @@ function applySkin() {
     document.body.classList.add(`skin-${skin.id}`);
 }
 
+// Stage 2.1: lightweight navigation history.
+// Top back buttons now return to the previous real screen instead of always jumping
+// to a hard-coded section. goHome() still resets the flow to the main menu.
+let zooCurrentScreen = "menuScreen";
+let zooScreenHistory = [];
+
+function getActiveScreenIdSafe() {
+    const active = document.querySelector('.screen.show');
+    return active ? active.id : (zooCurrentScreen || "menuScreen");
+}
+
+function rememberScreenTransition(nextScreenId, options = {}) {
+    const previousScreenId = zooCurrentScreen || getActiveScreenIdSafe();
+    if (!options.skipHistory && previousScreenId && previousScreenId !== nextScreenId && screens.includes(previousScreenId)) {
+        if (zooScreenHistory[zooScreenHistory.length - 1] !== previousScreenId) {
+            zooScreenHistory.push(previousScreenId);
+        }
+        if (zooScreenHistory.length > 20) zooScreenHistory = zooScreenHistory.slice(-20);
+    }
+    if (nextScreenId === "menuScreen" && options.clearHistory !== false) {
+        zooScreenHistory = [];
+    }
+    zooCurrentScreen = nextScreenId;
+}
+
+function goBackOrHome(fallbackScreenId = "menuScreen") {
+    playSound("click");
+    clearInterval(timerId);
+    hideOverlay();
+    try { closeShadowCelebration(); } catch(e) {}
+
+    const current = getActiveScreenIdSafe();
+    let target = null;
+    while (zooScreenHistory.length && !target) {
+        const candidate = zooScreenHistory.pop();
+        if (candidate && candidate !== current && screens.includes(candidate)) {
+            target = candidate;
+        }
+    }
+    showScreen(target || fallbackScreenId || "menuScreen", { skipHistory: true, clearHistory: false });
+}
+
 function goHome() {
     playSound("click");
     clearInterval(timerId);
     hideOverlay();
     try { closeShadowCelebration(); } catch(e) {}
-    showScreen("menuScreen");
+    showScreen("menuScreen", { skipHistory: true, clearHistory: true });
 }
 
-function showScreen(screenId) {
+function showScreen(screenId, navOptions = {}) {
+    if (!screens.includes(screenId)) screenId = "menuScreen";
+    rememberScreenTransition(screenId, navOptions || {});
     if (screenId !== "blockScreen") closeZooBlockGameOverModal();
     if (screenId !== "shadowScreen") { try { closeShadowCelebration(); } catch(e) {} }
     try { cleanupFoodDrag(); } catch(e) {}
@@ -10750,7 +10799,39 @@ const guideArrowTip = document.getElementById("guideArrowTip");
 const guideHand = document.getElementById("guideHand");
 const guideFab = document.getElementById("guideFab");
 const pageScrollHint = document.getElementById("pageScrollHint");
+
+// Safe stubs for scroll-hint helpers (may be defined in economy patch or absent)
+function attachScrollHint(selector, direction, root) {
+    try {
+        const el = (root || document).querySelector(selector);
+        if (!el) return;
+        if (el.querySelector('.guide-scroll-hint')) return;
+        const hint = document.createElement('div');
+        hint.className = `guide-scroll-hint ${direction}`;
+        hint.innerHTML = direction === 'horizontal'
+            ? '<span class="dots"><i></i><i></i><i></i></span><span class="arrow">→</span>'
+            : '<span class="dots"><i></i><i></i><i></i></span><span class="arrow">↓</span>';
+        el.appendChild(hint);
+    } catch(e) {}
+}
+
+function renderPageScrollHint() {
+    try {
+        if (!pageScrollHint) return;
+        const scrollable = document.body.scrollHeight > window.innerHeight + 8;
+        const atBottom   = window.scrollY + window.innerHeight >= document.body.scrollHeight - 24;
+        pageScrollHint.classList.toggle('show', scrollable && !atBottom);
+    } catch(e) {}
+}
 const GUIDE_STORAGE_KEY = "zooPetWorldGuideSeenV2";
+// ─── GUIDE / HELPER SYSTEM — Stage 3 rewrite ───────────────────────────────
+// Data-driven, safe, no infinite loops, correct action types.
+// Each step: { selector, title, text, action, arrow, fallback?, noHighlight?, prep? }
+// action: 'tap' | 'drag-h' | 'drag-v' | 'scroll' | 'select-color'
+// fallback: 'skip' (default) | 'text' (show bubble without highlight ring)
+// noHighlight: true → informational text only, no dim/ring
+// ───────────────────────────────────────────────────────────────────────────
+
 let guideSeenState = {};
 try { guideSeenState = JSON.parse(localStorage.getItem(GUIDE_STORAGE_KEY) || "{}"); } catch (e) { guideSeenState = {}; }
 let activeGuide = null;
@@ -10759,63 +10840,25 @@ function guideT(ru, en) {
     try { return getCurrentLanguage && getCurrentLanguage() === "en" ? en : ru; } catch (e) { return ru; }
 }
 
-function saveGuideSeenState() {
+function markGuideSeen(screenKey) {
+    guideSeenState[screenKey] = true;
     try { localStorage.setItem(GUIDE_STORAGE_KEY, JSON.stringify(guideSeenState)); } catch (e) {}
 }
 
-function getVisibleScreenId() {
-    const active = document.querySelector('.screen.show');
-    return active ? active.id : 'menuScreen';
+function resetGuideSeen() {
+    guideSeenState = {};
+    try { localStorage.removeItem(GUIDE_STORAGE_KEY); } catch (e) {}
 }
 
-function markGuideSeen(screenKey) {
-    guideSeenState[screenKey] = true;
-    saveGuideSeenState();
-}
-
-function buildScrollHint(direction = 'vertical') {
-    const wrap = document.createElement('div');
-    wrap.className = `guide-scroll-hint ${direction}`;
-    const dots = document.createElement('div');
-    dots.className = 'dots';
-    dots.innerHTML = '<i></i><i></i><i></i>';
-    const arrow = document.createElement('div');
-    arrow.className = 'arrow';
-    arrow.textContent = direction === 'horizontal' ? '→' : '↓';
-    wrap.appendChild(dots);
-    wrap.appendChild(arrow);
-    return wrap;
-}
-
-function attachScrollHint(selector, direction = 'vertical', root = document) {
-    const list = Array.from(root.querySelectorAll(selector));
-    list.forEach(el => {
-        if (!el) return;
-        const canScroll = direction === 'horizontal'
-            ? el.scrollWidth > el.clientWidth + 14
-            : el.scrollHeight > el.clientHeight + 14;
-        const existing = Array.from(el.children).find(child => child.classList && child.classList.contains('guide-scroll-hint'));
-        if (!canScroll) {
-            if (existing) existing.remove();
-            return;
-        }
-        if (!existing) {
-            el.classList.add('scroll-guide-host');
-            el.appendChild(buildScrollHint(direction));
-        }
-    });
-}
-
-function renderPageScrollHint() {
-    if (!pageScrollHint) return;
-    const show = document.documentElement.scrollHeight > window.innerHeight + 28 && (window.scrollY + window.innerHeight) < (document.documentElement.scrollHeight - 24);
-    pageScrollHint.innerHTML = '';
-    if (show) {
-        pageScrollHint.appendChild(buildScrollHint('vertical'));
-        pageScrollHint.classList.add('show');
-    } else {
-        pageScrollHint.classList.remove('show');
-    }
+// ── Visibility check — avoids highlighting hidden/zero-size elements ────────
+function isElementVisible(el) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    if (rect.width === 0 && rect.height === 0) return false;
+    const style = window.getComputedStyle(el);
+    if (style.display === 'none' || style.visibility === 'hidden') return false;
+    if (parseFloat(style.opacity) === 0) return false;
+    return true;
 }
 
 function refreshGuideHelpers(screenId = getVisibleScreenId()) {
@@ -10833,45 +10876,360 @@ function refreshGuideHelpers(screenId = getVisibleScreenId()) {
     renderPageScrollHint();
 }
 
+// ── Guide flows — all steps data-driven ─────────────────────────────────────
 function getGuideFlow(screenKey) {
-    const currentPetName = getAnimalDisplayName ? getAnimalDisplayName(selectedMainPetKey || 'lion') : guideT('питомец', 'pet');
+    const petName = (typeof getAnimalDisplayName === 'function' && selectedMainPetKey)
+        ? getAnimalDisplayName(selectedMainPetKey)
+        : guideT('питомец', 'pet');
+
     const flows = {
+
         menuScreen: [
-            { selector: '.big-play-card', title: guideT('Мой зоопарк', 'My zoo'), text: guideT('Это будущая главная территория игры. Сейчас раздел оставлен как teaser, а мини-игры находятся ниже.', 'This is the future main zoo area. For now it is a teaser, and mini-games are below.'), arrow: 'down', hand: 'tap' },
-            { selector: 'button.feature-card[onclick="openPetRoom()"]', title: guideT('Комната питомца', 'Pet room'), text: guideT('Здесь ты кормишь, моешь, усыпляешь и играешь со своим зверьком.', 'Here you feed, wash, put to sleep, and play with your pet.'), arrow: 'down', hand: 'tap' },
-            { selector: 'button.feature-card[onclick="openPuzzle()"]', title: guideT('Пазлы', 'Puzzles'), text: guideT('Тут пазлы по этапам. Новые картинки животных открываются или покупаются за монетки.', 'Puzzles unlock by stages. New animal pictures can be unlocked or bought with coins.'), arrow: 'down', hand: 'tap' },
-            { selector: '.feature-card-grid', title: guideT('Листай длинное меню', 'Scroll the long menu'), text: guideT('Если не все кнопки видны, потяни экран вниз. Тонкая анимированная стрелка показывает, где можно скроллить.', 'If not all buttons are visible, swipe down. A small animated arrow shows where scrolling is possible.'), arrow: 'down', hand: 'drag-v' }
+            {
+                selector: '.big-play-card',
+                title: guideT('Мой зоопарк', 'My Zoo'),
+                text: guideT('Это будущая главная территория игры. Мини-игры находятся ниже.', 'Future main zoo area. Mini-games are below.'),
+                action: 'tap', arrow: 'down'
+            },
+            {
+                selector: 'button.feature-card[onclick="openPetRoom()"]',
+                title: guideT('Комната питомца', 'Pet Room'),
+                text: guideT('Корми, мой и играй со своим зверьком.', 'Feed, wash, and play with your pet.'),
+                action: 'tap', arrow: 'down'
+            },
+            {
+                selector: 'button.feature-card[onclick="openColoring()"]',
+                title: guideT('Раскраска', 'Coloring'),
+                text: guideT('30 раскрасок — выбери цвет и нажми на область.', '30 coloring pages — pick a color and tap an area.'),
+                action: 'tap', arrow: 'down', fallback: 'skip'
+            },
+            {
+                selector: '.feature-card-grid',
+                title: guideT('Листай меню', 'Scroll the menu'),
+                text: guideT('Потяни экран вниз — там ещё мини-игры.', 'Swipe down to see more mini-games below.'),
+                action: 'scroll', arrow: 'down'
+            }
         ],
+
         petRoomScreen: [
-            { selector: '.pet-room-action.feed', title: guideT('Покормить питомца', 'Feed your pet'), text: guideT(`Нажми на Еду, чтобы открыть ленту с едой для ${currentPetName}.`, `Tap Food to open the food row for ${currentPetName}.`), arrow: 'down', hand: 'tap' },
-            { selector: '#petRoomBars', title: guideT('Следи за шкалами', 'Watch the bars'), text: guideT('Зелёный — всё хорошо, жёлтый — пора помочь, красный — срочно нужно действие.', 'Green means good, yellow means pay attention, red means action is needed soon.'), arrow: 'down', hand: 'tap' },
-            { selector: '.pet-room-mini-games', title: guideT('Мини-игры', 'Mini-games'), text: guideT('Отсюда можно быстро перейти в Найди пары, Пазл и Zoo Block.', 'From here you can jump to Memory, Puzzle, and Zoo Block.'), arrow: 'up', hand: 'tap' }
+            {
+                selector: '.pet-room-action.feed, #petRoomFoodBtn',
+                title: guideT('Покормить питомца', 'Feed your pet'),
+                text: guideT(`Нажми на Еду — откроется лента с едой для ${petName}.`, `Tap Food to open the food rail for ${petName}.`),
+                action: 'tap', arrow: 'down'
+            },
+            {
+                selector: '#petRoomBars, .pet-room-bars',
+                title: guideT('Следи за шкалами', 'Watch the bars'),
+                text: guideT('Зелёный — хорошо, жёлтый — внимание, красный — действуй.', 'Green — good, yellow — watch it, red — act now.'),
+                action: 'tap', arrow: 'down', fallback: 'text'
+            },
+            {
+                selector: '.pet-room-mini-games, .pet-room-shortcut',
+                title: guideT('Мини-игры рядом', 'Mini-games nearby'),
+                text: guideT('Отсюда можно перейти в Найди пары, Пазл и Zoo Block.', 'Jump to Memory, Puzzle, and Zoo Block from here.'),
+                action: 'tap', arrow: 'up', fallback: 'skip'
+            }
         ],
+
         petRoomScreen_feed: [
-            { prep: () => showPetRoomFoodTray(), selector: '#petRoomFoodRail', title: guideT('Потяни еду к питомцу', 'Drag food to the pet'), text: guideT('Проведи пальцем по еде, потяни её и отпусти прямо на питомце. Закрытую еду можно открыть за монетки.', 'Touch the food, drag it, and drop it on the pet. Locked food can be opened with coins.'), arrow: 'up', hand: 'drag-h' },
-            { selector: '#petRoomHero', title: guideT('Отпусти на питомце', 'Drop it on the pet'), text: guideT('Когда отпустишь еду на питомце, сытость поднимется, а питомец обрадуется.', 'When you drop food on the pet, fullness goes up and the pet gets happy.'), arrow: 'down', hand: 'tap' }
+            {
+                prep: () => { try { showPetRoomFoodTray && showPetRoomFoodTray(); } catch(e) {} },
+                selector: '#petRoomFoodRail, .food-rail',
+                title: guideT('Потяни еду', 'Drag food'),
+                text: guideT('Проведи пальцем по еде и потяни её на питомца.', 'Touch the food, drag it, and drop it on the pet.'),
+                action: 'drag-h', arrow: 'up'
+            },
+            {
+                selector: '#petRoomHero, .pet-room-hero',
+                title: guideT('Отпусти на питомца', 'Drop on the pet'),
+                text: guideT('Отпусти еду прямо на питомце — он обрадуется!', 'Release food right on the pet — it will be happy!'),
+                action: 'drag-h', arrow: 'down'
+            }
         ],
+
+        coloringScreen: [
+            {
+                selector: '.coloring-palette-grid, #coloringPaletteGrid',
+                title: guideT('Выбери цвет', 'Pick a color'),
+                text: guideT('Нажми на любой кружок — цвет выберется. Листай вправо, чтобы увидеть все цвета.', 'Tap any circle to pick a color. Swipe right to see all colors.'),
+                action: 'select-color', arrow: 'up', fallback: 'text'
+            },
+            {
+                selector: '#coloringCanvasWrap, .coloring-canvas-wrap',
+                title: guideT('Нажми на область', 'Tap an area'),
+                text: guideT('Теперь нажми на любую белую область — она заполнится цветом. Двумя пальцами можно увеличить.', 'Now tap any white area to fill it with color. Pinch to zoom in.'),
+                action: 'tap', arrow: 'down'
+            },
+            {
+                selector: '#coloringTemplates, .coloring-templates',
+                title: guideT('Смени раскраску', 'Switch coloring page'),
+                text: guideT('Листай шаблоны внизу, чтобы выбрать другое животное.', 'Swipe the templates below to pick another animal.'),
+                action: 'drag-h', arrow: 'up', fallback: 'skip'
+            }
+        ],
+
         puzzleScreen: [
-            { selector: '#puzzleStageRow', title: guideT('Этапы пазла', 'Puzzle stages'), text: guideT('Листай этапы вправо: они идут от простого 2x2 до сложного 6x6.', 'Swipe stages to the right: they go from easy 2x2 to hard 6x6.'), arrow: 'up', hand: 'drag-h' },
-            { selector: '#puzzleImageRail', title: guideT('Пазлы животных', 'Animal puzzles'), text: guideT('Выбирай картинку. Новые животные под замком — их можно открыть за монетки.', 'Choose a picture. New animals are locked and can be opened with coins.'), arrow: 'up', hand: 'drag-h' },
-            { selector: '#puzzleBoard', title: guideT('Собери картинку', 'Complete the picture'), text: guideT('Перетаскивай кусочки, а если удобно — просто нажимай на две части, чтобы поменять их местами.', 'Drag pieces, or tap two pieces to swap them.'), arrow: 'down', hand: 'drag-h' },
-            { selector: '.puzzle-upload-label', title: guideT('Своя картинка', 'Your own picture'), text: guideT('Хочешь свой пазл? Нажми сюда и загрузи фото из галереи.', 'Want your own puzzle? Tap here and upload a photo from the gallery.'), arrow: 'up', hand: 'tap' }
+            {
+                selector: '#puzzleStageRow, .puzzle-stage-row',
+                title: guideT('Этапы пазла', 'Puzzle stages'),
+                text: guideT('Листай этапы вправо: от простого 2×2 до сложного 6×6.', 'Swipe stages right: easy 2×2 to hard 6×6.'),
+                action: 'drag-h', arrow: 'up'
+            },
+            {
+                selector: '#puzzleImageRail, .puzzle-image-rail',
+                title: guideT('Пазлы животных', 'Animal puzzles'),
+                text: guideT('Выбери картинку. Новые — под замком, открываются за монетки.', 'Choose a picture. New ones are locked — open with coins.'),
+                action: 'drag-h', arrow: 'up', fallback: 'skip'
+            },
+            {
+                selector: '#puzzleBoard, .puzzle-board',
+                title: guideT('Собери картинку', 'Assemble the puzzle'),
+                text: guideT('Перетаскивай кусочки или нажимай две части, чтобы поменять.', 'Drag pieces or tap two pieces to swap them.'),
+                action: 'drag-h', arrow: 'down', fallback: 'text'
+            }
         ],
+
         blockScreen: [
-            { selector: '#blockPieces', title: guideT('Выбери фигуру', 'Choose a piece'), text: guideT('Нажми на одну из трёх фигур снизу. На телефоне удобнее: фигура → клетка.', 'Tap one of the three pieces below. On phones: piece → cell is easiest.'), arrow: 'up', hand: 'tap' },
-            { selector: '#blockBoard', title: guideT('Поставь на поле', 'Place it on the board'), text: guideT('Нажми на клетку поля 8x8, куда хочешь поставить выбранную фигуру.', 'Tap the 8x8 board cell where you want to place the selected piece.'), arrow: 'down', hand: 'tap' },
-            { selector: '.block-side-card', title: guideT('Комбо и линии', 'Combos and lines'), text: guideT('Заполняй целые строки или столбцы — они исчезнут, а питомец получит настроение.', 'Fill whole rows or columns — they disappear and your pet gets happier.'), arrow: 'left', hand: 'tap' }
+            {
+                selector: '#blockPieces, .block-pieces',
+                title: guideT('Выбери фигуру', 'Pick a piece'),
+                text: guideT('Нажми на одну из трёх фигур. На телефоне: фигура → клетка.', 'Tap one of three pieces. On phone: piece → cell.'),
+                action: 'tap', arrow: 'up'
+            },
+            {
+                selector: '#blockBoard, .block-board',
+                title: guideT('Поставь на поле', 'Place on the board'),
+                text: guideT('Нажми на клетку 8×8, куда поставить выбранную фигуру.', 'Tap the 8×8 cell where you want to place the piece.'),
+                action: 'tap', arrow: 'down', fallback: 'text'
+            }
         ],
-        petsScreen: [
-            { selector: '#petsList', title: guideT('Список питомцев', 'Pet list'), text: guideT('Листай вниз, выбирай главного питомца и покупай новых животных за монетки.', 'Scroll down, choose the main pet, and buy new animals with coins.'), arrow: 'down', hand: 'drag-v' }
+
+        shadowScreen: [
+            {
+                selector: '.shadow-options, .shadow-answers',
+                title: guideT('Угадай животное', 'Guess the animal'),
+                text: guideT('Смотри на тень и нажми на правильного зверя среди вариантов.', 'Look at the shadow and tap the correct animal from the options.'),
+                action: 'tap', arrow: 'up', fallback: 'text'
+            },
+            {
+                selector: '.shadow-silhouette, .shadow-image',
+                title: guideT('Внимательно смотри', 'Look closely'),
+                text: guideT('Контур подскажет, кто это. Есть подсказка — кнопка с лампочкой.', 'The outline gives it away. Use the hint button (lightbulb) if stuck.'),
+                action: 'tap', arrow: 'down', fallback: 'skip'
+            }
         ],
+
+        mapScreen: [
+            {
+                selector: '.map-list, .level-list',
+                title: guideT('Карта уровней', 'Level map'),
+                text: guideT('Листай карту вниз и открывай новые уровни. Чем выше — тем сложнее.', 'Scroll down to unlock new levels. Higher = harder.'),
+                action: 'scroll', arrow: 'down', fallback: 'text'
+            }
+        ],
+
         gameScreen: [
-            { selector: '#board', title: guideT('Найди одинаковые карточки', 'Find matching cards'), text: guideT('Открывай по две карточки и ищи одинаковые картинки. Если пары нет — запоминай.', 'Open two cards and look for matching pictures. If they do not match, remember them.'), arrow: 'down', hand: 'tap' }
+            {
+                selector: '#board, .memory-board',
+                title: guideT('Найди одинаковые карточки', 'Find matching cards'),
+                text: guideT('Открывай по две карточки, ищи одинаковые. Если пары нет — запоминай!', 'Open two cards and find the matching pair. Remember them if wrong!'),
+                action: 'tap', arrow: 'down', fallback: 'text'
+            }
+        ],
+
+        audioScreen: [
+            {
+                selector: '#musicTrackSelect, .audio-select',
+                title: guideT('Выбери трек', 'Choose a track'),
+                text: guideT('15 музыкальных тем. Нажми "Проверить музыку", чтобы послушать.', '15 music themes. Tap "Check music" to preview.'),
+                action: 'tap', arrow: 'down', fallback: 'skip'
+            }
+        ],
+
+        pairsModeScreen: [
+            {
+                selector: '.mode-card, .pairs-mode-card',
+                title: guideT('Выбери режим', 'Choose mode'),
+                text: guideT('Спокойный — без таймера. С таймером — нужно успеть.', 'Calm — no timer. Timed — race the clock.'),
+                action: 'tap', arrow: 'down', fallback: 'text'
+            }
+        ],
+
+        petsScreen: [
+            {
+                selector: '#petsList, .pets-list',
+                title: guideT('Твои питомцы', 'Your pets'),
+                text: guideT('Листай вниз, выбирай главного питомца. Новых покупай за монетки.', 'Scroll down to choose main pet. Buy new ones with coins.'),
+                action: 'scroll', arrow: 'down', fallback: 'text'
+            }
         ]
     };
+
     return flows[screenKey] || [];
 }
 
+// ── Safe element finder with prep support ───────────────────────────────────
+function getGuideTarget(step) {
+    if (step.prep) {
+        try { step.prep(); } catch (e) {}
+    }
+    if (!step.selector) return null;
+    // Support comma-separated selectors (try each)
+    const selectors = step.selector.split(',').map(s => s.trim());
+    for (const sel of selectors) {
+        try {
+            const el = document.querySelector(sel);
+            if (isElementVisible(el)) return el;
+        } catch (e) {}
+    }
+    return null;
+}
+
+// ── Show step without highlight (informational) ──────────────────────────────
+function showGuideStepInfo(step) {
+    if (!guideBubbleTitle || !guideBubbleText) return;
+    // Hide highlight ring — show only the bubble in a safe position
+    if (guideHighlight) {
+        guideHighlight.style.width = '0px';
+        guideHighlight.style.height = '0px';
+        guideHighlight.style.left = '-9999px';
+    }
+    if (guideArrow) guideArrow.classList.remove('show');
+    if (guideHand) guideHand.classList.remove('show');
+    guideBubbleTitle.textContent = step.title || 'Подсказка';
+    guideBubbleText.textContent = step.text || '';
+    guideNextBtn.textContent = (activeGuide && activeGuide.index >= activeGuide.steps.length - 1)
+        ? guideT('Готово', 'Done') : guideT('Дальше', 'Next');
+}
+
+// ── Main step display with infinite-loop guard ───────────────────────────────
+function showGuideStep() {
+    if (!activeGuide) return;
+
+    // Safety exit: stop if we've skipped more steps than exist
+    if ((activeGuide._skips || 0) > activeGuide.steps.length + 2) {
+        markGuideSeen(activeGuide.screenKey);
+        hideGuideOverlay();
+        return;
+    }
+
+    const step = activeGuide.steps[activeGuide.index];
+    if (!step) {
+        markGuideSeen(activeGuide.screenKey);
+        hideGuideOverlay();
+        return;
+    }
+
+    guideBubbleTitle.textContent = step.title || 'Подсказка';
+    guideBubbleText.textContent = step.text || '';
+    guideNextBtn.textContent = activeGuide.index >= activeGuide.steps.length - 1
+        ? guideT('Готово', 'Done') : guideT('Дальше', 'Next');
+
+    // Informational step (no selector, or explicitly noHighlight)
+    if (!step.selector || step.noHighlight) {
+        showGuideStepInfo(step);
+        return;
+    }
+
+    const target = getGuideTarget(step);
+
+    if (!target) {
+        const fallback = step.fallback || 'skip';
+        if (fallback === 'text') {
+            // Show bubble text without highlight
+            showGuideStepInfo(step);
+        } else {
+            // Skip this step silently
+            activeGuide._skips = (activeGuide._skips || 0) + 1;
+            activeGuide.index += 1;
+            showGuideStep();
+        }
+        return;
+    }
+
+    // Valid target found — reset skip counter
+    activeGuide._skips = 0;
+
+    // Scroll element into view, then position after settling
+    target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            positionGuideForTarget(target, step);
+        });
+    });
+}
+
+// ── Position highlight + hand + arrow on target ──────────────────────────────
+function positionGuideForTarget(target, step) {
+    if (!guideHighlight || !guideArrow || !guideHand) return;
+
+    const rect = target.getBoundingClientRect();
+    // Guard against off-screen or zero-size rects
+    if (rect.width === 0 && rect.height === 0) {
+        showGuideStepInfo(step);
+        return;
+    }
+
+    const pad = 8;
+    const winW = window.innerWidth;
+    const winH = window.innerHeight;
+
+    guideHighlight.style.left   = Math.max(4, rect.left - pad) + 'px';
+    guideHighlight.style.top    = Math.max(4, rect.top  - pad) + 'px';
+    guideHighlight.style.width  = Math.min(winW - 8, rect.width  + pad * 2) + 'px';
+    guideHighlight.style.height = Math.min(winH - 8, rect.height + pad * 2) + 'px';
+
+    const dir      = step.arrow  || 'down';
+    const action   = step.action || 'tap';
+
+    // Hand icon by action type
+    const handIcons = {
+        'tap':          '👆',
+        'drag-h':       '🤏',
+        'drag-v':       '🤏',
+        'scroll':       '👆',
+        'select-color': '🎨'
+    };
+    guideHand.textContent = handIcons[action] || '👆';
+
+    // Arrow direction class + tip
+    guideArrow.className = `guide-arrow show dir-${dir}`;
+    const arrowTips = { up: '↑', down: '↓', left: '←', right: '→' };
+    if (guideArrowTip) guideArrowTip.textContent = arrowTips[dir] || '↓';
+
+    // Arrow position
+    let arrowL, arrowT;
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+    if (dir === 'down')  { arrowL = cx - 18; arrowT = Math.max(4, rect.top - 52); }
+    if (dir === 'up')    { arrowL = cx - 18; arrowT = Math.min(winH - 60, rect.bottom + 8); }
+    if (dir === 'left')  { arrowL = Math.min(winW - 90, rect.right + 8); arrowT = cy - 18; }
+    if (dir === 'right') { arrowL = Math.max(4, rect.left - 86); arrowT = cy - 18; }
+    guideArrow.style.left = Math.min(winW - 90, Math.max(4, arrowL)) + 'px';
+    guideArrow.style.top  = Math.min(winH - 70, Math.max(4, arrowT)) + 'px';
+
+    // Hand position by action
+    let handL = cx - 14;
+    let handT = rect.bottom + 10;
+    if (action === 'drag-h') {
+        handL = rect.left + Math.max(16, rect.width * 0.1);
+        handT = cy - 8;
+    } else if (action === 'drag-v' || action === 'scroll') {
+        handL = cx - 14;
+        handT = rect.top + Math.max(12, rect.height * 0.15);
+    } else if (action === 'select-color') {
+        handL = rect.left + Math.max(10, rect.width * 0.05);
+        handT = cy - 10;
+    } else if (dir === 'up') {
+        handT = rect.top - 42;
+    }
+    guideHand.className = `guide-hand show ${action}`;
+    guideHand.style.left = Math.min(winW - 40, Math.max(4, handL)) + 'px';
+    guideHand.style.top  = Math.min(winH - 50, Math.max(4, handT)) + 'px';
+}
+
+// ── Guide lifecycle ──────────────────────────────────────────────────────────
 function maybeAutoStartGuide(screenKey = getVisibleScreenId()) {
     if (!guideOverlay || activeGuide) return;
     const flow = getGuideFlow(screenKey);
@@ -10882,7 +11240,9 @@ function maybeAutoStartGuide(screenKey = getVisibleScreenId()) {
 
 function startGuideForCurrentScreen() {
     const screenKey = getVisibleScreenId();
-    if (screenKey === 'petRoomScreen' && petRoomFoodTray && petRoomFoodTray.classList.contains('show')) {
+    if (screenKey === 'petRoomScreen'
+        && typeof petRoomFoodTray !== 'undefined'
+        && petRoomFoodTray && petRoomFoodTray.classList.contains('show')) {
         startGuide('petRoomScreen_feed', false);
         return;
     }
@@ -10892,15 +11252,20 @@ function startGuideForCurrentScreen() {
 function startGuide(screenKey, auto = false) {
     const steps = getGuideFlow(screenKey).slice();
     if (!steps.length || !guideOverlay) return;
-    activeGuide = { screenKey, steps, index: 0, auto };
+    activeGuide = { screenKey, steps, index: 0, auto, _skips: 0 };
     guideOverlay.classList.add('show');
     showGuideStep();
 }
 
 function hideGuideOverlay() {
     if (guideOverlay) guideOverlay.classList.remove('show');
-    if (guideArrow) guideArrow.classList.remove('show');
-    if (guideHand) guideHand.className = 'guide-hand';
+    if (guideArrow)   guideArrow.classList.remove('show');
+    if (guideHand)    guideHand.className = 'guide-hand';
+    if (guideHighlight) {
+        guideHighlight.style.width  = '0';
+        guideHighlight.style.height = '0';
+        guideHighlight.style.left   = '-9999px';
+    }
     activeGuide = null;
 }
 
@@ -10915,84 +11280,7 @@ function nextGuideStep() {
     showGuideStep();
 }
 
-function getGuideTarget(step) {
-    if (step.prep) {
-        try { step.prep(); } catch (e) {}
-    }
-    if (!step.selector) return null;
-    return document.querySelector(step.selector);
-}
-
-function showGuideStep() {
-    if (!activeGuide) return;
-    const step = activeGuide.steps[activeGuide.index];
-    if (!step) {
-        markGuideSeen(activeGuide.screenKey);
-        hideGuideOverlay();
-        return;
-    }
-    const target = getGuideTarget(step);
-    if (!target) {
-        activeGuide.index += 1;
-        showGuideStep();
-        return;
-    }
-    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-    setTimeout(() => positionGuideForTarget(target, step), 180);
-    guideBubbleTitle.textContent = step.title || 'Подсказка';
-    guideBubbleText.textContent = step.text || '';
-    guideNextBtn.textContent = activeGuide.index >= activeGuide.steps.length - 1 ? guideT('Готово', 'Done') : guideT('Дальше', 'Next');
-}
-
-function positionGuideForTarget(target, step) {
-    if (!guideHighlight || !guideArrow || !guideHand) return;
-    const rect = target.getBoundingClientRect();
-    const pad = 10;
-    guideHighlight.style.left = Math.max(8, rect.left - pad) + 'px';
-    guideHighlight.style.top = Math.max(8, rect.top - pad) + 'px';
-    guideHighlight.style.width = Math.min(window.innerWidth - 16, rect.width + pad * 2) + 'px';
-    guideHighlight.style.height = Math.min(window.innerHeight - 16, rect.height + pad * 2) + 'px';
-
-    const dir = step.arrow || 'down';
-    const handMode = step.hand || 'tap';
-    guideArrow.className = `guide-arrow show dir-${dir}`;
-    guideArrowTip.textContent = dir === 'up' ? '↑' : dir === 'down' ? '↓' : dir === 'left' ? '←' : '→';
-
-    let arrowLeft = rect.left + rect.width / 2 - 18;
-    let arrowTop = rect.top - 42;
-    if (dir === 'up') {
-        arrowLeft = rect.left + rect.width / 2 - 18;
-        arrowTop = rect.bottom + 8;
-    } else if (dir === 'down') {
-        arrowLeft = rect.left + rect.width / 2 - 18;
-        arrowTop = Math.max(8, rect.top - 52);
-    } else if (dir === 'left') {
-        arrowLeft = rect.right + 8;
-        arrowTop = rect.top + rect.height / 2 - 18;
-    } else if (dir === 'right') {
-        arrowLeft = Math.max(8, rect.left - 86);
-        arrowTop = rect.top + rect.height / 2 - 18;
-    }
-    guideArrow.style.left = Math.min(window.innerWidth - 90, Math.max(8, arrowLeft)) + 'px';
-    guideArrow.style.top = Math.min(window.innerHeight - 70, Math.max(8, arrowTop)) + 'px';
-
-    guideHand.className = `guide-hand show ${handMode}`;
-    guideHand.textContent = handMode.startsWith('drag') ? '🤏' : '👆';
-    let handLeft = rect.left + rect.width / 2 - 14;
-    let handTop = rect.bottom + 10;
-    if (handMode === 'drag-h') {
-        handLeft = rect.left + Math.min(24, rect.width * .15);
-        handTop = rect.top + rect.height / 2 - 8;
-    } else if (handMode === 'drag-v') {
-        handLeft = rect.left + rect.width / 2 - 14;
-        handTop = rect.top + Math.min(18, rect.height * .15);
-    } else if (dir === 'up') {
-        handTop = rect.top - 42;
-    }
-    guideHand.style.left = Math.min(window.innerWidth - 40, Math.max(8, handLeft)) + 'px';
-    guideHand.style.top = Math.min(window.innerHeight - 50, Math.max(8, handTop)) + 'px';
-}
-
+// ── Event wiring ─────────────────────────────────────────────────────────────
 window.addEventListener('resize', () => {
     refreshGuideHelpers(getVisibleScreenId());
     if (activeGuide) showGuideStep();
@@ -11004,6 +11292,8 @@ if (guideOverlay) {
         if (event.target === guideOverlay) nextGuideStep();
     });
 }
+
+
 
 let __menuOpenInProgress = false;
 function forceOpenMenu() {
@@ -11018,7 +11308,7 @@ function forceOpenMenu() {
         updateSoundButton();
     } catch(e) {}
     try { loadingScreen.style.display = "none"; } catch(e) {}
-    try { showScreen("menuScreen"); } catch(e) {}
+    try { showScreen("menuScreen", { skipHistory: true, clearHistory: true }); } catch(e) {}
     try { translatePageToEnglish(); } catch(e) {}
     try { installTranslationObserver(); } catch(e) {}
     // Start music AFTER a short delay — iOS needs the user-gesture context
@@ -11172,7 +11462,7 @@ function playSound(name) {
     }
 }
 
-/* ===== Zoo Memory 3.11 animal sounds ===== */
+/* ===== Zoo Pet World animal sounds ===== */
 function playToneAt(freq, duration, type = "sine", volume = 0.04, delay = 0, slideTo = null) {
     if (!soundEnabled) return;
     initAudio();
@@ -12658,7 +12948,7 @@ function animateDetailAvatar(className) {
 
 
 
-/* ===== Zoo Memory 3.11 animated pet helpers ===== */
+/* ===== Zoo Pet World animated pet helpers ===== */
 
 function getPetSpeciesBubble(key, mode) {
     const map = {
@@ -15044,14 +15334,39 @@ let coloringBoundaryCanvas = null;
 let coloringBoundaryCtx = null;
 let coloringOutlineReady = false;
 
+function setColoringLoadingState(isLoading, text) {
+    const box = document.getElementById("coloringLoadingState");
+    if (!box) return;
+    if (text) {
+        const label = box.querySelector("div:not(.coloring-loading-spinner)");
+        if (label) label.textContent = text;
+    }
+    box.classList.toggle("show", !!isLoading);
+}
+
 function openColoring() {
+    playSound("click");
+    // Show the screen immediately so the user does not see a frozen menu while
+    // the large embedded coloring image bundle is being lazy-loaded.
+    showScreen("coloringScreen");
+    setColoringLoadingState(true, "Загружаем картинки раскраски...");
+
     // Start boundary image downloads + load coloring modules in parallel.
     // preloadColoringLineArtAssets() is idempotent (guarded by a flag).
     preloadColoringLineArtAssets();
+    let coloringLoadFinished = false;
+    const loadingGuard = setTimeout(() => {
+        if (!coloringLoadFinished) {
+            setColoringLoadingState(true, "Картинки ещё загружаются...");
+        }
+    }, 4500);
+
     loadScriptOnce("assets/js/features/coloringImages.js", () => {
         loadScriptOnce("assets/js/zoo_coloring_reset_step2.js", () => {
-            playSound("click");
-            showScreen("coloringScreen");
+            coloringLoadFinished = true;
+            clearTimeout(loadingGuard);
+            setColoringLoadingState(false);
+            try { renderColoringScreen(); } catch(e) {}
             setTimeout(() => {
                 try { if (typeof buildColoringScrollHandles === 'function') buildColoringScrollHandles(); } catch(e) {}
             }, 400);
@@ -16428,7 +16743,7 @@ function openParentScreen() {
 }
 
 
-/* ===== Zoo Memory 3.11 single-file RU/EN i18n ===== */
+/* ===== Zoo Pet World single-file RU/EN i18n ===== */
 const i18nMap = {
 
     "Zoo Block": "Zoo Block",
@@ -16536,7 +16851,7 @@ const i18nMap = {
     "Реальные cartoon sprites животных": "Real cartoon animal sprites",
 
     "🇬🇧 English version": "🇷🇺 Русская версия",
-    "Zoo Memory 3.11": "Zoo Memory 3.11",
+    "Zoo Pet World": "Zoo Pet World",
     "Реальные cartoon sprites животных": "Real cartoon animal sprites",
     "Загружаем 50 уровней зоопарка...": "Loading 50 zoo levels...",
     "Открыть игру": "Open game",
@@ -16562,6 +16877,10 @@ const i18nMap = {
     "Музыка: Вкл": "Music: On",
     "Музыка: Выкл": "Music: Off",
     "Главное меню": "Main menu",
+    "← Назад": "← Back",
+    "Загружаем картинки раскраски...": "Loading coloring pages...",
+    "Первое открытие может занять несколько секунд, дальше быстрее.": "The first opening may take a few seconds, then it is faster.",
+    "Картинки ещё загружаются...": "Coloring pages are still loading...",
     "Мой питомец": "My Pet",
     "Все животные": "All animals",
     "Еда": "Food",
@@ -16847,7 +17166,7 @@ function translatePageToEnglish() {
     if (getCurrentLanguage() !== "en") return;
 
     document.documentElement.lang = "en";
-    document.title = "Zoo Memory: Animal Matching Game";
+    document.title = "Zoo Pet World";
 
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const textNodes = [];
@@ -16894,7 +17213,7 @@ function installTranslationObserver() {
 }
 
 
-/* ===== Zoo Memory 3.11 profile / achievements / daily gift / parent settings ===== */
+/* ===== Zoo Pet World profile / achievements / daily gift / parent settings ===== */
 const profileAvatars = ["🦁","🐼","🦊","🐘","🦒","🐵","🐯","🐨","🐰","🐸","🐧","🦉"];
 
 function openProfile() {
@@ -16967,6 +17286,16 @@ function claimDailyGift() {
 }
 
 window.zooMemoryBootOk = true;
+
+// Restore low-performance mode before first paint
+(function() {
+    try {
+        if (localStorage.getItem("zooLowPerformance") === "1") {
+            document.body.classList.add("low-performance");
+        }
+    } catch(e) {}
+})();
+
 function initApp() {
     try {
         normalizeDailyProgress();
@@ -16996,7 +17325,7 @@ setTimeout(() => {
 }, 1200);
 </script>
 
-<!-- Zoo Memory 3.11: fixed undefined currentLevel crash, win popup, calm timer state -->
+<!-- Zoo Pet World: fixed undefined currentLevel crash, win popup, calm timer state -->
 
 
 
@@ -17442,6 +17771,159 @@ setTimeout(() => {
 </style>
 
 <style>
+
+/* Stage 2.1 — coloring lazy-load state */
+.coloring-loading-state {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 84px;
+    margin: 10px 0 12px;
+    padding: 14px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 8px 18px rgba(67,31,0,.10);
+    color: #4c1d95;
+    font-weight: 900;
+    text-align: center;
+}
+.coloring-loading-state.show { display: flex !important; }
+.coloring-loading-state small {
+    color: #7c3aed;
+    font-weight: 700;
+}
+.coloring-loading-spinner {
+    font-size: 34px;
+    animation: coloringLoadPulse .9s ease-in-out infinite alternate;
+}
+@keyframes coloringLoadPulse {
+    from { transform: scale(.95) rotate(-3deg); opacity: .75; }
+    to { transform: scale(1.04) rotate(3deg); opacity: 1; }
+}
+body.low-performance .coloring-loading-spinner { animation: none !important; }
+
+</style>
+
+<style id="low-performance-mode">
+/*
+ * ⚡ LOW-PERFORMANCE / ЛЁГКИЙ РЕЖИМ
+ * Applied via body.low-performance when the parent toggle is on.
+ * Normal mode is 100% unchanged — this only adds overrides.
+ *
+ * What is disabled:
+ *   1. ALL backdrop-filter: blur() — biggest GPU cost on mobile WebKit
+ *   2. Heavy box-shadow (spread > 20px) → reduced to light 4px shadow
+ *   3. Background-only animations: clouds, sun pulse, background zoo animals,
+ *      starfield, fireflies, bubble-field, logo pulse, menu animal dance
+ *   4. Guide/helper overlay: no full-screen blur backdrop, semi-transparent bg instead
+ *   5. body background: static gradient instead of the layered radial-gradient circles
+ */
+
+/* 1 ── BACKDROP FILTER ───────────────────────────── */
+body.low-performance *,
+body.low-performance *::before,
+body.low-performance *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 2 ── HEAVY BOX-SHADOWS → light flat shadow ────── */
+body.low-performance .card-panel,
+body.low-performance .btn,
+body.low-performance .feature-card,
+body.low-performance .memory-card,
+body.low-performance .modal,
+body.low-performance .overlay .modal,
+body.low-performance .pet-room-card,
+body.low-performance .shop-card,
+body.low-performance .coloring-canvas-card,
+body.low-performance .shadow-option,
+body.low-performance .puzzle-piece {
+    box-shadow: 0 2px 6px rgba(0,0,0,.10) !important;
+}
+
+/* Keep guide highlight ring but simplify it */
+body.low-performance .guide-highlight-ring {
+    box-shadow: 0 0 0 4px rgba(124,58,237,.55) !important;
+}
+
+/* 3 ── BACKGROUND ANIMATIONS ─────────────────────── */
+
+/* Clouds stop moving */
+body.low-performance .cloud {
+    animation: none !important;
+    opacity: 0.7;
+}
+
+/* Sun stops pulsing */
+body.low-performance .sun {
+    animation: none !important;
+}
+
+/* Background zoo animals (decorative only) stop moving */
+body.low-performance .zoo-animal img,
+body.low-performance .zoo-animal svg {
+    animation: none !important;
+}
+body.low-performance .zoo-animal.parrot img {
+    /* parrot has a fly animation — freeze it in place */
+    animation: none !important;
+    transform: none !important;
+}
+
+/* Menu logo pulse stops */
+body.low-performance .logo {
+    animation: none !important;
+}
+
+/* Menu card animal icons stop dancing */
+body.low-performance .menu-animals img {
+    animation: none !important;
+}
+
+/* Starfield / fireflies / bubbles (cosmetic screen environments) */
+body.low-performance .starfield,
+body.low-performance .fireflies,
+body.low-performance .bubble-field {
+    animation: none !important;
+    opacity: 0 !important;
+}
+
+/* Loading screen animation */
+body.low-performance .loading-logo {
+    animation: none !important;
+}
+body.low-performance .loader-fill {
+    animation: none !important;
+    width: 100% !important;
+}
+
+/* 4 ── GUIDE / HELPER OVERLAY ───────────────────── */
+
+/* Remove the full-screen dark overlay blur — replace with light tint */
+body.low-performance .guide-overlay {
+    background: rgba(15, 23, 42, 0.55) !important;
+    /* original has a heavy backdrop-filter which is already killed above */
+}
+
+/* Guide highlight: remove heavy spread shadow */
+body.low-performance .guide-overlay .guide-highlight {
+    box-shadow: 0 0 0 9999px rgba(15,23,42,.55) !important;
+}
+
+/* 5 ── BODY BACKGROUND ───────────────────────────── */
+
+/* Replace layered radial-gradient + multiple circles with a simple gradient */
+body.low-performance {
+    background:
+        linear-gradient(180deg, #87CEFA 0%, #9fe3ff 34%, #fef3c7 35%, #9be15d 75%, #5ea63c 100%)
+        !important;
+}
+</style>
+
+<style>
 /* ─── Coloring layout: canvas TOP, tools MID, palette ONE ROW BOTTOM ─── */
 
 /* Make the coloring screen scrollable */
@@ -17535,6 +18017,26 @@ setTimeout(() => {
 
 
 
+
+
+<style id="assistant-stage3-guide-polish">
+/* Assistant Stage 3 merge polish: keep helper light in normal mode too. */
+.guide-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 23, 42, .38) !important;
+}
+.guide-bubble {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+.guide-arrow { z-index: 2502; }
+.guide-highlight { z-index: 2501; }
+.guide-bubble { z-index: 2503; }
+.guide-hand.select-color { animation: guideTap 1.2s infinite ease-in-out; }
+.guide-hand.scroll { animation: guideDragVertical 1.5s infinite ease-in-out; }
+body.low-performance .guide-overlay { background: rgba(15, 23, 42, .42) !important; }
+</style>
 
 </body>
 </html>
