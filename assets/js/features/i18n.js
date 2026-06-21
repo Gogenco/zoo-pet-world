@@ -1,5 +1,5 @@
 /**
- * Zoo Pet World — i18n Foundation  (Stage 4.3 merged — 216 keys)
+ * Zoo Pet World — i18n Foundation  (Stage 4.3D-B — 274 keys)
  */
 (function () {
     'use strict';
@@ -98,6 +98,16 @@
         "parent.privacy_text": "В HTML-версии нет регистрации и аккаунта. Прогресс хранится локально на устройстве.",
         "parent.ads_info": "Реклама",
         "parent.back_btn": "Назад",
+        "parent.save_tools": "Сохранение",
+        "parent.save_tools_desc": "Экспортируй прогресс перед тестами или импортируй backup на другом устройстве.",
+        "parent.export": "Экспорт",
+        "parent.import": "Импорт",
+        "parent.backup": "Backup",
+        "parent.release_guard": "Release guard",
+        "parent.save_exported": "Сохранение экспортировано ✅",
+        "parent.save_import_bad": "Файл сохранения повреждён или не JSON",
+        "parent.save_import_ok": "Сохранение импортировано ✅",
+        "parent.backup_missing": "Backup не найден",
         "guide.tip": "Подсказка",
         "guide.helper": "Помощник",
         "guide.mini_help": "Мини-помощь",
@@ -215,7 +225,69 @@
         "reward.shadow_level": "Тень: +{coins} 🪙",
         "reward.puzzle_done": "Пазл: +{coins} 🪙",
         "reward.task_done": "Задание: +{coins} 🪙",
-        "reward.streak_bonus": "Серия: +{coins} 🪙"
+        "reward.streak_bonus": "Серия: +{coins} 🪙",
+        "sound.on_label": "Звук: Вкл",
+        "sound.off_label": "Звук: Выкл",
+        "economy.daily_bonus_title": "🎁 Ежедневный бонус",
+        "economy.daily_bonus_desc": "Заходи каждый день: серия увеличивает награду до +50 монет.",
+        "economy.claimed_today": "Получено",
+        "economy.claim_btn": "Забрать подарок",
+        "economy.claimed_btn": "Сегодня забрано",
+        "economy.spend_btn": "Куда тратить?",
+        "economy.purpose_food": "Еда",
+        "economy.purpose_food_sub": "открывай вкусняшки",
+        "economy.purpose_pets": "Питомцы",
+        "economy.purpose_pets_sub": "покупай новых зверей",
+        "economy.purpose_puzzles": "Пазлы",
+        "economy.purpose_puzzles_sub": "открывай этапы и картинки",
+        "economy.purpose_coloring": "Раскраски",
+        "economy.purpose_coloring_sub": "открывай новые сцены",
+        "tasks.title": "📋 Сегодняшние миссии",
+        "tasks.desc": "Выполняй маленькие цели в разных режимах и забирай монеты.",
+        "tasks.claim_ready": "Забрать готовые награды ({n})",
+        "tasks.all_claimed": "Все награды забраны",
+        "tasks.none_ready": "Нет готовых наград",
+        "quest.feed.title": "Покорми питомца",
+        "quest.feed.desc": "Дай зверьку любую открытую еду в комнате питомца.",
+        "quest.feed.action": "К питомцу",
+        "quest.pairs.title": "Найди 5 пар",
+        "quest.pairs.desc": "Играй в Memory и находи одинаковых животных.",
+        "quest.pairs.action": "Memory",
+        "quest.play.title": "Сыграй 2 раза",
+        "quest.play.desc": "Подходит Memory, Pet Room play, Puzzle или Zoo Block.",
+        "quest.play.action": "Играть",
+        "quest.puzzle.title": "Собери 1 пазл",
+        "quest.puzzle.desc": "Собери любую открытую картинку в Puzzle.",
+        "quest.puzzle.action": "Пазл",
+        "quest.shadow.title": "Найди 3 тени",
+        "quest.shadow.desc": "В Shadow Game угадай животных по силуэту.",
+        "quest.shadow.action": "Тени",
+        "quest.coloring.title": "Раскрась 3 области",
+        "quest.coloring.desc": "Открой раскраску и залей цветом несколько областей.",
+        "quest.coloring.action": "Раскраска",
+        "quest.stars.title": "Получи 3 звезды",
+        "quest.stars.desc": "Пройди уровень Memory аккуратно.",
+        "quest.stars.action": "Уровни",
+        "pet.already_owned": "Этот питомец уже открыт ✅",
+        "pet.not_enough_coins": "Не хватает монет: нужно {price} 🪙",
+        "pet.purchased": "{name} теперь твой питомец! 🐾",
+        "quest.status_claimed": "получено",
+        "quest.status_ready": "готово",
+        "quest.status_progress": "в процессе",
+        "skin.rainbow": "Радуга",
+        "skin.jungle": "Джунгли",
+        "skin.ocean": "Океан",
+        "skin.candy": "Конфеты",
+        "skin.night": "Ночной зоопарк",
+        "placeholder.pet_name": "Дай имя животному",
+        "placeholder.player_name": "Напиши имя",
+        "confirm.reset_progress": "Сбросить весь прогресс игры?",
+        "confirm.import_save": "Импортировать сохранение? Текущий прогресс будет заменён, но перед заменой будет создан backup.",
+        "confirm.restore_backup": "Восстановить последний backup? Текущий прогресс будет заменён.",
+        "coloring.pinch_hint": "🤏 2 пальца — зум • 👆 нажми — заливка",
+        "parent.save_read_error": "Не получилось прочитать файл сохранения",
+        "parent.save_not_zoo": "Это не похоже на сохранение Zoo Pet World",
+        "parent.save_import_error": "Ошибка импорта сохранения"
     };
 
     const EN_INLINE = {
@@ -306,6 +378,16 @@
         "parent.privacy_text": "The HTML version has no registration or account. Progress is stored locally on the device.",
         "parent.ads_info": "Advertising",
         "parent.back_btn": "Back",
+        "parent.save_tools": "Save data",
+        "parent.save_tools_desc": "Export progress before testing or import a backup on another device.",
+        "parent.export": "Export",
+        "parent.import": "Import",
+        "parent.backup": "Backup",
+        "parent.release_guard": "Release guard",
+        "parent.save_exported": "Save exported ✅",
+        "parent.save_import_bad": "Save file is broken or not JSON",
+        "parent.save_import_ok": "Save imported ✅",
+        "parent.backup_missing": "Backup not found",
         "guide.tip": "Hint",
         "guide.helper": "Helper",
         "guide.mini_help": "Mini-help",
@@ -423,7 +505,69 @@
         "reward.shadow_level": "Shadow: +{coins} 🪙",
         "reward.puzzle_done": "Puzzle: +{coins} 🪙",
         "reward.task_done": "Task: +{coins} 🪙",
-        "reward.streak_bonus": "Streak: +{coins} 🪙"
+        "reward.streak_bonus": "Streak: +{coins} 🪙",
+        "sound.on_label": "Sound: On",
+        "sound.off_label": "Sound: Off",
+        "economy.daily_bonus_title": "🎁 Daily Bonus",
+        "economy.daily_bonus_desc": "Come every day: streaks increase your reward up to +50 coins.",
+        "economy.claimed_today": "Claimed",
+        "economy.claim_btn": "Claim gift",
+        "economy.claimed_btn": "Claimed today",
+        "economy.spend_btn": "What to spend on?",
+        "economy.purpose_food": "Food",
+        "economy.purpose_food_sub": "unlock treats",
+        "economy.purpose_pets": "Pets",
+        "economy.purpose_pets_sub": "buy new animals",
+        "economy.purpose_puzzles": "Puzzles",
+        "economy.purpose_puzzles_sub": "unlock stages & pictures",
+        "economy.purpose_coloring": "Coloring",
+        "economy.purpose_coloring_sub": "unlock new scenes",
+        "tasks.title": "📋 Today's Missions",
+        "tasks.desc": "Complete small goals in different modes and collect coins.",
+        "tasks.claim_ready": "Claim ready rewards ({n})",
+        "tasks.all_claimed": "All rewards claimed",
+        "tasks.none_ready": "No rewards ready yet",
+        "quest.feed.title": "Feed your pet",
+        "quest.feed.desc": "Give your animal any unlocked food in the Pet Room.",
+        "quest.feed.action": "Pet Room",
+        "quest.pairs.title": "Find 5 pairs",
+        "quest.pairs.desc": "Play Memory and find matching animals.",
+        "quest.pairs.action": "Memory",
+        "quest.play.title": "Play 2 times",
+        "quest.play.desc": "Memory, Pet Room play, Puzzle or Zoo Block count.",
+        "quest.play.action": "Play",
+        "quest.puzzle.title": "Solve 1 puzzle",
+        "quest.puzzle.desc": "Assemble any unlocked picture in Puzzle.",
+        "quest.puzzle.action": "Puzzle",
+        "quest.shadow.title": "Find 3 shadows",
+        "quest.shadow.desc": "Guess animals by their silhouette in Shadow Game.",
+        "quest.shadow.action": "Shadows",
+        "quest.coloring.title": "Color 3 areas",
+        "quest.coloring.desc": "Open Coloring and fill several areas with color.",
+        "quest.coloring.action": "Coloring",
+        "quest.stars.title": "Get 3 stars",
+        "quest.stars.desc": "Complete a Memory level carefully.",
+        "quest.stars.action": "Levels",
+        "pet.already_owned": "This pet is already unlocked ✅",
+        "pet.not_enough_coins": "Not enough coins: need {price} 🪙",
+        "pet.purchased": "{name} is now your pet! 🐾",
+        "quest.status_claimed": "claimed",
+        "quest.status_ready": "ready",
+        "quest.status_progress": "in progress",
+        "skin.rainbow": "Rainbow",
+        "skin.jungle": "Jungle",
+        "skin.ocean": "Ocean",
+        "skin.candy": "Candy",
+        "skin.night": "Night Zoo",
+        "placeholder.pet_name": "Name your animal",
+        "placeholder.player_name": "Enter name",
+        "confirm.reset_progress": "Reset all game progress?",
+        "confirm.import_save": "Import save? Current progress will be replaced, but a backup will be created first.",
+        "confirm.restore_backup": "Restore last backup? Current progress will be replaced.",
+        "coloring.pinch_hint": "🤏 2 fingers — zoom • 👆 tap — fill",
+        "parent.save_read_error": "Could not read the save file",
+        "parent.save_not_zoo": "This does not look like a Zoo Pet World save",
+        "parent.save_import_error": "Error importing save"
     };
 
     const cache = { ru: RU_INLINE, en: EN_INLINE };
@@ -443,17 +587,21 @@
     }
 
     async function _loadLang(lang) {
-        if (cache[lang]) return;
+        // For EN: already have EN_INLINE as base; merge JSON on top so any extra keys load too.
+        // For HY: no inline base, must load from JSON.
+        // For RU: RU_INLINE is always present; this is a no-op in normal flow.
+        const inlineBase = lang === 'en' ? EN_INLINE : (lang === 'ru' ? RU_INLINE : null);
         try {
             const r = await fetch(`${I18N_BASE}${lang}.json`);
             if (!r.ok) throw new Error(`HTTP ${r.status}`);
             const data = await r.json();
-            const clean = {};
-            for (const [k, v] of Object.entries(data)) { if (k !== '_meta') clean[k] = v; }
-            cache[lang] = clean;
+            const merged = inlineBase ? Object.assign({}, inlineBase) : {};
+            for (const [k, v] of Object.entries(data)) { if (k !== '_meta') merged[k] = v; }
+            cache[lang] = merged;
         } catch (e) {
-            console.warn(`[i18n] ${lang}.json load failed (${e.message}), using RU fallback`);
-            cache[lang] = RU_INLINE;
+            console.warn(`[i18n] ${lang}.json load failed (${e.message}), using inline fallback`);
+            if (inlineBase) cache[lang] = inlineBase;
+            else cache[lang] = RU_INLINE; // last resort for HY if JSON unavailable
         }
     }
 
@@ -487,10 +635,17 @@
         try { saved = localStorage.getItem(STORAGE_KEY) || FALLBACK_LANG; } catch(e) {}
         if (!SUPPORTED_LANGS.includes(saved)) saved = FALLBACK_LANG;
         currentLanguage = saved;
-        if (currentLanguage === 'hy' && !cache['hy']) {
+        // Load external JSON to supplement/override inline data
+        if (currentLanguage === 'hy') {
             _pendingLoad = _loadLang('hy');
             _pendingLoad.then(() => {
                 try { window.dispatchEvent(new CustomEvent('i18nReady', {detail: {lang:'hy'}})); } catch(e) {}
+            });
+        } else if (currentLanguage === 'en') {
+            // EN has EN_INLINE as immediate fallback; load JSON async to pick up any extra keys
+            _pendingLoad = _loadLang('en');
+            _pendingLoad.then(() => {
+                try { window.dispatchEvent(new CustomEvent('i18nReady', {detail: {lang:'en'}})); } catch(e) {}
             });
         }
     })();

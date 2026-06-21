@@ -42,7 +42,7 @@ function initLowPerformanceMode() {
 }
 
 function resetGameProgress() {
-    const ok = confirm("Сбросить весь прогресс игры?");
+    const ok = confirm(parentT('confirm.reset_progress', 'Сбросить весь прогресс игры?'));
     if (!ok) return;
     localStorage.clear();
     location.reload();
@@ -169,7 +169,7 @@ function importZooSaveFile(event) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => importZooSaveText(String(reader.result || ""));
-    reader.onerror = () => showParentSaveToast("Не получилось прочитать файл сохранения");
+    reader.onerror = () => showParentSaveToast(parentT('parent.save_read_error', 'Не получилось прочитать файл сохранения'));
     reader.readAsText(file);
     try { event.target.value = ""; } catch(e) {}
 }
@@ -182,10 +182,10 @@ function importZooSaveText(rawText) {
         return;
     }
     if (!payload || typeof payload !== "object" || !payload.data || typeof payload.data !== "object") {
-        showParentSaveToast("Это не похоже на сохранение Zoo Pet World");
+        showParentSaveToast(parentT('parent.save_not_zoo', 'Это не похоже на сохранение Zoo Pet World'));
         return;
     }
-    const ok = confirm("Импортировать сохранение? Текущий прогресс будет заменён, но перед заменой будет создан backup.");
+    const ok = confirm(parentT('confirm.import_save', 'Импортировать сохранение? Текущий прогресс будет заменён, но перед заменой будет создан backup.'));
     if (!ok) return;
     try {
         const before = createZooSaveSnapshot("before_manual_import");
@@ -201,7 +201,7 @@ function importZooSaveText(rawText) {
         alert(parentT('parent.save_import_ok', 'Сохранение импортировано ✅') + " Страница перезагрузится.");
         location.reload();
     } catch(e) {
-        showParentSaveToast("Ошибка импорта сохранения");
+        showParentSaveToast(parentT('parent.save_import_error', 'Ошибка импорта сохранения'));
     }
 }
 
@@ -212,7 +212,7 @@ function restoreZooSaveBackup() {
         showParentSaveToast(parentT('parent.backup_missing', 'Backup не найден'));
         return;
     }
-    const ok = confirm("Восстановить последний backup? Текущий прогресс будет заменён.");
+    const ok = confirm(parentT('confirm.restore_backup', 'Восстановить последний backup? Текущий прогресс будет заменён.'));
     if (!ok) return;
     importZooSaveText(raw);
 }
@@ -324,9 +324,7 @@ function renderParentSettings() {
                'settings.music',        'Музыка',
                'settings.music_desc',   'Можно полностью выключить музыку.')}
 
-        ${item('timerEnabled',
-               'settings.timer',        'Таймер',
-               'settings.timer_desc',   'Если выключить, игра будет спокойнее.')}
+        <!-- Stage 4.3D: timer toggle removed from Parents; mode is chosen before the game. -->
 
         ${item('interstitialEnabled',
                'settings.ads',          'Interstitial реклама',

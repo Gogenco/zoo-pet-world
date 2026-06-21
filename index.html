@@ -1147,7 +1147,7 @@ h1, h2, h3 {
 }
 
 .big-play-card.zoo-teaser-card::after {
-    content: "скоро";
+    content: attr(data-soon);
     position: absolute;
     right: 14px;
     top: 14px;
@@ -6769,7 +6769,7 @@ body.skin-night .zoo-animal { filter: drop-shadow(0 6px 8px rgba(0,0,0,.35)) bri
 }
 
 .pet-room-foam-burst::after {
-    content: "Пена!";
+    content: "🫧";
     position: absolute;
     left: 50%;
     top: 6px;
@@ -9339,6 +9339,97 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     }
 }
 
+
+/* ===== Stage 4.3C: Compact unlock cards + safe purchase confirm ===== */
+.food-chip .unlock-polish-card,
+.puzzle-image-choice .unlock-polish-card,
+.puzzle-stage-btn .unlock-polish-card {
+    display: none !important;
+}
+.food-chip.locked,
+.puzzle-image-choice.locked,
+.puzzle-stage-btn.locked {
+    position: relative;
+    overflow: hidden;
+}
+.food-chip.locked .food-price,
+.puzzle-image-choice.locked .puzzle-choice-price,
+.compact-unlock-action {
+    display: grid;
+    place-items: center;
+    min-height: 30px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.96);
+    color: #92400e;
+    font-size: 11px;
+    line-height: 1.05;
+    font-weight: 1000;
+    text-align: center;
+    white-space: normal;
+    box-shadow: 0 4px 0 rgba(146,64,14,.10), 0 6px 12px rgba(0,0,0,.08);
+}
+.food-chip.locked .food-price,
+.puzzle-image-choice.locked .puzzle-choice-price {
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+}
+.compact-unlock-action {
+    margin-top: 5px;
+    width: calc(100% - 8px);
+    justify-self: center;
+}
+.puzzle-stage-btn.locked small {
+    font-size: 11px;
+    line-height: 1.12;
+    color: #92400e;
+}
+.puzzle-stage-btn.locked {
+    padding-bottom: 10px;
+    min-height: 118px;
+}
+.food-chip.locked .food-label,
+.puzzle-image-choice .puzzle-choice-name {
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+}
+.food-chip.can-buy-now .food-price,
+.puzzle-image-choice.can-buy-now .puzzle-choice-price,
+.puzzle-stage-btn.can-buy-now .compact-unlock-action {
+    background: linear-gradient(180deg, #ffffff, #dcfce7);
+    color: #166534;
+}
+.coin-short-popup {
+    position: fixed;
+    left: 50%;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 4200;
+    max-width: min(92vw, 360px);
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(254,243,199,.96));
+    color: #92400e;
+    font-weight: 1000;
+    text-align: center;
+    box-shadow: 0 14px 30px rgba(67,31,0,.20), 0 5px 0 rgba(245,158,11,.18);
+    border: 2px solid rgba(255,255,255,.88);
+    pointer-events: none;
+    animation: coinShortPopupIn .22s ease-out, coinShortPopupOut .26s ease-in 1.65s forwards;
+}
+@keyframes coinShortPopupIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(12px) scale(.92); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+@keyframes coinShortPopupOut {
+    to { opacity: 0; transform: translateX(-50%) translateY(8px) scale(.96); }
+}
+.purchase-confirm-price {
+    white-space: normal !important;
+    line-height: 1.18 !important;
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -9414,7 +9505,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
         <div class="coins-box">Монетки: <span id="menuCoins">0</span> 🪙</div>
         <div class="level-count-badge">Играть • Мой зоопарк • Профиль <span class="music-bars"><i></i><i></i><i></i></span></div>
 
-        <button class="big-play-card zoo-teaser-card" onclick="openZooTeaser()">
+        <button class="big-play-card zoo-teaser-card" onclick="openZooTeaser()" data-soon="скоро">
             Мой зоопарк
             <span>Главная территория игры. Скоро здесь появятся вольеры, животные и развитие за монетки.</span>
         </button>
@@ -10174,7 +10265,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
                     <button id="coloringScrollBtn" class="coloring-scroll-fab down" onclick="coloringScrollToBottom()" aria-label="Прокрутить раскраску вниз">
                         <span id="coloringScrollIcon" aria-hidden="true">↓</span>
                     </button>
-                    <div id="coloringCanvasWrap" class="coloring-canvas-wrap" aria-label="Холст для раскраски">
+                    <div id="coloringCanvasWrap" class="coloring-canvas-wrap" aria-label="Холст для раскраски" data-hint="🤏 2 пальца — зум • 👆 нажми — заливка">
                         <canvas id="coloringPaintCanvas" class="coloring-canvas" width="1280" height="1120"></canvas>
                         <canvas id="coloringOutlineCanvas" class="coloring-outline" width="1280" height="1120"></canvas>
                     </div>
@@ -10897,11 +10988,11 @@ function buildLevel(levelNumber) {
 const levels = Array.from({ length: 50 }, (_, index) => buildLevel(index + 1));
 
 const skins = [
-    { id: "rainbow", title: "Радуга", price: 0, colors: ["#7c3aed", "#ec4899", "#f97316"] },
-    { id: "jungle", title: "Джунгли", price: 30, colors: ["#166534", "#22c55e", "#facc15"] },
-    { id: "ocean", title: "Океан", price: 45, colors: ["#0ea5e9", "#2563eb", "#8b5cf6"] },
-    { id: "candy", title: "Конфеты", price: 60, colors: ["#fb7185", "#f9a8d4", "#facc15"] },
-    { id: "night", title: "Ночной зоопарк", price: 80, colors: ["#111827", "#4c1d95", "#38bdf8"] }
+    { id: "rainbow", titleKey: "skin.rainbow", price: 0, colors: ["#7c3aed", "#ec4899", "#f97316"] },
+    { id: "jungle",  titleKey: "skin.jungle",  price: 30, colors: ["#166534", "#22c55e", "#facc15"] },
+    { id: "ocean",   titleKey: "skin.ocean",   price: 45, colors: ["#0ea5e9", "#2563eb", "#8b5cf6"] },
+    { id: "candy",   titleKey: "skin.candy",   price: 60, colors: ["#fb7185", "#f9a8d4", "#facc15"] },
+    { id: "night",   titleKey: "skin.night",   price: 80, colors: ["#111827", "#4c1d95", "#38bdf8"] }
 ];
 
 const safeStorage = {
@@ -11256,6 +11347,7 @@ function showScreen(screenId, navOptions = {}) {
     if (screenId === "audioScreen") renderAudioSettings();
     updateCoinsViews();
     translatePageToEnglish();
+    try { applyI18nPlaceholders(); } catch(e) {}
     hideGuideOverlay();
     // Show coloring scroll buttons only on coloring screen
     const scrollBtn = document.getElementById("coloringScrollBtn");
@@ -11846,13 +11938,14 @@ function forceOpenMenu() {
     try { applySkin(); } catch(e) {}
     try { updateCoinsViews(); } catch(e) {}
     try {
-        soundButton.textContent = soundEnabled ? t('sound.on') : t('sound.off');
+        soundButton.textContent = soundEnabled ? t('sound.on_label') : t('sound.off_label');
         updateMusicButton();
         updateSoundButton();
     } catch(e) {}
     try { loadingScreen.style.display = "none"; } catch(e) {}
     try { showScreen("menuScreen", { skipHistory: true, clearHistory: true }); } catch(e) {}
     try { translatePageToEnglish(); } catch(e) {}
+    try { applyI18nPlaceholders(); } catch(e) {}
     try { installTranslationObserver(); } catch(e) {}
     // Start music AFTER a short delay — iOS needs the user-gesture context
     // to already be processed before AudioContext operations.
@@ -14086,12 +14179,12 @@ function getPetUnlockMeta(key, index) {
 
 function buyPet(key, price) {
     if (albumUnlocked.includes(key)) {
-        showPetRoomToast("Этот питомец уже открыт ✅");
+        showPetRoomToast(t('pet.already_owned'));
         return;
     }
     if (coins < price) {
         playSound("wrong");
-        showPetRoomToast(`Не хватает монет: нужно ${price} 🪙`);
+        showPetRoomToast(t('pet.not_enough_coins', {price}));
         return;
     }
     coins -= price;
@@ -14103,7 +14196,7 @@ function buyPet(key, price) {
     updateCoinsViews();
     renderPets();
     playSound("coin");
-    showPetRoomToast(`${animalInfo[key].name} теперь твой питомец! 🐾`);
+    showPetRoomToast(t('pet.purchased', {name: animalInfo[key].name}));
 }
 
 function selectPetForRoom(key) {
@@ -14174,7 +14267,7 @@ function renderPets() {
             const input = document.createElement("input");
             input.className = "pet-name-input";
             input.id = `petName_${key}`;
-            input.placeholder = "Дай имя животному";
+            input.placeholder = t('placeholder.pet_name');
             input.value = animalNames[key] || "";
             input.maxLength = 18;
 
@@ -14365,9 +14458,11 @@ function renderPuzzleStages() {
             stage.id === puzzleStageId ? "active" : "",
             isUnlocked ? "unlocked" : "locked"
         ].filter(Boolean).join(" ");
+        btn.dataset.price = String(stage.unlockPrice || 0);
+        btn.dataset.stageId = String(stage.id);
         btn.innerHTML = isUnlocked
             ? `<b>${stage.label}</b><small>${stage.short} • ${stage.pieces} шт • +${stage.reward}🪙</small>`
-            : `<b>🔒 ${stage.label}</b><small>${stage.short} • ${stage.unlockPrice}🪙</small>`;
+            : `<b>🔒 ${stage.label}</b><small>${stage.short} • ${stage.unlockPrice} 🪙</small><span class="compact-unlock-action">Открыть</span>`;
         btn.onclick = () => isUnlocked ? setPuzzleStage(stage.id) : buyPuzzleStage(stage.id);
         puzzleStageRow.appendChild(btn);
     });
@@ -15952,6 +16047,10 @@ function getCurrentColoringTemplate() {
 function renderColoringScreen() {
     if (!coloringPaintCanvas || !coloringOutlineCanvas) return;
     if (coloringCoins) coloringCoins.textContent = String(coins);
+    // Set localised pinch-to-zoom hint on the canvas wrap (used by CSS ::after content: attr(data-hint))
+    if (coloringCanvasWrap) {
+        coloringCanvasWrap.setAttribute('data-hint', t('coloring.pinch_hint'));
+    }
     renderColoringPalette();
     renderColoringSizes();
     renderColoringTools();
@@ -16341,50 +16440,6 @@ function updateColoringScrollDots() {
         dotsEl.appendChild(sp);
     }
 }
-
-// ── Floating coloring scroll button (green circle, left side like ? is right) ──
-function coloringScrollUpdateBtn() {
-    const btn = document.getElementById('coloringScrollBtn');
-    const icon = document.getElementById('coloringScrollIcon');
-    if (!btn || !icon) return;
-    // Find the scrollable container (could be window or card-panel)
-    const screen = document.getElementById('coloringScreen');
-    const panel = screen ? screen.querySelector('.card-panel') : null;
-    const canPanelScroll = panel && panel.scrollHeight > panel.clientHeight + 4;
-    const scrollEl = canPanelScroll ? panel : null;
-    const scrollTop = scrollEl ? scrollEl.scrollTop : window.pageYOffset;
-    const scrollMax = scrollEl
-        ? scrollEl.scrollHeight - scrollEl.clientHeight
-        : document.body.scrollHeight - window.innerHeight;
-    const atBottom = scrollMax > 0 && (scrollMax - scrollTop) < 30;
-    icon.textContent = atBottom ? '↑' : '↓';
-}
-
-function coloringScrollToggle() {
-    const screen = document.getElementById('coloringScreen');
-    const panel = screen ? screen.querySelector('.card-panel') : null;
-    const canPanelScroll = panel && panel.scrollHeight > panel.clientHeight + 4;
-    if (canPanelScroll) {
-        const atBottom = panel.scrollHeight - panel.scrollTop - panel.clientHeight < 30;
-        panel.scrollTo({ top: atBottom ? 0 : panel.scrollHeight, behavior: 'smooth' });
-    } else {
-        // Fall back to scrolling the screen element or window
-        const atBottom = screen && (screen.scrollHeight - screen.scrollTop - screen.clientHeight < 30);
-        if (screen && screen.scrollHeight > screen.clientHeight + 4) {
-            screen.scrollTo({ top: atBottom ? 0 : screen.scrollHeight, behavior: 'smooth' });
-        } else {
-            const winAtBottom = window.pageYOffset + window.innerHeight >= document.body.scrollHeight - 30;
-            window.scrollTo({ top: winAtBottom ? 0 : document.body.scrollHeight, behavior: 'smooth' });
-        }
-    }
-    setTimeout(coloringScrollUpdateBtn, 500);
-}
-
-// Update button icon as user scrolls
-document.addEventListener('scroll', function() {
-    const screen = document.getElementById('coloringScreen');
-    if (screen && screen.classList.contains('show')) coloringScrollUpdateBtn();
-}, { passive: true, capture: true });
 
 function drawColoringAssetIntoCanvas(ctx, img, offsetX = 0, offsetY = 0) {
     const canvasWidth = ctx.canvas.width;
@@ -16960,7 +17015,7 @@ function renderShop() {
         const info = document.createElement("div");
         const title = document.createElement("div");
         title.className = "skin-title";
-        title.textContent = skin.title;
+        title.textContent = t(skin.titleKey);
         const price = document.createElement("div");
         price.className = "skin-price";
         price.textContent = skin.price === 0 ? t('shop.free') : t('shop.price_coins', {price: skin.price});
@@ -17065,22 +17120,22 @@ function renderEconomyPanel() {
         <div class="economy-card">
             <div class="economy-card-top">
                 <div>
-                    <div class="economy-title">🎁 Ежедневный бонус</div>
-                    <div class="economy-desc">Заходи каждый день: серия увеличивает награду до +50 монет.</div>
+                    <div class="economy-title">${t('economy.daily_bonus_title')}</div>
+                    <div class="economy-desc">${t('economy.daily_bonus_desc')}</div>
                 </div>
-                <div class="economy-reward-badge">${claimedToday ? "Получено" : `+${reward} 🪙`}</div>
+                <div class="economy-reward-badge">${claimedToday ? t('economy.claimed_today') : `+${reward} 🪙`}</div>
             </div>
             <div class="economy-streak">${dots}</div>
             <div class="economy-actions">
-                <button class="btn btn-green" ${claimedToday ? "disabled" : ""} onclick="claimDailyGift()">${claimedToday ? "Сегодня забрано" : "Забрать подарок"}</button>
-                <button class="btn btn-purple" onclick="showScreen('shopScreen')">Куда тратить?</button>
+                <button class="btn btn-green" ${claimedToday ? "disabled" : ""} onclick="claimDailyGift()">${claimedToday ? t('economy.claimed_btn') : t('economy.claim_btn')}</button>
+                <button class="btn btn-purple" onclick="showScreen('shopScreen')">${t('economy.spend_btn')}</button>
             </div>
         </div>
         <div class="coin-purpose-grid">
-            <div class="coin-purpose"><span>🥕</span><span>Еда<small>открывай вкусняшки</small></span></div>
-            <div class="coin-purpose"><span>🐾</span><span>Питомцы<small>покупай новых зверей</small></span></div>
-            <div class="coin-purpose"><span>🧩</span><span>Пазлы<small>открывай этапы и картинки</small></span></div>
-            <div class="coin-purpose"><span>🎨</span><span>Раскраски<small>открывай новые сцены</small></span></div>
+            <div class="coin-purpose"><span>🥕</span><span>${t('economy.purpose_food')}<small>${t('economy.purpose_food_sub')}</small></span></div>
+            <div class="coin-purpose"><span>🐾</span><span>${t('economy.purpose_pets')}<small>${t('economy.purpose_pets_sub')}</small></span></div>
+            <div class="coin-purpose"><span>🧩</span><span>${t('economy.purpose_puzzles')}<small>${t('economy.purpose_puzzles_sub')}</small></span></div>
+            <div class="coin-purpose"><span>🎨</span><span>${t('economy.purpose_coloring')}<small>${t('economy.purpose_coloring_sub')}</small></span></div>
         </div>
     `;
 }
@@ -17091,79 +17146,79 @@ function getDailyQuestDefinitions() {
         {
             id: "feed",
             icon: "🥕",
-            title: "Покорми питомца",
-            desc: "Дай зверьку любую открытую еду в комнате питомца.",
+            title: t('quest.feed.title'),
+            desc: t('quest.feed.desc'),
             progress: dailyProgress.feed || 0,
             target: 1,
             reward: 10,
-            actionText: "К питомцу",
+            actionText: t('quest.feed.action'),
             action: () => openPetRoom()
         },
         {
             id: "pairs",
             icon: "🧠",
-            title: "Найди 5 пар",
-            desc: "Играй в Memory и находи одинаковых животных.",
+            title: t('quest.pairs.title'),
+            desc: t('quest.pairs.desc'),
             progress: dailyProgress.pairs || 0,
             target: 5,
             reward: 8,
-            actionText: "Memory",
+            actionText: t('quest.pairs.action'),
             action: () => startGame(currentMode || "timed")
         },
         {
             id: "play",
             icon: "🎮",
-            title: "Сыграй 2 раза",
-            desc: "Подходит Memory, Pet Room play, Puzzle или Zoo Block.",
+            title: t('quest.play.title'),
+            desc: t('quest.play.desc'),
             gamesIcons: "🃏 🧩 🧱 🦁 🖍️",   // Memory, Puzzle, Zoo Block, Shadow, Coloring
             progress: dailyProgress.play || 0,
             target: 2,
             reward: 12,
-            actionText: "Играть",
+            actionText: t('quest.play.action'),
             action: () => showScreen("menuScreen")
         },
         {
             id: "puzzle",
             icon: "🧩",
-            title: "Собери 1 пазл",
-            desc: "Собери любую открытую картинку в Puzzle.",
+            title: t('quest.puzzle.title'),
+            desc: t('quest.puzzle.desc'),
             progress: dailyProgress.puzzle || 0,
             target: 1,
             reward: 14,
-            actionText: "Пазл",
+            actionText: t('quest.puzzle.action'),
             action: () => openPuzzle()
         },
         {
             id: "shadow",
             icon: "🌙",
-            title: "Найди 3 тени",
-            desc: "В Shadow Game угадай животных по силуэту.",
+            title: t('quest.shadow.title'),
+            desc: t('quest.shadow.desc'),
             progress: dailyProgress.shadow || 0,
             target: 3,
             reward: 15,
-            actionText: "Тени",
+            actionText: t('quest.shadow.action'),
             action: () => openShadowGame()
         },
         {
             id: "coloring",
             icon: "🎨",
-            title: "Раскрась 3 области",
-            desc: "Открой раскраску и залей цветом несколько областей.",
+            title: t('quest.coloring.title'),
+            desc: t('quest.coloring.desc'),
             progress: dailyProgress.coloring || 0,
             target: 3,
             reward: 12,
-            actionText: "Раскраска",
+            actionText: t('quest.coloring.action'),
             action: () => openColoring()
         },
         {
             id: "threeStars",
             icon: "⭐",
-            title: "Получи 3 звезды",
-            desc: "Пройди уровень Memory аккуратно.",
+            title: t('quest.stars.title'),
+            desc: t('quest.stars.desc'),
             progress: dailyProgress.threeStars || 0,
             target: 1,
             reward: 18,
-            actionText: "Уровни",
+            actionText: t('quest.stars.action'),
             action: () => openMap()
         }
     ];
@@ -17264,7 +17319,12 @@ function claimAllDailyQuests() {
 function getTaskStreak() {
     try {
         const data = JSON.parse(localStorage.getItem('zooTaskStreakV1') || '{}');
-        return Number(data.count || 0);
+        const today = typeof getTodayKey === 'function' ? getTodayKey() : new Date().toISOString().slice(0, 10);
+        const yesterdayDate = new Date();
+        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+        const yesterday = yesterdayDate.toISOString().slice(0, 10);
+        if (data.lastDay !== today && data.lastDay !== yesterday) return 0;
+        return Math.max(0, Number(data.count || 0));
     } catch(e) { return 0; }
 }
 
@@ -17287,14 +17347,14 @@ function renderTasks() {
     summary.innerHTML = `
         <div class="task-summary-top">
             <div>
-                <div class="task-summary-title">📋 Сегодняшние миссии</div>
-                <div class="task-summary-desc">Выполняй маленькие цели в разных режимах и забирай монеты.</div>
+                <div class="task-summary-title">${t('tasks.title')}</div>
+                <div class="task-summary-desc">${t('tasks.desc')}</div>
             </div>
             <div class="task-summary-badge">${doneCount}/${tasks.length}</div>
         </div>
         ${streakBadgeHtml}
         <button class="btn btn-green" style="width:100%;" ${claimableCount ? "" : "disabled"} onclick="claimAllDailyQuests()">
-            ${claimableCount ? `Забрать готовые награды (${claimableCount})` : claimedCount === tasks.length ? "Все награды забраны" : "Нет готовых наград"}
+            ${claimableCount ? t('tasks.claim_ready', {n: claimableCount}) : claimedCount === tasks.length ? t('tasks.all_claimed') : t('tasks.none_ready')}
         </button>
     `;
     tasksList.appendChild(summary);
@@ -17834,22 +17894,37 @@ function translatePageToEnglish() {
     if (langButton) langButton.textContent = t('lang.ru_btn');
 }
 
+// Apply i18n placeholders for all languages (called on every screen change)
+function applyI18nPlaceholders() {
+    const playerInput = document.getElementById('playerNameInput');
+    if (playerInput) playerInput.placeholder = t('placeholder.player_name');
+    // Update the "скоро" badge on zoo-teaser-card
+    const teaserCard = document.querySelector('.zoo-teaser-card');
+    if (teaserCard) teaserCard.setAttribute('data-soon', t('menu.soon'));
+}
+
 function installTranslationObserver() {
     if (getCurrentLanguage() !== "en") return;
+    // Guard: only install once
+    if (window.__translationObserverInstalled) return;
+    window.__translationObserverInstalled = true;
 
     const observeOptions = { childList: true, subtree: true, characterData: true };
-    let locked = false;
+    let _timer = null;
     const observer = new MutationObserver(() => {
-        if (locked || window.__i18nTranslating) return;
-        locked = true;
-        observer.disconnect();
-        setTimeout(() => {
+        if (window.__i18nTranslating) return;
+        if (_timer) clearTimeout(_timer);
+        _timer = setTimeout(() => {
+            if (window.__i18nTranslating) return;
             window.__i18nTranslating = true;
+            observer.disconnect();
             try { translatePageToEnglish(); } catch(e) {}
-            window.__i18nTranslating = false;
-            locked = false;
-            observer.observe(document.body, observeOptions);
-        }, 80);  // 80ms debounce prevents tight mutation loop
+            // Short pause lets DOM settle before re-observing, breaking the ping-pong
+            setTimeout(() => {
+                window.__i18nTranslating = false;
+                try { observer.observe(document.body, observeOptions); } catch(e) {}
+            }, 50);
+        }, 120); // 120ms debounce
     });
 
     observer.observe(document.body, observeOptions);
@@ -17947,7 +18022,7 @@ function initApp() {
         setupImages();
         applySkin();
         updateCoinsViews();
-        soundButton.textContent = soundEnabled ? "Звук: Вкл" : "Звук: Выкл";
+        soundButton.textContent = soundEnabled ? t('sound.on_label') : t('sound.off_label');
         updateMusicButton();
         updateSoundButton();
         setTimeout(() => {
@@ -17994,7 +18069,7 @@ setTimeout(() => {
     touch-action: none;
 }
 #coloringScreen .coloring-canvas-wrap::after {
-    content: '🤏 2 пальца — увеличить';
+    content: attr(data-hint);
     position: absolute;
     right: 12px;
     bottom: 12px;
@@ -18158,7 +18233,7 @@ setTimeout(() => {
     line-height: 1.1;
 }
 #coloringScreen .coloring-canvas-wrap::after {
-    content: '🤏 2 пальца — зум • 👆 нажми — заливка' !important;
+    content: attr(data-hint) !important;
 }
 @media (max-width: 980px) and (orientation: landscape) {
     #coloringScreen.show .card-panel {
@@ -19042,47 +19117,69 @@ body.guide-open #guideFab { pointer-events: none !important; }
     function dict(){ return LANG_DATA[currentLang()] || LANG_DATA.ru; }
     function closeOverlayElement(overlay){
         if (!overlay) return;
-        if (overlay.id === 'dailyGiftOverlay') {
+        const isRewarded = overlay.id === 'rewardedAdOverlay' || (overlay.classList && overlay.classList.contains('rewarded-ad-overlay'));
+        const isDaily = overlay.id === 'dailyGiftOverlay' || (overlay.classList && overlay.classList.contains('daily-gift-overlay'));
+        const isPurchase = overlay.id === 'purchaseConfirmOverlay' || (overlay.classList && overlay.classList.contains('purchase-confirm-overlay'));
+        const isBlock = overlay.id === 'blockGameOverOverlay' || (overlay.classList && overlay.classList.contains('block-gameover-overlay'));
+        const isShadow = overlay.id === 'shadowCelebrationOverlay' || (overlay.classList && overlay.classList.contains('shadow-celebration-overlay'));
+        const isGuide = overlay.id === 'guideOverlay' || (overlay.classList && overlay.classList.contains('guide-overlay'));
+
+        if (isRewarded && typeof window.closeRewardedAdOverlay === 'function') {
+            window.closeRewardedAdOverlay();
+            return;
+        } else if (isDaily) {
+            overlay.classList.remove('show');
             overlay.style.display = 'none';
-        } else if (overlay.id === 'purchaseConfirmOverlay' && typeof window.closePurchaseConfirm === 'function') {
+        } else if (isPurchase && typeof window.closePurchaseConfirm === 'function') {
             window.closePurchaseConfirm();
             return;
-        } else if (overlay.id === 'blockGameOverOverlay' && typeof window.closeZooBlockGameOverModal === 'function') {
+        } else if (isBlock && typeof window.closeZooBlockGameOverModal === 'function') {
             window.closeZooBlockGameOverModal();
             return;
-        } else if (overlay.id === 'guideOverlay') {
+        } else if (isShadow && typeof window.closeShadowCelebration === 'function') {
+            window.closeShadowCelebration();
+            return;
+        } else if (isGuide) {
             if (typeof window.skipGuide === 'function') window.skipGuide();
             overlay.classList.remove('show');
         } else if (overlay.id === 'overlay' && typeof window.hideOverlay === 'function') {
             window.hideOverlay();
             return;
-        } else if (overlay.classList.contains('language-picker-overlay') || overlay.classList.contains('puzzle-choice-modal-overlay')) {
+        } else if (overlay.classList && (overlay.classList.contains('language-picker-overlay') || overlay.classList.contains('puzzle-choice-modal-overlay'))) {
             overlay.classList.remove('show');
-            window.setTimeout(() => overlay.remove(), 240);
+            window.setTimeout(() => { try { overlay.remove(); } catch(e) {} }, 240);
         } else {
-            overlay.classList.remove('show');
+            overlay.classList && overlay.classList.remove('show');
         }
+        try { overlay.setAttribute('aria-hidden', 'true'); } catch(e) {}
         try { document.body.classList.remove('zoo-modal-open'); } catch(e) {}
     }
     function findOverlayForCard(card){
         return card && card.closest && card.closest('.language-picker-overlay, .puzzle-choice-modal-overlay, .purchase-confirm-overlay, .rewarded-ad-overlay, .daily-gift-overlay, .shadow-celebration-overlay, .block-gameover-overlay, .guide-overlay, .overlay');
     }
     function ensureCloseButton(card){
-        if (!card || card.dataset.stage42aCloseReady === '1') return;
-        card.dataset.stage42aCloseReady = '1';
-        if (card.querySelector(':scope > .zoo-modal-close')) return;
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'zoo-modal-close';
+        if (!card) return;
+        card.style.position = card.style.position || 'relative';
+        let btn = card.querySelector(':scope > .zoo-modal-close');
+        if (btn) {
+            const clone = btn.cloneNode(true);
+            btn.replaceWith(clone);
+            btn = clone;
+        } else {
+            btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'zoo-modal-close';
+            btn.textContent = '×';
+            card.insertBefore(btn, card.firstChild);
+        }
         btn.setAttribute('aria-label', dict().close);
-        btn.textContent = '×';
         btn.addEventListener('click', function(event){
             event.preventDefault();
             event.stopPropagation();
             const overlay = findOverlayForCard(card);
             closeOverlayElement(overlay || card);
         }, true);
-        card.insertBefore(btn, card.firstChild);
+        card.dataset.stage43dCloseReady = '1';
     }
     function auditModalCloseButtons(){
         document.querySelectorAll('.language-picker-card, .puzzle-choice-modal-card, .purchase-confirm-card, .rewarded-ad-card, .daily-gift-card, .shadow-celebration-card, .block-gameover-card, .modal, .guide-bubble').forEach(ensureCloseButton);
@@ -19266,15 +19363,16 @@ body.guide-open #guideFab { pointer-events: none !important; }
     }
     const observer = new MutationObserver((function(){
         let _busy = false;
+        let _timer = null;
         return function(){
             if (_busy || window.__i18nTranslating) return;
-            _busy = true;
-            setTimeout(function(){
-                if (!window.__i18nTranslating) {
-                    try { auditModalCloseButtons(); updateLanguageButton(); updatePetRoomVoiceLabel(); } catch(e){}
-                }
+            if (_timer) clearTimeout(_timer);
+            _timer = setTimeout(function(){
+                if (_busy || window.__i18nTranslating) return;
+                _busy = true;
+                try { auditModalCloseButtons(); updateLanguageButton(); updatePetRoomVoiceLabel(); } catch(e){}
                 _busy = false;
-            }, 120); // debounce: prevents feedback loop with translation observer
+            }, 150); // slightly longer than translation observer (120ms) to avoid mutual fire
         };
     })());
     try { observer.observe(document.body, { childList: true, subtree: true }); } catch(e) {}

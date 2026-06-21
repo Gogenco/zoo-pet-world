@@ -187,7 +187,7 @@ def main():
         page4.wait_for_timeout(3000)
         c2 = page4.evaluate("window.__translateCallCount")
         check("Переключение на English не запускает бесконечный цикл перевода",
-              c2 - c1 <= 15, f"calls grew by {c2-c1} over 3s AFTER initial settling (ожидаем <=15 — pre-existing cross-observer bounce, capped by debounce)")
+              c2 - c1 <= 3, f"calls grew by {c2-c1} over 3s AFTER initial settling (ожидаем <=3 — fixed in Stage 4.3D-B)")
         # leave it in Russian for the next run
         page4.evaluate("safeStorage.set('zooLanguage','ru');")
         page4.close()

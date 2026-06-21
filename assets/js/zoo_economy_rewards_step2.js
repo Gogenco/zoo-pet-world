@@ -6,6 +6,11 @@
 // Zoo Pet World — Stage 6.1.7 RESET Step 2 rewards/economy/ads module
 // Rewards/progress integration QA.
 (function(){
+    // Safe i18n wrapper — falls back to Russian literal if t() not yet available
+    function _t(key, params, fallback) {
+        try { return (typeof t === 'function' ? t(key, params) : null) || fallback; } catch(e) { return fallback; }
+    }
+
     const QUEST_TYPES = new Set(['pairs','levels','threeStars','feed','play','puzzle','block','shadow','coloring']);
     const questClaimLocks = new Set();
 
@@ -80,6 +85,79 @@
         dailyProgress.rewardLog = dailyProgress.rewardLog.slice(-30);
     }
 
+
+    // Stage 4.3D: one canonical daily-task streak checker used by both single and bulk claim.
+    function getYesterdayKeySafe(){
+        try {
+            const d = new Date();
+            d.setDate(d.getDate() - 1);
+            return d.toISOString().slice(0, 10);
+        } catch(e) { return ''; }
+    }
+    function readTaskStreakData(){
+        try { return JSON.parse(localStorage.getItem('zooTaskStreakV1') || '{}') || {}; } catch(e) { return {}; }
+    }
+    function writeTaskStreakData(data){
+        try { localStorage.setItem('zooTaskStreakV1', JSON.stringify(data || {})); } catch(e) {}
+    }
+    function validTaskStreakCount(){
+        const data = readTaskStreakData();
+        const today = (typeof getTodayKey === 'function') ? getTodayKey() : new Date().toISOString().slice(0,10);
+        const yesterday = getYesterdayKeySafe();
+        if (data.lastDay !== today && data.lastDay !== yesterday) return 0;
+        return Math.max(0, Number(data.count || 0));
+    }
+    window.getTaskStreak = getTaskStreak = function(){
+        return validTaskStreakCount();
+    };
+    function checkAndAwardTaskStreakIfAllClaimed(source){
+        normalizeDailyProgress();
+        const tasks = getDailyQuestDefinitions();
+        if (!tasks.length) return {changed:false, bonus:false};
+        dailyProgress.claimed = uniqueArray(dailyProgress.claimed);
+        const allDone = tasks.every(task => isDailyQuestDone(task));
+        const allClaimed = tasks.every(task => dailyProgress.claimed.includes(task.id));
+        if (!allDone || !allClaimed) return {changed:false, bonus:false};
+
+        const today = (typeof getTodayKey === 'function') ? getTodayKey() : new Date().toISOString().slice(0,10);
+        const yesterday = getYesterdayKeySafe();
+        const data = readTaskStreakData();
+        let count = Math.max(0, Number(data.count || 0));
+        const previousLastDay = data.lastDay || '';
+        const previousBonusClaimed = data.bonusClaimed || '';
+        let changed = false;
+        let bonus = false;
+
+        if (previousLastDay !== today) {
+            count = previousLastDay === yesterday ? count + 1 : 1;
+            data.lastDay = today;
+            data.count = count;
+            changed = true;
+        }
+
+        if (count > 0 && count % 3 === 0 && previousBonusClaimed !== today) {
+            const bonusCoins = 50;
+            coins += bonusCoins;
+            data.bonusClaimed = today;
+            bonus = true;
+            changed = true;
+            updateCoinsViews();
+            saveProgress();
+            setTimeout(() => {
+                try { showFoodToast(_t('tasks.streak_bonus', {n: count, coins: bonusCoins}, `🏆 Серия ${count} дней! Бонус +${bonusCoins} 🪙`)); } catch(e) {}
+            }, source === 'bulk' ? 800 : 450);
+        } else if (changed && count > 1) {
+            setTimeout(() => {
+                try { showFoodToast(_t('tasks.streak_day', {n: count}, `🔥 Серия ${count} дн.`)); } catch(e) {}
+            }, source === 'bulk' ? 800 : 450);
+        }
+
+        if (changed) writeTaskStreakData(data);
+        try { window.dispatchEvent(new CustomEvent('zooTaskStreakUpdated', {detail:{count, bonus, source}})); } catch(e) {}
+        return {changed, bonus, count};
+    }
+    window.checkAndAwardTaskStreakIfAllClaimed = checkAndAwardTaskStreakIfAllClaimed;
+
     claimDailyQuest = function(taskId) {
         normalizeDailyProgress();
         if (questClaimLocks.has(taskId)) return;
@@ -90,11 +168,11 @@
             dailyProgress.claimed = uniqueArray(dailyProgress.claimed);
             if (!isDailyQuestDone(task)) {
                 playSound('wrong');
-                showFoodToast('Задание ещё не готово 🙂');
+                showFoodToast(_t('tasks.no_ready', null, 'Задание ещё не готово 🙂'));
                 return;
             }
             if (dailyProgress.claimed.includes(task.id)) {
-                showFoodToast('Эта награда уже получена ✅');
+                showFoodToast(_t('tasks.claimed', null, 'Эта награда уже получена ✅'));
                 renderTasks();
                 return;
             }
@@ -106,7 +184,8 @@
             saveProgress();
             updateCoinsViews();
             playSound('coin');
-            showFoodToast(`Задание выполнено: +${task.reward} 🪙`);
+            showFoodToast(_t('tasks.done_toast', {reward: task.reward}, `Задание выполнено: +${task.reward} 🪙`));
+            checkAndAwardTaskStreakIfAllClaimed('single');
             renderTasks();
         } finally {
             questClaimLocks.delete(taskId);
@@ -122,7 +201,7 @@
             const tasks = getDailyQuestDefinitions();
             const ready = tasks.filter(task => isDailyQuestDone(task) && !dailyProgress.claimed.includes(task.id));
             if (!ready.length) {
-                showFoodToast('Пока нет готовых наград 🙂');
+                showFoodToast(_t('tasks.no_ready', null, 'Пока нет готовых наград 🙂'));
                 renderTasks();
                 return;
             }
@@ -137,7 +216,8 @@
             saveProgress();
             updateCoinsViews();
             playSound('coin');
-            showFoodToast(`Все готовые задания: +${reward} 🪙`);
+            showFoodToast(_t('tasks.claim_all', {reward}, `Все готовые задания: +${reward} 🪙`));
+            checkAndAwardTaskStreakIfAllClaimed('bulk');
             renderTasks();
         } finally {
             questClaimLocks.delete('__all__');
@@ -145,6 +225,7 @@
     };
 
     function insertRewardQaCard(tasks) {
+        if (!window.__ZOO_DEBUG__) return;
         if (!tasksList || tasksList.querySelector('.task-qa-card')) return;
         const doneCount = tasks.filter(isDailyQuestDone).length;
         const claimedCount = tasks.filter(isDailyQuestClaimed).length;
@@ -183,7 +264,7 @@
             const claimed = isDailyQuestClaimed(task);
             const pill = document.createElement('span');
             pill.className = 'quest-status-mini' + (claimed ? ' done' : done ? ' ready' : '');
-            pill.textContent = claimed ? 'получено' : done ? 'готово' : 'в процессе';
+            pill.textContent = claimed ? _t('quest.status_claimed', null, 'получено') : done ? _t('quest.status_ready', null, 'готово') : _t('quest.status_progress', null, 'в процессе');
             reward.appendChild(pill);
         });
     }
@@ -284,8 +365,8 @@
       const missing = shortage(price);
       const priceEl = chip.querySelector('.food-price');
       if (priceEl) {
-        priceEl.textContent = missing <= 0 ? `Открыть за ${price} 🪙` : `Ещё ${missing} 🪙`;
-        priceEl.title = missing <= 0 ? `Монет хватает: открой за ${price} 🪙` : `Не хватает ${missing} 🪙`;
+        priceEl.textContent = `${price} 🪙 • Открыть`;
+        priceEl.title = missing <= 0 ? `У тебя ${coins} 🪙. Нажми, чтобы подтвердить покупку за ${price} 🪙` : `Не хватает ${missing} 🪙`;
       }
       chip.classList.toggle('can-buy-now', missing <= 0);
       chip.classList.toggle('need-more-coins', missing > 0);
@@ -297,8 +378,17 @@
       removeOldCards(btn);
       const text = btn.textContent || '';
       const match = text.match(/(\d+)\s*🪙/);
-      const price = match ? Number(match[1]) : 0;
-      if (price) btn.appendChild(createUnlockCard(price, false));
+      const price = match ? Number(match[1]) : Number(btn.dataset.price || 0);
+      const missing = shortage(price);
+      btn.classList.toggle('can-buy-now', price > 0 && missing <= 0);
+      btn.classList.toggle('need-more-coins', price > 0 && missing > 0);
+      if (price && !btn.querySelector('.compact-unlock-action')) {
+        const action = document.createElement('span');
+        action.className = 'compact-unlock-action';
+        action.textContent = 'Открыть';
+        btn.appendChild(action);
+      }
+      btn.title = missing <= 0 ? `У тебя ${coins} 🪙. Нажми, чтобы подтвердить открытие за ${price} 🪙` : `Не хватает ${missing} 🪙`;
     });
   }
   function enhancePuzzleImages(){
@@ -310,8 +400,8 @@
       const price = match ? Number(match[1]) : 0;
       if (price && priceEl) {
         const missing = shortage(price);
-        priceEl.textContent = missing <= 0 ? `Открыть за ${price} 🪙` : `Ещё ${missing} 🪙`;
-        priceEl.title = missing <= 0 ? `Монет хватает: можно открыть пазл` : `Не хватает ${missing} 🪙`;
+        priceEl.textContent = `${price} 🪙 • Открыть`;
+        priceEl.title = missing <= 0 ? `У тебя ${coins} 🪙. Нажми, чтобы подтвердить покупку за ${price} 🪙` : `Не хватает ${missing} 🪙`;
         btn.classList.toggle('can-buy-now', missing <= 0);
         btn.classList.toggle('need-more-coins', missing > 0);
       }
@@ -319,8 +409,9 @@
   }
   function showNeedToast(kind, price){
     const missing = shortage(price);
-    const text = missing > 0 ? `Не хватает ${missing} 🪙. Выполни задания или сыграй мини-игру.` : `Монет хватает: можно открыть за ${price} 🪙`;
-    if (kind === 'food' && typeof showFoodToast === 'function') showFoodToast(text);
+    const text = missing > 0 ? `Не хватает ${missing} 🪙` : `Открыть за ${price} 🪙`;
+    if (missing > 0 && typeof showCoinShortPopup === 'function') showCoinShortPopup(text);
+    else if (kind === 'food' && typeof showFoodToast === 'function') showFoodToast(text);
     else if (kind === 'pet' && typeof showPetRoomToast === 'function') showPetRoomToast(text);
     else if (kind === 'puzzle' && typeof showPuzzleMessage === 'function') showPuzzleMessage(text);
     else if (typeof showRewardToast === 'function') showRewardToast(text);
@@ -430,6 +521,21 @@
   function num(v){ return Number(v || 0) || 0; }
   function priceMissing(price){ return Math.max(0, Number(price || 0) - Number(coins || 0)); }
   function formatCoins(v){ return `${Number(v || 0)} 🪙`; }
+
+  function showCoinShortPopup(message){
+    try {
+      document.querySelectorAll('.coin-short-popup').forEach(el => el.remove());
+      const pop = document.createElement('div');
+      pop.className = 'coin-short-popup';
+      pop.textContent = message;
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 2100);
+    } catch(e) {
+      try { showFoodToast(message); } catch(_) {}
+    }
+  }
+  try { window.showCoinShortPopup = showCoinShortPopup; } catch(e) {}
+
   function playClick(){ try { playSound('click'); } catch(e) {} }
   function playWrong(){ try { playSound('wrong'); } catch(e) {} }
   function playCoin(){ try { playSound('coin'); } catch(e) {} }
@@ -667,7 +773,7 @@
     if (icon) icon.textContent = options.icon || '🛒';
     if (title) title.textContent = options.title || 'Купить?';
     if (text) text.textContent = options.text || `Списать ${price} монет и открыть предмет?`;
-    if (priceBox) priceBox.textContent = price > 0 ? `Списать ${formatCoins(price)}` : 'Бесплатно';
+    if (priceBox) priceBox.textContent = price > 0 ? `У тебя: ${formatCoins(coins)} • списать: ${formatCoins(price)}` : 'Бесплатно';
     if (yes) yes.textContent = price > 0 ? `Купить за ${price} 🪙` : 'Продолжить';
     if (no) no.textContent = 'Не купить';
 
@@ -691,7 +797,7 @@
       if (missing > 0) {
         closePurchaseConfirm();
         playWrong();
-        showFoodToast(`Не хватает ${missing} 🪙`);
+        showCoinShortPopup(`Не хватает ${missing} 🪙`);
         return;
       }
       closePurchaseConfirm();
@@ -742,7 +848,7 @@
     if (!food) return;
     if (unlockedFoods.includes(food.id)) { showFoodToast(`${food.label} уже открыта ✅`); return; }
     const missing = priceMissing(food.price);
-    if (missing > 0) { playWrong(); showFoodToast(`Не хватает ${missing} 🪙`); return; }
+    if (missing > 0) { playWrong(); showCoinShortPopup(`Не хватает ${missing} 🪙`); return; }
     showPurchaseConfirm({
       icon: food.emoji || '🍎',
       title: `Купить ${food.label}?`,
@@ -761,9 +867,9 @@
 
   window.buyPet = buyPet = function(key, price){
     const actualPrice = Number(price || (getPetUnlockMeta ? getPetUnlockMeta(key, 0).price : 0));
-    if (albumUnlocked.includes(key)) { showPetRoomToast('Этот питомец уже открыт ✅'); return; }
+    if (albumUnlocked.includes(key)) { showPetRoomToast(_t('pet.already_owned', null, 'Этот питомец уже открыт ✅')); return; }
     const missing = priceMissing(actualPrice);
-    if (missing > 0) { playWrong(); showPetRoomToast(`Не хватает ${missing} 🪙`); return; }
+    if (missing > 0) { playWrong(); showCoinShortPopup(`Не хватает ${missing} 🪙`); return; }
     const name = animalInfo[key]?.name || key;
     showPurchaseConfirm({
       icon: '🐾', title: `Купить питомца?`,
@@ -776,7 +882,7 @@
         albumUnlocked = Array.from(new Set(albumUnlocked));
         selectedMainPetKey = key; selectedPetKey = key; playerProfile.favorite = key;
         saveProgress(); updateCoinsViews(); renderPets(); playCoin();
-        showPetRoomToast(`${name} теперь твой питомец! 🐾`);
+        showPetRoomToast(_t('pet.purchased', {name}, `${name} теперь твой питомец! 🐾`));
       }
     });
   };
@@ -787,7 +893,7 @@
     if (previous && !isPuzzleStageUnlocked(previous.id)) { showPuzzleMessage(`Сначала открой предыдущий этап ${previous.short} 🔒`); playWrong(); return; }
     if (isPuzzleStageUnlocked(stage.id)) { setPuzzleStage(stage.id); return; }
     const missing = priceMissing(stage.unlockPrice);
-    if (missing > 0) { showPuzzleMessage(`Не хватает ${missing} 🪙`); playWrong(); return; }
+    if (missing > 0) { showCoinShortPopup(`Не хватает ${missing} 🪙`); playWrong(); return; }
     showPurchaseConfirm({
       icon:'🧩', title:`Открыть ${stage.label}?`,
       text:`Списать ${stage.unlockPrice} монет и открыть этап ${stage.short}?`,
@@ -808,7 +914,7 @@
     if (!item) return;
     if (unlockedPuzzleImages.includes(id)) { setPuzzleImage(item.key, item.label, animalImageSrc(item.key)); return; }
     const missing = priceMissing(item.price);
-    if (missing > 0) { showPuzzleMessage(`Не хватает ${missing} 🪙`); playWrong(); return; }
+    if (missing > 0) { showCoinShortPopup(`Не хватает ${missing} 🪙`); playWrong(); return; }
     showPurchaseConfirm({
       icon:'🖼️', title:`Купить картинку?`,
       text:`Списать ${item.price} монет и открыть пазл «${item.label}»?`,
@@ -830,7 +936,7 @@
     if (!item) return;
     if (isColoringTemplateUnlocked(id)) { selectColoringTemplate(id); return; }
     const missing = priceMissing(item.price);
-    if (missing > 0) { playWrong(); updateColoringHint(guideT(`Не хватает ${missing} монет для открытия этой раскраски 😿`, `Need ${missing} more coins to unlock this coloring page 😿`)); return; }
+    if (missing > 0) { playWrong(); showCoinShortPopup(`Не хватает ${missing} 🪙`); return; }
     showPurchaseConfirm({
       icon:item.emoji || '🎨', title:'Купить раскраску?',
       text:`Списать ${item.price} монет и открыть «${item.title}»?`,
@@ -966,6 +1072,13 @@
     let adIndex = 1;
     let secondsLeft = AD_SECONDS;
     let timer = null;
+    window.closeRewardedAdOverlay = function closeRewardedAdOverlay(){
+      try { if (timer) clearInterval(timer); } catch(e) {}
+      timer = null;
+      try { overlay.classList.remove('show'); overlay.setAttribute('aria-hidden', 'true'); } catch(e) {}
+      try { applyRewardedAdFailsafe(overlay, false); } catch(e) {}
+      try { document.body.classList.remove('zoo-modal-open'); } catch(e) {}
+    };
     const rewardText = type === 'coins' ? `+${AD_COIN_REWARD} монет` : `+${AD_HINT_REWARD} подсказки`;
     icon.textContent = type === 'coins' ? '🪙' : '💡';
     title.textContent = type === 'coins' ? 'Бонус монет' : 'Бонус подсказок';
