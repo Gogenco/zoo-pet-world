@@ -8890,6 +8890,184 @@ button,
     }
 }
 
+
+
+/* ===== Stage 4.2A: UX polish / language picker / modal close / mini-game crosslinks ===== */
+.language-picker-overlay,
+.puzzle-choice-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2147482700;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    background: rgba(15, 23, 42, .42);
+    pointer-events: none;
+    overscroll-behavior: contain;
+}
+.language-picker-overlay.show,
+.puzzle-choice-modal-overlay.show {
+    display: flex !important;
+    pointer-events: auto !important;
+}
+.language-picker-card,
+.puzzle-choice-modal-card {
+    position: relative;
+    width: min(92vw, 430px);
+    max-height: calc(100vh - 36px);
+    overflow: auto;
+    border-radius: 32px;
+    padding: 24px 18px 18px;
+    background: linear-gradient(180deg, #ffffff, #fef3c7 56%, #dcfce7);
+    border: 4px solid rgba(255,255,255,.92);
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .28);
+    text-align: center;
+    color: #1f2937;
+}
+.language-picker-title,
+.puzzle-choice-title {
+    color: #4c1d95;
+    font-size: 24px;
+    font-weight: 1000;
+    margin: 0 42px 8px;
+    line-height: 1.15;
+}
+.language-picker-text,
+.puzzle-choice-text {
+    margin: 0 auto 14px;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.32;
+}
+.language-picker-list {
+    display: grid;
+    gap: 10px;
+}
+.language-picker-option,
+.puzzle-choice-action {
+    border: 0;
+    width: 100%;
+    min-height: 54px;
+    border-radius: 22px;
+    padding: 12px 14px;
+    background: linear-gradient(180deg, #ffffff, #e0f2fe);
+    color: #4c1d95;
+    font-size: 17px;
+    font-weight: 1000;
+    box-shadow: 0 6px 0 rgba(14, 165, 233, .18);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.language-picker-option.active {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    box-shadow: 0 6px 0 rgba(21, 128, 61, .22);
+}
+.puzzle-choice-actions {
+    display: grid;
+    gap: 10px;
+}
+.puzzle-choice-action.primary { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+.puzzle-choice-action.purple { background: linear-gradient(135deg, #8b5cf6, #4c1d95); color: #fff; }
+.puzzle-choice-action.orange { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; }
+.zoo-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    border: 0;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, .94);
+    color: #4c1d95;
+    box-shadow: 0 5px 0 rgba(124,58,237,.16), 0 9px 18px rgba(15,23,42,.12);
+    font-size: 22px;
+    font-weight: 1000;
+    line-height: 1;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.zoo-modal-close:active { transform: translateY(2px) scale(.98); box-shadow: 0 3px 0 rgba(124,58,237,.14); }
+.modal,
+.purchase-confirm-card,
+.rewarded-ad-card,
+.daily-gift-card,
+.block-gameover-card,
+.shadow-celebration-card,
+.guide-bubble {
+    position: relative;
+}
+.pet-room-voice-btn {
+    position: absolute;
+    right: 8px;
+    bottom: 16px;
+    z-index: 9;
+    border: 0;
+    min-height: 48px;
+    border-radius: 999px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #8b5cf6, #4c1d95);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 1000;
+    box-shadow: 0 7px 0 rgba(76,29,149,.22), 0 12px 24px rgba(15,23,42,.12);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.pet-room-voice-btn:active { transform: translateY(2px) scale(.98); }
+.pet-room-mini-games .mini-games-title,
+.mini-game-cross-links .mini-games-title {
+    grid-column: 1 / -1;
+    text-align: left;
+    color: #4c1d95;
+    font-size: 16px;
+    font-weight: 1000;
+    margin: 0 0 2px;
+}
+.mini-game-cross-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 24px;
+    background: rgba(255,255,255,.72);
+    box-shadow: inset 0 0 0 2px rgba(124,58,237,.08);
+}
+.mini-game-cross-card {
+    border: 0;
+    border-radius: 18px;
+    min-height: 56px;
+    padding: 8px 6px;
+    background: linear-gradient(180deg, #ffffff, #fef3c7);
+    color: #4c1d95;
+    font-size: 13px;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(245,158,11,.18);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.mini-game-cross-card .mini-icon { display: block; font-size: 22px; margin-bottom: 2px; }
+body.low-performance .language-picker-overlay,
+body.low-performance .puzzle-choice-modal-overlay { background: rgba(15,23,42,.34); backdrop-filter: none !important; }
+body.low-performance .language-picker-card,
+body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15,23,42,.20); }
+@media (max-width: 520px) {
+    .language-picker-card,
+    .puzzle-choice-modal-card { width: min(94vw, 370px); border-radius: 28px; padding: 20px 14px 16px; }
+    .language-picker-title,
+    .puzzle-choice-title { font-size: 21px; }
+    .mini-game-cross-links { grid-template-columns: 1fr 1fr; }
+    .pet-room-voice-btn { right: 4px; bottom: 8px; min-height: 44px; padding: 9px 12px; font-size: 13px; }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -9069,7 +9247,7 @@ button,
             <button class="btn btn-pink" onclick="toggleSound()" id="soundButton">Звук: Вкл</button>
             <button class="btn btn-blue" onclick="toggleMusic()" id="musicButton">Музыка: Вкл</button>
         </div>
-        <button class="language-switch" id="languageSwitchButton" onclick="toggleLanguage()">🇬🇧 English version</button>
+        <button class="language-switch" id="languageSwitchButton" onclick="showLanguagePicker()">🇬🇧 English version</button>
 
         <div class="small-note">Реклама в Android-версии: баннер снизу + редкий interstitial</div>
     </div>
@@ -9130,6 +9308,7 @@ button,
             <div class="pet-room-bowl" aria-hidden="true"></div>
             <div class="pet-room-stage" id="petRoomStage">
                 <div id="petRoomAnimatedMount"></div>
+                <button id="petRoomVoiceBtn" class="pet-room-voice-btn" type="button" onclick="playPetRoomAnimalVoice()">🔊 Голос</button>
             </div>
         </div>
 
@@ -9162,6 +9341,7 @@ button,
         </div>
 
         <div class="pet-room-mini-games">
+            <div class="mini-games-title">🎮 Поиграй в другую игру</div>
             <button class="pet-room-mini-card" onclick="setModeAndOpenMap('calm')"><span class="mini-icon">🃏</span>Найди пары<small>уже работает</small></button>
             <button class="pet-room-mini-card" onclick="openPuzzle()"><span class="mini-icon">🧩</span>Пазл<small>уже работает</small></button>
             <button class="pet-room-mini-card" onclick="openZooBlock()"><span class="mini-icon">🧱</span>Zoo Block<small>уже работает</small></button>
@@ -9872,7 +10052,7 @@ window.addEventListener("error", event => {
     try {
         console.error("Zoo Pet World JS error:", event.message, event.error);
         if (typeof message !== "undefined" && message) {
-            message.textContent = "Ошибка игры исправляется: " + event.message;
+            message.textContent = t('error.game', {msg: event.message});
         }
     } catch (_) {}
 });
@@ -11139,7 +11319,7 @@ function showGuideStepInfo(step) {
     }
     if (guideArrow) guideArrow.classList.remove('show');
     if (guideHand) guideHand.classList.remove('show');
-    guideBubbleTitle.textContent = step.title || 'Подсказка';
+    guideBubbleTitle.textContent = step.title || t('guide.tip');
     guideBubbleText.textContent = step.text || '';
     guideNextBtn.textContent = (activeGuide && activeGuide.index >= activeGuide.steps.length - 1)
         ? guideT('Готово', 'Done') : guideT('Дальше', 'Next');
@@ -11392,7 +11572,7 @@ function forceOpenMenu() {
     try { applySkin(); } catch(e) {}
     try { updateCoinsViews(); } catch(e) {}
     try {
-        soundButton.textContent = soundEnabled ? "Звук: Вкл" : "Звук: Выкл";
+        soundButton.textContent = soundEnabled ? t('sound.on') : t('sound.off');
         updateMusicButton();
         updateSoundButton();
     } catch(e) {}
@@ -11420,15 +11600,15 @@ function openPairsModeScreen() {
 function openZooTeaser() {
     playSound("click");
     if (typeof showFoodToast === "function") {
-        showFoodToast("Мой зоопарк скоро откроется 🐾");
+        showFoodToast(t('myzoo.toast'));
     }
     if (!overlay || !modalIcon || !modalTitle || !modalText || !modalButton) return;
     modalIcon.textContent = "🐾";
-    modalTitle.textContent = "Мой зоопарк";
-    modalStars.textContent = "Скоро";
-    modalText.textContent = "Это будет главный большой раздел игры: вольеры, животные, развитие за монетки и связь с мини-играми. Сейчас он оставлен как teaser, чтобы не ломать баланс.";
+    modalTitle.textContent = t('myzoo.title');
+    modalStars.textContent = t('myzoo.soon');
+    modalText.textContent = t("myzoo.text");
     modalAnimal.classList.remove("show");
-    modalButton.textContent = "Понятно";
+    modalButton.textContent = t('myzoo.ok');
     modalButton.onclick = hideOverlay;
     forceShowVictoryPopup();
 }
@@ -11441,7 +11621,7 @@ function setModeAndOpenMap(mode) {
         saveProgress();
         playSound("wrong");
         if (typeof showFoodToast === "function") {
-            showFoodToast("Таймер отключён в настройках родителей 🛡️");
+            showFoodToast(t('timer.disabled_toast'));
         } else if (typeof showPetRoomToast === "function") {
             showPetRoomToast("Таймер отключён в настройках родителей 🛡️");
         }
@@ -12022,13 +12202,13 @@ function stopBackgroundMusic() {
 function updateMusicButton() {
     if (musicButton) {
         const track = getCurrentMusicTrack();
-        musicButton.textContent = musicEnabled ? `Музыка: ${track.label}` : "Музыка: Выкл";
+        musicButton.textContent = musicEnabled ? `${t('settings.music')}: ${track.label}` : t('music.off');
     }
 }
 
 function updateSoundButton() {
     if (soundButton) {
-        soundButton.textContent = soundEnabled ? `Звук: ${Math.round(soundVolume * 100)}%` : "Звук: Выкл";
+        soundButton.textContent = soundEnabled ? `${t('sound.on').replace('Вкл','').replace('On','').trim()}: ${Math.round(soundVolume * 100)}%` : t('sound.off');
     }
 }
 
@@ -12075,9 +12255,9 @@ function starString(count) {
 
 function renderMap() {
     currentMode = normalizeMemoryMode(currentMode);
-    modeLabel.textContent = currentMode === "timed" ? "С таймером" : "Спокойный";
+    modeLabel.textContent = currentMode === 'timed' ? t('mode.timed') : t('mode.calm');
     const mapChip = document.getElementById("mapModeChip");
-    if (mapChip) mapChip.textContent = currentMode === "timed" ? "⏱ Таймер" : "🧘 Спокойно";
+    if (mapChip) mapChip.textContent = currentMode === 'timed' ? t('mode.timer_chip') : t('mode.calm_chip');
     mapList.innerHTML = "";
     levels.forEach((level, index) => {
         const unlocked = index <= maxUnlockedLevel;
@@ -12104,7 +12284,7 @@ function renderMap() {
         starsBox.textContent = starString(stars);
         const btn = document.createElement("button");
         btn.className = unlocked ? "btn btn-green" : "btn btn-red";
-        btn.textContent = unlocked ? "Играть" : "Закрыто";
+        btn.textContent = unlocked ? t('pairs.play') : t('pairs.locked');
         btn.disabled = !unlocked;
         btn.onclick = () => startLevel(index);
 
@@ -12200,12 +12380,12 @@ function startLevel(index) {
     progressFill.style.width = currentMode === "timed" ? "100%" : "0%";
     message.textContent = `${config.title}: ${getLevelTypeLabel(config.type)} • ${config.pairs} пар${currentMode === "timed" ? " • " + config.time + "с" : ""}`;
     levelTitle.textContent = config.title;
-    levelSubtitle.textContent = currentMode === "timed" ? "Режим с таймером" : "Спокойный режим без таймера";
+    levelSubtitle.textContent = currentMode === 'timed' ? t('mode.timed_subtitle') : t('mode.calm_subtitle');
     const gameChip = document.getElementById("gameModeChip");
-    if (gameChip) gameChip.textContent = currentMode === "timed" ? "⏱ Таймер" : "🧘 Спокойно";
+    if (gameChip) gameChip.textContent = currentMode === 'timed' ? t('mode.timer_chip') : t('mode.calm_chip');
 
     if (currentMode === "calm") {
-        timerBox.innerHTML = "🧘 Без таймера";
+        timerBox.innerHTML = t('mode.calm_html');
         progressBox.style.display = "none";
     } else {
         timerBox.innerHTML = `⏱ <span id="timer">${timeLeft}</span>с`;
@@ -12235,7 +12415,7 @@ function startTimer() {
 
         if (timeLeft <= 10) {
             timerBox.classList.add("danger");
-            message.textContent = "Быстрее! Время почти закончилось ⏳";
+            message.textContent = t('pairs.hurry');
         }
 
         if (timeLeft <= 0) {
@@ -12308,7 +12488,7 @@ function openCard(id) {
             matchedPairs++;
             updateTaskProgress("pairs", 1);
             playSound("match");
-            message.textContent = `Супер! Найдено ${matchedPairs}/${levels[levelIndex].pairs} ⭐`;
+            message.textContent = t('pairs.found', {matched: matchedPairs, total: levels[levelIndex].pairs});
 
             if (matchedPairs >= levels[levelIndex].pairs) {
                 renderCards();
@@ -12323,7 +12503,7 @@ function openCard(id) {
             window.currentLevelMistakes = (window.currentLevelMistakes || 0) + 1;
             locked = true;
             playSound("wrong");
-            message.textContent = levels[levelIndex].type === "noMistake" ? "Ошибка! Звёзд будет меньше 🙂" : "Не пара, попробуй ещё 🙂";
+            message.textContent = levels[levelIndex].type === 'noMistake' ? t('pairs.no_mistake_wrong') : t('pairs.wrong');
 
             setTimeout(() => {
                 first.open = false;
@@ -12331,7 +12511,7 @@ function openCard(id) {
                 opened = [];
                 locked = false;
                 if (!levelFinished) {
-                    message.textContent = "Ищи следующую пару 👀";
+                    message.textContent = t('pairs.next_pair');
                 }
                 renderCards();
             }, 650);
@@ -12431,10 +12611,10 @@ function winLevel() {
 
     const isLastLevel = levelIndex === levels.length - 1;
     modalIcon.textContent = isLastLevel ? "🏆" : "🎉";
-    modalTitle.textContent = isLastLevel ? "Игра пройдена!" : "Уровень пройден!";
+    modalTitle.textContent = isLastLevel ? t('pairs.win_all') : t('pairs.win_title');
     modalStars.textContent = starString(stars);
-    modalText.textContent = `Получено ${reward} монет. Открыто: ${animalInfo[newAnimalKey].name}. ${animalInfo[newAnimalKey].fact}`;
-    modalButton.textContent = isLastLevel ? "Играть заново" : "Следующий уровень";
+    modalText.textContent = t('pairs.win_text', {reward, animal: animalInfo[newAnimalKey].name});
+    modalButton.textContent = isLastLevel ? t('pairs.win_restart') : t('pairs.win_next');
     modalButton.onclick = isLastLevel ? () => startLevel(0) : nextLevel;
     hideOverlay();
     void overlay.offsetWidth;
@@ -12452,11 +12632,11 @@ function loseLevel() {
     playSound("lose");
 
     modalIcon.textContent = "⏳";
-    modalTitle.textContent = "Время вышло";
+    modalTitle.textContent = t('pairs.timeout_title');
     modalStars.textContent = "☆☆☆";
-    modalText.textContent = "Ничего страшного. Можно повторить уровень или включить спокойный режим без таймера.";
+    modalText.textContent = t('pairs.timeout_text');
     modalAnimal.classList.remove("show");
-    modalButton.textContent = "Повторить уровень";
+    modalButton.textContent = t('pairs.retry');
     modalButton.onclick = restartLevel;
     forceShowVictoryPopup();
 }
@@ -12692,7 +12872,7 @@ function renderPetRoom() {
 
     if (petRoomSubtitle) petRoomSubtitle.textContent = `${displayName}: ${animalInfo[selectedMainPetKey].fact}`;
     const reminderText = getPetReminderText(care, displayName);
-    if (petRoomSpeech) petRoomSpeech.textContent = reminderText || `${displayName} сейчас ${moodText}. Что сделаем?`;
+    if (petRoomSpeech) petRoomSpeech.textContent = reminderText || `${displayName} ${moodText}. ${t('btn.next')}?`;
     if (petRoomReminder) {
         petRoomReminder.textContent = reminderText;
         petRoomReminder.classList.toggle("show", Boolean(reminderText));
@@ -13280,7 +13460,7 @@ function getMoodText(mood) {
 function updatePetMoodView(key) {
     if (!petMoodCard) return;
     const mood = getPetMood(key).mood;
-    petMoodCard.textContent = `Настроение: ${getMoodText(mood)}`;
+    petMoodCard.textContent = t('pets.mood', {mood: getMoodText(mood)});
     if (selectedPetKey === key && petAnimationMode !== "eat" && petAnimationMode !== "greet" && petAnimationMode !== "run") {
         petExpressionMode = mood === "sleepy" ? "sleepy" : "happy";
         petAnimationMode = mood === "sleepy" ? "sleep" : "walk";
@@ -13415,7 +13595,7 @@ function renderFoodRailInto(container, source = "detail") {
     if (source !== "petRoom") {
         const note = document.createElement("div");
         note.className = "food-shop-note";
-        note.textContent = "Покупай вкусняшки за монетки 🪙";
+        note.textContent = t('petroom.buy_food_hint');
         container.appendChild(note);
     }
 
@@ -13466,13 +13646,13 @@ function buyFood(foodId) {
     if (!food) return;
 
     if (unlockedFoods.includes(food.id)) {
-        showFoodToast(`${food.label} уже открыта ✅`);
+        showFoodToast(t('petroom.food_owned', {food: food.label}));
         return;
     }
 
     if (coins < food.price) {
         playSound("wrong");
-        showFoodToast(`Не хватает монет: нужно ${food.price} 🪙`);
+        showFoodToast(t('petroom.food_no_coins', {price: food.price}));
         return;
     }
 
@@ -13483,7 +13663,7 @@ function buyFood(foodId) {
     renderFoodRail();
     renderPetRoomFoodRail();
     playSound("coin");
-    showFoodToast(`${food.label} открыта! ${food.emoji}`);
+    showFoodToast(t('petroom.food_bought', {food: food.label, emoji: food.emoji}));
 }
 
 function startFoodDrag(event) {
@@ -13554,9 +13734,9 @@ function endFoodDrag(event) {
     } else {
         playSound("wrong");
         if (isPetRoom) {
-            if (petRoomSpeech) petRoomSpeech.textContent = "Дотащи еду прямо к питомцу 🙂";
+            if (petRoomSpeech) petRoomSpeech.textContent = t('petroom.drag_food');
         } else if (petDetailStatus) {
-            petDetailStatus.textContent = "Попробуй дотащить еду прямо к животному 🙂";
+            petDetailStatus.textContent = t('petroom.try_drag');
         }
     }
 
@@ -13618,7 +13798,7 @@ function feedPetDetail(foodEmoji, foodName, startX, startY) {
     updateTaskProgress("feed", 1);
     saveProgress();
 
-    petDetailStatus.textContent = `${animalName} покушал ${foodName}! Всего: ${animalFeedCount[key]} раз(а) 🥕`;
+    petDetailStatus.textContent = t('petroom.fed', {animal: animalName, food: foodName, count: animalFeedCount[key]});
     showDetailSpeech(`Ням-ням! Спасибо за ${foodName}! 💚`);
     playSound("coin");
 }
@@ -13699,7 +13879,7 @@ function renderPets() {
 
         const stageBadge = document.createElement("div");
         stageBadge.className = "pet-stage-badge";
-        stageBadge.textContent = `Этап ${meta.stage} • уровень ${meta.requiredLevel}`;
+        stageBadge.textContent = t('pets.stage_level', {stage: meta.stage, level: meta.requiredLevel});
         info.appendChild(stageBadge);
 
         const title = document.createElement("div");
@@ -13708,7 +13888,7 @@ function renderPets() {
 
         const fact = document.createElement("div");
         fact.className = "pet-fact";
-        fact.textContent = unlocked ? animalInfo[key].fact : `Можно открыть по прогрессу или купить за ${meta.price} монет.`;
+        fact.textContent = unlocked ? animalInfo[key].fact : t('pets.locked_fact', {price: meta.price});
 
         info.appendChild(title);
         info.appendChild(fact);
@@ -13734,22 +13914,17 @@ function renderPets() {
 
             const selectBtn = document.createElement("button");
             selectBtn.className = "pet-buy-btn";
-            selectBtn.textContent = selected ? "Открыть комнату питомца ✅" : "Сделать главным питомцем";
+            selectBtn.textContent = selected ? t('pets.open_room') : t('pets.select_main');
             selectBtn.onclick = () => selectPetForRoom(key);
-
-            const soundBtn = document.createElement("button");
-            soundBtn.className = "pet-mini-btn";
-            soundBtn.textContent = "🔊 Голос";
-            soundBtn.onclick = () => { initAudio(); playAnimalSound(key); };
 
             info.appendChild(nameRow);
             info.appendChild(selectBtn);
-            info.appendChild(soundBtn);
+            // Stage 4.2A: animal voice button moved from My Animals list into the active Pet Room window.
 
             if (selected) {
                 const badge = document.createElement("div");
                 badge.className = "pet-selected-badge";
-                badge.textContent = "Сейчас живёт в комнате 🏠";
+                badge.textContent = t('pets.in_room');
                 info.appendChild(badge);
             }
         } else {
@@ -13760,7 +13935,7 @@ function renderPets() {
                 : `Закрыт до уровня ${meta.requiredLevel}, но покупка монетами доступна.`;
             const buyBtn = document.createElement("button");
             buyBtn.className = coins >= meta.price ? "pet-buy-btn" : "pet-buy-btn locked-stage";
-            buyBtn.textContent = coins >= meta.price ? `Купить за ${meta.price} 🪙` : `Нужно ${meta.price} 🪙`;
+            buyBtn.textContent = coins >= meta.price ? t('pets.buy_price', {price: meta.price}) : t('pets.need_price', {price: meta.price});
             buyBtn.onclick = () => buyPet(key, meta.price);
             info.appendChild(lockedText);
             info.appendChild(buyBtn);
@@ -14129,7 +14304,7 @@ function updatePuzzleUI() {
         puzzleReference.style.backgroundPosition = "center";
     }
     if (puzzleImageLabel) puzzleImageLabel.textContent = puzzleCurrentImage.label;
-    if (puzzleTitleText) puzzleTitleText.textContent = `Собери: ${puzzleCurrentImage.label}`;
+    if (puzzleTitleText) puzzleTitleText.textContent = t('puzzle.assemble', {label: puzzleCurrentImage.label});
     if (puzzleProgressNote) {
         const nextStage = puzzleStages.find(item => item.id > maxUnlockedPuzzleStage);
         const lockedCount = puzzleImageCatalog.filter(item => !unlockedPuzzleImages.includes(item.key)).length;
@@ -14216,7 +14391,7 @@ function showPuzzleWinPop(reward, unlockedStageText = "") {
     if (old) old.remove();
     const pop = document.createElement("div");
     pop.className = "puzzle-win-pop";
-    pop.innerHTML = `<span class="big">🎉</span>Пазл собран!<br/><small>Награда: +${reward} монет 🪙${unlockedStageText}</small>`;
+    pop.innerHTML = `<span class="big">🎉</span>${t('puzzle.complete', {reward, extra: unlockedStageText})}`;
     document.body.appendChild(pop);
     setTimeout(() => pop.remove(), 1700);
 }
@@ -14872,8 +15047,8 @@ function finishZooBlockGame() {
     zooBlockGameOver = true;
     zooBlockBestScore = Math.max(zooBlockBestScore, zooBlockScore);
     zooBlockGamesPlayed++;
-    // Stage 4.1 fix: removed halfReward — Zoo Block now pays full score-based reward.
-    // Minimum 8 coins per game, scales with score.
+    // Stage 4 fix: removed halfReward — Zoo Block now pays full score-based reward.
+    // Minimum 8 coins per game (was ~4), scales with score.
     const reward = Math.max(8, Math.floor(zooBlockScore / 75));
     coins += reward;
     updateTaskProgress("block", 1);
@@ -14889,7 +15064,7 @@ function finishZooBlockGame() {
     saveProgress();
     updateCoinsViews();
     updateZooBlockUI();
-    showZooBlockPop(guideT("Игра окончена", "Game over"), guideT(`Награда: +${reward} монет 🪙`, `Reward: +${reward} coins 🪙`));
+    showZooBlockPop(t('block.gameover'), t('block.reward_pop', {coins: reward}));
     showZooBlockGameOverModal(reward);
     showZooBlockMessage(guideT("Нет места для фигур. Нажми Заново, чтобы начать новую игру.", "No space for pieces. Tap Restart to start a new game."));
     playSound("coin");
@@ -15038,7 +15213,7 @@ function getShadowDifficulty(index) {
     const block = Math.floor(index / 10);
     const targetCount = Math.min(1 + block, 5);
     const optionCount = Math.min(4 + block * 2, 12);
-    // Stage 4.1 fix: removed halfReward — Shadow now pays full per-animal reward.
+    // Stage 4 fix: removed halfReward — Shadow now pays full per-animal reward.
     const reward = Math.max(5, 5 + block * 3);
     const label = block === 0 ? 'Лёгкий' : block === 1 ? 'Средний' : block === 2 ? 'Сложный' : block === 3 ? 'Мастер' : 'Легенда';
     return { block, targetCount, optionCount, reward, label };
@@ -15109,10 +15284,10 @@ function renderShadowLevel() {
 
     const needCount = currentShadowLevel.targets.length;
     if (shadowLevelBadge) {
-        shadowLevelBadge.textContent = `⭐ Уровень ${shadowLevelIndex + 1} • ${currentShadowLevel.difficulty.label}`;
+        shadowLevelBadge.textContent = t('shadow.level_badge', {level: shadowLevelIndex + 1, diff: currentShadowLevel.difficulty.label});
     }
     if (typeof shadowStreakBadge !== 'undefined' && shadowStreakBadge) {
-        shadowStreakBadge.textContent = `🔥 Серия ${shadowPerfectStreak}`;
+        shadowStreakBadge.textContent = t('shadow.streak', {n: shadowPerfectStreak});
     }
 
     if (typeof shadowTargets !== 'undefined' && shadowTargets) {
@@ -15141,7 +15316,7 @@ function renderShadowLevel() {
     updateShadowProgress();
     if (shadowMessage) {
         const hardNote = currentShadowLevel.difficulty.block >= 2 ? ' Некоторые тени чуть спрятаны 🌿' : '';
-        shadowMessage.textContent = needCount === 1 ? 'Найди животное по тени 👆' + hardNote : `Найди ${needCount} зверька по теням 👆${hardNote}`;
+        shadowMessage.textContent = needCount === 1 ? t('shadow.find_one') + hardNote : t('shadow.find_many', {n: needCount}) + hardNote;
     }
 
     if (shadowOptions) {
@@ -15167,7 +15342,7 @@ function updateShadowProgress() {
     if (typeof shadowProgressRow !== 'undefined' && shadowProgressRow) {
         const animalWord = total === 1 ? 'зверька' : 'зверьков';
         const dots = Array.from({ length: total }, (_, i) => `<span class="shadow-progress-dot ${i < found ? 'done' : ''}"></span>`).join('');
-        shadowProgressRow.innerHTML = `<span>Найди всех ${animalWord}: ${found} / ${total}</span><span>${dots}</span>`;
+        shadowProgressRow.innerHTML = `<span>${t('shadow.find_progress', {word: animalWord, found, total})}</span><span>${dots}</span>`;
     }
     if (typeof shadowTargets !== 'undefined' && shadowTargets) {
         [...shadowTargets.querySelectorAll('.shadow-target-item')].forEach(item => {
@@ -15200,7 +15375,7 @@ function chooseShadowOption(animalId, button) {
         const foundAnimal = currentShadowLevel.targets.find(item => item.id === animalId);
         const left = currentShadowLevel.targets.length - shadowFoundIds.size;
         if (left > 0) {
-            if (shadowMessage) shadowMessage.textContent = `Верно! Это ${foundAnimal ? foundAnimal.name : 'зверёк'}! Осталось: ${left} 💚`;
+            if (shadowMessage) shadowMessage.textContent = t('shadow.correct_remain', {name: foundAnimal ? foundAnimal.name : t('shadow.great'), left});
         } else {
             shadowAnswered = true;
             if (shadowWrongCount === 0) {
@@ -15219,7 +15394,7 @@ function chooseShadowOption(animalId, button) {
             saveProgress();
             updateCoinsViews();
             if (shadowOptions) [...shadowOptions.querySelectorAll('.shadow-option')].forEach(btn => btn.classList.add('disabled-after-win'));
-            if (shadowMessage) shadowMessage.textContent = `Уровень пройден! +${shadowLevelReward}🪙 🎉`;
+            if (shadowMessage) shadowMessage.textContent = t('shadow.level_done', {reward: shadowLevelReward});
             setTimeout(showShadowCelebration, 420);
         }
     } else {
@@ -15228,7 +15403,7 @@ function chooseShadowOption(animalId, button) {
         void button.offsetWidth;
         button.classList.add('wrong');
         playTone(240, 0.10, 'sine', 0.035);
-        if (shadowMessage) shadowMessage.textContent = currentShadowLevel.targets.length > 1 ? 'Почти! Этот зверёк не из теней 💚' : 'Почти! Попробуй ещё раз 💚';
+        if (shadowMessage) shadowMessage.textContent = currentShadowLevel.targets.length > 1 ? t('shadow.wrong_one') : t('shadow.wrong_many');
     }
 }
 
@@ -15241,7 +15416,7 @@ function useShadowHint() {
         const btn = wrongButtons[Math.floor(Math.random() * wrongButtons.length)];
         btn.classList.add('hidden-by-hint');
         shadowHintUsed = true;
-        if (shadowMessage) shadowMessage.textContent = 'Подсказка убрала одного лишнего зверька 💡';
+        if (shadowMessage) shadowMessage.textContent = t('shadow.hint_remove');
         playTone(520, 0.10, 'triangle', 0.035);
         return;
     }
@@ -15251,7 +15426,7 @@ function useShadowHint() {
         notFoundButtons[0].classList.add('hint-pulse');
         setTimeout(() => notFoundButtons[0].classList.remove('hint-pulse'), 1500);
         shadowHintUsed = true;
-        if (shadowMessage) shadowMessage.textContent = 'Подсказка мягко подсветила нужного зверька 💡';
+        if (shadowMessage) shadowMessage.textContent = t('shadow.hint_highlight');
         playTone(620, 0.10, 'triangle', 0.035);
     }
 }
@@ -15260,8 +15435,8 @@ function showShadowCelebration() {
     if (!currentShadowLevel) return;
     const perfect = shadowWrongCount === 0;
     if (typeof shadowCelebrationTitle !== 'undefined' && shadowCelebrationTitle) {
-        if (shadowLevelIndex % 10 === 9) shadowCelebrationTitle.textContent = 'Новый этап открыт!';
-        else shadowCelebrationTitle.textContent = perfect ? 'Идеально!' : 'Молодец!';
+        if (shadowLevelIndex % 10 === 9) shadowCelebrationTitle.textContent = t('shadow.new_stage');
+        else shadowCelebrationTitle.textContent = perfect ? t('shadow.perfect') : t('shadow.great');
     }
     if (typeof shadowCelebrationText !== 'undefined' && shadowCelebrationText) {
         const nextDifficulty = getShadowDifficulty(shadowLevelIndex + 1);
@@ -15270,7 +15445,7 @@ function showShadowCelebration() {
             ? `Дальше будет сложнее: нужно найти уже ${nextDifficulty.targetCount} зверьков!`
             : 'Нажми кнопку, чтобы перейти дальше.';
         const perfectNote = perfect ? ` Серия без ошибок: ${shadowPerfectStreak}!` : ' Ничего, в следующем уровне можно собрать серию!';
-        shadowCelebrationText.textContent = `Ты нашёл: ${completed}. Награда: +${shadowLevelReward} монет.${perfectNote} ${stageNote}`;
+        shadowCelebrationText.textContent = t('shadow.celeb_text', {done: completed, reward: shadowLevelReward, perfect: perfectNote, stage: stageNote});
     }
     if (typeof shadowCelebrationAnimals !== 'undefined' && shadowCelebrationAnimals) {
         shadowCelebrationAnimals.innerHTML = '';
@@ -16492,15 +16667,15 @@ function renderShop() {
         title.textContent = skin.title;
         const price = document.createElement("div");
         price.className = "skin-price";
-        price.textContent = skin.price === 0 ? "Бесплатно" : `${skin.price} монет`;
+        price.textContent = skin.price === 0 ? t('shop.free') : t('shop.price_coins', {price: skin.price});
 
         const button = document.createElement("button");
         button.className = isSelected ? "btn btn-green" : "btn btn-blue";
 
         if (isSelected) {
-            button.textContent = "Выбран";
+            button.textContent = t('shop.selected');
         } else if (isUnlocked) {
-            button.textContent = "Выбрать";
+            button.textContent = t('shop.select');
             button.onclick = () => {
                 selectedSkin = skin.id;
                 applySkin();
@@ -16509,7 +16684,7 @@ function renderShop() {
                 renderShop();
             };
         } else {
-            button.textContent = coins >= skin.price ? "Купить" : "Не хватает";
+            button.textContent = coins >= skin.price ? t('shop.buy') : t('shop.no_coins');
             button.onclick = () => {
                 if (coins >= skin.price) {
                     coins -= skin.price;
@@ -16715,7 +16890,7 @@ function claimDailyQuest(taskId) {
     saveProgress();
     updateCoinsViews();
     playSound("coin");
-    showFoodToast(`Задание выполнено: +${task.reward} 🪙`);
+    showFoodToast(t('tasks.done_toast', {reward: task.reward}));
     renderTasks();
 }
 
@@ -16724,7 +16899,7 @@ function claimAllDailyQuests() {
     const tasks = getDailyQuestDefinitions();
     const ready = tasks.filter(task => isDailyQuestDone(task) && !isDailyQuestClaimed(task));
     if (!ready.length) {
-        showFoodToast("Пока нет готовых наград 🙂");
+        showFoodToast(t('tasks.no_ready'));
         return;
     }
     const reward = ready.reduce((sum, task) => sum + task.reward, 0);
@@ -16734,7 +16909,7 @@ function claimAllDailyQuests() {
     saveProgress();
     updateCoinsViews();
     playSound("coin");
-    showFoodToast(`Все готовые задания: +${reward} 🪙`);
+    showFoodToast(t('tasks.claim_all', {reward}));
     renderTasks();
 }
 
@@ -16805,7 +16980,7 @@ function renderTasks() {
 
         const btn = document.createElement("button");
         btn.className = claimable ? "btn btn-green" : done ? "btn btn-blue" : "btn btn-purple";
-        btn.textContent = claimed ? "Получено" : claimable ? "Забрать" : task.actionText;
+        btn.textContent = claimed ? t('tasks.claimed') : claimable ? t('tasks.claim') : task.actionText;
         btn.disabled = claimed;
         btn.onclick = () => {
             if (claimable) {
@@ -17285,7 +17460,7 @@ function translatePageToEnglish() {
     });
 
     const langButton = document.getElementById("languageSwitchButton");
-    if (langButton) langButton.textContent = "🇷🇺 Русская версия";
+    if (langButton) langButton.textContent = t('lang.ru_btn');
 }
 
 function installTranslationObserver() {
@@ -17350,8 +17525,8 @@ function getDailyGiftStreakForClaim() {
 }
 
 function getDailyGiftReward(streak = getDailyGiftStreakForClaim()) {
-    // Stage 4.1 fix: removed halfReward — now pays full 20-50 coins.
-    // streak=1→20, streak=7→50 (capped), aligned with UI text.
+    // Stage 4 fix: removed halfReward — now pays full 20-50 coins (was 10-25).
+    // streak=1→20, streak=7→50 (capped), aligns with what the UI promises.
     return 20 + Math.min(30, Math.max(0, (Number(streak || 1) - 1) * 5));
 }
 
@@ -17362,7 +17537,7 @@ function checkDailyGift() {
         const streak = getDailyGiftStreakForClaim();
         const reward = getDailyGiftReward(streak);
         dailyGiftOverlay.style.display = "grid";
-        dailyGiftText.textContent = `Сегодняшний подарок: +${reward} монет! Серия: ${streak} дн.`;
+        dailyGiftText.textContent = t('daily.gift_text', {coins: reward, streak});
     }
     renderEconomyPanel();
 }
@@ -17384,7 +17559,7 @@ function claimDailyGift() {
     updateCoinsViews();
     dailyGiftOverlay.style.display = "none";
     playSound("coin");
-    showFoodToast(`Ежедневный подарок: +${reward} 🪙`);
+    showFoodToast(t('daily.gift_toast', {coins: reward}));
     renderEconomyPanel();
 }
 
@@ -18412,318 +18587,249 @@ body.guide-open #guideFab { pointer-events: none !important; }
     window.addEventListener('load', bind, { once: true });
     window.openGuideFromFab = openGuideFromFab;
 })();
-</script>
 
 
-<style id="assistant-stage3-3-purchase-modal-hotfix">
-/* Hotfix 3.3: purchase confirmations must be real centered modals on every screen. */
-.purchase-confirm-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2650;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
-    background: rgba(15, 23, 42, .44);
-    pointer-events: none;
-}
-.purchase-confirm-overlay.show {
-    display: flex !important;
-    pointer-events: auto;
-}
-.purchase-confirm-card {
-    width: min(92vw, 410px);
-    max-height: calc(100vh - 36px);
-    overflow: auto;
-    border-radius: 32px;
-    padding: 22px 20px 18px;
-    text-align: center;
-    background: linear-gradient(180deg, #ffffff, #fff7ed 58%, #ecfdf5);
-    color: #1f2937;
-    border: 4px solid rgba(255, 255, 255, .92);
-    box-shadow: 0 24px 70px rgba(15, 23, 42, .30);
-    transform: translateZ(0);
-    animation: purchaseConfirmPop .22s ease-out;
-}
-.purchase-confirm-icon {
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 10px;
-    display: grid;
-    place-items: center;
-    border-radius: 24px;
-    background: linear-gradient(135deg, #fef3c7, #bbf7d0, #bfdbfe);
-    font-size: 36px;
-    box-shadow: 0 7px 0 rgba(124, 58, 237, .14);
-}
-.purchase-confirm-title {
-    margin: 2px 0 8px;
-    color: #4c1d95;
-    font-size: 24px;
-    line-height: 1.12;
-    font-weight: 1000;
-}
-.purchase-confirm-text {
-    margin: 0 auto 10px;
-    color: #334155;
-    font-size: 16px;
-    line-height: 1.35;
-    font-weight: 800;
-}
-.purchase-confirm-price {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    margin: 0 auto 14px;
-    padding: 7px 13px;
-    border-radius: 999px;
-    color: #166534;
-    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
-    font-weight: 1000;
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,.66);
-}
-.purchase-confirm-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    align-items: stretch;
-}
-.purchase-confirm-actions .btn {
-    width: 100%;
-    min-height: 50px;
-    margin: 0;
-    white-space: normal;
-    line-height: 1.15;
-}
-@keyframes purchaseConfirmPop {
-    from { opacity: 0; transform: scale(.92) translateY(8px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-}
-@media (max-width: 520px) {
-    .purchase-confirm-card { width: min(94vw, 360px); padding: 18px 16px 16px; border-radius: 28px; }
-    .purchase-confirm-title { font-size: 21px; }
-    .purchase-confirm-text { font-size: 14px; }
-    .purchase-confirm-actions { grid-template-columns: 1fr; }
-}
-body.low-performance .purchase-confirm-overlay {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(15, 23, 42, .38);
-}
-body.low-performance .purchase-confirm-card {
-    box-shadow: 0 14px 36px rgba(15, 23, 42, .22);
-    animation: none;
-}
-</style>
-
-<style id="assistant-stage3-4-overlay-audit">
-/* Stage 3.4 UI Stability / Overlay Audit: one safe modal layer for all popups. */
-#overlay.overlay,
-#blockGameOverOverlay.block-gameover-overlay,
-#shadowCelebrationOverlay.shadow-celebration-overlay,
-#dailyGiftOverlay.daily-gift-overlay,
-#purchaseConfirmOverlay.purchase-confirm-overlay,
-#rewardedAdOverlay.rewarded-ad-overlay {
-    position: fixed !important;
-    inset: 0 !important;
-    box-sizing: border-box !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
-    touch-action: manipulation !important;
-}
-
-#overlay.overlay.show,
-#blockGameOverOverlay.block-gameover-overlay.show,
-#shadowCelebrationOverlay.shadow-celebration-overlay.show,
-#purchaseConfirmOverlay.purchase-confirm-overlay.show,
-#rewardedAdOverlay.rewarded-ad-overlay.show {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    pointer-events: auto !important;
-}
-
-#purchaseConfirmOverlay.purchase-confirm-overlay,
-#rewardedAdOverlay.rewarded-ad-overlay {
-    z-index: 2147482600 !important;
-    background: rgba(15, 23, 42, .44) !important;
-    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)) !important;
-}
-
-#rewardedAdOverlay.rewarded-ad-overlay { z-index: 2147482550 !important; }
-#guideOverlay.guide-overlay { z-index: 2147482000 !important; }
-#overlay.overlay { z-index: 2147481500 !important; }
-#blockGameOverOverlay.block-gameover-overlay { z-index: 2147481500 !important; }
-#shadowCelebrationOverlay.shadow-celebration-overlay { z-index: 2147481500 !important; }
-#dailyGiftOverlay.daily-gift-overlay { z-index: 2147481500 !important; }
-
-#dailyGiftOverlay.daily-gift-overlay {
-    place-items: center !important;
-    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)) !important;
-}
-#dailyGiftOverlay.daily-gift-overlay.show { display: grid !important; }
-
-.purchase-confirm-card,
-.rewarded-ad-card,
-.modal,
-.block-gameover-card,
-.shadow-celebration-card,
-.daily-gift-card,
-.guide-bubble {
-    box-sizing: border-box !important;
-    max-width: min(94vw, 430px) !important;
-    max-height: calc(100vh - 36px) !important;
-    overflow: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-}
-
-.purchase-confirm-actions .btn,
-.rewarded-ad-actions .btn,
-#purchaseConfirmYes,
-#purchaseConfirmNo,
-#rewardedAdActionBtn,
-.guide-btn,
-.modal .btn,
-.block-gameover-card .btn,
-.shadow-celebration-card .btn,
-.daily-gift-card .btn {
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-}
-
-body.zoo-modal-open #guideFab {
-    pointer-events: none !important;
-    opacity: .36 !important;
-}
-body.zoo-modal-open .page-scroll-hint,
-body.zoo-modal-open #pageScrollHint {
-    pointer-events: none !important;
-    opacity: 0 !important;
-}
-
-body.low-performance #purchaseConfirmOverlay.purchase-confirm-overlay,
-body.low-performance #rewardedAdOverlay.rewarded-ad-overlay,
-body.low-performance #overlay.overlay,
-body.low-performance #blockGameOverOverlay.block-gameover-overlay,
-body.low-performance #shadowCelebrationOverlay.shadow-celebration-overlay,
-body.low-performance #dailyGiftOverlay.daily-gift-overlay {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(15, 23, 42, .36) !important;
-}
-body.low-performance .purchase-confirm-card,
-body.low-performance .rewarded-ad-card,
-body.low-performance .modal,
-body.low-performance .block-gameover-card,
-body.low-performance .shadow-celebration-card,
-body.low-performance .daily-gift-card {
-    animation: none !important;
-    box-shadow: 0 14px 34px rgba(15, 23, 42, .22) !important;
-}
-</style>
-
-<script id="assistant-stage3-4-overlay-audit-script">
-(function overlayAuditStage34(){
+/* ===== Stage 4.2A: Critical UX polish — language picker, modal close buttons, pet voice, puzzle completion choices ===== */
+(function(){
     'use strict';
-    const MODAL_SELECTORS = [
-        '#overlay.overlay',
-        '#blockGameOverOverlay.block-gameover-overlay',
-        '#shadowCelebrationOverlay.shadow-celebration-overlay',
-        '#dailyGiftOverlay.daily-gift-overlay',
-        '#purchaseConfirmOverlay.purchase-confirm-overlay',
-        '#rewardedAdOverlay.rewarded-ad-overlay'
-    ];
-    const GUIDE_SELECTOR = '#guideOverlay.guide-overlay';
-
-    function hasVisibleDisplay(el) {
-        if (!el) return false;
-        if (el.classList && el.classList.contains('show')) return true;
-        if (el.id === 'dailyGiftOverlay') {
-            return (el.style && el.style.display && el.style.display !== 'none');
-        }
-        return false;
+    const LANG_DATA = {
+        ru: { flag: '🇷🇺', label: 'Русский', title: 'Выбери язык', text: 'Язык можно поменять в любой момент.', menu: '🇷🇺 Русская версия', playOther: 'Поиграй в другую игру', voice: '🔊 Голос', close: 'Закрыть' },
+        en: { flag: '🇬🇧', label: 'English', title: 'Choose language', text: 'You can change the language anytime.', menu: '🇬🇧 English version', playOther: 'Play another game', voice: '🔊 Voice', close: 'Close' },
+        hy: { flag: '🇦🇲', label: 'Հայերեն', title: 'Ընտրիր լեզուն', text: 'Լեզուն կարելի է փոխել ցանկացած պահի։', menu: '🇦🇲 Հայերեն տարբերակ', playOther: 'Խաղա ուրիշ խաղ', voice: '🔊 Ձայն', close: 'Փակել' }
+    };
+    function currentLang(){
+        try { return (typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : localStorage.getItem('zooLanguage')) || 'ru'; } catch(e) { return 'ru'; }
     }
-
-    function normalizeOverlay(el) {
-        if (!el || el.dataset.assistantStage34Audited === '1') return;
-        el.dataset.assistantStage34Audited = '1';
-        if (!el.getAttribute('role')) el.setAttribute('role', 'dialog');
-        if (el.id !== 'guideOverlay' && !el.getAttribute('aria-modal')) el.setAttribute('aria-modal', 'true');
-        if (el.id === 'purchaseConfirmOverlay') el.classList.add('purchase-confirm-overlay');
-        if (el.id === 'rewardedAdOverlay') el.classList.add('rewarded-ad-overlay');
-    }
-
-    function updateModalBodyState() {
-        let modalOpen = false;
-        MODAL_SELECTORS.forEach(selector => {
-            const el = document.querySelector(selector);
-            normalizeOverlay(el);
-            if (hasVisibleDisplay(el)) modalOpen = true;
-        });
-        const guide = document.querySelector(GUIDE_SELECTOR);
-        normalizeOverlay(guide);
-        document.body.classList.toggle('zoo-modal-open', modalOpen);
-        document.body.classList.toggle('guide-open', !!(guide && guide.classList.contains('show')));
-    }
-
-    function rebindDynamicModalButtons() {
-        ['purchaseConfirmYes','purchaseConfirmNo','rewardedAdActionBtn','guideNextBtn'].forEach(id => {
-            const btn = document.getElementById(id);
-            if (!btn || btn.dataset.assistantStage34TouchBound === '1') return;
-            btn.dataset.assistantStage34TouchBound = '1';
-            btn.setAttribute('type', 'button');
-            btn.style.touchAction = 'manipulation';
-        });
-    }
-
-    function auditTick() {
-        updateModalBodyState();
-        rebindDynamicModalButtons();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', auditTick, { once: true });
-    } else {
-        auditTick();
-    }
-    window.addEventListener('load', auditTick, { once: true });
-
-    const observer = new MutationObserver(function(mutations){
-        let shouldUpdate = false;
-        for (const mutation of mutations) {
-            if (mutation.type === 'childList') { shouldUpdate = true; break; }
-            if (mutation.type === 'attributes' && (mutation.attributeName === 'class' || mutation.attributeName === 'style')) { shouldUpdate = true; break; }
-        }
-        if (shouldUpdate) requestAnimationFrame(auditTick);
-    });
-    observer.observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ['class','style'] });
-
-    document.addEventListener('keydown', function(event){
-        if (event.key !== 'Escape') return;
-        const purchase = document.getElementById('purchaseConfirmOverlay');
-        const rewarded = document.getElementById('rewardedAdOverlay');
-        if (purchase && purchase.classList.contains('show') && typeof window.closePurchaseConfirm === 'function') {
+    function dict(){ return LANG_DATA[currentLang()] || LANG_DATA.ru; }
+    function closeOverlayElement(overlay){
+        if (!overlay) return;
+        if (overlay.id === 'dailyGiftOverlay') {
+            overlay.style.display = 'none';
+        } else if (overlay.id === 'purchaseConfirmOverlay' && typeof window.closePurchaseConfirm === 'function') {
             window.closePurchaseConfirm();
+            return;
+        } else if (overlay.id === 'blockGameOverOverlay' && typeof window.closeZooBlockGameOverModal === 'function') {
+            window.closeZooBlockGameOverModal();
+            return;
+        } else if (overlay.id === 'guideOverlay') {
+            if (typeof window.skipGuide === 'function') window.skipGuide();
+            overlay.classList.remove('show');
+        } else if (overlay.id === 'overlay' && typeof window.hideOverlay === 'function') {
+            window.hideOverlay();
+            return;
+        } else if (overlay.classList.contains('language-picker-overlay') || overlay.classList.contains('puzzle-choice-modal-overlay')) {
+            overlay.classList.remove('show');
+            window.setTimeout(() => overlay.remove(), 240);
+        } else {
+            overlay.classList.remove('show');
+        }
+        try { document.body.classList.remove('zoo-modal-open'); } catch(e) {}
+    }
+    function findOverlayForCard(card){
+        return card && card.closest && card.closest('.language-picker-overlay, .puzzle-choice-modal-overlay, .purchase-confirm-overlay, .rewarded-ad-overlay, .daily-gift-overlay, .shadow-celebration-overlay, .block-gameover-overlay, .guide-overlay, .overlay');
+    }
+    function ensureCloseButton(card){
+        if (!card || card.dataset.stage42aCloseReady === '1') return;
+        card.dataset.stage42aCloseReady = '1';
+        if (card.querySelector(':scope > .zoo-modal-close')) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'zoo-modal-close';
+        btn.setAttribute('aria-label', dict().close);
+        btn.textContent = '×';
+        btn.addEventListener('click', function(event){
             event.preventDefault();
             event.stopPropagation();
-        } else if (rewarded && rewarded.classList.contains('show')) {
-            // Do not close while a mock ad countdown is running; the action button will handle completion.
-            const btn = document.getElementById('rewardedAdActionBtn');
-            if (btn && !btn.disabled) {
-                rewarded.classList.remove('show');
-                rewarded.style.display = 'none';
-                document.body.classList.remove('zoo-modal-open');
-                event.preventDefault();
-                event.stopPropagation();
-            }
+            const overlay = findOverlayForCard(card);
+            closeOverlayElement(overlay || card);
+        }, true);
+        card.insertBefore(btn, card.firstChild);
+    }
+    function auditModalCloseButtons(){
+        document.querySelectorAll('.language-picker-card, .puzzle-choice-modal-card, .purchase-confirm-card, .rewarded-ad-card, .daily-gift-card, .shadow-celebration-card, .block-gameover-card, .modal, .guide-bubble').forEach(ensureCloseButton);
+    }
+    function updateLanguageButton(){
+        const btn = document.getElementById('languageSwitchButton');
+        if (!btn) return;
+        const d = dict();
+        if (btn.textContent !== d.menu) btn.textContent = d.menu;
+        btn.onclick = function(event){
+            if (event) { event.preventDefault(); event.stopPropagation(); }
+            window.showLanguagePicker();
+            return false;
+        };
+        btn.setAttribute('aria-haspopup', 'dialog');
+    }
+    window.showLanguagePicker = function showLanguagePicker(){
+        const old = document.getElementById('languagePickerOverlay');
+        if (old) old.remove();
+        const d = dict();
+        const lang = currentLang();
+        const overlay = document.createElement('div');
+        overlay.id = 'languagePickerOverlay';
+        overlay.className = 'language-picker-overlay show';
+        overlay.dataset.zooModalOverlay = 'true';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.innerHTML = `
+            <div class="language-picker-card">
+                <div class="language-picker-title">🌐 ${d.title}</div>
+                <div class="language-picker-text">${d.text}</div>
+                <div class="language-picker-list">
+                    ${Object.entries(LANG_DATA).map(([key, info]) => `<button type="button" class="language-picker-option ${key === lang ? 'active' : ''}" data-lang="${key}">${info.flag} ${info.label}</button>`).join('')}
+                </div>
+            </div>`;
+        document.body.appendChild(overlay);
+        document.body.classList.add('zoo-modal-open');
+        auditModalCloseButtons();
+        overlay.addEventListener('click', function(event){
+            if (event.target === overlay) closeOverlayElement(overlay);
+        });
+        overlay.querySelectorAll('[data-lang]').forEach(btn => {
+            btn.addEventListener('click', function(){
+                const next = btn.dataset.lang || 'ru';
+                if (typeof setLanguage === 'function') setLanguage(next);
+                else { try { localStorage.setItem('zooLanguage', next); } catch(e) {} location.reload(); }
+            });
+        });
+    };
+    window.playPetRoomAnimalVoice = function playPetRoomAnimalVoice(){
+        try { initAudio(); } catch(e) {}
+        const key = window.selectedMainPetKey || (typeof selectedMainPetKey !== 'undefined' ? selectedMainPetKey : 'lion') || 'lion';
+        try { playAnimalSound(key); } catch(e) { try { playSound('click'); } catch(_) {} }
+        try {
+            const name = typeof getAnimalDisplayName === 'function' ? getAnimalDisplayName(key) : '';
+            if (typeof showPetRoomToast === 'function') showPetRoomToast(`${name ? name + ': ' : ''}${dict().voice}`);
+            if (typeof playPetRoomSparkEffect === 'function') playPetRoomSparkEffect('🔊');
+        } catch(e) {}
+    };
+    function updatePetRoomVoiceLabel(){
+        const btn = document.getElementById('petRoomVoiceBtn');
+        if (btn && btn.textContent !== dict().voice) btn.textContent = dict().voice;
+        const title = document.querySelector('.pet-room-mini-games .mini-games-title');
+        const titleText = '🎮 ' + dict().playOther;
+        if (title && title.textContent !== titleText) title.textContent = titleText;
+    }
+    function miniGameLinksHtml(){
+        const d = dict();
+        return `<div class="mini-game-cross-links">
+            <div class="mini-games-title">🎮 ${d.playOther}</div>
+            <button type="button" class="mini-game-cross-card" onclick="setModeAndOpenMap('calm')"><span class="mini-icon">🃏</span>${currentLang()==='en'?'Pairs':currentLang()==='hy'?'Զույգեր':'Найди пары'}</button>
+            <button type="button" class="mini-game-cross-card" onclick="openPuzzle()"><span class="mini-icon">🧩</span>${currentLang()==='en'?'Puzzle':currentLang()==='hy'?'Փազլ':'Пазл'}</button>
+            <button type="button" class="mini-game-cross-card" onclick="openZooBlock()"><span class="mini-icon">🧱</span>Zoo Block</button>
+            <button type="button" class="mini-game-cross-card" onclick="openShadowGame()"><span class="mini-icon">🦁</span>${currentLang()==='en'?'Find animal':currentLang()==='hy'?'Գտիր կենդանուն':'Найди животное'}</button>
+        </div>`;
+    }
+    function getNextUnlockedPuzzleImage(){
+        try {
+            const unlocked = (Array.isArray(unlockedPuzzleImages) ? unlockedPuzzleImages : []);
+            if (!Array.isArray(puzzleImageCatalog)) return null;
+            return puzzleImageCatalog.find(item => unlocked.includes(item.key) && puzzleCurrentImage && item.key !== puzzleCurrentImage.id) || null;
+        } catch(e) { return null; }
+    }
+    function getNextLockedPuzzleImage(){
+        try {
+            const unlocked = (Array.isArray(unlockedPuzzleImages) ? unlockedPuzzleImages : []);
+            if (!Array.isArray(puzzleImageCatalog)) return null;
+            return puzzleImageCatalog.find(item => !unlocked.includes(item.key)) || null;
+        } catch(e) { return null; }
+    }
+    function getNextPuzzleStageChoice(){
+        try {
+            const next = puzzleStages.find(item => item.id === puzzleStageId + 1);
+            if (!next) return null;
+            return next;
+        } catch(e) { return null; }
+    }
+    window.showPuzzleWinPop = function showPuzzleWinPop(reward, unlockedStageText = ''){
+        const oldToast = document.querySelector('.puzzle-win-pop');
+        if (oldToast) oldToast.remove();
+        const old = document.getElementById('puzzleChoiceOverlay');
+        if (old) old.remove();
+        const lang = currentLang();
+        const nextStage = getNextPuzzleStageChoice();
+        const otherImage = getNextUnlockedPuzzleImage();
+        const lockedImage = getNextLockedPuzzleImage();
+        const title = lang === 'en' ? 'Puzzle complete!' : lang === 'hy' ? 'Փազլը հավաքված է!' : 'Пазл собран!';
+        const text = lang === 'en'
+            ? `Reward: +${reward} coins 🪙${unlockedStageText || ''}`
+            : lang === 'hy'
+                ? `Պարգև՝ +${reward} մետաղադրամ 🪙${unlockedStageText || ''}`
+                : `Награда: +${reward} монет 🪙${unlockedStageText || ''}`;
+        const overlay = document.createElement('div');
+        overlay.id = 'puzzleChoiceOverlay';
+        overlay.className = 'puzzle-choice-modal-overlay show';
+        overlay.dataset.zooModalOverlay = 'true';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        const actions = [];
+        if (nextStage && typeof isPuzzleStageUnlocked === 'function' && isPuzzleStageUnlocked(nextStage.id)) {
+            actions.push(`<button type="button" class="puzzle-choice-action primary" data-action="next-stage">${lang==='en'?'Next mode':lang==='hy'?'Հաջորդ ռեժիմ':'Следующий режим'} ${nextStage.short}</button>`);
+        } else if (nextStage) {
+            actions.push(`<button type="button" class="puzzle-choice-action orange" data-action="open-stage">${lang==='en'?'Open next level':lang==='hy'?'Բացել հաջորդ փուլը':'Открыть следующий уровень'} ${nextStage.short}</button>`);
+        }
+        if (otherImage) {
+            actions.push(`<button type="button" class="puzzle-choice-action purple" data-action="other-image">${lang==='en'?'Other picture':lang==='hy'?'Ուրիշ նկար':'Другая картинка'}: ${otherImage.label}</button>`);
+        } else if (lockedImage) {
+            actions.push(`<button type="button" class="puzzle-choice-action orange" data-action="open-image">${lang==='en'?'Open new picture':lang==='hy'?'Բացել նոր նկարը':'Открыть новую картинку'}: ${lockedImage.label}</button>`);
+        }
+        actions.push(`<button type="button" class="puzzle-choice-action" data-action="again">${lang==='en'?'Play again':lang==='hy'?'Խաղալ նորից':'Сыграть ещё раз'}</button>`);
+        overlay.innerHTML = `<div class="puzzle-choice-modal-card">
+            <div class="puzzle-choice-title">🎉 ${title}</div>
+            <div class="puzzle-choice-text">${text}</div>
+            <div class="puzzle-choice-actions">${actions.join('')}</div>
+            ${miniGameLinksHtml()}
+        </div>`;
+        document.body.appendChild(overlay);
+        document.body.classList.add('zoo-modal-open');
+        auditModalCloseButtons();
+        overlay.addEventListener('click', function(event){ if (event.target === overlay) closeOverlayElement(overlay); });
+        overlay.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', function(){
+                const action = btn.dataset.action;
+                closeOverlayElement(overlay);
+                if (action === 'next-stage' && nextStage) setPuzzleStage(nextStage.id);
+                else if (action === 'open-stage' && nextStage) buyPuzzleStage(nextStage.id);
+                else if (action === 'other-image' && otherImage) setPuzzleImage(otherImage.key, otherImage.label, animalImageSrc(otherImage.key));
+                else if (action === 'open-image' && lockedImage) buyPuzzleImage(lockedImage.key);
+                else { try { buildPuzzlePieces(); shufflePuzzle(false); } catch(e) {} }
+            });
+        });
+        try { playSound('win'); } catch(e) {}
+    };
+    const oldRenderPetRoom = window.renderPetRoom;
+    if (typeof oldRenderPetRoom === 'function' && !oldRenderPetRoom.__stage42aWrapped) {
+        const wrapped = function(){
+            const result = oldRenderPetRoom.apply(this, arguments);
+            updatePetRoomVoiceLabel();
+            return result;
+        };
+        wrapped.__stage42aWrapped = true;
+        window.renderPetRoom = wrapped;
+    }
+    document.addEventListener('click', function(event){
+        const langBtn = event.target && event.target.closest ? event.target.closest('#languageSwitchButton') : null;
+        if (langBtn) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.showLanguagePicker();
         }
     }, true);
-
-    window.assistantOverlayAuditStage34 = { update: auditTick };
+    document.addEventListener('keydown', function(event){
+        if (event.key !== 'Escape') return;
+        const open = document.querySelector('.language-picker-overlay.show, .puzzle-choice-modal-overlay.show, .purchase-confirm-overlay.show, .rewarded-ad-overlay.show, .daily-gift-overlay[style*="grid"], .shadow-celebration-overlay.show, .block-gameover-overlay.show, .overlay.show, .guide-overlay.show');
+        if (open) closeOverlayElement(open);
+    }, true);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function(){ updateLanguageButton(); updatePetRoomVoiceLabel(); auditModalCloseButtons(); }, { once: true });
+    } else {
+        updateLanguageButton(); updatePetRoomVoiceLabel(); auditModalCloseButtons();
+    }
+    const observer = new MutationObserver(function(){ auditModalCloseButtons(); updateLanguageButton(); updatePetRoomVoiceLabel(); });
+    try { observer.observe(document.body, { childList: true, subtree: true }); } catch(e) {}
+    window.addEventListener('load', function(){ updateLanguageButton(); updatePetRoomVoiceLabel(); auditModalCloseButtons(); }, { once: true });
 })();
+
 </script>
 
 </body>
