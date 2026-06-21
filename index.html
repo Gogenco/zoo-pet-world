@@ -4931,6 +4931,34 @@ h1, h2, h3 {
     background: linear-gradient(135deg, #fb7185, #e11d48);
 }
 
+/* ── i18n language selector (Stage 4) ── */
+.parent-setting-lang { flex-wrap: wrap; gap: 10px; }
+.lang-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+.lang-btn {
+    padding: 8px 14px;
+    border: 2px solid rgba(124,58,237,.25);
+    border-radius: 999px;
+    background: rgba(255,255,255,.7);
+    color: #4c1d95;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+}
+.lang-btn:hover  { background: rgba(124,58,237,.12); border-color: rgba(124,58,237,.5); }
+.lang-btn-active {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(109,40,217,.35);
+}
+
 @media (max-width: 380px) {
     .avatar-grid {
         grid-template-columns: repeat(4, 1fr);
@@ -9406,7 +9434,7 @@ button,
     <div class="daily-gift-card">
         <div class="daily-gift-box">🎁</div>
         <h2>Ежедневный подарок</h2>
-        <p id="dailyGiftText">Сегодня ты получил +20 монет!</p>
+        <p id="dailyGiftText">Загружаем подарок...</p>
         <button class="btn btn-purple" onclick="claimDailyGift()">Забрать подарок</button>
     </div>
 </div>
@@ -10836,8 +10864,20 @@ let guideSeenState = {};
 try { guideSeenState = JSON.parse(localStorage.getItem(GUIDE_STORAGE_KEY) || "{}"); } catch (e) { guideSeenState = {}; }
 let activeGuide = null;
 
-function guideT(ru, en) {
-    try { return getCurrentLanguage && getCurrentLanguage() === "en" ? en : ru; } catch (e) { return ru; }
+function guideT(ru, en, voiceKey) {
+    // voiceKey: future audio key, no audio played yet (Stage 4 foundation)
+    try {
+        const lang = (typeof getCurrentLanguage === 'function') ? getCurrentLanguage() : 'ru';
+        if (lang === 'en') return en || ru;
+        if (lang === 'ru') return ru;
+        // HY or other future languages: try t() with voiceKey as i18n key,
+        // fall back to ru string if no key provided or key missing
+        if (typeof t === 'function' && voiceKey) {
+            const translated = t(voiceKey);
+            if (translated && translated !== voiceKey) return translated;
+        }
+        return ru; // safe fallback
+    } catch (e) { return ru; }
 }
 
 function markGuideSeen(screenKey) {
@@ -10889,19 +10929,19 @@ function getGuideFlow(screenKey) {
                 selector: '.big-play-card',
                 title: guideT('Мой зоопарк', 'My Zoo'),
                 text: guideT('Это будущая главная территория игры. Мини-игры находятся ниже.', 'Future main zoo area. Mini-games are below.'),
-                action: 'tap', arrow: 'down'
+                action: 'tap', arrow: 'down', voiceKey: 'guide.menu.my_zoo'
             },
             {
                 selector: 'button.feature-card[onclick="openPetRoom()"]',
                 title: guideT('Комната питомца', 'Pet Room'),
                 text: guideT('Корми, мой и играй со своим зверьком.', 'Feed, wash, and play with your pet.'),
-                action: 'tap', arrow: 'down'
+                action: 'tap', arrow: 'down', voiceKey: 'guide.menu.pet_room'
             },
             {
                 selector: 'button.feature-card[onclick="openColoring()"]',
                 title: guideT('Раскраска', 'Coloring'),
                 text: guideT('30 раскрасок — выбери цвет и нажми на область.', '30 coloring pages — pick a color and tap an area.'),
-                action: 'tap', arrow: 'down', fallback: 'skip'
+                action: 'tap', arrow: 'down', fallback: 'skip', voiceKey: 'guide.menu.coloring'
             },
             {
                 selector: '.feature-card-grid',
@@ -10916,7 +10956,7 @@ function getGuideFlow(screenKey) {
                 selector: '.pet-room-action.feed, #petRoomFoodBtn',
                 title: guideT('Покормить питомца', 'Feed your pet'),
                 text: guideT(`Нажми на Еду — откроется лента с едой для ${petName}.`, `Tap Food to open the food rail for ${petName}.`),
-                action: 'tap', arrow: 'down'
+                action: 'tap', arrow: 'down', voiceKey: 'guide.petroom.feed'
             },
             {
                 selector: '#petRoomBars, .pet-room-bars',
@@ -10952,6 +10992,7 @@ function getGuideFlow(screenKey) {
             {
                 selector: '.coloring-palette-grid, #coloringPaletteGrid',
                 title: guideT('Выбери цвет', 'Pick a color'),
+                voiceKey: 'guide.coloring.pick_color',
                 text: guideT('Нажми на любой кружок — цвет выберется. Листай вправо, чтобы увидеть все цвета.', 'Tap any circle to pick a color. Swipe right to see all colors.'),
                 action: 'select-color', arrow: 'up', fallback: 'text'
             },
@@ -11033,6 +11074,7 @@ function getGuideFlow(screenKey) {
             {
                 selector: '#board, .memory-board',
                 title: guideT('Найди одинаковые карточки', 'Find matching cards'),
+                voiceKey: 'guide.game.find_pairs',
                 text: guideT('Открывай по две карточки, ищи одинаковые. Если пары нет — запоминай!', 'Open two cards and find the matching pair. Remember them if wrong!'),
                 action: 'tap', arrow: 'down', fallback: 'text'
             }
@@ -14830,7 +14872,9 @@ function finishZooBlockGame() {
     zooBlockGameOver = true;
     zooBlockBestScore = Math.max(zooBlockBestScore, zooBlockScore);
     zooBlockGamesPlayed++;
-    const reward = halfReward(Math.max(8, Math.floor(zooBlockScore / 75)));
+    // Stage 4.1 fix: removed halfReward — Zoo Block now pays full score-based reward.
+    // Minimum 8 coins per game, scales with score.
+    const reward = Math.max(8, Math.floor(zooBlockScore / 75));
     coins += reward;
     updateTaskProgress("block", 1);
     updateTaskProgress("play", 1);
@@ -14994,7 +15038,8 @@ function getShadowDifficulty(index) {
     const block = Math.floor(index / 10);
     const targetCount = Math.min(1 + block, 5);
     const optionCount = Math.min(4 + block * 2, 12);
-    const reward = halfReward(Math.max(5, 5 + block * 3));
+    // Stage 4.1 fix: removed halfReward — Shadow now pays full per-animal reward.
+    const reward = Math.max(5, 5 + block * 3);
     const label = block === 0 ? 'Лёгкий' : block === 1 ? 'Средний' : block === 2 ? 'Сложный' : block === 3 ? 'Мастер' : 'Легенда';
     return { block, targetCount, optionCount, reward, label };
 }
@@ -16836,7 +16881,7 @@ const i18nMap = {
     "Награды за игру": "Game rewards",
     "Награды за прогресс, животных и память": "Rewards for progress, animals and memory",
     "Ежедневный подарок": "Daily Gift",
-    "Сегодняшний подарок: +20 монет!": "Today’s gift: +20 coins!",
+    "Сегодняшний подарок: ": "Today’s gift: ",
     "Забрать подарок": "Claim gift",
     "Найди 50 пар": "Find 50 pairs",
     "Тренируй память на разных уровнях.": "Train memory on different levels.",
@@ -17178,13 +17223,22 @@ const i18nMap = {
 };
 
 function getCurrentLanguage() {
-    return safeStorage.get("zooLanguage", "ru");
+    // Overridden by assets/js/features/i18n.js (Stage 4).
+    // This stub exists as a fallback if i18n.js fails to load.
+    try { return localStorage.getItem("zooLanguage") || "ru"; } catch(e) { return "ru"; }
 }
 
 function toggleLanguage() {
-    const next = getCurrentLanguage() === "ru" ? "en" : "ru";
-    safeStorage.set("zooLanguage", next);
-    location.reload();
+    // Legacy binary toggle — replaced by setLanguage() from i18n.js.
+    // Kept for any old onclick handlers that may still reference it.
+    if (typeof setLanguage === 'function') {
+        const next = getCurrentLanguage() === "ru" ? "en" : "ru";
+        setLanguage(next);
+    } else {
+        const next = getCurrentLanguage() === "ru" ? "en" : "ru";
+        try { localStorage.setItem("zooLanguage", next); } catch(e) {}
+        location.reload();
+    }
 }
 
 function translateTextValue(value) {
@@ -17296,7 +17350,9 @@ function getDailyGiftStreakForClaim() {
 }
 
 function getDailyGiftReward(streak = getDailyGiftStreakForClaim()) {
-    return halfReward(20 + Math.min(30, Math.max(0, (Number(streak || 1) - 1) * 5)));
+    // Stage 4.1 fix: removed halfReward — now pays full 20-50 coins.
+    // streak=1→20, streak=7→50 (capped), aligned with UI text.
+    return 20 + Math.min(30, Math.max(0, (Number(streak || 1) - 1) * 5));
 }
 
 function checkDailyGift() {
@@ -17435,6 +17491,7 @@ setTimeout(() => {
 <script id="coloring-inline-assets">
 // coloring images moved to assets/js/features/coloringImages.js (lazy-loaded)
 </script>
+<script src="assets/js/features/i18n.js"></script>
 <script src="assets/js/features/cleanRoomScene.js"></script>
 <script src="assets/js/zoo_economy_rewards_step2.js" async></script>
 
@@ -18182,6 +18239,492 @@ body.low-performance .rewarded-ad-overlay {
 .guide-hand.scroll { animation: guideDragVertical 1.5s infinite ease-in-out; }
 body.low-performance .guide-overlay { background: rgba(15, 23, 42, .42) !important; }
 </style>
+
+
+
+<!-- Assistant hotfix 3.2: hard-bind guide button above all game layers -->
+<style id="assistant-stage3-2-guide-button-hotfix">
+#guideFab.guide-fab,
+#guideFab {
+    position: fixed !important;
+    right: max(16px, env(safe-area-inset-right)) !important;
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+    z-index: 2147483000 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+#guideOverlay.guide-overlay {
+    z-index: 2147482000 !important;
+    pointer-events: auto !important;
+}
+#guideHighlight { z-index: 2147482001 !important; }
+#guideArrow { z-index: 2147482002 !important; }
+#guideHand { z-index: 2147482003 !important; }
+#guideOverlay .guide-bubble,
+.guide-bubble { z-index: 2147482004 !important; }
+body.guide-open #guideFab { pointer-events: none !important; }
+</style>
+<script id="assistant-stage3-2-guide-button-hotfix-script">
+(function hardBindGuideFab(){
+    'use strict';
+    const SAFE_TITLE_RU = 'Подсказка';
+    const SAFE_TEXT_RU = 'Я здесь. Нажимай кнопки, листай списки и выбирай элементы на экране. Если рамка не появилась, значит для этого элемента ещё нет точной подсказки.';
+    const SAFE_TITLE_EN = 'Help';
+    const SAFE_TEXT_EN = 'I am here. Tap buttons, scroll lists, and choose items on the screen. If the frame is not shown, this exact element does not have a guide step yet.';
+
+    function currentLangIsEn(){
+        try { return typeof getCurrentLanguage === 'function' && getCurrentLanguage() === 'en'; } catch(e) { return false; }
+    }
+
+    function getVisibleScreenSafe(){
+        try {
+            if (typeof getVisibleScreenId === 'function') return getVisibleScreenId();
+            const shown = document.querySelector('.screen.show, section.show, [id$="Screen"].show');
+            return shown && shown.id ? shown.id : 'menuScreen';
+        } catch(e) { return 'menuScreen'; }
+    }
+
+    function ensureManualGuideFallback(){
+        const overlay = document.getElementById('guideOverlay');
+        const title = document.getElementById('guideBubbleTitle');
+        const text = document.getElementById('guideBubbleText');
+        const next = document.getElementById('guideNextBtn');
+        const highlight = document.getElementById('guideHighlight');
+        const arrow = document.getElementById('guideArrow');
+        const hand = document.getElementById('guideHand');
+        if (!overlay || !title || !text) return false;
+        if (highlight) {
+            highlight.style.width = '0px';
+            highlight.style.height = '0px';
+            highlight.style.left = '-9999px';
+            highlight.style.top = '-9999px';
+        }
+        if (arrow) arrow.classList.remove('show');
+        if (hand) hand.className = 'guide-hand';
+        title.textContent = currentLangIsEn() ? SAFE_TITLE_EN : SAFE_TITLE_RU;
+        text.textContent = currentLangIsEn() ? SAFE_TEXT_EN : SAFE_TEXT_RU;
+        if (next) next.textContent = currentLangIsEn() ? 'Done' : 'Готово';
+        window.activeGuide = window.activeGuide || null;
+        overlay.classList.add('show');
+        document.body.classList.add('guide-open');
+        return true;
+    }
+
+    function openGuideFromFab(event){
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+        }
+        const overlay = document.getElementById('guideOverlay');
+        const wasOpen = !!(overlay && overlay.classList.contains('show'));
+        try {
+            if (typeof startGuideForCurrentScreen === 'function') {
+                startGuideForCurrentScreen();
+            } else if (typeof startGuide === 'function') {
+                startGuide(getVisibleScreenSafe(), false);
+            }
+        } catch (e) {
+            console.warn('Guide start failed, showing safe fallback', e);
+        }
+        window.setTimeout(function(){
+            const overlayNow = document.getElementById('guideOverlay');
+            const opened = !!(overlayNow && overlayNow.classList.contains('show'));
+            if (!opened || wasOpen === opened && !document.body.classList.contains('guide-open')) {
+                ensureManualGuideFallback();
+            } else {
+                document.body.classList.add('guide-open');
+            }
+        }, 30);
+        return false;
+    }
+
+    function closeGuideBodyState(){
+        const overlay = document.getElementById('guideOverlay');
+        if (!overlay || !overlay.classList.contains('show')) {
+            document.body.classList.remove('guide-open');
+        }
+    }
+
+    function bind(){
+        const fab = document.getElementById('guideFab');
+        if (!fab || fab.dataset.assistantStage32Bound === '1') return;
+        fab.dataset.assistantStage32Bound = '1';
+        fab.setAttribute('type', 'button');
+        fab.setAttribute('aria-label', currentLangIsEn() ? 'Show help' : 'Показать подсказки');
+        fab.onclick = openGuideFromFab;
+        ['click','pointerup','touchend'].forEach(function(type){
+            fab.addEventListener(type, openGuideFromFab, { capture: true, passive: false });
+        });
+    }
+
+    document.addEventListener('click', function(event){
+        const fab = event.target && event.target.closest ? event.target.closest('#guideFab') : null;
+        if (fab) openGuideFromFab(event);
+    }, true);
+
+    document.addEventListener('pointerup', function(event){
+        const fab = event.target && event.target.closest ? event.target.closest('#guideFab') : null;
+        if (fab) openGuideFromFab(event);
+    }, true);
+
+    const oldHide = window.hideGuideOverlay;
+    if (typeof oldHide === 'function' && !oldHide.__assistantStage32Wrapped) {
+        const wrapped = function(){
+            const result = oldHide.apply(this, arguments);
+            document.body.classList.remove('guide-open');
+            return result;
+        };
+        wrapped.__assistantStage32Wrapped = true;
+        window.hideGuideOverlay = wrapped;
+    }
+
+    const oldSkip = window.skipGuide;
+    if (typeof oldSkip === 'function' && !oldSkip.__assistantStage32Wrapped) {
+        const wrappedSkip = function(){
+            const result = oldSkip.apply(this, arguments);
+            document.body.classList.remove('guide-open');
+            return result;
+        };
+        wrappedSkip.__assistantStage32Wrapped = true;
+        window.skipGuide = wrappedSkip;
+    }
+
+    const oldNext = window.nextGuideStep;
+    if (typeof oldNext === 'function' && !oldNext.__assistantStage32Wrapped) {
+        const wrappedNext = function(){
+            const result = oldNext.apply(this, arguments);
+            window.setTimeout(closeGuideBodyState, 20);
+            return result;
+        };
+        wrappedNext.__assistantStage32Wrapped = true;
+        window.nextGuideStep = wrappedNext;
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bind, { once: true });
+    } else {
+        bind();
+    }
+    window.addEventListener('load', bind, { once: true });
+    window.openGuideFromFab = openGuideFromFab;
+})();
+</script>
+
+
+<style id="assistant-stage3-3-purchase-modal-hotfix">
+/* Hotfix 3.3: purchase confirmations must be real centered modals on every screen. */
+.purchase-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2650;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    background: rgba(15, 23, 42, .44);
+    pointer-events: none;
+}
+.purchase-confirm-overlay.show {
+    display: flex !important;
+    pointer-events: auto;
+}
+.purchase-confirm-card {
+    width: min(92vw, 410px);
+    max-height: calc(100vh - 36px);
+    overflow: auto;
+    border-radius: 32px;
+    padding: 22px 20px 18px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff, #fff7ed 58%, #ecfdf5);
+    color: #1f2937;
+    border: 4px solid rgba(255, 255, 255, .92);
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .30);
+    transform: translateZ(0);
+    animation: purchaseConfirmPop .22s ease-out;
+}
+.purchase-confirm-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 10px;
+    display: grid;
+    place-items: center;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #fef3c7, #bbf7d0, #bfdbfe);
+    font-size: 36px;
+    box-shadow: 0 7px 0 rgba(124, 58, 237, .14);
+}
+.purchase-confirm-title {
+    margin: 2px 0 8px;
+    color: #4c1d95;
+    font-size: 24px;
+    line-height: 1.12;
+    font-weight: 1000;
+}
+.purchase-confirm-text {
+    margin: 0 auto 10px;
+    color: #334155;
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 800;
+}
+.purchase-confirm-price {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    margin: 0 auto 14px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    color: #166534;
+    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
+    font-weight: 1000;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.66);
+}
+.purchase-confirm-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+}
+.purchase-confirm-actions .btn {
+    width: 100%;
+    min-height: 50px;
+    margin: 0;
+    white-space: normal;
+    line-height: 1.15;
+}
+@keyframes purchaseConfirmPop {
+    from { opacity: 0; transform: scale(.92) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@media (max-width: 520px) {
+    .purchase-confirm-card { width: min(94vw, 360px); padding: 18px 16px 16px; border-radius: 28px; }
+    .purchase-confirm-title { font-size: 21px; }
+    .purchase-confirm-text { font-size: 14px; }
+    .purchase-confirm-actions { grid-template-columns: 1fr; }
+}
+body.low-performance .purchase-confirm-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 23, 42, .38);
+}
+body.low-performance .purchase-confirm-card {
+    box-shadow: 0 14px 36px rgba(15, 23, 42, .22);
+    animation: none;
+}
+</style>
+
+<style id="assistant-stage3-4-overlay-audit">
+/* Stage 3.4 UI Stability / Overlay Audit: one safe modal layer for all popups. */
+#overlay.overlay,
+#blockGameOverOverlay.block-gameover-overlay,
+#shadowCelebrationOverlay.shadow-celebration-overlay,
+#dailyGiftOverlay.daily-gift-overlay,
+#purchaseConfirmOverlay.purchase-confirm-overlay,
+#rewardedAdOverlay.rewarded-ad-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: manipulation !important;
+}
+
+#overlay.overlay.show,
+#blockGameOverOverlay.block-gameover-overlay.show,
+#shadowCelebrationOverlay.shadow-celebration-overlay.show,
+#purchaseConfirmOverlay.purchase-confirm-overlay.show,
+#rewardedAdOverlay.rewarded-ad-overlay.show {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: auto !important;
+}
+
+#purchaseConfirmOverlay.purchase-confirm-overlay,
+#rewardedAdOverlay.rewarded-ad-overlay {
+    z-index: 2147482600 !important;
+    background: rgba(15, 23, 42, .44) !important;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+#rewardedAdOverlay.rewarded-ad-overlay { z-index: 2147482550 !important; }
+#guideOverlay.guide-overlay { z-index: 2147482000 !important; }
+#overlay.overlay { z-index: 2147481500 !important; }
+#blockGameOverOverlay.block-gameover-overlay { z-index: 2147481500 !important; }
+#shadowCelebrationOverlay.shadow-celebration-overlay { z-index: 2147481500 !important; }
+#dailyGiftOverlay.daily-gift-overlay { z-index: 2147481500 !important; }
+
+#dailyGiftOverlay.daily-gift-overlay {
+    place-items: center !important;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)) !important;
+}
+#dailyGiftOverlay.daily-gift-overlay.show { display: grid !important; }
+
+.purchase-confirm-card,
+.rewarded-ad-card,
+.modal,
+.block-gameover-card,
+.shadow-celebration-card,
+.daily-gift-card,
+.guide-bubble {
+    box-sizing: border-box !important;
+    max-width: min(94vw, 430px) !important;
+    max-height: calc(100vh - 36px) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+.purchase-confirm-actions .btn,
+.rewarded-ad-actions .btn,
+#purchaseConfirmYes,
+#purchaseConfirmNo,
+#rewardedAdActionBtn,
+.guide-btn,
+.modal .btn,
+.block-gameover-card .btn,
+.shadow-celebration-card .btn,
+.daily-gift-card .btn {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+body.zoo-modal-open #guideFab {
+    pointer-events: none !important;
+    opacity: .36 !important;
+}
+body.zoo-modal-open .page-scroll-hint,
+body.zoo-modal-open #pageScrollHint {
+    pointer-events: none !important;
+    opacity: 0 !important;
+}
+
+body.low-performance #purchaseConfirmOverlay.purchase-confirm-overlay,
+body.low-performance #rewardedAdOverlay.rewarded-ad-overlay,
+body.low-performance #overlay.overlay,
+body.low-performance #blockGameOverOverlay.block-gameover-overlay,
+body.low-performance #shadowCelebrationOverlay.shadow-celebration-overlay,
+body.low-performance #dailyGiftOverlay.daily-gift-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 23, 42, .36) !important;
+}
+body.low-performance .purchase-confirm-card,
+body.low-performance .rewarded-ad-card,
+body.low-performance .modal,
+body.low-performance .block-gameover-card,
+body.low-performance .shadow-celebration-card,
+body.low-performance .daily-gift-card {
+    animation: none !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, .22) !important;
+}
+</style>
+
+<script id="assistant-stage3-4-overlay-audit-script">
+(function overlayAuditStage34(){
+    'use strict';
+    const MODAL_SELECTORS = [
+        '#overlay.overlay',
+        '#blockGameOverOverlay.block-gameover-overlay',
+        '#shadowCelebrationOverlay.shadow-celebration-overlay',
+        '#dailyGiftOverlay.daily-gift-overlay',
+        '#purchaseConfirmOverlay.purchase-confirm-overlay',
+        '#rewardedAdOverlay.rewarded-ad-overlay'
+    ];
+    const GUIDE_SELECTOR = '#guideOverlay.guide-overlay';
+
+    function hasVisibleDisplay(el) {
+        if (!el) return false;
+        if (el.classList && el.classList.contains('show')) return true;
+        if (el.id === 'dailyGiftOverlay') {
+            return (el.style && el.style.display && el.style.display !== 'none');
+        }
+        return false;
+    }
+
+    function normalizeOverlay(el) {
+        if (!el || el.dataset.assistantStage34Audited === '1') return;
+        el.dataset.assistantStage34Audited = '1';
+        if (!el.getAttribute('role')) el.setAttribute('role', 'dialog');
+        if (el.id !== 'guideOverlay' && !el.getAttribute('aria-modal')) el.setAttribute('aria-modal', 'true');
+        if (el.id === 'purchaseConfirmOverlay') el.classList.add('purchase-confirm-overlay');
+        if (el.id === 'rewardedAdOverlay') el.classList.add('rewarded-ad-overlay');
+    }
+
+    function updateModalBodyState() {
+        let modalOpen = false;
+        MODAL_SELECTORS.forEach(selector => {
+            const el = document.querySelector(selector);
+            normalizeOverlay(el);
+            if (hasVisibleDisplay(el)) modalOpen = true;
+        });
+        const guide = document.querySelector(GUIDE_SELECTOR);
+        normalizeOverlay(guide);
+        document.body.classList.toggle('zoo-modal-open', modalOpen);
+        document.body.classList.toggle('guide-open', !!(guide && guide.classList.contains('show')));
+    }
+
+    function rebindDynamicModalButtons() {
+        ['purchaseConfirmYes','purchaseConfirmNo','rewardedAdActionBtn','guideNextBtn'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (!btn || btn.dataset.assistantStage34TouchBound === '1') return;
+            btn.dataset.assistantStage34TouchBound = '1';
+            btn.setAttribute('type', 'button');
+            btn.style.touchAction = 'manipulation';
+        });
+    }
+
+    function auditTick() {
+        updateModalBodyState();
+        rebindDynamicModalButtons();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', auditTick, { once: true });
+    } else {
+        auditTick();
+    }
+    window.addEventListener('load', auditTick, { once: true });
+
+    const observer = new MutationObserver(function(mutations){
+        let shouldUpdate = false;
+        for (const mutation of mutations) {
+            if (mutation.type === 'childList') { shouldUpdate = true; break; }
+            if (mutation.type === 'attributes' && (mutation.attributeName === 'class' || mutation.attributeName === 'style')) { shouldUpdate = true; break; }
+        }
+        if (shouldUpdate) requestAnimationFrame(auditTick);
+    });
+    observer.observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ['class','style'] });
+
+    document.addEventListener('keydown', function(event){
+        if (event.key !== 'Escape') return;
+        const purchase = document.getElementById('purchaseConfirmOverlay');
+        const rewarded = document.getElementById('rewardedAdOverlay');
+        if (purchase && purchase.classList.contains('show') && typeof window.closePurchaseConfirm === 'function') {
+            window.closePurchaseConfirm();
+            event.preventDefault();
+            event.stopPropagation();
+        } else if (rewarded && rewarded.classList.contains('show')) {
+            // Do not close while a mock ad countdown is running; the action button will handle completion.
+            const btn = document.getElementById('rewardedAdActionBtn');
+            if (btn && !btn.disabled) {
+                rewarded.classList.remove('show');
+                rewarded.style.display = 'none';
+                document.body.classList.remove('zoo-modal-open');
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }
+    }, true);
+
+    window.assistantOverlayAuditStage34 = { update: auditTick };
+})();
+</script>
 
 </body>
 </html>

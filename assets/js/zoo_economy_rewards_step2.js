@@ -407,7 +407,7 @@
 
 // Economy balance, purchase confirmation, rewarded ads mock.
 (function(){
-  const PRICE_MULTIPLIER = 5;
+  const PRICE_MULTIPLIER = 3;  // Stage 4.1: was 5 — pets feel achievable faster
   const AD_SECONDS = 30;
   const AD_VIEWS_REQUIRED = 2;
   const AD_COIN_REWARD = 120;
@@ -417,6 +417,7 @@
   const HINT_KEY = 'zooHintTickets';
 
   window.halfReward = function halfReward(value) {
+    // Kept only for legacy call sites. Stage 4.1 no longer applies it to daily tasks, achievements, daily gift, Zoo Block, or Shadow.
     return Math.max(1, Math.ceil((Number(value) || 0) / 2));
   };
 
@@ -440,7 +441,7 @@
     try { puzzleStages.forEach(item => scalePriceObject(item, 'unlockPrice')); } catch(e) {}
     try { puzzleImageCatalog.forEach(item => scalePriceObject(item, 'price')); } catch(e) {}
     try { coloringTemplatesCatalog.forEach(item => scalePriceObject(item, 'price')); } catch(e) {}
-    try { achievementCatalog.forEach(item => { if (!item.__stage616RewardScaled) { item.__stage616OriginalReward = Number(item.reward || 0); item.reward = halfReward(item.reward); item.__stage616RewardScaled = true; } }); } catch(e) {}
+    try { achievementCatalog.forEach(item => { if (!item.__stage616RewardScaled) { item.__stage616OriginalReward = Number(item.reward || 0); /* Stage 4.1: achievements now keep full reward. */ item.__stage616RewardScaled = true; } }); } catch(e) {}
   }
 
   scaleStaticEconomy();
@@ -465,7 +466,7 @@
       list.forEach(task => {
         if (!task.__stage616RewardScaled) {
           task.__stage616OriginalReward = Number(task.reward || 0);
-          task.reward = halfReward(task.reward);
+          // Stage 4.1: daily tasks now pay full reward. Do not halfReward here.
           task.__stage616RewardScaled = true;
         }
       });
@@ -473,12 +474,161 @@
     };
   }
 
+  function ensurePurchaseConfirmStyles(){
+    if (document.getElementById('purchaseConfirmModalStyles')) return;
+    const style = document.createElement('style');
+    style.id = 'purchaseConfirmModalStyles';
+    style.textContent = `
+      .purchase-confirm-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2650;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+        background: rgba(15, 23, 42, .44);
+        pointer-events: none;
+      }
+      .purchase-confirm-overlay.show {
+        display: flex !important;
+        pointer-events: auto !important;
+      }
+      .purchase-confirm-card {
+        width: min(92vw, 410px);
+        max-height: calc(100vh - 36px);
+        overflow: auto;
+        border-radius: 32px;
+        padding: 22px 20px 18px;
+        text-align: center;
+        background: linear-gradient(180deg, #ffffff, #fff7ed 58%, #ecfdf5);
+        color: #1f2937;
+        border: 4px solid rgba(255, 255, 255, .92);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .30);
+        transform: translateZ(0);
+        animation: purchaseConfirmPop .22s ease-out;
+      }
+      .purchase-confirm-icon {
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 10px;
+        display: grid;
+        place-items: center;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #fef3c7, #bbf7d0, #bfdbfe);
+        font-size: 36px;
+        box-shadow: 0 7px 0 rgba(124, 58, 237, .14);
+      }
+      .purchase-confirm-title {
+        margin: 2px 0 8px;
+        color: #4c1d95;
+        font-size: 24px;
+        line-height: 1.12;
+        font-weight: 1000;
+      }
+      .purchase-confirm-text {
+        margin: 0 auto 10px;
+        color: #334155;
+        font-size: 16px;
+        line-height: 1.35;
+        font-weight: 800;
+      }
+      .purchase-confirm-price {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        margin: 0 auto 14px;
+        padding: 7px 13px;
+        border-radius: 999px;
+        color: #166534;
+        background: linear-gradient(180deg, #dcfce7, #bbf7d0);
+        font-weight: 1000;
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,.66);
+      }
+      .purchase-confirm-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        align-items: stretch;
+      }
+      .purchase-confirm-actions .btn {
+        width: 100%;
+        touch-action: manipulation;
+        min-height: 50px;
+        margin: 0;
+        white-space: normal;
+        line-height: 1.15;
+      }
+      @keyframes purchaseConfirmPop {
+        from { opacity: 0; transform: scale(.92) translateY(8px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      @media (max-width: 520px) {
+        .purchase-confirm-card { width: min(94vw, 360px); padding: 18px 16px 16px; border-radius: 28px; }
+        .purchase-confirm-title { font-size: 21px; }
+        .purchase-confirm-text { font-size: 14px; }
+        .purchase-confirm-actions { grid-template-columns: 1fr; }
+      }
+      body.low-performance .purchase-confirm-overlay {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(15, 23, 42, .38);
+      }
+      body.low-performance .purchase-confirm-card {
+        box-shadow: 0 14px 36px rgba(15, 23, 42, .22);
+        animation: none;
+      }
+      body.zoo-modal-open #guideFab {
+        pointer-events: none !important;
+        opacity: .42;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function applyOverlayFailsafe(overlay, isOpen){
+    if (!overlay) return;
+    overlay.dataset.zooModalOverlay = 'true';
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.zIndex = '2147482600';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.padding = 'max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom))';
+    overlay.style.background = 'rgba(15, 23, 42, .44)';
+    overlay.style.overscrollBehavior = 'contain';
+    overlay.style.touchAction = 'manipulation';
+    overlay.style.display = isOpen ? 'flex' : 'none';
+    overlay.style.pointerEvents = isOpen ? 'auto' : 'none';
+    if (document && document.body) document.body.classList.toggle('zoo-modal-open', !!isOpen);
+  }
+
+  function applyPurchaseCardFailsafe(card){
+    if (!card) return;
+    card.style.maxWidth = '410px';
+    card.style.width = 'min(92vw, 410px)';
+    card.style.maxHeight = 'calc(100vh - 36px)';
+    card.style.overflow = 'auto';
+    card.style.boxSizing = 'border-box';
+  }
+
   function ensurePurchaseConfirmOverlay(){
+    ensurePurchaseConfirmStyles();
     let overlay = document.getElementById('purchaseConfirmOverlay');
-    if (overlay) return overlay;
+    if (overlay) {
+      overlay.classList.add('purchase-confirm-overlay');
+      applyOverlayFailsafe(overlay, overlay.classList.contains('show'));
+      applyPurchaseCardFailsafe(overlay.querySelector('.purchase-confirm-card'));
+      return overlay;
+    }
     overlay = document.createElement('div');
     overlay.id = 'purchaseConfirmOverlay';
     overlay.className = 'purchase-confirm-overlay';
+    overlay.dataset.zooModalOverlay = 'true';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-hidden', 'true');
     overlay.innerHTML = `
       <div class="purchase-confirm-card">
         <div class="purchase-confirm-icon" id="purchaseConfirmIcon">🛒</div>
@@ -491,12 +641,15 @@
         </div>
       </div>`;
     document.body.appendChild(overlay);
+    applyOverlayFailsafe(overlay, false);
+    applyPurchaseCardFailsafe(overlay.querySelector('.purchase-confirm-card'));
     return overlay;
   }
 
   function showPurchaseConfirm(options){
+    options = options || {};
     const price = Number(options.price || 0);
-    if (price <= 0) { options.onConfirm && options.onConfirm(); return; }
+    if (price <= 0 && options.forceDialog !== true) { options.onConfirm && options.onConfirm(); return; }
     const overlay = ensurePurchaseConfirmOverlay();
     const icon = document.getElementById('purchaseConfirmIcon');
     const title = document.getElementById('purchaseConfirmTitle');
@@ -504,29 +657,80 @@
     const priceBox = document.getElementById('purchaseConfirmPrice');
     const yes = document.getElementById('purchaseConfirmYes');
     const no = document.getElementById('purchaseConfirmNo');
-    icon.textContent = options.icon || '🛒';
-    title.textContent = options.title || 'Купить?';
-    text.textContent = options.text || `Списать ${price} монет и открыть предмет?`;
-    priceBox.textContent = `Списать ${formatCoins(price)}`;
-    yes.textContent = `Купить за ${price} 🪙`;
-    no.textContent = 'Не купить';
-    yes.onclick = () => {
+    const card = overlay ? overlay.querySelector('.purchase-confirm-card') : null;
+    applyPurchaseCardFailsafe(card);
+    if (icon) icon.textContent = options.icon || '🛒';
+    if (title) title.textContent = options.title || 'Купить?';
+    if (text) text.textContent = options.text || `Списать ${price} монет и открыть предмет?`;
+    if (priceBox) priceBox.textContent = price > 0 ? `Списать ${formatCoins(price)}` : 'Бесплатно';
+    if (yes) yes.textContent = price > 0 ? `Купить за ${price} 🪙` : 'Продолжить';
+    if (no) no.textContent = 'Не купить';
+
+    let closed = false;
+    function cleanupHandlers(){
+      document.removeEventListener('keydown', onKeyDown, true);
+    }
+    function closePurchaseConfirm(){
+      closed = true;
+      if (overlay) {
+        overlay.classList.remove('show');
+        overlay.setAttribute('aria-hidden', 'true');
+        applyOverlayFailsafe(overlay, false);
+      }
+      cleanupHandlers();
+    }
+    function confirmPurchase(event){
+      if (event) { event.preventDefault(); event.stopPropagation(); }
+      if (closed) return;
       const missing = priceMissing(price);
       if (missing > 0) {
-        overlay.classList.remove('show');
+        closePurchaseConfirm();
         playWrong();
         showFoodToast(`Не хватает ${missing} 🪙`);
         return;
       }
-      overlay.classList.remove('show');
+      closePurchaseConfirm();
       options.onConfirm && options.onConfirm();
-    };
-    no.onclick = () => { overlay.classList.remove('show'); playClick(); };
-    overlay.onclick = (e) => { if (e.target === overlay) { overlay.classList.remove('show'); playClick(); } };
+    }
+    function cancelPurchase(event){
+      if (event) { event.preventDefault(); event.stopPropagation(); }
+      if (closed) return;
+      closePurchaseConfirm();
+      playClick();
+    }
+    function onKeyDown(event){
+      if (event.key === 'Escape' && overlay && overlay.classList.contains('show')) cancelPurchase(event);
+    }
+
+    if (yes) {
+      yes.onclick = confirmPurchase;
+      yes.onpointerup = null;
+      yes.ontouchend = null;
+    }
+    if (no) {
+      no.onclick = cancelPurchase;
+      no.onpointerup = null;
+      no.ontouchend = null;
+    }
+    if (overlay) {
+      overlay.onclick = (e) => { if (e.target === overlay) cancelPurchase(e); };
+      overlay.setAttribute('aria-hidden', 'false');
+      applyOverlayFailsafe(overlay, true);
+      overlay.classList.add('show');
+      document.addEventListener('keydown', onKeyDown, true);
+    }
     playClick();
-    overlay.classList.add('show');
+    setTimeout(() => { try { no && no.focus(); } catch(e) {} }, 20);
   }
   window.showPurchaseConfirm = showPurchaseConfirm;
+  window.closePurchaseConfirm = function(){
+    const overlay = document.getElementById('purchaseConfirmOverlay');
+    if (overlay) {
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+      applyOverlayFailsafe(overlay, false);
+    }
+  };
 
   window.buyFood = buyFood = function(foodId){
     const food = foodCatalog.find(item => item.id === foodId);
@@ -702,12 +906,33 @@
   function setHintTickets(value){ safeStorage.set(HINT_KEY, String(Math.max(0, Number(value || 0)))); }
   window.getHintTickets = getHintTickets;
 
+  function applyRewardedAdFailsafe(overlay, isOpen){
+    if (!overlay) return;
+    overlay.dataset.zooModalOverlay = 'true';
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.zIndex = '2147482550';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.padding = 'max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom))';
+    overlay.style.display = isOpen ? 'flex' : 'none';
+    overlay.style.pointerEvents = isOpen ? 'auto' : 'none';
+    if (document && document.body) document.body.classList.toggle('zoo-modal-open', !!isOpen);
+  }
+
   function ensureRewardedAdOverlay(){
     let overlay = document.getElementById('rewardedAdOverlay');
-    if (overlay) return overlay;
+    if (overlay) {
+      overlay.classList.add('rewarded-ad-overlay');
+      applyRewardedAdFailsafe(overlay, overlay.classList.contains('show'));
+      return overlay;
+    }
     overlay = document.createElement('div');
     overlay.id = 'rewardedAdOverlay';
     overlay.className = 'rewarded-ad-overlay';
+    overlay.dataset.zooModalOverlay = 'true';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
     overlay.innerHTML = `
       <div class="rewarded-ad-card">
         <div class="rewarded-ad-icon" id="rewardedAdIcon">🎬</div>
@@ -719,6 +944,7 @@
         </div>
       </div>`;
     document.body.appendChild(overlay);
+    applyRewardedAdFailsafe(overlay, false);
     return overlay;
   }
 
@@ -738,6 +964,7 @@
     const rewardText = type === 'coins' ? `+${AD_COIN_REWARD} монет` : `+${AD_HINT_REWARD} подсказки`;
     icon.textContent = type === 'coins' ? '🪙' : '💡';
     title.textContent = type === 'coins' ? 'Бонус монет' : 'Бонус подсказок';
+    applyRewardedAdFailsafe(overlay, true);
     overlay.classList.add('show');
     function render(){
       text.textContent = `Реклама ${adIndex}/${AD_VIEWS_REQUIRED}: осталось ${secondsLeft} сек. Награда после двух роликов: ${rewardText}.`;
@@ -770,7 +997,7 @@
         btn.disabled = false;
         btn.textContent = 'Забрать';
         text.textContent = `Готово! Награда: ${rewardText}.`;
-        btn.onclick = () => { overlay.classList.remove('show'); renderAdBonusCard(); try { renderTasks(); } catch(e) {} };
+        btn.onclick = () => { overlay.classList.remove('show'); applyRewardedAdFailsafe(overlay, false); renderAdBonusCard(); try { renderTasks(); } catch(e) {} };
       }
     }
     function runTimer(){
@@ -789,7 +1016,7 @@
     text.textContent = `Нужно посмотреть 2 рекламы по ${AD_SECONDS} сек. Формат для Android: Rewarded Ad.`;
     fill.style.width = '0%';
     overlay.onclick = (e) => {
-      if (e.target === overlay && !timer) overlay.classList.remove('show');
+      if (e.target === overlay && !timer) { overlay.classList.remove('show'); applyRewardedAdFailsafe(overlay, false); }
     };
   }
   window.startRewardedAdPack = startRewardedAdPack;
