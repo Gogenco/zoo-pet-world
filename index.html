@@ -9290,6 +9290,55 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
 #coloringScrollUpBtn.is-disabled,
 #coloringScrollBtn.is-disabled { opacity: .42; filter: grayscale(.25); }
 
+
+
+/* ===== Stage 4.3A Save Stability / Release Guard ===== */
+.parent-save-tools {
+    align-items: flex-start;
+}
+.parent-save-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    min-width: min(100%, 220px);
+}
+.parent-action-btn {
+    border: 0;
+    border-radius: 16px;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, #ffffff, #ede9fe);
+    color: #4c1d95;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(124,58,237,.14), 0 10px 18px rgba(0,0,0,.07);
+    cursor: pointer;
+}
+.parent-action-btn.soft {
+    background: linear-gradient(180deg, #ffffff, #dcfce7);
+    color: #166534;
+}
+.parent-action-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 0 rgba(124,58,237,.12), 0 6px 14px rgba(0,0,0,.06);
+}
+.release-guard-card {
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(240,249,255,.94));
+    border-color: rgba(14,165,233,.18);
+}
+.release-guard-card small {
+    display: block;
+    margin-top: 3px;
+}
+@media (max-width: 430px) {
+    .parent-save-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+    .parent-action-btn {
+        flex: 1 1 88px;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -14155,14 +14204,36 @@ function renderPets() {
         } else {
             const lockedText = document.createElement("div");
             lockedText.className = "pet-locked-text";
-            lockedText.textContent = levelReady
-                ? `Этап доступен. Можно купить за ${meta.price} монет.`
-                : `Закрыт до уровня ${meta.requiredLevel}, но покупка монетами доступна.`;
-            const buyBtn = document.createElement("button");
-            buyBtn.className = coins >= meta.price ? "pet-buy-btn" : "pet-buy-btn locked-stage";
-            buyBtn.textContent = coins >= meta.price ? t('pets.buy_price', {price: meta.price}) : t('pets.need_price', {price: meta.price});
+            // Progress bar showing coins needed to unlock
+            const need = Math.max(0, meta.price - coins);
+            const canUnlock = coins >= meta.price;
+
+            const progressWrap = document.createElement('div');
+            progressWrap.className = 'pet-unlock-progress';
+
+            const progressLabel = document.createElement('div');
+            progressLabel.className = 'pet-unlock-label';
+            progressLabel.textContent = canUnlock
+                ? t('pets.can_unlock_now')
+                : t('pets.progress_need', { coins: need, pet: animalInfo[key].name });
+
+            const barTrack = document.createElement('div');
+            barTrack.className = 'pet-unlock-bar-track';
+            const barFill = document.createElement('div');
+            barFill.className = 'pet-unlock-bar-fill' + (canUnlock ? ' ready' : '');
+            barFill.style.width = Math.min(100, Math.round((coins / meta.price) * 100)) + '%';
+            barTrack.appendChild(barFill);
+
+            progressWrap.appendChild(progressLabel);
+            progressWrap.appendChild(barTrack);
+            info.appendChild(progressWrap);
+
+            const buyBtn = document.createElement('button');
+            buyBtn.className = canUnlock ? 'pet-buy-btn' : 'pet-buy-btn locked-stage';
+            buyBtn.textContent = canUnlock
+                ? t('pets.buy_price', {price: meta.price})
+                : t('pets.need_price', {price: meta.price});
             buyBtn.onclick = () => buyPet(key, meta.price);
-            info.appendChild(lockedText);
             info.appendChild(buyBtn);
         }
 
@@ -17044,6 +17115,7 @@ function getDailyQuestDefinitions() {
             icon: "🎮",
             title: "Сыграй 2 раза",
             desc: "Подходит Memory, Pet Room play, Puzzle или Zoo Block.",
+            gamesIcons: "🃏 🧩 🧱 🦁 🖍️",   // Memory, Puzzle, Zoo Block, Shadow, Coloring
             progress: dailyProgress.play || 0,
             target: 2,
             reward: 12,
@@ -17135,7 +17207,65 @@ function claimAllDailyQuests() {
     updateCoinsViews();
     playSound("coin");
     showFoodToast(t('tasks.claim_all', {reward}));
+
+    // ── Daily tasks streak bonus ─────────────────────────────────────────
+    // Check if ALL tasks are now claimed — if so, count this day in the streak.
+    // Streak stored separately from daily gift streak.
+    const allNowClaimed = tasks.every(isDailyQuestClaimed);
+    if (allNowClaimed) {
+        try {
+            const today = getTodayKey();
+            let streakData = {};
+            try { streakData = JSON.parse(localStorage.getItem('zooTaskStreakV1') || '{}'); } catch(e) {}
+            const lastDay    = streakData.lastDay || '';
+            let   streakCount = Number(streakData.count || 0);
+            const bonusClaimed = streakData.bonusClaimed || '';
+
+            // Advance streak only once per calendar day
+            if (lastDay !== today) {
+                // Check if yesterday's key matches (consecutive day)
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yKey = yesterday.toISOString().slice(0, 10);
+                streakCount = (lastDay === yKey) ? streakCount + 1 : 1;
+                streakData = { lastDay: today, count: streakCount, bonusClaimed };
+                localStorage.setItem('zooTaskStreakV1', JSON.stringify(streakData));
+            }
+
+            // Give +50 bonus every 3 days, once per day
+            if (streakCount > 0 && streakCount % 3 === 0 && bonusClaimed !== today) {
+                const bonusCoins = 50;
+                coins += bonusCoins;
+                streakData.bonusClaimed = today;
+                localStorage.setItem('zooTaskStreakV1', JSON.stringify(streakData));
+                updateCoinsViews();
+                saveProgress();
+                playSound("coin");
+                setTimeout(() => {
+                    showFoodToast(t('tasks.streak_bonus', {n: streakCount, coins: bonusCoins}));
+                }, 900);
+            } else {
+                // Just show the streak counter if > 1
+                if (streakCount > 1) {
+                    setTimeout(() => {
+                        showFoodToast(t('tasks.streak_day', {n: streakCount}));
+                    }, 900);
+                }
+            }
+
+            // Update streak display in tasks screen
+            setTimeout(renderTasks, 100);
+        } catch(e) { console.warn('[streak]', e); }
+    }
+
     renderTasks();
+}
+
+function getTaskStreak() {
+    try {
+        const data = JSON.parse(localStorage.getItem('zooTaskStreakV1') || '{}');
+        return Number(data.count || 0);
+    } catch(e) { return 0; }
 }
 
 function renderTasks() {
@@ -17150,6 +17280,10 @@ function renderTasks() {
 
     const summary = document.createElement("div");
     summary.className = "task-summary-card";
+    const taskStreakN = (typeof getTaskStreak === 'function') ? getTaskStreak() : 0;
+    const streakBadgeHtml = taskStreakN > 0
+        ? `<div class="task-streak-badge">🔥 ${t('tasks.streak_day', {n: taskStreakN})}</div>`
+        : '';
     summary.innerHTML = `
         <div class="task-summary-top">
             <div>
@@ -17158,6 +17292,7 @@ function renderTasks() {
             </div>
             <div class="task-summary-badge">${doneCount}/${tasks.length}</div>
         </div>
+        ${streakBadgeHtml}
         <button class="btn btn-green" style="width:100%;" ${claimableCount ? "" : "disabled"} onclick="claimAllDailyQuests()">
             ${claimableCount ? `Забрать готовые награды (${claimableCount})` : claimedCount === tasks.length ? "Все награды забраны" : "Нет готовых наград"}
         </button>
@@ -17189,6 +17324,18 @@ function renderTasks() {
         desc.className = "task-desc";
         desc.textContent = task.desc;
 
+        // Task 3: Mini-game icons hint for the 'play' task
+        if (task.gamesIcons) {
+            const iconsRow = document.createElement("div");
+            iconsRow.className = "task-games-icons";
+            iconsRow.innerHTML = `<span class="task-games-icons-label">${t('tasks.play_games_icons_hint')}</span> <span class="task-games-icons-chips">${task.gamesIcons}</span>`;
+            body.appendChild(title);
+            body.appendChild(desc);
+            body.appendChild(iconsRow);
+        } else {
+            body.appendChild(title);
+            body.appendChild(desc);
+        }
         const progressRow = document.createElement("div");
         progressRow.className = "quest-progress-row";
         progressRow.innerHTML = `
@@ -17199,9 +17346,10 @@ function renderTasks() {
         const bottom = document.createElement("div");
         bottom.className = "quest-bottom";
 
-        const reward = document.createElement("div");
-        reward.className = "quest-reward";
-        reward.textContent = `+${task.reward} 🪙`;
+        // Task 4: Reward feedback shows coin amount clearly
+        const rewardEl = document.createElement("div");
+        rewardEl.className = "quest-reward";
+        rewardEl.textContent = t('reward.coins', {coins: task.reward});
 
         const btn = document.createElement("button");
         btn.className = claimable ? "btn btn-green" : done ? "btn btn-blue" : "btn btn-purple";
@@ -17216,11 +17364,9 @@ function renderTasks() {
             }
         };
 
-        bottom.appendChild(reward);
+        bottom.appendChild(rewardEl);
         bottom.appendChild(btn);
 
-        body.appendChild(title);
-        body.appendChild(desc);
         body.appendChild(progressRow);
         body.appendChild(bottom);
 
@@ -17694,20 +17840,16 @@ function installTranslationObserver() {
     const observeOptions = { childList: true, subtree: true, characterData: true };
     let locked = false;
     const observer = new MutationObserver(() => {
-        if (locked) return;
+        if (locked || window.__i18nTranslating) return;
         locked = true;
-        // translatePageToEnglish() itself rewrites text nodes (and the language
-        // button's textContent), which counts as new mutations. Without
-        // disconnecting first, those self-caused mutations re-trigger this same
-        // observer forever (verified: ~4 calls/sec with zero user interaction),
-        // pegging the CPU and, after enough repeated passes, corrupting text via
-        // compounding find/replace. Disconnect while we translate, then resume.
         observer.disconnect();
         setTimeout(() => {
-            translatePageToEnglish();
+            window.__i18nTranslating = true;
+            try { translatePageToEnglish(); } catch(e) {}
+            window.__i18nTranslating = false;
             locked = false;
             observer.observe(document.body, observeOptions);
-        }, 0);
+        }, 80);  // 80ms debounce prevents tight mutation loop
     });
 
     observer.observe(document.body, observeOptions);
@@ -18667,6 +18809,78 @@ body.low-performance .guide-overlay { background: rgba(15, 23, 42, .42) !importa
 .guide-bubble { z-index: 2147482004 !important; }
 body.guide-open #guideFab { pointer-events: none !important; }
 </style>
+
+<style id="stage-4-3b-retention-styles">
+/* ── Pet unlock progress bar (Task 1) ────────────────────────────── */
+.pet-unlock-progress {
+    margin: 6px 0 8px;
+}
+.pet-unlock-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6d28d9;
+    margin-bottom: 5px;
+    line-height: 1.3;
+}
+.pet-unlock-bar-track {
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(124,58,237,.12);
+    overflow: hidden;
+}
+.pet-unlock-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #a78bfa, #7c3aed);
+    transition: width .4s ease;
+    min-width: 4px;
+}
+.pet-unlock-bar-fill.ready {
+    background: linear-gradient(90deg, #34d399, #059669);
+}
+
+/* ── Task streak badge (Task 2) ──────────────────────────────────── */
+.task-streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1.5px solid #f59e0b;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #92400e;
+    margin: 6px 0 8px;
+}
+
+/* ── Mini-game icons hint (Task 3) ──────────────────────────────── */
+.task-games-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 6px;
+    flex-wrap: wrap;
+}
+.task-games-icons-label {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.task-games-icons-chips {
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+/* ── Quest reward — clearer coin display (Task 4) ───────────────── */
+.quest-reward {
+    font-size: 16px;
+    font-weight: 900;
+    color: #059669;
+    min-width: 54px;
+}
+</style>
 <script id="assistant-stage3-2-guide-button-hotfix-script">
 (function hardBindGuideFab(){
     'use strict';
@@ -19050,7 +19264,19 @@ body.guide-open #guideFab { pointer-events: none !important; }
     } else {
         updateLanguageButton(); updatePetRoomVoiceLabel(); auditModalCloseButtons();
     }
-    const observer = new MutationObserver(function(){ auditModalCloseButtons(); updateLanguageButton(); updatePetRoomVoiceLabel(); });
+    const observer = new MutationObserver((function(){
+        let _busy = false;
+        return function(){
+            if (_busy || window.__i18nTranslating) return;
+            _busy = true;
+            setTimeout(function(){
+                if (!window.__i18nTranslating) {
+                    try { auditModalCloseButtons(); updateLanguageButton(); updatePetRoomVoiceLabel(); } catch(e){}
+                }
+                _busy = false;
+            }, 120); // debounce: prevents feedback loop with translation observer
+        };
+    })());
     try { observer.observe(document.body, { childList: true, subtree: true }); } catch(e) {}
     window.addEventListener('load', function(){ updateLanguageButton(); updatePetRoomVoiceLabel(); auditModalCloseButtons(); }, { once: true });
 })();

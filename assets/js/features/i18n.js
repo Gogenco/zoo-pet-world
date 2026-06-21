@@ -1,12 +1,5 @@
 /**
- * Zoo Pet World — i18n Foundation  (Stage 4.2B updated)
- * ─────────────────────────────────────────────────────────────────────────────
- * • Inline RU + EN strings cover 191 keys each (no fetch needed for RU/EN)
- * • HY loaded async via fetch(assets/i18n/hy.json), falls back to RU
- * • t(key, params) with {param} interpolation
- * • setLanguage(lang) saves to localStorage and reloads
- * • Missing keys: console.warn once, returns key itself
- * • voiceKey support: guide steps carry voiceKey for future audio (no audio yet)
+ * Zoo Pet World — i18n Foundation  (Stage 4.3 merged — 216 keys)
  */
 (function () {
     'use strict';
@@ -17,7 +10,6 @@
     const I18N_BASE        = 'assets/i18n/';
     const MISSING_WARNED   = new Set();
 
-    // ── Inline RU strings — always available, authoritative fallback ──────────
     const RU_INLINE = {
         "nav.home": "Главное меню",
         "nav.back": "Назад",
@@ -209,10 +201,23 @@
         "block.gameover": "Игра окончена",
         "error.game": "Ошибка игры исправляется: {msg}",
         "misc.no_timer": "🧘 Без таймера",
-        "lang.ru_btn": "🇷🇺 Русская версия"
+        "lang.ru_btn": "🇷🇺 Русская версия",
+        "pets.progress_need": "Ещё {coins} 🪙 до {pet}",
+        "pets.can_unlock_now": "Можно открыть сейчас 🎉",
+        "pets.progress_buy_hint": "Купи за {price} 🪙",
+        "tasks.streak_day": "🔥 Серия заданий: {n} дн.",
+        "tasks.streak_bonus": "🏆 Серия {n} дней! Бонус +{coins} 🪙",
+        "tasks.all_done": "Все задания выполнены! ✅",
+        "tasks.streak_label": "Серия заданий",
+        "tasks.play_games_icons_hint": "Засчитываются эти игры:",
+        "reward.coins": "+{coins} 🪙",
+        "reward.block_complete": "Zoo Block: +{coins} 🪙",
+        "reward.shadow_level": "Тень: +{coins} 🪙",
+        "reward.puzzle_done": "Пазл: +{coins} 🪙",
+        "reward.task_done": "Задание: +{coins} 🪙",
+        "reward.streak_bonus": "Серия: +{coins} 🪙"
     };
 
-    // ── Inline EN strings — available immediately for EN users ───────────────
     const EN_INLINE = {
         "nav.home": "Home",
         "nav.back": "Back",
@@ -404,18 +409,30 @@
         "block.gameover": "Game over",
         "error.game": "Game error being fixed: {msg}",
         "misc.no_timer": "🧘 No timer",
-        "lang.ru_btn": "🇷🇺 Russian"
+        "lang.ru_btn": "🇷🇺 Russian",
+        "pets.progress_need": "Need {coins} 🪙 for {pet}",
+        "pets.can_unlock_now": "Can unlock now 🎉",
+        "pets.progress_buy_hint": "Buy for {price} 🪙",
+        "tasks.streak_day": "🔥 Task streak: {n} days",
+        "tasks.streak_bonus": "🏆 {n}-day streak! Bonus +{coins} 🪙",
+        "tasks.all_done": "All tasks done! ✅",
+        "tasks.streak_label": "Task streak",
+        "tasks.play_games_icons_hint": "These games count:",
+        "reward.coins": "+{coins} 🪙",
+        "reward.block_complete": "Zoo Block: +{coins} 🪙",
+        "reward.shadow_level": "Shadow: +{coins} 🪙",
+        "reward.puzzle_done": "Puzzle: +{coins} 🪙",
+        "reward.task_done": "Task: +{coins} 🪙",
+        "reward.streak_bonus": "Streak: +{coins} 🪙"
     };
 
-    // ── State ─────────────────────────────────────────────────────────────────
     const cache = { ru: RU_INLINE, en: EN_INLINE };
     let currentLanguage = FALLBACK_LANG;
     let _pendingLoad = null;
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
     function _resolve(key, lang) {
-        const strings = cache[lang];
-        if (strings && strings[key] !== undefined) return strings[key];
+        const s = cache[lang];
+        if (s && s[key] !== undefined) return s[key];
         if (lang !== FALLBACK_LANG && RU_INLINE[key] !== undefined) return RU_INLINE[key];
         return null;
     }
@@ -425,33 +442,21 @@
         return str.replace(/\{(\w+)\}/g, (_, k) => (params[k] !== undefined ? params[k] : `{${k}}`) );
     }
 
-    // ── Async JSON loader (HY only) ───────────────────────────────────────────
     async function _loadLang(lang) {
         if (cache[lang]) return;
         try {
-            const url = `${I18N_BASE}${lang}.json`;
-            const r = await fetch(url);
+            const r = await fetch(`${I18N_BASE}${lang}.json`);
             if (!r.ok) throw new Error(`HTTP ${r.status}`);
             const data = await r.json();
             const clean = {};
-            for (const [k, v] of Object.entries(data)) {
-                if (k !== '_meta') clean[k] = v;
-            }
+            for (const [k, v] of Object.entries(data)) { if (k !== '_meta') clean[k] = v; }
             cache[lang] = clean;
         } catch (e) {
-            console.warn(`[i18n] failed to load ${lang}.json (${e.message}), using RU fallback`);
+            console.warn(`[i18n] ${lang}.json load failed (${e.message}), using RU fallback`);
             cache[lang] = RU_INLINE;
         }
     }
 
-    // ── Public API ────────────────────────────────────────────────────────────
-
-    /**
-     * t(key, params?)
-     * Translated string for current language with {param} interpolation.
-     * Falls back: currentLang → RU_INLINE → key itself.
-     * voiceKey: step.voiceKey field is reserved for future audio, not played here.
-     */
     window.t = function t(key, params) {
         if (!key) return '';
         const str = _resolve(key, currentLanguage);
@@ -465,41 +470,28 @@
         return _interpolate(str, params);
     };
 
-    /** getCurrentLanguage() — overrides the same-named function in index.html */
-    window.getCurrentLanguage = function getCurrentLanguage() {
-        return currentLanguage;
-    };
+    window.getCurrentLanguage = function() { return currentLanguage; };
 
-    /**
-     * setLanguage(lang) — persists and reloads.
-     * Called from language selector in parent settings.
-     */
-    window.setLanguage = function setLanguage(lang) {
-        if (!SUPPORTED_LANGS.includes(lang)) {
-            console.warn(`[i18n] unsupported lang "${lang}", using "${FALLBACK_LANG}"`);
-            lang = FALLBACK_LANG;
-        }
-        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
-        try { if (window.safeStorage) safeStorage.set(STORAGE_KEY, lang); } catch (e) {}
+    window.setLanguage = function(lang) {
+        if (!SUPPORTED_LANGS.includes(lang)) lang = FALLBACK_LANG;
+        try { localStorage.setItem(STORAGE_KEY, lang); } catch(e) {}
+        try { if (window.safeStorage) safeStorage.set(STORAGE_KEY, lang); } catch(e) {}
         location.reload();
     };
 
     window.I18N_SUPPORTED_LANGS = SUPPORTED_LANGS;
-    window.i18nReady = function i18nReady() { return !!cache[currentLanguage]; };
+    window.i18nReady = function() { return !!cache[currentLanguage]; };
 
-    // ── Initialization ────────────────────────────────────────────────────────
     (function _init() {
         let saved = FALLBACK_LANG;
-        try { saved = localStorage.getItem(STORAGE_KEY) || FALLBACK_LANG; } catch (e) {}
+        try { saved = localStorage.getItem(STORAGE_KEY) || FALLBACK_LANG; } catch(e) {}
         if (!SUPPORTED_LANGS.includes(saved)) saved = FALLBACK_LANG;
         currentLanguage = saved;
-
         if (currentLanguage === 'hy' && !cache['hy']) {
             _pendingLoad = _loadLang('hy');
             _pendingLoad.then(() => {
-                try { window.dispatchEvent(new CustomEvent('i18nReady', { detail: { lang: 'hy' } })); } catch(e) {}
+                try { window.dispatchEvent(new CustomEvent('i18nReady', {detail: {lang:'hy'}})); } catch(e) {}
             });
         }
     })();
-
 })();
