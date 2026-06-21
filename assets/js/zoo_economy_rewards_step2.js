@@ -281,11 +281,14 @@
       if (!chip || chip.classList.contains('unlocked')) return;
       removeOldCards(chip);
       const price = Number(chip.dataset.price || 0);
-      const card = createUnlockCard(price, false);
-      chip.appendChild(card);
       const missing = shortage(price);
       const priceEl = chip.querySelector('.food-price');
-      if (priceEl) priceEl.textContent = missing <= 0 ? `${price} 🪙 • открыть` : `ещё ${missing} 🪙`;
+      if (priceEl) {
+        priceEl.textContent = missing <= 0 ? `Открыть за ${price} 🪙` : `Ещё ${missing} 🪙`;
+        priceEl.title = missing <= 0 ? `Монет хватает: открой за ${price} 🪙` : `Не хватает ${missing} 🪙`;
+      }
+      chip.classList.toggle('can-buy-now', missing <= 0);
+      chip.classList.toggle('need-more-coins', missing > 0);
     });
   }
   function enhancePuzzleStages(){
@@ -305,10 +308,12 @@
       const priceEl = btn.querySelector('.puzzle-choice-price');
       const match = priceEl ? (priceEl.textContent || '').match(/(\d+)/) : null;
       const price = match ? Number(match[1]) : 0;
-      if (price) {
+      if (price && priceEl) {
         const missing = shortage(price);
-        if (priceEl) priceEl.textContent = missing <= 0 ? `${price} 🪙 • открыть` : `ещё ${missing} 🪙`;
-        btn.appendChild(createUnlockCard(price, false));
+        priceEl.textContent = missing <= 0 ? `Открыть за ${price} 🪙` : `Ещё ${missing} 🪙`;
+        priceEl.title = missing <= 0 ? `Монет хватает: можно открыть пазл` : `Не хватает ${missing} 🪙`;
+        btn.classList.toggle('can-buy-now', missing <= 0);
+        btn.classList.toggle('need-more-coins', missing > 0);
       }
     });
   }
