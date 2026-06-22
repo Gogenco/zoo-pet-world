@@ -1166,3 +1166,95 @@
 })();
 
 })();
+
+
+// Stage 4.4C — coloring canvas fit + non-paintable outer margins.
+(function(){
+  function getColoringImageRect(canvasWidth, canvasHeight, imgWidth, imgHeight){
+    const pad = 8;
+    const availW = Math.max(1, canvasWidth - pad * 2);
+    const availH = Math.max(1, canvasHeight - pad * 2);
+    const scale = Math.min(availW / imgWidth, availH / imgHeight);
+    const drawWidth = Math.round(imgWidth * scale);
+    const drawHeight = Math.round(imgHeight * scale);
+    const dx = Math.round((canvasWidth - drawWidth) / 2);
+    const dy = Math.round((canvasHeight - drawHeight) / 2);
+    return { dx, dy, drawWidth, drawHeight };
+  }
+
+  function drawImageFitLarge(ctx, imageCanvas){
+    const canvasWidth = ctx.canvas.width;
+    const canvasHeight = ctx.canvas.height;
+    const imgWidth = imageCanvas.width || imageCanvas.naturalWidth || canvasWidth;
+    const imgHeight = imageCanvas.height || imageCanvas.naturalHeight || canvasHeight;
+    const rect = getColoringImageRect(canvasWidth, canvasHeight, imgWidth, imgHeight);
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(imageCanvas, rect.dx, rect.dy, rect.drawWidth, rect.drawHeight);
+    return rect;
+  }
+
+  function lockOuterMargins(boundaryCtx, img){
+    if (!boundaryCtx || !img) return;
+    const canvasWidth = boundaryCtx.canvas.width;
+    const canvasHeight = boundaryCtx.canvas.height;
+    const imgWidth = img.width || img.naturalWidth || canvasWidth;
+    const imgHeight = img.height || img.naturalHeight || canvasHeight;
+    const r = getColoringImageRect(canvasWidth, canvasHeight, imgWidth, imgHeight);
+    boundaryCtx.save();
+    boundaryCtx.fillStyle = '#000000';
+    // top
+    if (r.dy > 0) boundaryCtx.fillRect(0, 0, canvasWidth, r.dy);
+    // bottom
+    if (r.dy + r.drawHeight < canvasHeight) boundaryCtx.fillRect(0, r.dy + r.drawHeight, canvasWidth, canvasHeight - (r.dy + r.drawHeight));
+    // left
+    if (r.dx > 0) boundaryCtx.fillRect(0, r.dy, r.dx, r.drawHeight);
+    // right
+    if (r.dx + r.drawWidth < canvasWidth) boundaryCtx.fillRect(r.dx + r.drawWidth, r.dy, canvasWidth - (r.dx + r.drawWidth), r.drawHeight);
+    boundaryCtx.restore();
+  }
+
+  const prevDrawColoringTemplateById = drawColoringTemplateById;
+  drawColoringTemplateById = function(ctx, templateId){
+    const img = coloringLineArtImages && coloringLineArtImages[templateId];
+    if (img && (img.complete || (img.naturalWidth && img.naturalHeight))){
+      drawImageFitLarge(ctx, img);
+      if (ctx === coloringBoundaryCtx || (ctx && ctx.__coloringBoundary)) lockOuterMargins(ctx, img);
+      return;
+    }
+    return prevDrawColoringTemplateById(ctx, templateId);
+  };
+
+  const prevRedrawColoringOutline = redrawColoringOutline;
+  redrawColoringOutline = function(){
+    prevRedrawColoringOutline();
+    try {
+      const img = coloringLineArtImages && coloringLineArtImages[coloringCurrentTemplateId];
+      if (img && (img.complete || img.naturalWidth)){
+        const outlineCtx = getColoringOutlineCtx && getColoringOutlineCtx();
+        if (outlineCtx) drawImageFitLarge(outlineCtx, img);
+        if (coloringBoundaryCtx){
+          drawImageFitLarge(coloringBoundaryCtx, img);
+          lockOuterMargins(coloringBoundaryCtx, img);
+        }
+        coloringOutlineReady = true;
+      }
+    } catch(e){ console.warn('Stage 4.4C redraw fallback', e); }
+  };
+
+  const previousRenderColoringScreen = renderColoringScreen;
+  renderColoringScreen = function(){
+    previousRenderColoringScreen();
+    setTimeout(() => {
+      try { redrawColoringOutline(); } catch(e) {}
+    }, 80);
+  };
+
+  const previousSelectColoringTemplate = selectColoringTemplate;
+  selectColoringTemplate = function(id){
+    previousSelectColoringTemplate(id);
+    setTimeout(() => {
+      try { redrawColoringOutline(); } catch(e) {}
+    }, 80);
+  };
+})();

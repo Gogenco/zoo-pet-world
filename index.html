@@ -8907,6 +8907,147 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     box-shadow: 0 4px 10px rgba(0,0,0,.12);
 }
 
+
+/* ===== Stage 4.5A: Find Differences prototype ===== */
+.spot-diff-panel {
+    max-width: min(980px, 100vw - 18px) !important;
+}
+.spot-diff-hero {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(240,249,255,.93));
+    box-shadow: 0 8px 0 rgba(14,165,233,.14), 0 14px 24px rgba(0,0,0,.08);
+}
+.spot-diff-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.spot-diff-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(220,252,231,.95);
+    color: #166534;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(34,197,94,.13);
+}
+.spot-diff-message {
+    margin: 10px auto;
+    width: min(100%, 620px);
+    padding: 10px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.88);
+    color: #7c2d12;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.25;
+    font-weight: 1000;
+}
+.spot-diff-scenes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: stretch;
+}
+.spot-diff-card {
+    position: relative;
+    padding: 10px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #ffffff, #ecfeff);
+    box-shadow: 0 7px 0 rgba(6,182,212,.14), 0 12px 22px rgba(0,0,0,.07);
+}
+.spot-diff-label {
+    margin-bottom: 8px;
+    text-align: center;
+    color: #4c1d95;
+    font-weight: 1000;
+    font-size: 13px;
+}
+.spot-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #93c5fd 0 48%, #bbf7d0 48% 100%);
+    border: 4px solid rgba(255,255,255,.9);
+    box-shadow: inset 0 0 0 2px rgba(14,165,233,.12);
+    user-select: none;
+}
+.spot-el {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    font-weight: 1000;
+    pointer-events: none;
+}
+.spot-sun { width: 17%; aspect-ratio: 1; border-radius: 50%; background: #facc15; box-shadow: 0 0 0 8px rgba(250,204,21,.18); }
+.spot-cloud { width: 21%; height: 10%; border-radius: 999px; background: rgba(255,255,255,.92); box-shadow: 18px -7px 0 rgba(255,255,255,.92), -14px 5px 0 rgba(255,255,255,.9); }
+.spot-tree-trunk { width: 5%; height: 26%; border-radius: 999px; background: #92400e; }
+.spot-tree-top { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #16a34a; box-shadow: 18px 10px 0 #22c55e, -16px 8px 0 #15803d; }
+.spot-animal { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #fef3c7; font-size: clamp(28px, 6vw, 58px); box-shadow: inset 0 -9px 0 rgba(245,158,11,.2), 0 7px 16px rgba(0,0,0,.10); }
+.spot-flower { width: 8%; aspect-ratio: 1; border-radius: 50%; background: #ec4899; box-shadow: 10px 0 0 #f472b6, -10px 0 0 #f472b6, 0 10px 0 #f472b6, 0 -10px 0 #f472b6; }
+.spot-rock { width: 13%; height: 7%; border-radius: 999px 999px 14px 14px; background: #94a3b8; }
+.spot-ball { width: 9%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0 15%, #ef4444 16% 55%, #facc15 56%); }
+.spot-water { width: 28%; height: 11%; border-radius: 50%; background: rgba(56,189,248,.68); box-shadow: inset 0 0 0 4px rgba(255,255,255,.35); }
+.spot-butterfly { font-size: clamp(20px, 4vw, 38px); }
+.spot-diff-hit {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    z-index: 6;
+    -webkit-tap-highlight-color: transparent;
+}
+.spot-diff-hit.found {
+    border: 4px solid rgba(34,197,94,.95);
+    background: rgba(187,247,208,.22);
+    box-shadow: 0 0 0 5px rgba(255,255,255,.7), 0 8px 18px rgba(22,163,74,.22);
+}
+.spot-diff-hit.hint:not(.found) {
+    border: 4px dashed rgba(250,204,21,.95);
+    background: rgba(254,240,138,.16);
+    animation: spotHintPulse .8s infinite alternate ease-in-out;
+}
+@keyframes spotHintPulse { from { transform: translate(-50%, -50%) scale(.96); } to { transform: translate(-50%, -50%) scale(1.04); } }
+.spot-diff-level-rail {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 2px 4px;
+    -webkit-overflow-scrolling: touch;
+}
+.spot-level-btn {
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 18px;
+    min-width: 74px;
+    padding: 9px 10px;
+    background: linear-gradient(180deg, #ffffff, #ede9fe);
+    color: #4c1d95;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(124,58,237,.14);
+}
+.spot-level-btn.active { background: linear-gradient(180deg, #dcfce7, #bbf7d0); color: #166534; }
+.spot-level-btn.done { background: linear-gradient(180deg, #fef9c3, #fde68a); color: #92400e; }
+@media (max-width: 720px) {
+    .spot-diff-scenes { grid-template-columns: 1fr; gap: 10px; }
+    .spot-scene { aspect-ratio: 4 / 3; }
+    .spot-diff-card { padding: 8px; border-radius: 22px; }
+    .spot-diff-hero { padding: 10px 8px; }
+}
+
 /* ===== Stage 4.4A: Coloring portrait-first refactor ===== */
 
 #coloringCanvasViewport {
@@ -9008,7 +9149,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto;
-    padding: 6px !important;
+    padding: 4px !important;
     border-radius: 24px;
 }
 
@@ -9016,9 +9157,9 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     position: relative;
     width: 100% !important;
     max-width: 100% !important;
-    aspect-ratio: 1280 / 1120 !important;
-    max-height: min(60vh, 470px);
-    min-height: 300px;
+    aspect-ratio: 1000 / 1400 !important;
+    max-height: min(72vh, 760px);
+    min-height: 420px;
     margin: 0 auto;
     border-radius: 22px;
     overflow: hidden;
@@ -9207,8 +9348,8 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     }
 
     #coloringScreen .coloring-canvas-wrap {
-        min-height: 282px;
-        max-height: 56vh;
+        min-height: 380px;
+        max-height: 68vh;
         border-radius: 20px;
     }
 
@@ -9227,10 +9368,280 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     }
 
     #coloringScreen .coloring-canvas-wrap {
-        max-height: min(64vh, 460px);
-        min-height: 260px;
+        max-height: min(78vh, 760px);
+        min-height: 420px;
     }
 }
+
+/* ===== Stage 4.5B: Find Differences Easybrain-style UX ===== */
+.spot-title-row {
+    margin-bottom: 8px;
+}
+.spot-diff-panel {
+    max-width: min(1040px, 100vw - 14px) !important;
+}
+.spot-diff-hero {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(236,253,245,.94));
+    box-shadow: 0 8px 0 rgba(14,165,233,.13), 0 14px 24px rgba(0,0,0,.08);
+}
+.spot-diff-status {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+.spot-diff-pill {
+    min-height: 38px;
+    padding: 8px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.94);
+    color: #4c1d95;
+    font-weight: 1000;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: 0 5px 0 rgba(124,58,237,.12), 0 8px 14px rgba(0,0,0,.05);
+}
+.spot-diff-pill.progress {
+    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
+    color: #166534;
+}
+.spot-diff-pill.timer {
+    background: linear-gradient(180deg, #fef9c3, #fde68a);
+    color: #92400e;
+}
+.spot-diff-pill.timer.danger {
+    background: linear-gradient(180deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    animation: spotTimerPulse .7s infinite alternate ease-in-out;
+}
+.spot-diff-pill.reward {
+    background: linear-gradient(180deg, #dbeafe, #bfdbfe);
+    color: #1d4ed8;
+}
+@keyframes spotTimerPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.04); }
+}
+.spot-diff-message {
+    margin: 10px auto;
+    width: min(100%, 720px);
+    padding: 10px 12px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.9);
+    color: #7c2d12;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.25;
+    font-weight: 1000;
+    box-shadow: inset 0 0 0 2px rgba(250,204,21,.14);
+}
+.spot-diff-message.success {
+    color: #166534;
+    background: rgba(220,252,231,.96);
+}
+.spot-diff-message.wrong {
+    color: #991b1b;
+    background: rgba(254,226,226,.96);
+}
+.spot-diff-toolbar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 10px;
+    -webkit-overflow-scrolling: touch;
+}
+.spot-tool-btn {
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 18px;
+    min-width: 84px;
+    min-height: 50px;
+    padding: 7px 9px;
+    background: linear-gradient(180deg, #ffffff, #ede9fe);
+    color: #4c1d95;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(124,58,237,.14), 0 8px 14px rgba(0,0,0,.05);
+    cursor: pointer;
+}
+.spot-tool-btn span {
+    display: block;
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1;
+}
+.spot-tool-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 0 rgba(124,58,237,.12), 0 5px 10px rgba(0,0,0,.05);
+}
+.spot-diff-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+}
+.spot-diff-card {
+    padding: 7px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #ffffff, #ecfeff);
+    box-shadow: 0 7px 0 rgba(6,182,212,.14), 0 12px 22px rgba(0,0,0,.07);
+}
+.spot-diff-label {
+    margin-bottom: 6px;
+    text-align: center;
+    color: #4c1d95;
+    font-weight: 1000;
+    font-size: 12px;
+}
+.spot-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #93c5fd 0 48%, #bbf7d0 48% 100%);
+    border: 4px solid rgba(255,255,255,.94);
+    box-shadow: inset 0 0 0 2px rgba(14,165,233,.12);
+    user-select: none;
+    cursor: crosshair;
+    touch-action: manipulation;
+}
+.spot-scene-content {
+    position: absolute;
+    inset: 0;
+    transform-origin: center center;
+    transition: transform .18s ease;
+}
+.spot-scene.shake {
+    animation: spotShake .25s ease-in-out;
+}
+@keyframes spotShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+.spot-el {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    font-weight: 1000;
+    pointer-events: none;
+}
+.spot-sun { width: 17%; aspect-ratio: 1; border-radius: 50%; background: #facc15; box-shadow: 0 0 0 8px rgba(250,204,21,.18); }
+.spot-cloud { width: 21%; height: 10%; border-radius: 999px; background: rgba(255,255,255,.92); box-shadow: 18px -7px 0 rgba(255,255,255,.92), -14px 5px 0 rgba(255,255,255,.9); }
+.spot-tree-trunk { width: 5%; height: 26%; border-radius: 999px; background: #92400e; }
+.spot-tree-top { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #16a34a; box-shadow: 18px 10px 0 #22c55e, -16px 8px 0 #15803d; }
+.spot-animal { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #fef3c7; font-size: clamp(26px, 6vw, 60px); box-shadow: inset 0 -9px 0 rgba(245,158,11,.2), 0 7px 16px rgba(0,0,0,.10); }
+.spot-flower { width: 8%; aspect-ratio: 1; border-radius: 50%; background: #ec4899; box-shadow: 10px 0 0 #f472b6, -10px 0 0 #f472b6, 0 10px 0 #f472b6, 0 -10px 0 #f472b6; }
+.spot-rock { width: 13%; height: 7%; border-radius: 999px 999px 14px 14px; background: #94a3b8; }
+.spot-ball { width: 9%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0 15%, #ef4444 16% 55%, #facc15 56%); }
+.spot-water { width: 28%; height: 11%; border-radius: 50%; background: rgba(56,189,248,.68); box-shadow: inset 0 0 0 4px rgba(255,255,255,.35); }
+.spot-butterfly { font-size: clamp(20px, 4vw, 38px); }
+.spot-star { font-size: clamp(18px, 4vw, 34px); }
+.spot-moon { width: 15%; aspect-ratio: 1; border-radius: 50%; background: #fde68a; box-shadow: -8px 0 0 #93c5fd inset; }
+.spot-berry { width: 7%; aspect-ratio: 1; border-radius: 50%; background: #ef4444; box-shadow: 8px 5px 0 #dc2626, -7px 4px 0 #f87171; }
+.spot-leaf { width: 12%; height: 7%; border-radius: 999px 0 999px 0; background: #22c55e; transform: translate(-50%, -50%) rotate(-22deg); }
+.spot-diff-hit {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    z-index: 6;
+    -webkit-tap-highlight-color: transparent;
+}
+.spot-diff-hit.found {
+    border: 4px solid rgba(34,197,94,.95);
+    background: rgba(187,247,208,.20);
+    box-shadow: 0 0 0 5px rgba(255,255,255,.7), 0 8px 18px rgba(22,163,74,.22);
+    pointer-events: none;
+}
+.spot-diff-hit.found::after {
+    content: '✓';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #22c55e;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 1000;
+}
+.spot-diff-hit.hint:not(.found) {
+    border: 4px dashed rgba(250,204,21,.95);
+    background: rgba(254,240,138,.18);
+    animation: spotHintPulse .75s infinite alternate ease-in-out;
+}
+@keyframes spotHintPulse {
+    from { transform: translate(-50%, -50%) scale(.94); }
+    to { transform: translate(-50%, -50%) scale(1.07); }
+}
+.spot-miss {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 4px solid rgba(239,68,68,.9);
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    pointer-events: none;
+    animation: spotMiss .42s ease-out forwards;
+}
+@keyframes spotMiss {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(.65); }
+    to { opacity: 0; transform: translate(-50%, -50%) scale(1.35); }
+}
+.spot-diff-level-rail {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 2px 4px;
+    -webkit-overflow-scrolling: touch;
+}
+.spot-level-btn {
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 18px;
+    min-width: 74px;
+    padding: 9px 10px;
+    background: linear-gradient(180deg, #ffffff, #ede9fe);
+    color: #4c1d95;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(124,58,237,.14);
+}
+.spot-level-btn.active { background: linear-gradient(180deg, #dcfce7, #bbf7d0); color: #166534; }
+.spot-level-btn.done { background: linear-gradient(180deg, #fef9c3, #fde68a); color: #92400e; }
+@media (max-width: 720px) {
+    .spot-diff-status {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .spot-diff-board {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .spot-scene {
+        aspect-ratio: 4 / 3;
+    }
+    .spot-diff-card {
+        padding: 7px;
+        border-radius: 22px;
+    }
+    .spot-diff-hero {
+        padding: 9px;
+    }
+    .spot-tool-btn {
+        min-width: 76px;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -9321,10 +9732,10 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
                         <div class="feature-text">выбери спокойный режим или таймер</div>
                     </button>
 
-                    <button class="feature-card planned-game-card" onclick="openSpotDifferencesTeaser()" data-soon="скоро">
+                    <button class="feature-card" onclick="openSpotDifferences()">
                         <span class="feature-icon game-preview-icon icon-map" aria-hidden="true"><i></i><i></i><i></i></span>
                         Найди отличия
-                        <div class="feature-text">скоро: две картинки и отличия</div>
+                        <div class="feature-text">две картинки и скрытые отличия</div>
                     </button>
 
                     <button class="feature-card" onclick="openShadowGame()">
@@ -9441,6 +9852,62 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     </div>
 </div>
 
+
+
+<div id="spotDiffScreen" class="screen">
+    <div class="card-panel spot-diff-panel">
+        <div class="top-home-row">
+            <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
+            <div class="mode-chip">Найди отличия • монетки: <span id="spotDiffCoins">0</span> 🪙</div>
+        </div>
+
+        <div class="title-row spot-title-row">
+            <div class="logo">🔎</div>
+            <div>
+                <h1>Найди отличия</h1>
+                <div class="subtitle">Сравни две картинки, найди 5 отличий и нажимай на любую картинку</div>
+            </div>
+        </div>
+
+        <div class="spot-diff-hero">
+            <div class="spot-diff-status">
+                <div id="spotDiffLevelBadge" class="spot-diff-pill">🦁 Уровень 1</div>
+                <div id="spotDiffProgress" class="spot-diff-pill progress">0 / 5</div>
+                <div id="spotDiffTimer" class="spot-diff-pill timer">⏱ 03:00</div>
+                <div id="spotDiffReward" class="spot-diff-pill reward">+18 🪙</div>
+            </div>
+
+            <div id="spotDiffMessage" class="spot-diff-message">Найди 5 отличий 👀</div>
+
+            <div class="spot-diff-toolbar">
+                <button type="button" class="spot-tool-btn" onclick="useSpotDiffHint()">💡<span>Подсказка</span></button>
+                <button type="button" class="spot-tool-btn" onclick="changeSpotDiffZoom(-0.2)">➖<span>Меньше</span></button>
+                <button type="button" class="spot-tool-btn" onclick="changeSpotDiffZoom(0.2)">🔍<span>Больше</span></button>
+                <button type="button" class="spot-tool-btn" onclick="resetSpotDiffZoom()">1x<span>Сброс</span></button>
+                <button type="button" class="spot-tool-btn" onclick="restartSpotDiffLevel()">🔁<span>Заново</span></button>
+            </div>
+
+            <div class="spot-diff-board" aria-label="Две картинки для поиска отличий">
+                <div class="spot-diff-card">
+                    <div class="spot-diff-label">Картинка 1</div>
+                    <div id="spotDiffLeft" class="spot-scene"></div>
+                </div>
+                <div class="spot-diff-card right">
+                    <div class="spot-diff-label">Картинка 2</div>
+                    <div id="spotDiffRight" class="spot-scene"></div>
+                </div>
+            </div>
+
+            <div id="spotDiffLevelRail" class="spot-diff-level-rail"></div>
+        </div>
+
+        <div class="screen-footer-nav">
+            <button class="btn btn-purple" onclick="restartSpotDiffLevel()">Заново</button>
+            <button class="btn btn-green" onclick="goNextSpotDiffLevel()">Следующий</button>
+            <button type="button" class="btn btn-light" onclick="goHome()">Главное меню</button>
+        </div>
+    </div>
+</div>
 
 <div id="petRoomScreen" class="screen">
     <div class="card-panel pet-room-panel">
@@ -10855,7 +11322,7 @@ let petCareDecayTimer = null;
 let lastReminderText = "";
 let lastReminderShownAt = 0;
 
-const screens = ["menuScreen", "pairsModeScreen", "petRoomScreen", "puzzleScreen", "blockScreen", "shadowScreen", "coloringScreen", "audioScreen", "profileScreen", "achievementsScreen", "mapScreen", "gameScreen", "albumScreen", "petsScreen", "petDetailScreen", "shopScreen", "tasksScreen", "parentScreen"];
+const screens = ["menuScreen", "pairsModeScreen", "spotDiffScreen", "petRoomScreen", "puzzleScreen", "blockScreen", "shadowScreen", "coloringScreen", "audioScreen", "profileScreen", "achievementsScreen", "mapScreen", "gameScreen", "albumScreen", "petsScreen", "petDetailScreen", "shopScreen", "tasksScreen", "parentScreen"];
 const loadingScreen = document.getElementById("loadingScreen");
 const board = document.getElementById("board");
 const levelText = document.getElementById("level");
@@ -11119,6 +11586,7 @@ function showScreen(screenId, navOptions = {}) {
     if (screenId === "puzzleScreen") renderPuzzleScreen();
     if (screenId === "blockScreen") renderZooBlockScreen();
     if (screenId === "coloringScreen") renderColoringScreen();
+    if (screenId === "spotDiffScreen") renderSpotDifferencesScreen();
     if (screenId === "petsScreen") renderPets();
     if (screenId === "shopScreen") renderShop();
     if (screenId === "tasksScreen") renderTasks();
@@ -11756,21 +12224,448 @@ function openZooTeaser() {
 }
 
 
-function openSpotDifferencesTeaser() {
-    playSound("click");
-    if (typeof showFoodToast === "function") {
-        showFoodToast("Игра «Найди отличия» скоро появится 👀");
+
+
+const spotDiffLevels = [
+    {
+        title: 'Львёнок в парке', emoji: '🦁', reward: 18, time: 180,
+        base: [
+            ['sun','spot-sun',82,16], ['cloud','spot-cloud',27,18], ['trunk','spot-tree-trunk',18,66], ['tree','spot-tree-top',18,48],
+            ['animal','spot-animal',51,62,'🦁'], ['flower','spot-flower',78,76], ['rock','spot-rock',31,83], ['ball','spot-ball',66,83]
+        ],
+        diffs: [
+            {id:'sun', label:'солнце ниже', left:['sun','spot-sun',82,16], right:['sun','spot-sun',82,25], hit:[82,25,18,18], hitLeft:[82,16,18,18]},
+            {id:'flower', label:'цветок другого цвета', left:['flower','spot-flower',78,76], right:['flower','spot-flower',78,76,null,'background:#8b5cf6;box-shadow:10px 0 0 #a78bfa,-10px 0 0 #a78bfa,0 10px 0 #a78bfa,0 -10px 0 #a78bfa;'], hit:[78,76,16,16]},
+            {id:'cloud', label:'облако сдвинулось', left:['cloud','spot-cloud',27,18], right:['cloud','spot-cloud',36,16], hit:[36,16,25,16], hitLeft:[27,18,25,16]},
+            {id:'ball', label:'мяч исчез', left:['ball','spot-ball',66,83], right:null, hit:[66,83,17,17], hitLeft:[66,83,17,17]},
+            {id:'butterfly', label:'появилась бабочка', left:null, right:['butterfly','spot-butterfly',23,35,'🦋'], hit:[23,35,18,18]}
+        ]
+    },
+    {
+        title: 'Панда и бамбук', emoji: '🐼', reward: 20, time: 175,
+        base: [
+            ['sun','spot-sun',76,16], ['cloud','spot-cloud',24,17], ['trunk','spot-tree-trunk',83,66], ['tree','spot-tree-top',83,47],
+            ['animal','spot-animal',50,63,'🐼'], ['flower','spot-flower',28,77], ['rock','spot-rock',69,84], ['water','spot-water',33,88]
+        ],
+        diffs: [
+            {id:'animal', label:'панда сместилась', left:['animal','spot-animal',50,63,'🐼'], right:['animal','spot-animal',56,63,'🐼'], hit:[56,63,22,22], hitLeft:[50,63,22,22]},
+            {id:'water', label:'пруд стал больше', left:['water','spot-water',33,88], right:['water','spot-water',38,88,null,'width:34%;height:13%;'], hit:[38,88,30,15], hitLeft:[33,88,28,13]},
+            {id:'tree', label:'крона другого цвета', left:['tree','spot-tree-top',83,47], right:['tree','spot-tree-top',83,47,null,'background:#65a30d;box-shadow:18px 10px 0 #84cc16,-16px 8px 0 #4d7c0f;'], hit:[83,47,24,24]},
+            {id:'rock', label:'камень исчез', left:['rock','spot-rock',69,84], right:null, hit:[69,84,18,13], hitLeft:[69,84,18,13]},
+            {id:'butterfly', label:'появилась бабочка', left:null, right:['butterfly','spot-butterfly',20,36,'🦋'], hit:[20,36,18,18]}
+        ]
+    },
+    {
+        title: 'Дельфин у моря', emoji: '🐬', reward: 22, time: 170,
+        base: [
+            ['sun','spot-sun',84,15], ['cloud','spot-cloud',32,18], ['water','spot-water',50,82], ['animal','spot-animal',50,58,'🐬'],
+            ['ball','spot-ball',74,50], ['rock','spot-rock',18,84], ['flower','spot-flower',24,67]
+        ],
+        diffs: [
+            {id:'sun', label:'солнце поменяло место', left:['sun','spot-sun',84,15], right:['sun','spot-sun',74,20], hit:[74,20,18,18], hitLeft:[84,15,18,18]},
+            {id:'animal', label:'дельфин выше', left:['animal','spot-animal',50,58,'🐬'], right:['animal','spot-animal',50,51,'🐬'], hit:[50,51,22,22], hitLeft:[50,58,22,22]},
+            {id:'ball', label:'мяч другого цвета', left:['ball','spot-ball',74,50], right:['ball','spot-ball',74,50,null,'background:radial-gradient(circle at 32% 28%,#fff 0 15%,#3b82f6 16% 55%,#facc15 56%);'], hit:[74,50,16,16]},
+            {id:'flower', label:'цветок исчез', left:['flower','spot-flower',24,67], right:null, hit:[24,67,16,16], hitLeft:[24,67,16,16]},
+            {id:'star', label:'звезда появилась', left:null, right:['star','spot-star',28,34,'⭐'], hit:[28,34,16,16]}
+        ]
+    },
+    {
+        title: 'Жираф на лугу', emoji: '🦒', reward: 24, time: 165,
+        base: [
+            ['sun','spot-sun',15,15], ['cloud','spot-cloud',55,17], ['tree','spot-tree-top',82,48], ['trunk','spot-tree-trunk',82,68],
+            ['animal','spot-animal',48,61,'🦒'], ['flower','spot-flower',22,77], ['rock','spot-rock',70,84], ['leaf','spot-leaf',64,34]
+        ],
+        diffs: [
+            {id:'sun', label:'солнце справа', left:['sun','spot-sun',15,15], right:['sun','spot-sun',24,20], hit:[24,20,18,18], hitLeft:[15,15,18,18]},
+            {id:'animal', label:'жираф ниже', left:['animal','spot-animal',48,61,'🦒'], right:['animal','spot-animal',48,67,'🦒'], hit:[48,67,22,22], hitLeft:[48,61,22,22]},
+            {id:'leaf', label:'лист исчез', left:['leaf','spot-leaf',64,34], right:null, hit:[64,34,16,16], hitLeft:[64,34,16,16]},
+            {id:'rock', label:'камень стал синим', left:['rock','spot-rock',70,84], right:['rock','spot-rock',70,84,null,'background:#60a5fa;'], hit:[70,84,18,13]},
+            {id:'butterfly', label:'бабочка появилась', left:null, right:['butterfly','spot-butterfly',34,38,'🦋'], hit:[34,38,18,18]}
+        ]
+    },
+    {
+        title: 'Попугай в джунглях', emoji: '🦜', reward: 25, time: 160,
+        base: [
+            ['sun','spot-sun',80,15], ['cloud','spot-cloud',30,16], ['tree','spot-tree-top',20,49], ['trunk','spot-tree-trunk',20,70],
+            ['animal','spot-animal',52,55,'🦜'], ['flower','spot-flower',76,77], ['water','spot-water',47,88], ['leaf','spot-leaf',62,31]
+        ],
+        diffs: [
+            {id:'animal', label:'попугай сместился', left:['animal','spot-animal',52,55,'🦜'], right:['animal','spot-animal',59,55,'🦜'], hit:[59,55,22,22], hitLeft:[52,55,22,22]},
+            {id:'cloud', label:'облако ниже', left:['cloud','spot-cloud',30,16], right:['cloud','spot-cloud',30,24], hit:[30,24,25,16], hitLeft:[30,16,25,16]},
+            {id:'flower', label:'цветок другого цвета', left:['flower','spot-flower',76,77], right:['flower','spot-flower',76,77,null,'background:#f59e0b;box-shadow:10px 0 0 #fbbf24,-10px 0 0 #fbbf24,0 10px 0 #fbbf24,0 -10px 0 #fbbf24;'], hit:[76,77,16,16]},
+            {id:'leaf', label:'лист пропал', left:['leaf','spot-leaf',62,31], right:null, hit:[62,31,16,16], hitLeft:[62,31,16,16]},
+            {id:'berry', label:'ягоды появились', left:null, right:['berry','spot-berry',28,36], hit:[28,36,16,16]}
+        ]
+    },
+    {
+        title: 'Коала ночью', emoji: '🐨', reward: 26, time: 155,
+        base: [
+            ['moon','spot-moon',82,16], ['cloud','spot-cloud',30,18], ['tree','spot-tree-top',24,50], ['trunk','spot-tree-trunk',24,70],
+            ['animal','spot-animal',52,62,'🐨'], ['star','spot-star',62,25,'⭐'], ['rock','spot-rock',74,84], ['flower','spot-flower',18,79]
+        ],
+        diffs: [
+            {id:'moon', label:'луна ниже', left:['moon','spot-moon',82,16], right:['moon','spot-moon',82,24], hit:[82,24,18,18], hitLeft:[82,16,18,18]},
+            {id:'star', label:'звезда исчезла', left:['star','spot-star',62,25,'⭐'], right:null, hit:[62,25,16,16], hitLeft:[62,25,16,16]},
+            {id:'animal', label:'коала левее', left:['animal','spot-animal',52,62,'🐨'], right:['animal','spot-animal',46,62,'🐨'], hit:[46,62,22,22], hitLeft:[52,62,22,22]},
+            {id:'flower', label:'цветок стал зелёным', left:['flower','spot-flower',18,79], right:['flower','spot-flower',18,79,null,'background:#22c55e;box-shadow:10px 0 0 #86efac,-10px 0 0 #86efac,0 10px 0 #86efac,0 -10px 0 #86efac;'], hit:[18,79,16,16]},
+            {id:'berry', label:'ягоды появились', left:null, right:['berry','spot-berry',70,38], hit:[70,38,16,16]}
+        ]
+    },
+    {
+        title: 'Черепаха у моря', emoji: '🐢', reward: 27, time: 150,
+        base: [
+            ['sun','spot-sun',78,15], ['cloud','spot-cloud',30,17], ['water','spot-water',50,84], ['animal','spot-animal',52,63,'🐢'],
+            ['rock','spot-rock',20,84], ['ball','spot-ball',72,58], ['flower','spot-flower',25,70]
+        ],
+        diffs: [
+            {id:'animal', label:'черепаха правее', left:['animal','spot-animal',52,63,'🐢'], right:['animal','spot-animal',60,63,'🐢'], hit:[60,63,22,22], hitLeft:[52,63,22,22]},
+            {id:'ball', label:'мяч исчез', left:['ball','spot-ball',72,58], right:null, hit:[72,58,16,16], hitLeft:[72,58,16,16]},
+            {id:'water', label:'вода выше', left:['water','spot-water',50,84], right:['water','spot-water',50,78,null,'height:14%;'], hit:[50,78,32,16], hitLeft:[50,84,32,14]},
+            {id:'flower', label:'цветок ниже', left:['flower','spot-flower',25,70], right:['flower','spot-flower',25,78], hit:[25,78,16,16], hitLeft:[25,70,16,16]},
+            {id:'star', label:'звезда появилась', left:null, right:['star','spot-star',37,34,'⭐'], hit:[37,34,16,16]}
+        ]
+    },
+    {
+        title: 'Сова на ветке', emoji: '🦉', reward: 28, time: 145,
+        base: [
+            ['moon','spot-moon',80,16], ['cloud','spot-cloud',25,18], ['tree','spot-tree-top',78,48], ['trunk','spot-tree-trunk',78,69],
+            ['animal','spot-animal',50,58,'🦉'], ['leaf','spot-leaf',38,38], ['star','spot-star',62,24,'⭐'], ['rock','spot-rock',25,84]
+        ],
+        diffs: [
+            {id:'moon', label:'луна левее', left:['moon','spot-moon',80,16], right:['moon','spot-moon',72,18], hit:[72,18,18,18], hitLeft:[80,16,18,18]},
+            {id:'animal', label:'сова выше', left:['animal','spot-animal',50,58,'🦉'], right:['animal','spot-animal',50,50,'🦉'], hit:[50,50,22,22], hitLeft:[50,58,22,22]},
+            {id:'leaf', label:'лист исчез', left:['leaf','spot-leaf',38,38], right:null, hit:[38,38,16,16], hitLeft:[38,38,16,16]},
+            {id:'star', label:'звезда другого места', left:['star','spot-star',62,24,'⭐'], right:['star','spot-star',60,32,'⭐'], hit:[60,32,16,16], hitLeft:[62,24,16,16]},
+            {id:'berry', label:'ягоды появились', left:null, right:['berry','spot-berry',30,54], hit:[30,54,16,16]}
+        ]
+    },
+    {
+        title: 'Обезьянка в лесу', emoji: '🐵', reward: 29, time: 140,
+        base: [
+            ['sun','spot-sun',82,15], ['cloud','spot-cloud',35,16], ['tree','spot-tree-top',20,45], ['trunk','spot-tree-trunk',20,68],
+            ['animal','spot-animal',52,59,'🐵'], ['leaf','spot-leaf',64,33], ['flower','spot-flower',78,76], ['rock','spot-rock',34,84]
+        ],
+        diffs: [
+            {id:'animal', label:'обезьянка ниже', left:['animal','spot-animal',52,59,'🐵'], right:['animal','spot-animal',52,67,'🐵'], hit:[52,67,22,22], hitLeft:[52,59,22,22]},
+            {id:'cloud', label:'облако правее', left:['cloud','spot-cloud',35,16], right:['cloud','spot-cloud',44,16], hit:[44,16,25,16], hitLeft:[35,16,25,16]},
+            {id:'leaf', label:'лист стал красным', left:['leaf','spot-leaf',64,33], right:['leaf','spot-leaf',64,33,null,'background:#ef4444;'], hit:[64,33,17,14]},
+            {id:'flower', label:'цветок исчез', left:['flower','spot-flower',78,76], right:null, hit:[78,76,16,16], hitLeft:[78,76,16,16]},
+            {id:'butterfly', label:'бабочка появилась', left:null, right:['butterfly','spot-butterfly',28,38,'🦋'], hit:[28,38,18,18]}
+        ]
+    },
+    {
+        title: 'Кит в океане', emoji: '🐋', reward: 30, time: 135,
+        base: [
+            ['sun','spot-sun',82,16], ['cloud','spot-cloud',28,18], ['water','spot-water',50,82], ['animal','spot-animal',50,58,'🐋'],
+            ['ball','spot-ball',76,52], ['rock','spot-rock',20,84], ['star','spot-star',35,35,'⭐']
+        ],
+        diffs: [
+            {id:'animal', label:'кит правее', left:['animal','spot-animal',50,58,'🐋'], right:['animal','spot-animal',58,58,'🐋'], hit:[58,58,22,22], hitLeft:[50,58,22,22]},
+            {id:'sun', label:'солнце выше', left:['sun','spot-sun',82,16], right:['sun','spot-sun',82,10], hit:[82,10,18,18], hitLeft:[82,16,18,18]},
+            {id:'star', label:'звезда пропала', left:['star','spot-star',35,35,'⭐'], right:null, hit:[35,35,16,16], hitLeft:[35,35,16,16]},
+            {id:'ball', label:'мяч стал синим', left:['ball','spot-ball',76,52], right:['ball','spot-ball',76,52,null,'background:radial-gradient(circle at 32% 28%,#fff 0 15%,#0ea5e9 16% 55%,#22c55e 56%);'], hit:[76,52,16,16]},
+            {id:'butterfly', label:'рыбка появилась', left:null, right:['butterfly','spot-butterfly',24,62,'🐟'], hit:[24,62,18,18]}
+        ]
     }
-    if (!overlay || !modalIcon || !modalTitle || !modalText || !modalButton) return;
-    modalIcon.textContent = "🔎";
-    modalTitle.textContent = "Найди отличия";
-    modalStars.textContent = "Скоро";
-    modalText.textContent = "Эта игра пока в плане разработки: ребёнок будет искать отличия между первой и второй картинкой.";
-    modalAnimal.classList.remove("show");
-    modalButton.textContent = "Понятно";
-    modalButton.onclick = hideOverlay;
-    forceShowVictoryPopup();
+];
+
+let spotDiffCurrentLevel = Number(safeStorage.get('zooSpotDiffCurrentLevel', '0')) || 0;
+let spotDiffCompleted = safeStorage.get('zooSpotDiffCompleted', '')
+    .split(',')
+    .map(v => Number(v))
+    .filter(v => Number.isFinite(v));
+let spotDiffFound = [];
+let spotDiffTimeLeft = 0;
+let spotDiffTimerId = null;
+let spotDiffZoom = 1;
+let spotDiffCanPlay = true;
+
+const spotDiffCoins = document.getElementById('spotDiffCoins');
+const spotDiffLevelBadge = document.getElementById('spotDiffLevelBadge');
+const spotDiffProgress = document.getElementById('spotDiffProgress');
+const spotDiffTimer = document.getElementById('spotDiffTimer');
+const spotDiffReward = document.getElementById('spotDiffReward');
+const spotDiffMessage = document.getElementById('spotDiffMessage');
+const spotDiffLeft = document.getElementById('spotDiffLeft');
+const spotDiffRight = document.getElementById('spotDiffRight');
+const spotDiffLevelRail = document.getElementById('spotDiffLevelRail');
+
+function openSpotDifferences() {
+    playSound("click");
+    if (musicEnabled && !musicTimer) startBackgroundMusic();
+    spotDiffCurrentLevel = Math.max(0, Math.min(spotDiffCurrentLevel, spotDiffLevels.length - 1));
+    showScreen('spotDiffScreen');
 }
+
+function stopSpotDiffTimer() {
+    if (spotDiffTimerId) {
+        clearInterval(spotDiffTimerId);
+        spotDiffTimerId = null;
+    }
+}
+
+function startSpotDiffTimer() {
+    stopSpotDiffTimer();
+    const level = spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0];
+    spotDiffTimeLeft = Number(level.time || 180);
+    spotDiffCanPlay = true;
+    updateSpotDiffTimerText();
+    spotDiffTimerId = setInterval(() => {
+        if (!document.getElementById('spotDiffScreen')?.classList.contains('show')) {
+            stopSpotDiffTimer();
+            return;
+        }
+        spotDiffTimeLeft -= 1;
+        updateSpotDiffTimerText();
+        if (spotDiffTimeLeft <= 0) {
+            stopSpotDiffTimer();
+            if (spotDiffFound.length < (level.diffs?.length || 5)) {
+                spotDiffCanPlay = false;
+                setSpotDiffMessage('Время вышло. Нажми «Заново» и попробуй ещё раз ⏳', 'wrong');
+                playSound('wrong');
+            }
+        }
+    }, 1000);
+}
+
+function updateSpotDiffTimerText() {
+    if (!spotDiffTimer) return;
+    const t = Math.max(0, spotDiffTimeLeft || 0);
+    const mm = String(Math.floor(t / 60)).padStart(2, '0');
+    const ss = String(t % 60).padStart(2, '0');
+    spotDiffTimer.textContent = `⏱ ${mm}:${ss}`;
+    spotDiffTimer.classList.toggle('danger', t <= 20);
+}
+
+function renderSpotDifferencesScreen() {
+    if (!spotDiffLeft || !spotDiffRight) return;
+    if (spotDiffCoins) spotDiffCoins.textContent = String(coins);
+    spotDiffFound = [];
+    spotDiffZoom = 1;
+    renderSpotDiffLevelRail();
+    renderSpotDiffLevel();
+    startSpotDiffTimer();
+}
+
+function renderSpotDiffLevel() {
+    const level = spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0];
+    if (!level || !spotDiffLeft || !spotDiffRight) return;
+
+    spotDiffLeft.innerHTML = '<div class="spot-scene-content"></div>';
+    spotDiffRight.innerHTML = '<div class="spot-scene-content"></div>';
+    spotDiffLeft.onclick = event => handleSpotSceneMiss(event, spotDiffLeft);
+    spotDiffRight.onclick = event => handleSpotSceneMiss(event, spotDiffRight);
+
+    if (spotDiffLevelBadge) spotDiffLevelBadge.textContent = `${level.emoji} Уровень ${spotDiffCurrentLevel + 1}`;
+    if (spotDiffReward) spotDiffReward.textContent = `+${level.reward || 18} 🪙`;
+    updateSpotDiffProgress();
+    setSpotDiffMessage('Найди 5 отличий. Можно нажимать на любую картинку 👀');
+
+    const leftMap = new Map();
+    const rightMap = new Map();
+    level.base.forEach(el => { leftMap.set(el[0], el); rightMap.set(el[0], el); });
+    level.diffs.forEach(diff => {
+        if (diff.left === null) leftMap.delete(diff.id); else if (diff.left) leftMap.set(diff.id, diff.left);
+        if (diff.right === null) rightMap.delete(diff.id); else if (diff.right) rightMap.set(diff.id, diff.right);
+    });
+
+    const leftContent = spotDiffLeft.querySelector('.spot-scene-content');
+    const rightContent = spotDiffRight.querySelector('.spot-scene-content');
+    leftMap.forEach(el => leftContent.appendChild(createSpotSceneElement(el)));
+    rightMap.forEach(el => rightContent.appendChild(createSpotSceneElement(el)));
+
+    level.diffs.forEach(diff => {
+        leftContent.appendChild(createSpotDiffHit(diff, 'left'));
+        rightContent.appendChild(createSpotDiffHit(diff, 'right'));
+    });
+
+    applySpotDiffZoom();
+}
+
+function createSpotSceneElement(el) {
+    const node = document.createElement('div');
+    node.className = `spot-el ${el[1] || ''}`;
+    node.style.left = `${el[2]}%`;
+    node.style.top = `${el[3]}%`;
+    if (el[4]) node.textContent = el[4];
+    if (el[5]) node.style.cssText += el[5];
+    return node;
+}
+
+function getSpotDiffHitBox(diff, side) {
+    if (side === 'left') return diff.hitLeft || diff.hit || [50, 50, 15, 15];
+    return diff.hit || diff.hitLeft || [50, 50, 15, 15];
+}
+
+function createSpotDiffHit(diff, side) {
+    const hit = document.createElement('button');
+    hit.type = 'button';
+    hit.className = 'spot-diff-hit';
+    hit.dataset.diffId = diff.id;
+    hit.setAttribute('aria-label', `Отличие: ${diff.label}`);
+    const [x, y, w, h] = getSpotDiffHitBox(diff, side);
+    hit.style.left = `${x}%`;
+    hit.style.top = `${y}%`;
+    hit.style.width = `${w}%`;
+    hit.style.height = `${h}%`;
+    hit.onclick = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        markSpotDiffFound(diff.id, diff.label);
+    };
+    return hit;
+}
+
+function markSpotDiffFound(id, label) {
+    if (!spotDiffCanPlay) return;
+    if (spotDiffFound.includes(id)) return;
+    spotDiffFound.push(id);
+
+    document.querySelectorAll(`.spot-diff-hit[data-diff-id="${id}"]`).forEach(hit => {
+        hit.classList.remove('hint');
+        hit.classList.add('found');
+    });
+
+    playSound('match');
+    setSpotDiffMessage(`Отличие найдено: ${label} ✨`, 'success');
+    updateSpotDiffProgress();
+
+    const level = spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0];
+    if (spotDiffFound.length >= (level.diffs?.length || 5)) {
+        completeSpotDiffLevel();
+    }
+}
+
+function handleSpotSceneMiss(event, scene) {
+    if (!spotDiffCanPlay) return;
+    const rect = scene.getBoundingClientRect();
+    const mark = document.createElement('div');
+    mark.className = 'spot-miss';
+    mark.style.left = `${event.clientX - rect.left}px`;
+    mark.style.top = `${event.clientY - rect.top}px`;
+    scene.appendChild(mark);
+    setTimeout(() => mark.remove(), 450);
+    scene.classList.remove('shake');
+    void scene.offsetWidth;
+    scene.classList.add('shake');
+    setSpotDiffMessage('Тут отличия нет. Посмотри внимательнее 🙂', 'wrong');
+    playSound('wrong');
+}
+
+function updateSpotDiffProgress() {
+    const level = spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0];
+    const total = level.diffs?.length || 5;
+    if (spotDiffProgress) spotDiffProgress.textContent = `${spotDiffFound.length} / ${total}`;
+}
+
+function setSpotDiffMessage(text, type = '') {
+    if (!spotDiffMessage) return;
+    spotDiffMessage.textContent = text;
+    spotDiffMessage.classList.remove('success', 'wrong');
+    if (type) spotDiffMessage.classList.add(type);
+}
+
+function completeSpotDiffLevel() {
+    stopSpotDiffTimer();
+    spotDiffCanPlay = false;
+    const level = spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0];
+    const alreadyDone = spotDiffCompleted.includes(spotDiffCurrentLevel);
+    let reward = 0;
+
+    if (!alreadyDone) {
+        reward = level.reward || 18;
+        coins += reward;
+        spotDiffCompleted.push(spotDiffCurrentLevel);
+        spotDiffCompleted = Array.from(new Set(spotDiffCompleted)).sort((a, b) => a - b);
+        safeStorage.set('zooSpotDiffCompleted', spotDiffCompleted.join(','));
+        updateTaskProgress('game', 1);
+    }
+
+    safeStorage.set('zooSpotDiffCurrentLevel', String(spotDiffCurrentLevel));
+    saveProgress();
+    updateCoinsViews();
+    if (spotDiffCoins) spotDiffCoins.textContent = String(coins);
+    renderSpotDiffLevelRail();
+    setSpotDiffMessage(alreadyDone ? 'Уровень уже был пройден. Можно перейти дальше 🎉' : `Все 5 отличий найдены! +${reward} 🪙`, 'success');
+    if (typeof showFoodToast === 'function') showFoodToast(alreadyDone ? 'Все отличия найдены 🎉' : `Награда: +${reward} 🪙`);
+}
+
+function restartSpotDiffLevel() {
+    playSound('click');
+    spotDiffFound = [];
+    spotDiffZoom = 1;
+    renderSpotDiffLevel();
+    startSpotDiffTimer();
+}
+
+function useSpotDiffHint() {
+    if (!spotDiffCanPlay) return;
+    const level = spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0];
+    const next = level.diffs.find(diff => !spotDiffFound.includes(diff.id));
+    if (!next) {
+        setSpotDiffMessage('Все отличия уже найдены 🎉', 'success');
+        return;
+    }
+    document.querySelectorAll(`.spot-diff-hit[data-diff-id="${next.id}"]`).forEach(hit => {
+        hit.classList.add('hint');
+        setTimeout(() => hit.classList.remove('hint'), 2600);
+    });
+    playSound('click');
+    setSpotDiffMessage('Подсказка мигает на обеих картинках 💡');
+}
+
+function renderSpotDiffLevelRail() {
+    if (!spotDiffLevelRail) return;
+    spotDiffLevelRail.innerHTML = '';
+    spotDiffLevels.forEach((level, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'spot-level-btn' + (index === spotDiffCurrentLevel ? ' active' : '') + (spotDiffCompleted.includes(index) ? ' done' : '');
+        btn.textContent = `${level.emoji} ${index + 1}`;
+        btn.onclick = () => {
+            stopSpotDiffTimer();
+            spotDiffCurrentLevel = index;
+            safeStorage.set('zooSpotDiffCurrentLevel', String(index));
+            playSound('click');
+            renderSpotDifferencesScreen();
+        };
+        spotDiffLevelRail.appendChild(btn);
+    });
+}
+
+function goNextSpotDiffLevel() {
+    stopSpotDiffTimer();
+    spotDiffCurrentLevel = (spotDiffCurrentLevel + 1) % spotDiffLevels.length;
+    safeStorage.set('zooSpotDiffCurrentLevel', String(spotDiffCurrentLevel));
+    renderSpotDifferencesScreen();
+}
+
+function changeSpotDiffZoom(delta) {
+    spotDiffZoom = Math.max(1, Math.min(2.2, Math.round((spotDiffZoom + delta) * 10) / 10));
+    applySpotDiffZoom();
+    setSpotDiffMessage(`Масштаб: x${spotDiffZoom.toFixed(1)} 🔍`);
+}
+
+function resetSpotDiffZoom() {
+    spotDiffZoom = 1;
+    applySpotDiffZoom();
+    setSpotDiffMessage('Масштаб сброшен: x1.0');
+}
+
+function applySpotDiffZoom() {
+    document.querySelectorAll('#spotDiffScreen .spot-scene-content').forEach(el => {
+        el.style.transform = `scale(${spotDiffZoom})`;
+    });
+}
+
+(function patchSpotDiffScreenCleanup(){
+    const originalShowScreenForSpotDiff = showScreen;
+    showScreen = function(screenId, navOptions = {}) {
+        if (screenId !== 'spotDiffScreen') stopSpotDiffTimer();
+        return originalShowScreenForSpotDiff(screenId, navOptions);
+    };
+})();
+
 
 function setModeAndOpenMap(mode) {
     const requestedMode = normalizeMemoryMode(mode);
@@ -15778,8 +16673,8 @@ let coloringUndoStack = [];
 let coloringHasDrawn = false;
 let coloringPointerId = null;
 
-const COLORING_CANVAS_WIDTH = 1280;
-const COLORING_CANVAS_HEIGHT = 720;
+const COLORING_CANVAS_WIDTH = 1000;
+const COLORING_CANVAS_HEIGHT = 1400;
 let coloringBoundaryCanvas = null;
 let coloringBoundaryCtx = null;
 let coloringOutlineReady = false;
