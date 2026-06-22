@@ -280,5 +280,7 @@
   "coloring.pinch_hint": "🤏 2 fingers — zoom • 👆 tap — fill",
   "parent.save_read_error": "Could not read the save file",
   "parent.save_not_zoo": "This does not look like a Zoo Pet World save",
-  "parent.save_import_error": "Error importing save"
+  "parent.save_import_error": "Error importing save",
+  "coloring.portrait_hint": "Pick a color and tap an area to fill it neatly ✨",
+  "coloring.canvas_hint": "🤏 2 fingers — zoom • 👆 tap — fill"
 }

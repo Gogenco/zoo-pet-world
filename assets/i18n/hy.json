@@ -277,8 +277,10 @@
   "confirm.reset_progress": "Ջնջե՞լ բոլոր խաղի առաջընթացը:",
   "confirm.import_save": "Ներմուծե՞լ պահպանումը? Ընթացիկ առաջընթացը կփոխարինվի, բայց նախ կստեղծվի backup:",
   "confirm.restore_backup": "Վերականգնե՞լ վերջին backup-ը? Ընթացիկ առաջընթացը կփոխարինվի:",
-  "coloring.pinch_hint": "🤏 2 մատ — մեծացնել • 👆 հպիր — ներկիր",
+  "coloring.pinch_hint": "🤏 2 մատ — մեծացնել • 👆 սեղմիր — ներկել",
   "parent.save_read_error": "Չհաջողվեց կարդալ պահպանման ֆայլը",
   "parent.save_not_zoo": "Սա Zoo Pet World-ի պահպանում չի թվում",
-  "parent.save_import_error": "Ներմուծման սխալ"
+  "parent.save_import_error": "Ներմուծման սխալ",
+  "coloring.portrait_hint": "Ընտրիր գույնը և սեղմիր հատվածի վրա՝ գունավորելու համար ✨",
+  "coloring.canvas_hint": "🤏 2 մատ — մեծացնել • 👆 սեղմիր — ներկել"
 }

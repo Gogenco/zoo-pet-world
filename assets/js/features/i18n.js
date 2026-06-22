@@ -285,6 +285,8 @@
         "confirm.import_save": "Импортировать сохранение? Текущий прогресс будет заменён, но перед заменой будет создан backup.",
         "confirm.restore_backup": "Восстановить последний backup? Текущий прогресс будет заменён.",
         "coloring.pinch_hint": "🤏 2 пальца — зум • 👆 нажми — заливка",
+        "coloring.canvas_hint": "🤏 2 пальца — зум • 👆 нажми — заливка",
+        "coloring.portrait_hint": "Выбери цвет и нажми на область для аккуратной заливки ✨",
         "parent.save_read_error": "Не получилось прочитать файл сохранения",
         "parent.save_not_zoo": "Это не похоже на сохранение Zoo Pet World",
         "parent.save_import_error": "Ошибка импорта сохранения"
@@ -565,6 +567,8 @@
         "confirm.import_save": "Import save? Current progress will be replaced, but a backup will be created first.",
         "confirm.restore_backup": "Restore last backup? Current progress will be replaced.",
         "coloring.pinch_hint": "🤏 2 fingers — zoom • 👆 tap — fill",
+        "coloring.canvas_hint": "🤏 2 fingers — zoom • 👆 tap — fill",
+        "coloring.portrait_hint": "Pick a color and tap an area to fill it neatly ✨",
         "parent.save_read_error": "Could not read the save file",
         "parent.save_not_zoo": "This does not look like a Zoo Pet World save",
         "parent.save_import_error": "Error importing save"

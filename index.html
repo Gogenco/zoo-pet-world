@@ -3316,464 +3316,6 @@ h1, h2, h3 {
     margin-right: auto;
 }
 
-.coloring-rotate-overlay {
-    display: none;
-}
-
-.rotate-card {
-    width: min(90vw, 390px);
-    border-radius: 34px;
-    padding: 24px 18px 22px;
-    background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(240,253,244,.98));
-    box-shadow: 0 24px 64px rgba(0,0,0,.28), 0 0 0 4px rgba(187,247,208,.8);
-    text-align: center;
-    color: #312e81;
-    position: relative;
-}
-
-.rotate-lion {
-    position: absolute;
-    left: 50%;
-    top: -56px;
-    transform: translateX(-50%);
-    font-size: 72px;
-    filter: drop-shadow(0 10px 12px rgba(0,0,0,.18));
-    animation: rotateLionPeek 1.15s infinite alternate ease-in-out;
-}
-
-.rotate-title {
-    margin-top: 18px;
-    font-size: 32px;
-    font-weight: 1000;
-    color: #7c3aed;
-}
-
-.rotate-text {
-    margin-top: 12px;
-    font-size: 18px;
-    line-height: 1.28;
-    font-weight: 900;
-    color: #334155;
-}
-
-.rotate-animation {
-    margin: 20px auto 10px;
-    display: grid;
-    grid-template-columns: 86px 70px 120px;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    position: relative;
-}
-
-.phone {
-    display: grid;
-    place-items: center;
-    border-radius: 18px;
-    background: linear-gradient(180deg, #7dd3fc, #22c55e);
-    box-shadow: inset 0 0 0 5px rgba(124,58,237,.28), 0 10px 22px rgba(0,0,0,.16);
-    font-size: 24px;
-}
-
-.phone-portrait {
-    width: 64px;
-    height: 104px;
-    animation: phonePortraitPulse 1.25s infinite ease-in-out;
-}
-
-.phone-landscape {
-    width: 118px;
-    height: 72px;
-    animation: phoneLandscapeGlow 1.25s infinite ease-in-out;
-}
-
-.rotate-arrows {
-    color: #a855f7;
-    font-size: 52px;
-    font-weight: 1000;
-    animation: rotateArrowSpin 1.15s infinite ease-in-out;
-}
-
-.rotate-hand {
-    position: absolute;
-    right: 8px;
-    bottom: 6px;
-    font-size: 38px;
-    animation: rotateHandTap 1.1s infinite ease-in-out;
-    filter: drop-shadow(0 8px 10px rgba(0,0,0,.2));
-}
-
-@keyframes rotateLionPeek {
-    from { transform: translateX(-50%) translateY(0); }
-    to { transform: translateX(-50%) translateY(-8px); }
-}
-
-@keyframes phonePortraitPulse {
-    0%, 100% { opacity: .58; transform: scale(.95); }
-    50% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes phoneLandscapeGlow {
-    0%, 100% { transform: scale(1); box-shadow: inset 0 0 0 5px rgba(124,58,237,.28), 0 10px 22px rgba(0,0,0,.16); }
-    50% { transform: scale(1.06); box-shadow: inset 0 0 0 5px rgba(124,58,237,.35), 0 0 0 8px rgba(167,139,250,.18), 0 14px 26px rgba(0,0,0,.18); }
-}
-
-@keyframes rotateArrowSpin {
-    0% { transform: rotate(-8deg); }
-    50% { transform: rotate(24deg); }
-    100% { transform: rotate(-8deg); }
-}
-
-@keyframes rotateHandTap {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    45% { transform: translate(-12px, -8px) scale(.94); }
-}
-
-@media (orientation: portrait) and (max-width: 900px) {
-    #coloringScreen.show .coloring-rotate-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 3100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 22px;
-        background: rgba(15, 23, 42, .62);
-        backdrop-filter: blur(4px);
-    }
-
-    #coloringScreen.show .coloring-hero {
-        filter: blur(2px) brightness(.75);
-        pointer-events: none;
-    }
-}
-
-@media (orientation: landscape) {
-    #coloringScreen.show {
-        max-width: none;
-        padding: 8px 10px 14px;
-    }
-
-    #coloringScreen.show .card-panel {
-        max-width: min(1420px, 100vw - 20px);
-        padding: 12px;
-    }
-
-    #coloringScreen .title-row,
-    #coloringScreen .top-home-row {
-        margin-bottom: 6px;
-    }
-
-    #coloringScreen .title-row h1 {
-        font-size: clamp(23px, 3vw, 38px);
-    }
-
-    #coloringScreen .subtitle {
-        font-size: clamp(12px, 1.4vw, 16px);
-    }
-
-    #coloringScreen .coloring-hero {
-        padding: 10px 12px 14px;
-    }
-
-    #coloringScreen .coloring-canvas-wrap {
-        max-height: calc(100vh - 255px);
-    }
-
-    #coloringScreen .coloring-stage {
-        gap: 10px;
-    }
-
-    #coloringScreen .coloring-hint {
-        padding: 8px 12px;
-    }
-
-    #coloringScreen .screen-footer-nav {
-        display: none;
-    }
-}
-
-
-/* ===== Stage 4.4: Wider coloring art fix ===== */
-#coloringScreen .coloring-canvas-wrap {
-    aspect-ratio: 1280 / 720 !important;
-}
-
-#coloringScreen .coloring-canvas-card {
-    max-width: min(100%, 1240px) !important;
-    width: 100%;
-}
-
-#coloringScreen .coloring-hero {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-#coloringScreen .coloring-hint {
-    max-width: min(100%, 1240px);
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media (orientation: landscape) {
-    #coloringScreen.show .card-panel {
-        max-width: min(100vw - 10px, 1540px) !important;
-        padding: 10px;
-    }
-
-    #coloringScreen .top-home-row,
-    #coloringScreen .title-row {
-        margin-bottom: 4px;
-    }
-
-    #coloringScreen .coloring-topbar {
-        gap: 8px;
-    }
-
-    #coloringScreen .coloring-canvas-wrap {
-        width: 100%;
-        max-height: calc(100vh - 185px) !important;
-    }
-
-    #coloringScreen .coloring-canvas-card {
-        padding: 8px 8px 10px;
-    }
-
-    #coloringScreen .coloring-tools,
-    #coloringScreen .coloring-palette,
-    #coloringScreen #coloringTemplates {
-        max-width: min(100%, 1240px);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    #coloringScreen .coloring-tool-grid-mobile {
-        grid-auto-columns: minmax(104px, 1fr);
-    }
-}
-
-
-/* ===== Stage 4.5: Edge-to-edge coloring canvas ===== */
-#coloringScreen.show {
-    padding-left: 4px !important;
-    padding-right: 4px !important;
-}
-
-#coloringScreen.show .card-panel {
-    width: calc(100vw - 8px) !important;
-    max-width: calc(100vw - 8px) !important;
-    border-radius: 28px;
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-}
-
-#coloringScreen .top-home-row,
-#coloringScreen .title-row {
-    padding-left: 6px;
-    padding-right: 6px;
-}
-
-#coloringScreen .coloring-hero {
-    padding: 8px 6px 12px !important;
-}
-
-#coloringScreen .coloring-canvas-card {
-    max-width: none !important;
-    width: 100% !important;
-    padding: 6px !important;
-    border-radius: 26px;
-}
-
-#coloringScreen .coloring-canvas-wrap,
-#coloringScreen .coloring-hint,
-#coloringScreen .coloring-tools,
-#coloringScreen .coloring-palette,
-#coloringScreen #coloringTemplates {
-    max-width: none !important;
-    width: 100% !important;
-}
-
-#coloringScreen .coloring-canvas-wrap {
-    aspect-ratio: 1280 / 720 !important;
-}
-
-@media (orientation: landscape) {
-    #coloringScreen.show {
-        padding: 2px !important;
-    }
-
-    #coloringScreen.show .card-panel {
-        width: calc(100vw - 4px) !important;
-        max-width: calc(100vw - 4px) !important;
-        padding: 6px 4px 10px !important;
-        border-radius: 24px;
-    }
-
-    #coloringScreen .top-home-row,
-    #coloringScreen .title-row {
-        margin-bottom: 2px !important;
-        padding-left: 4px;
-        padding-right: 4px;
-    }
-
-    #coloringScreen .title-row .logo {
-        width: 58px;
-        height: 58px;
-        font-size: 28px;
-    }
-
-    #coloringScreen .title-row h1 {
-        font-size: clamp(20px, 2.6vw, 34px) !important;
-        line-height: 1.05;
-    }
-
-    #coloringScreen .subtitle {
-        font-size: clamp(11px, 1.25vw, 14px) !important;
-        line-height: 1.2;
-    }
-
-    #coloringScreen .coloring-hero {
-        padding: 6px 4px 10px !important;
-        border-radius: 24px;
-    }
-
-    #coloringScreen .coloring-topbar {
-        margin-bottom: 6px;
-        gap: 8px;
-    }
-
-    #coloringScreen .coloring-badge {
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-
-    #coloringScreen .coloring-actions {
-        gap: 6px;
-    }
-
-    #coloringScreen .coloring-action-btn {
-        height: 40px;
-        min-width: 40px;
-        border-radius: 14px;
-    }
-
-    #coloringScreen .coloring-canvas-card {
-        padding: 4px !important;
-        box-shadow: 0 6px 0 rgba(34,197,94,.12), 0 10px 18px rgba(0,0,0,.08);
-    }
-
-    #coloringScreen .coloring-canvas-wrap {
-        width: calc(100vw - 28px) !important;
-        max-width: calc(100vw - 28px) !important;
-        max-height: calc(100vh - 150px) !important;
-        margin: 0 auto;
-        border-radius: 22px;
-    }
-
-    #coloringScreen .coloring-hint {
-        width: calc(100vw - 28px) !important;
-        max-width: calc(100vw - 28px) !important;
-        margin: 8px auto 0;
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-
-    #coloringScreen .coloring-stage {
-        gap: 8px !important;
-    }
-
-    #coloringScreen .coloring-tools,
-    #coloringScreen .coloring-palette {
-        padding: 10px 8px 12px !important;
-        border-radius: 22px;
-    }
-
-    #coloringScreen #coloringTemplates {
-        padding-bottom: 10px;
-    }
-}
-
-
-
-/* ===== Stage 4.8: Tap-to-fill coloring + taller canvas + restore panel margins ===== */
-#coloringScreen.show {
-    padding: 10px 12px 16px !important;
-}
-
-#coloringScreen.show .card-panel {
-    width: auto !important;
-    max-width: min(1420px, 100vw - 28px) !important;
-    padding: 12px !important;
-    border-radius: 34px;
-}
-
-#coloringScreen .top-home-row,
-#coloringScreen .title-row {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-#coloringScreen .coloring-hero {
-    padding: 10px 10px 14px !important;
-}
-
-#coloringScreen .coloring-canvas-card {
-    max-width: min(100%, 1240px) !important;
-    width: 100% !important;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 8px !important;
-    border-radius: 28px;
-}
-
-#coloringScreen .coloring-canvas-wrap {
-    width: 100% !important;
-    max-width: min(100%, 1240px) !important;
-    aspect-ratio: 1280 / 1120 !important;
-    max-height: calc(100vh - 210px) !important;
-    background: #ffffff !important;
-}
-
-#coloringScreen .coloring-hint,
-#coloringScreen .coloring-tools,
-#coloringScreen .coloring-palette,
-#coloringScreen #coloringTemplates {
-    max-width: min(100%, 1240px);
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#coloringScreen .coloring-sizes {
-    display: none !important;
-}
-
-@media (orientation: landscape) {
-    #coloringScreen.show {
-        padding: 8px 10px 14px !important;
-    }
-
-    #coloringScreen.show .card-panel {
-        width: auto !important;
-        max-width: min(1420px, 100vw - 40px) !important;
-        padding: 12px !important;
-        border-radius: 34px;
-    }
-
-    #coloringScreen .coloring-canvas-wrap {
-        max-height: calc(100vh - 205px) !important;
-    }
-}
-
-@media (max-width: 820px) {
-    #coloringScreen.show .card-panel {
-        max-width: min(100vw - 16px, 1420px) !important;
-        padding: 10px !important;
-    }
-
-    #coloringScreen .coloring-canvas-card {
-        padding: 6px !important;
-    }
-}
 /* ===== Stage 4.6: Memory 50 levels / max 20 cards ===== */
 .board.cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -7836,34 +7378,6 @@ body {
     box-shadow: 0 3px 0 rgba(0,0,0,.08);
 }
 
-.coloring-scroll-fab {
-    position: absolute;
-    left: 8px;
-    z-index: 40;
-    width: 54px;
-    height: 54px;
-    border: 0;
-    border-radius: 50%;
-    background: linear-gradient(180deg, #10b981, #059669);
-    color: #fff;
-    font-size: 24px;
-    font-weight: 1000;
-    box-shadow: 0 8px 20px rgba(5,150,105,.4);
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    transition: transform .15s, opacity .15s ease, filter .15s ease;
-}
-.coloring-scroll-fab.up { top: 18px; }
-.coloring-scroll-fab.down { bottom: 18px; }
-.coloring-scroll-fab.visible { display: flex; }
-.coloring-scroll-fab:active { transform: translateY(2px) scale(.96); }
-.coloring-scroll-fab.is-disabled {
-    opacity: .42;
-    filter: grayscale(.25);
-}
-
 @media (max-width: 430px) {
     .food-chip {
         flex-basis: 92px;
@@ -7906,36 +7420,6 @@ body {
     box-shadow: 0 10px 24px rgba(76,29,149,.35);
 }
 .guide-fab:active { transform: translateY(2px) scale(.98); }
-
-/* Coloring scroll button — in the green zone INSIDE the canvas card, left side */
-#coloringScrollBtn {
-    position: absolute;
-    left: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 40;
-    width: 54px;
-    height: 54px;
-    border: 0;
-    border-radius: 50%;
-    background: linear-gradient(180deg, #10b981, #059669);
-    color: #fff;
-    font-size: 24px;
-    font-weight: 1000;
-    box-shadow: 0 8px 20px rgba(5,150,105,.4);
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    transition: transform .15s;
-}
-#coloringScrollBtn:active { transform: translateY(calc(-50% + 2px)) scale(.96); }
-#coloringScrollBtn.visible { display: flex; }
-
-/* Fix canvas displaced by order patches — restore original HTML order */
-#coloringScreen .coloring-tools { order: unset !important; }
-#coloringScreen .coloring-palette { order: unset !important; }
-#coloringScreen .coloring-canvas-card { order: unset !important; position: relative !important; }
 
 .guide-overlay {
     position: fixed;
@@ -9264,34 +8748,6 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
 
 
 
-/* ===== Stage 4.2C late override: place dual coloring buttons correctly ===== */
-#coloringScrollUpBtn,
-#coloringScrollBtn {
-    position: absolute !important;
-    left: 8px !important;
-    width: 54px !important;
-    height: 54px !important;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 0;
-    background: linear-gradient(180deg, #10b981, #059669);
-    color: #fff;
-    font-size: 24px;
-    font-weight: 1000;
-    box-shadow: 0 8px 20px rgba(5,150,105,.4);
-    z-index: 40;
-}
-#coloringScrollUpBtn { top: 18px !important; transform: none !important; }
-#coloringScrollBtn { top: auto !important; bottom: 18px !important; transform: none !important; }
-#coloringScrollUpBtn.visible,
-#coloringScrollBtn.visible { display: flex !important; }
-#coloringScrollUpBtn.is-disabled,
-#coloringScrollBtn.is-disabled { opacity: .42; filter: grayscale(.25); }
-
-
-
 /* ===== Stage 4.3A Save Stability / Release Guard ===== */
 .parent-save-tools {
     align-items: flex-start;
@@ -9430,6 +8886,317 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     line-height: 1.18 !important;
 }
 
+
+
+/* ===== Stage 4.4A: Coloring portrait-first refactor ===== */
+#coloringScreen.show {
+    padding: 10px 10px 16px !important;
+}
+
+#coloringScreen.show .card-panel {
+    width: min(100%, 780px) !important;
+    max-width: calc(100vw - 14px) !important;
+    padding: 12px !important;
+    border-radius: 30px;
+}
+
+#coloringScreen .top-home-row,
+#coloringScreen .title-row {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#coloringScreen .title-row {
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+#coloringScreen .title-row .logo {
+    width: clamp(58px, 16vw, 76px);
+    height: clamp(58px, 16vw, 76px);
+    font-size: clamp(28px, 7vw, 38px);
+}
+
+#coloringScreen .title-row h1 {
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1.05;
+}
+
+#coloringScreen .subtitle {
+    font-size: clamp(12px, 3.4vw, 15px);
+    line-height: 1.22;
+}
+
+#coloringScreen .coloring-hero {
+    margin-top: 8px;
+    padding: 10px 8px 12px !important;
+    border-radius: 26px;
+}
+
+#coloringScreen .coloring-topbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+#coloringScreen .coloring-badge {
+    width: 100%;
+    justify-content: center;
+    padding: 9px 12px;
+    font-size: 13px;
+    white-space: normal;
+    text-align: center;
+}
+
+#coloringScreen .coloring-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#coloringScreen .coloring-action-btn {
+    min-width: 46px;
+    height: 44px;
+    border-radius: 16px;
+}
+
+#coloringScreen .coloring-stage {
+    margin-top: 10px;
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+}
+
+#coloringScreen .coloring-canvas-card {
+    order: 1;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+    padding: 6px !important;
+    border-radius: 24px;
+}
+
+#coloringScreen .coloring-canvas-wrap {
+    position: relative;
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 1280 / 1120 !important;
+    max-height: min(60vh, 470px);
+    min-height: 300px;
+    margin: 0 auto;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #ffffff !important;
+    border: 3px solid rgba(16,185,129,.28);
+    touch-action: none;
+}
+
+#coloringScreen .coloring-canvas,
+#coloringScreen .coloring-outline {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#coloringScreen .coloring-outline {
+    pointer-events: none;
+}
+
+#coloringScreen .coloring-canvas-wrap::after {
+    content: attr(data-hint);
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 4;
+    width: auto;
+    max-width: none;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.92);
+    color: #0f172a;
+    font-size: 11px;
+    line-height: 1.15;
+    font-weight: 1000;
+    text-align: center;
+    box-shadow: 0 6px 14px rgba(0,0,0,.10);
+    pointer-events: none;
+}
+
+#coloringScreen .coloring-hint {
+    margin-top: 8px;
+    padding: 9px 10px;
+    border-radius: 18px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: center;
+}
+
+#coloringScreen .coloring-hint::before {
+    content: '💡';
+    flex: 0 0 auto;
+}
+
+#coloringScreen .coloring-palette {
+    order: 2;
+}
+
+#coloringScreen .coloring-tools {
+    order: 3;
+}
+
+#coloringScreen .coloring-tools,
+#coloringScreen .coloring-palette {
+    width: 100%;
+    padding: 10px 8px !important;
+    border-radius: 22px;
+}
+
+#coloringScreen .coloring-side-title {
+    text-align: left;
+    padding-left: 4px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+#coloringScreen .coloring-palette-grid {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 4px 10px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+}
+
+#coloringScreen .color-chip {
+    flex: 0 0 44px;
+    width: 44px !important;
+    height: 44px !important;
+    border-width: 3px;
+    scroll-snap-align: center;
+    position: relative;
+}
+
+#coloringScreen .color-chip.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(124,58,237,.22), 0 8px 14px rgba(0,0,0,.16) !important;
+}
+
+#coloringScreen .color-chip.active::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,.60);
+    font-weight: 1000;
+}
+
+#coloringScreen .coloring-tool-grid-mobile {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px;
+}
+
+#coloringScreen .coloring-tool-btn {
+    min-height: 58px;
+    margin: 0;
+    padding: 7px 4px;
+    border-radius: 18px;
+    font-size: 23px;
+}
+
+#coloringScreen .coloring-tool-btn small {
+    font-size: 10px;
+    line-height: 1.05;
+}
+
+#coloringScreen .coloring-sizes {
+    display: none !important;
+}
+
+#coloringScreen .coloring-templates {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 2px 12px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+}
+
+#coloringScreen .coloring-template-card {
+    flex: 0 0 clamp(112px, 32vw, 136px);
+    min-height: 132px;
+    scroll-snap-align: start;
+}
+
+#coloringScreen .coloring-template-card img {
+    height: 78px;
+    object-fit: contain;
+}
+
+#coloringScreen .coloring-template-card div:last-child {
+    line-height: 1.08;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+#coloringScrollDots.coloring-templates-scroll-hint {
+    margin-top: 0;
+    justify-content: center;
+}
+
+@media (max-width: 420px) {
+    #coloringScreen.show .card-panel {
+        max-width: calc(100vw - 10px) !important;
+        padding: 10px !important;
+    }
+
+    #coloringScreen .coloring-hero {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+
+    #coloringScreen .coloring-canvas-wrap {
+        min-height: 282px;
+        max-height: 56vh;
+        border-radius: 20px;
+    }
+
+    #coloringScreen .coloring-tool-grid-mobile {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #coloringScreen .coloring-tool-btn {
+        min-height: 52px;
+    }
+}
+
+@media (orientation: landscape) {
+    #coloringScreen.show .card-panel {
+        max-width: min(980px, 100vw - 24px) !important;
+    }
+
+    #coloringScreen .coloring-canvas-wrap {
+        max-height: min(64vh, 460px);
+        min-height: 260px;
+    }
+}
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -10214,26 +9981,13 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
             </div>
         </div>
 
-        <div id="coloringRotateOverlay" class="coloring-rotate-overlay">
-            <div class="rotate-card">
-                <div class="rotate-lion">🦁</div>
-                <div class="rotate-title">Поверни телефон</div>
-                <div class="rotate-animation">
-                    <div class="phone phone-portrait">🌤️</div>
-                    <div class="rotate-arrows">↻</div>
-                    <div class="phone phone-landscape">🌤️</div>
-                    <div class="rotate-hand">👆</div>
-                </div>
-                <div class="rotate-text">Для раскраски переверни экран горизонтально</div>
-            </div>
-        </div>
-
         <div class="coloring-hero">
             <div id="coloringLoadingState" class="coloring-loading-state" style="display:none;">
                 <div class="coloring-loading-spinner">🖍️</div>
                 <div>Загружаем картинки раскраски...</div>
                 <small>Первое открытие может занять несколько секунд, дальше быстрее.</small>
             </div>
+
             <div class="coloring-topbar">
                 <div id="coloringBadge" class="coloring-badge">🦁 Львенок в саванне</div>
                 <div class="coloring-actions">
@@ -10244,6 +9998,19 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
             </div>
 
             <div class="coloring-stage">
+                <div class="coloring-canvas-card">
+                    <div id="coloringCanvasWrap" class="coloring-canvas-wrap" aria-label="Холст для раскраски" data-hint="🤏 2 пальца — зум • 👆 нажми — заливка">
+                        <canvas id="coloringPaintCanvas" class="coloring-canvas" width="1280" height="1120"></canvas>
+                        <canvas id="coloringOutlineCanvas" class="coloring-outline" width="1280" height="1120"></canvas>
+                    </div>
+                    <div id="coloringHint" class="coloring-hint">Выбери цвет и нажми на пустую область, чтобы залить её ✨</div>
+                </div>
+
+                <div class="coloring-palette">
+                    <div class="coloring-side-title">Палитра</div>
+                    <div id="coloringPaletteGrid" class="coloring-palette-grid"></div>
+                </div>
+
                 <div class="coloring-tools">
                     <div class="coloring-side-title">Инструменты</div>
                     <div class="coloring-tool-grid-mobile">
@@ -10256,25 +10023,6 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
                         <div class="coloring-side-title" style="margin-bottom:6px;">Толщина</div>
                         <div id="coloringSizeRow" class="coloring-size-row"></div>
                     </div>
-                </div>
-
-                <div class="coloring-canvas-card">
-                    <button id="coloringScrollUpBtn" class="coloring-scroll-fab up" onclick="coloringScrollToTop()" aria-label="Прокрутить раскраску вверх">
-                        <span aria-hidden="true">↑</span>
-                    </button>
-                    <button id="coloringScrollBtn" class="coloring-scroll-fab down" onclick="coloringScrollToBottom()" aria-label="Прокрутить раскраску вниз">
-                        <span id="coloringScrollIcon" aria-hidden="true">↓</span>
-                    </button>
-                    <div id="coloringCanvasWrap" class="coloring-canvas-wrap" aria-label="Холст для раскраски" data-hint="🤏 2 пальца — зум • 👆 нажми — заливка">
-                        <canvas id="coloringPaintCanvas" class="coloring-canvas" width="1280" height="1120"></canvas>
-                        <canvas id="coloringOutlineCanvas" class="coloring-outline" width="1280" height="1120"></canvas>
-                    </div>
-                    <div id="coloringHint" class="coloring-hint">Выбери цвет и нажми на пустую область, чтобы залить её ✨</div>
-                </div>
-
-                <div class="coloring-palette">
-                    <div class="coloring-side-title">Палитра</div>
-                    <div id="coloringPaletteGrid" class="coloring-palette-grid"></div>
                 </div>
             </div>
 
@@ -11349,12 +11097,6 @@ function showScreen(screenId, navOptions = {}) {
     translatePageToEnglish();
     try { applyI18nPlaceholders(); } catch(e) {}
     hideGuideOverlay();
-    // Show coloring scroll buttons only on coloring screen
-    const scrollBtn = document.getElementById("coloringScrollBtn");
-    const scrollUpBtn = document.getElementById("coloringScrollUpBtn");
-    if (scrollBtn) scrollBtn.classList.toggle("visible", screenId === "coloringScreen");
-    if (scrollUpBtn) scrollUpBtn.classList.toggle("visible", screenId === "coloringScreen");
-    if (screenId === "coloringScreen") coloringScrollUpdateBtn();
     setTimeout(() => {
         refreshGuideHelpers(screenId);
         maybeAutoStartGuide(screenId);
@@ -16049,7 +15791,7 @@ function renderColoringScreen() {
     if (coloringCoins) coloringCoins.textContent = String(coins);
     // Set localised pinch-to-zoom hint on the canvas wrap (used by CSS ::after content: attr(data-hint))
     if (coloringCanvasWrap) {
-        coloringCanvasWrap.setAttribute('data-hint', t('coloring.pinch_hint'));
+        coloringCanvasWrap.setAttribute('data-hint', t('coloring.canvas_hint'));
     }
     renderColoringPalette();
     renderColoringSizes();
@@ -16058,7 +15800,7 @@ function renderColoringScreen() {
     ensureColoringCanvasReady();
     redrawColoringOutline();
     updateColoringBadge();
-    updateColoringHint(guideT('Поверни телефон горизонтально, выбери цвет и нажми на область для аккуратной заливки ✨', 'Rotate your phone, pick a color and tap an area to fill it ✨'));
+    updateColoringHint(t('coloring.portrait_hint'));
 }
 
 function ensureColoringCanvasSize() {
@@ -16414,7 +16156,7 @@ function renderColoringTemplates() {
     try { refreshGuideHelpers('coloringScreen'); } catch(e) {}
     // Update scroll indicator dots
     updateColoringScrollDots();
-    coloringTemplates.addEventListener('scroll', updateColoringScrollDots, { passive: true });
+    coloringTemplates.onscroll = updateColoringScrollDots;
 }
 
 function updateColoringScrollDots() {
@@ -18046,348 +17788,12 @@ setTimeout(() => {
 </script>
 
 <!-- Zoo Pet World: fixed undefined currentLevel crash, win popup, calm timer state -->
-
-
-
-
-<style id="coloring-import-patch">
-#coloringScreen .coloring-tool-grid-mobile {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-#coloringScreen .coloring-sizes {
-    display: none !important;
-}
-#coloringScreen .coloring-canvas-wrap {
-    position: relative;
-    overflow: hidden;
-}
-#coloringCanvasViewport {
-    position: absolute;
-    inset: 0;
-    transform-origin: 0 0;
-    will-change: transform;
-    touch-action: none;
-}
-#coloringScreen .coloring-canvas-wrap::after {
-    content: attr(data-hint);
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    z-index: 4;
-    font-size: 12px;
-    color: #0f172a;
-    background: rgba(255,255,255,.88);
-    border-radius: 999px;
-    padding: 6px 10px;
-    box-shadow: 0 6px 14px rgba(0,0,0,.10);
-    pointer-events: none;
-}
-#coloringScreen .coloring-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 8px;
-}
-#coloringZoomResetBtn {
-    font-size: 18px;
-}
-#coloringScreen .coloring-template-thumb img {
-    object-fit: contain;
-    background: #fff;
-}
-@media (max-width: 920px) {
-    #coloringScreen .coloring-palette-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-    #coloringScreen .coloring-hint {
-        font-size: 13px;
-        line-height: 1.35;
-    }
-}
-</style>
 <script id="coloring-inline-assets">
 // coloring images moved to assets/js/features/coloringImages.js (lazy-loaded)
 </script>
 <script src="assets/js/features/i18n.js"></script>
 <script src="assets/js/features/cleanRoomScene.js"></script>
 <script src="assets/js/zoo_economy_rewards_step2.js" async></script>
-
-
-<style id="coloring-mobile-polish-patch">
-/* ===== Stage 6.1.3.1: Coloring Mobile UI polish ===== */
-#coloringScreen .coloring-topbar {
-    align-items: flex-start;
-    gap: 10px;
-}
-#coloringMobileHelpBar {
-    margin: 10px 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    padding: 8px 10px;
-    border-radius: 18px;
-    background: rgba(255,255,255,.78);
-    border: 2px solid rgba(124,58,237,.12);
-    box-shadow: 0 6px 14px rgba(67,31,0,.08);
-    color: #4b3418;
-    font-weight: 900;
-    font-size: 13px;
-    line-height: 1.2;
-}
-#coloringSelectedColorDot {
-    width: 24px;
-    height: 24px;
-    border-radius: 999px;
-    border: 3px solid #fff;
-    box-shadow: 0 0 0 2px rgba(124,58,237,.18), 0 4px 10px rgba(0,0,0,.10);
-    flex: 0 0 auto;
-}
-#coloringMobileHelpBar .help-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    border-radius: 999px;
-    padding: 5px 8px;
-    background: rgba(250,204,21,.18);
-    color: #6b3d0b;
-    white-space: nowrap;
-}
-#coloringZoomBadge {
-    background: rgba(56,189,248,.18) !important;
-    color: #075985 !important;
-}
-#coloringTemplateCounter {
-    background: rgba(34,197,94,.16) !important;
-    color: #166534 !important;
-}
-#coloringScreen .coloring-tools {
-    min-width: 136px;
-}
-#coloringScreen .coloring-tool-grid-mobile {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
-}
-#coloringScreen .coloring-tool-btn {
-    min-height: 66px;
-    font-size: 24px;
-    padding: 8px 6px;
-}
-#coloringScreen .coloring-tool-btn small {
-    font-size: 11px;
-}
-#coloringScreen .coloring-palette {
-    min-width: 132px;
-}
-#coloringScreen .coloring-palette-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-    max-height: 286px;
-    overflow-y: auto;
-    padding: 4px 4px 8px;
-    -webkit-overflow-scrolling: touch;
-}
-#coloringScreen .color-chip {
-    width: 34px !important;
-    height: 34px !important;
-    border-width: 3px;
-    position: relative;
-}
-#coloringScreen .color-chip.active {
-    transform: scale(1.12);
-    box-shadow: 0 0 0 4px rgba(124,58,237,.22), 0 8px 14px rgba(0,0,0,.16) !important;
-}
-#coloringScreen .color-chip.active::after {
-    content: '✓';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    color: #fff;
-    text-shadow: 0 1px 3px rgba(0,0,0,.55);
-    font-weight: 1000;
-}
-#coloringScreen .coloring-canvas-card {
-    position: relative;
-}
-#coloringScreen .coloring-hint {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 42px;
-}
-#coloringScreen .coloring-hint::before {
-    content: '💡';
-    flex: 0 0 auto;
-}
-#coloringScreen .coloring-templates {
-    gap: 10px;
-    padding-bottom: 16px;
-    scroll-snap-type: x proximity;
-}
-#coloringScreen .coloring-template-card {
-    scroll-snap-align: start;
-}
-#coloringScreen .coloring-template-card div:last-child {
-    line-height: 1.1;
-}
-#coloringScreen .coloring-canvas-wrap::after {
-    content: attr(data-hint) !important;
-}
-@media (max-width: 980px) and (orientation: landscape) {
-    #coloringScreen.show .card-panel {
-        padding: 10px 12px 12px !important;
-    }
-    #coloringScreen .title-row {
-        margin-bottom: 6px;
-    }
-    #coloringScreen .title-row .logo {
-        width: 44px;
-        height: 44px;
-        font-size: 24px;
-    }
-    #coloringScreen .title-row h1 {
-        font-size: 23px !important;
-    }
-    #coloringScreen .subtitle {
-        display: none;
-    }
-    #coloringMobileHelpBar {
-        margin: 6px 0 8px;
-        padding: 6px 8px;
-        font-size: 12px;
-    }
-    #coloringScreen .coloring-stage {
-        display: grid !important;
-        grid-template-columns: 118px minmax(0, 1fr) 128px !important;
-        align-items: start;
-        gap: 8px !important;
-    }
-    #coloringScreen .coloring-tools,
-    #coloringScreen .coloring-palette {
-        padding: 8px !important;
-        border-radius: 18px !important;
-    }
-    #coloringScreen .coloring-side-title {
-        font-size: 11px;
-        margin-bottom: 6px;
-    }
-    #coloringScreen .coloring-tool-btn {
-        min-height: 56px;
-        font-size: 21px;
-        border-radius: 16px;
-    }
-    #coloringScreen .coloring-palette-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        max-height: 222px;
-        gap: 7px !important;
-    }
-    #coloringScreen .color-chip {
-        width: 30px !important;
-        height: 30px !important;
-    }
-    #coloringScreen .coloring-canvas-card {
-        padding: 7px !important;
-        border-radius: 22px !important;
-    }
-    #coloringScreen .coloring-canvas-wrap {
-        min-height: 300px;
-        max-height: calc(100vh - 210px);
-        aspect-ratio: 16 / 9 !important;
-    }
-    #coloringScreen .coloring-hint {
-        margin-top: 6px;
-        padding: 7px 10px;
-        font-size: 12px;
-        border-radius: 15px;
-    }
-    #coloringScreen .coloring-templates {
-        margin-top: 8px;
-        max-height: 104px;
-    }
-    #coloringScreen .screen-footer-nav {
-        margin-top: 8px;
-    }
-}
-@media (max-width: 720px) and (orientation: portrait) {
-    #coloringMobileHelpBar {
-        font-size: 12px;
-    }
-    #coloringScreen .coloring-palette-grid {
-        grid-template-columns: repeat(6, 1fr) !important;
-        max-height: 110px;
-    }
-    #coloringScreen .color-chip {
-        width: 32px !important;
-        height: 32px !important;
-    }
-}
-</style>
-
-
-
-
-
-
-
-
-
-<style id="coloring-loupe-hotfix-style">
-#coloringCanvasWrap.color-loupe-mode {
-  cursor: zoom-in;
-}
-#coloringLoupeOverlay {
-  position: absolute;
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 4px solid rgba(255,255,255,.95);
-  box-shadow: 0 8px 22px rgba(0,0,0,.25), inset 0 0 0 2px rgba(99,102,241,.35);
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.28), rgba(255,255,255,.06) 55%, rgba(15,23,42,.06));
-  backdrop-filter: blur(1px);
-  z-index: 20;
-  pointer-events: none;
-  display: none;
-  transform: translate(-50%, -50%);
-}
-#coloringLoupeOverlay::before {
-  content: '🔍';
-  position: absolute;
-  top: -14px;
-  right: -10px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  border-radius: 999px;
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
-  font-size: 16px;
-}
-#coloringLoupeOverlay::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  transform: translate(-50%, -50%);
-  border: 2px solid rgba(99,102,241,.8);
-  border-radius: 50%;
-  box-shadow: 0 0 0 9999px rgba(255,255,255,.03) inset;
-}
-#coloringZoomResetBtn.loupe-active {
-  background: linear-gradient(135deg, #8b5cf6, #22c55e);
-  color: #fff;
-  transform: scale(1.03);
-}
-</style>
-
-
-
-
 <style id="coloring-lineart-batch1-style">
 /* ===== Stage 6.1.3.6: closed-shape line art pass, batch 1 ===== */
 #coloringScreen .coloring-hint::after {
@@ -19381,73 +18787,7 @@ body.guide-open #guideFab { pointer-events: none !important; }
 
 
 
-/* ===== Stage 4.2C UX hotfix: coloring dual scroll + pet voice verification ===== */
-function getColoringScrollContainer() {
-    const screen = document.getElementById('coloringScreen');
-    const panel = screen ? screen.querySelector('.card-panel') : null;
-    if (panel && panel.scrollHeight > panel.clientHeight + 4) return panel;
-    if (screen && screen.scrollHeight > screen.clientHeight + 4) return screen;
-    return document.scrollingElement || document.documentElement || document.body;
-}
-
-function coloringScrollUpdateBtn() {
-    const downBtn = document.getElementById('coloringScrollBtn');
-    const upBtn = document.getElementById('coloringScrollUpBtn');
-    const screen = document.getElementById('coloringScreen');
-    const isVisible = !!(screen && screen.classList.contains('show'));
-    if (!downBtn || !upBtn) return;
-    downBtn.classList.toggle('visible', isVisible);
-    upBtn.classList.toggle('visible', isVisible);
-    const scrollEl = getColoringScrollContainer();
-    const top = scrollEl === document.body || scrollEl === document.documentElement || scrollEl === document.scrollingElement
-        ? (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0)
-        : scrollEl.scrollTop;
-    const max = scrollEl === document.body || scrollEl === document.documentElement || scrollEl === document.scrollingElement
-        ? Math.max(0, (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight)
-        : Math.max(0, scrollEl.scrollHeight - scrollEl.clientHeight);
-    upBtn.classList.toggle('is-disabled', top <= 12);
-    downBtn.classList.toggle('is-disabled', max - top <= 12);
-}
-
-function coloringScrollToTop() {
-    const scrollEl = getColoringScrollContainer();
-    if (scrollEl && typeof scrollEl.scrollTo === 'function') {
-        if (scrollEl === document.body || scrollEl === document.documentElement || scrollEl === document.scrollingElement) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }
-    setTimeout(coloringScrollUpdateBtn, 420);
-}
-
-function coloringScrollToBottom() {
-    const scrollEl = getColoringScrollContainer();
-    if (scrollEl && typeof scrollEl.scrollTo === 'function') {
-        if (scrollEl === document.body || scrollEl === document.documentElement || scrollEl === document.scrollingElement) {
-            const max = Math.max(0, (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight);
-            window.scrollTo({ top: max, behavior: 'smooth' });
-        } else {
-            scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
-        }
-    }
-    setTimeout(coloringScrollUpdateBtn, 420);
-}
-
-function coloringScrollToggle() {
-    coloringScrollToBottom();
-}
-
-document.addEventListener('scroll', function() {
-    const screen = document.getElementById('coloringScreen');
-    if (screen && screen.classList.contains('show')) coloringScrollUpdateBtn();
-}, { passive: true, capture: true });
-
-window.addEventListener('resize', function(){
-    const screen = document.getElementById('coloringScreen');
-    if (screen && screen.classList.contains('show')) coloringScrollUpdateBtn();
-}, { passive: true });
-
+/* ===== Stage 4.4A: coloring scroll buttons removed; pet voice verification kept ===== */
 (function(){
     const originalRenderPetRoom = window.renderPetRoom;
     if (typeof originalRenderPetRoom === 'function') {

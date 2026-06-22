@@ -280,5 +280,7 @@
   "coloring.pinch_hint": "🤏 2 пальца — зум • 👆 нажми — заливка",
   "parent.save_read_error": "Не получилось прочитать файл сохранения",
   "parent.save_not_zoo": "Это не похоже на сохранение Zoo Pet World",
-  "parent.save_import_error": "Ошибка импорта сохранения"
+  "parent.save_import_error": "Ошибка импорта сохранения",
+  "coloring.portrait_hint": "Выбери цвет и нажми на область для аккуратной заливки ✨",
+  "coloring.canvas_hint": "🤏 2 пальца — зум • 👆 нажми — заливка"
 }
