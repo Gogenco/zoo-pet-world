@@ -8888,7 +8888,41 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
 
 
 
+
+.planned-game-card {
+    position: relative;
+    overflow: hidden;
+}
+.planned-game-card::after {
+    content: attr(data-soon);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(250,204,21,.94);
+    color: #713f12;
+    font-size: 10px;
+    font-weight: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+
 /* ===== Stage 4.4A: Coloring portrait-first refactor ===== */
+
+#coloringCanvasViewport {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: 0 0;
+    will-change: transform;
+    touch-action: none;
+}
+
+#coloringZoomResetBtn {
+    font-size: 18px;
+}
+
 #coloringScreen.show {
     padding: 10px 10px 16px !important;
 }
@@ -9287,10 +9321,10 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
                         <div class="feature-text">выбери спокойный режим или таймер</div>
                     </button>
 
-                    <button class="feature-card" onclick="showScreen('mapScreen')">
+                    <button class="feature-card planned-game-card" onclick="openSpotDifferencesTeaser()" data-soon="скоро">
                         <span class="feature-icon game-preview-icon icon-map" aria-hidden="true"><i></i><i></i><i></i></span>
-                        Карта уровней
-                        <div class="feature-text">вольеры, звёзды и 50 уровней</div>
+                        Найди отличия
+                        <div class="feature-text">скоро: две картинки и отличия</div>
                     </button>
 
                     <button class="feature-card" onclick="openShadowGame()">
@@ -9386,7 +9420,6 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     <div class="card-panel">
         <div class="topbar">
             <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
-            <button class="home-chip" onclick="showScreen('mapScreen')">🗺️ Карта</button>
         </div>
         <div class="pairs-mode-hero">
             <h2>Найди пары</h2>
@@ -9404,7 +9437,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
                 <small>С таймером, больше напряжения и лучше для челленджа.</small>
             </button>
         </div>
-        <div class="small-note">Зоопарк будет отдельным большим этапом: пока играем и копим монетки.</div>
+        <div class="small-note">Сначала выбери режим — потом откроется карта уровней этой игры.</div>
     </div>
 </div>
 
@@ -9675,7 +9708,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
 
         <div id="releaseChecklistBox" class="release-checklist" style="display:none;"></div>
 
-        <button class="btn btn-purple" style="width:100%;margin-top:12px;" onclick="showScreen('menuScreen')">Назад</button>
+        <button class="btn btn-purple" style="width:100%;margin-top:12px;" onclick="showScreen('pairsModeScreen')">← Выбор режима</button>
     </div>
 </div>
 
@@ -9757,8 +9790,8 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
         <div class="title-row">
             <div class="logo">🗺️</div>
             <div>
-                <h1>Карта зоопарка</h1>
-                <div class="subtitle">Проходи вольеры и открывай животных</div>
+                <h1>Карта уровней</h1>
+                <div class="subtitle">Уровни игры «Найди пары» — выбери режим и проходи по порядку</div>
             </div>
         </div>
         <div class="coins-box">Режим: <span id="modeLabel">С таймером</span></div>
@@ -9800,7 +9833,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
 
     <div class="two-col" style="width:100%;margin-top:11px;">
         <button class="btn btn-orange" onclick="restartLevel()">Заново</button>
-        <button class="btn btn-purple" onclick="openMapFromGame()">Карта</button>
+        <button class="btn btn-purple" onclick="openMapFromGame()">Карта уровней</button>
     </div>
     <button class="btn btn-light" style="width:100%;margin-top:10px;" onclick="goHome()">🏠 Главное меню</button>
 
@@ -10121,7 +10154,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
         <div id="modalText" class="modal-text">Молодец! Переходим дальше.</div>
         <button id="modalButton" type="button" class="btn btn-green" onclick="nextLevel()">Следующий уровень</button>
         <div class="two-col" style="width:100%;margin-top:10px;">
-            <button type="button" class="btn btn-purple" onclick="openMapFromModal()">Карта</button>
+            <button type="button" class="btn btn-purple" onclick="openMapFromModal()">Карта уровней</button>
             <button type="button" class="btn btn-light" onclick="goHome()">Главное меню</button>
         </div>
     </div>
@@ -11722,6 +11755,23 @@ function openZooTeaser() {
     forceShowVictoryPopup();
 }
 
+
+function openSpotDifferencesTeaser() {
+    playSound("click");
+    if (typeof showFoodToast === "function") {
+        showFoodToast("Игра «Найди отличия» скоро появится 👀");
+    }
+    if (!overlay || !modalIcon || !modalTitle || !modalText || !modalButton) return;
+    modalIcon.textContent = "🔎";
+    modalTitle.textContent = "Найди отличия";
+    modalStars.textContent = "Скоро";
+    modalText.textContent = "Эта игра пока в плане разработки: ребёнок будет искать отличия между первой и второй картинкой.";
+    modalAnimal.classList.remove("show");
+    modalButton.textContent = "Понятно";
+    modalButton.onclick = hideOverlay;
+    forceShowVictoryPopup();
+}
+
 function setModeAndOpenMap(mode) {
     const requestedMode = normalizeMemoryMode(mode);
 
@@ -12386,8 +12436,8 @@ function renderMap() {
         const desc = document.createElement("div");
         desc.className = "map-desc";
         desc.textContent = unlocked
-            ? `${level.zoneIcon || "🗺️"} ${level.zoneName || "Зоопарк"} • ${level.pairs} пар • ${currentMode === "timed" ? level.time + " сек" : "без таймера"}`
-            : "Закрыто. Пройди предыдущий вольер.";
+            ? `${level.zoneIcon || "🗺️"} Уровень ${index + 1} • ${level.pairs} пар • ${currentMode === "timed" ? level.time + " сек" : "без таймера"}`
+            : "Закрыто. Пройди предыдущий уровень.";
         const starsBox = document.createElement("div");
         starsBox.className = "stars";
         starsBox.textContent = starString(stars);
@@ -15767,9 +15817,6 @@ function openColoring() {
             clearTimeout(loadingGuard);
             setColoringLoadingState(false);
             try { renderColoringScreen(); } catch(e) {}
-            setTimeout(() => {
-                try { if (typeof buildColoringScrollHandles === 'function') buildColoringScrollHandles(); } catch(e) {}
-            }, 400);
         });
     });
 }
