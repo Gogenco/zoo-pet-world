@@ -9823,6 +9823,110 @@ body.low-performance .purchase-confirm-overlay {
     }
 }
 
+
+/* ===== Stage 4.8A — Premium menu/top icons integration ===== */
+.logo.zoo-top-icon-logo,
+.loading-logo.zoo-top-icon-logo {
+    background: linear-gradient(135deg, #ffffff, #fef3c7 55%, #dbeafe) !important;
+    overflow: hidden;
+    padding: 7px;
+    font-size: 0 !important;
+}
+
+.logo.zoo-top-icon-logo .top-screen-icon-img,
+.loading-logo.zoo-top-icon-logo .top-screen-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 5px 8px rgba(76, 29, 149, .18));
+}
+
+.menu-image-icon {
+    position: relative;
+    display: grid !important;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 9px !important;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,247,237,.94));
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.92), 0 8px 14px rgba(76,29,149,.12);
+    overflow: hidden;
+    font-size: 0 !important;
+}
+
+.menu-image-icon::before,
+.menu-image-icon::after,
+.menu-image-icon i {
+    content: none !important;
+    display: none !important;
+}
+
+.menu-card-icon-img {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 5px 7px rgba(15,23,42,.14));
+}
+
+.menu-section-title-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-section-icon-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: rgba(255,255,255,.72);
+    box-shadow: 0 4px 8px rgba(76,29,149,.12);
+}
+
+.big-play-card.zoo-teaser-card::before {
+    content: "" !important;
+    background:
+        url("assets/menu_icons/all_animals.png") center / 74% 74% no-repeat,
+        rgba(255,255,255,.92) !important;
+}
+
+.top-mini-image-icon {
+    background: linear-gradient(180deg, #ffffff, #fef3c7) !important;
+    overflow: hidden;
+    padding: 5px;
+    font-size: 0 !important;
+}
+
+.top-mini-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.mode-hero-icon {
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 8px;
+    border-radius: 28px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #ffffff, #fff7ed);
+    box-shadow: 0 9px 0 rgba(124,58,237,.16), 0 14px 24px rgba(15,23,42,.10);
+    padding: 8px;
+}
+
+.mode-hero-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 5px 8px rgba(15,23,42,.15));
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -9871,7 +9975,7 @@ body.low-performance .purchase-confirm-overlay {
 
 <div id="loadingScreen" class="loading-screen">
     <div class="loading-card">
-        <div class="loading-logo">🦁</div>
+        <div class="loading-logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/all_animals.png" alt="" aria-hidden="true"/></div>
         <h2>Zoo Pet World</h2>
         <div class="subtitle">Загружаем питомца и 50 уровней зоопарка...</div>
         <div class="loader-bar"><div class="loader-fill"></div></div>
@@ -9882,7 +9986,7 @@ body.low-performance .purchase-confirm-overlay {
 <div id="menuScreen" class="screen">
     <div class="card-panel">
         <div class="title-row">
-            <div class="logo">🦁</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/all_animals.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Zoo Pet World</h1>
                 <div class="subtitle">Мини-игры, питомцы и детский зоопарк</div>
@@ -9905,40 +10009,40 @@ body.low-performance .purchase-confirm-overlay {
 
         <div class="feature-card-grid">
             <section class="menu-section play-section" aria-label="Играть">
-                <div class="menu-section-title">🎮 Играть <small>мини-игры</small></div>
+                <div class="menu-section-title"><span class="menu-section-title-main"><img class="menu-section-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/> Играть</span><small>мини-игры</small></div>
                 <div class="menu-section-grid">
                     <button class="feature-card" onclick="openPairsModeScreen()">
-                        <span class="feature-icon game-preview-icon icon-pairs" aria-hidden="true"><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></span>
                         Найди пары
                         <div class="feature-text">выбери спокойный режим или таймер</div>
                     </button>
 
                     <button class="feature-card" onclick="openSpotDifferences()">
-                        <span class="feature-icon game-preview-icon icon-map" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/find_differences.png" alt="" aria-hidden="true"/></span>
                         Найди отличия
                         <div class="feature-text">две картинки и скрытые отличия</div>
                     </button>
 
                     <button class="feature-card" onclick="openShadowGame()">
-                        <span class="feature-icon game-preview-icon icon-shadow" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/find_animal.png" alt="" aria-hidden="true"/></span>
                         Найди животное
                         <div class="feature-text">угадай зверька по тени</div>
                     </button>
 
                     <button class="feature-card" onclick="openPuzzle()">
-                        <span class="feature-icon game-preview-icon icon-puzzle" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/puzzle.png" alt="" aria-hidden="true"/></span>
                         Пазл
                         <div class="feature-text">этапы, замки и картинки</div>
                     </button>
 
                     <button class="feature-card" onclick="openZooBlock()">
-                        <span class="feature-icon game-preview-icon icon-block" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/zoo_block.png" alt="" aria-hidden="true"/></span>
                         Zoo Block
                         <div class="feature-text">блоки, линии и комбо</div>
                     </button>
 
                     <button class="feature-card" onclick="openColoring()">
-                        <span class="feature-icon game-preview-icon icon-coloring" aria-hidden="true"><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/coloring.png" alt="" aria-hidden="true"/></span>
                         Раскраска
                         <div class="feature-text">кисть, фломастер и ластик</div>
                     </button>
@@ -9946,28 +10050,28 @@ body.low-performance .purchase-confirm-overlay {
             </section>
 
             <section class="menu-section zoo-section" aria-label="Мой зоопарк">
-                <div class="menu-section-title">🐾 Мой зоопарк <small>животные и уход</small></div>
+                <div class="menu-section-title"><span class="menu-section-title-main"><img class="menu-section-icon-img" src="assets/menu_icons/my_pet.png" alt="" aria-hidden="true"/> Мой зоопарк</span><small>животные и уход</small></div>
                 <div class="menu-section-grid">
                     <button class="feature-card" onclick="openPetRoom()">
-                        <span class="feature-icon game-preview-icon icon-pet" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/my_pet.png" alt="" aria-hidden="true"/></span>
                         Мой питомец
                         <div class="feature-text">еда, игра, сон и душ</div>
                     </button>
 
                     <button class="feature-card" onclick="openPets()">
-                        <span class="feature-icon game-preview-icon icon-animals" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/all_animals.png" alt="" aria-hidden="true"/></span>
                         Все животные
                         <div class="feature-text">альбом, имена и детали</div>
                     </button>
 
                     <button class="feature-card" onclick="openAlbum()">
-                        <span class="feature-icon game-preview-icon icon-album" aria-hidden="true"><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/album.png" alt="" aria-hidden="true"/></span>
                         Альбом
                         <div class="feature-text">факты о животных</div>
                     </button>
 
                     <button class="feature-card" onclick="openShop()">
-                        <span class="feature-icon game-preview-icon icon-skins" aria-hidden="true"><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/skins.png" alt="" aria-hidden="true"/></span>
                         Скины
                         <div class="feature-text">рубашки карточек</div>
                     </button>
@@ -9975,22 +10079,22 @@ body.low-performance .purchase-confirm-overlay {
             </section>
 
             <section class="menu-section profile-section" aria-label="Профиль">
-                <div class="menu-section-title">⭐ Профиль <small>настройки и цели</small></div>
+                <div class="menu-section-title"><span class="menu-section-title-main"><img class="menu-section-icon-img" src="assets/menu_icons/tasks.png" alt="" aria-hidden="true"/> Профиль</span><small>настройки и цели</small></div>
                 <div class="menu-section-grid">
                     <button class="feature-card" onclick="openTasks()">
-                        <span class="feature-icon game-preview-icon icon-tasks" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/tasks.png" alt="" aria-hidden="true"/></span>
                         Задания
                         <div class="feature-text">монетки за цели</div>
                     </button>
 
                     <button class="feature-card" onclick="openParentScreen()">
-                        <span class="feature-icon game-preview-icon icon-parent" aria-hidden="true"><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/for_parents.png" alt="" aria-hidden="true"/></span>
                         Родителям
                         <div class="feature-text">безопасность и таймер</div>
                     </button>
 
                     <button class="feature-card" onclick="openAudioSettings()">
-                        <span class="feature-icon game-preview-icon icon-audio" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="feature-icon menu-image-icon" aria-hidden="true"><img class="menu-card-icon-img" src="assets/menu_icons/sound_music.png" alt="" aria-hidden="true"/></span>
                         Звук и музыка
                         <div class="feature-text">треки и громкость</div>
                     </button>
@@ -10014,6 +10118,7 @@ body.low-performance .purchase-confirm-overlay {
             <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
         </div>
         <div class="pairs-mode-hero">
+            <div class="mode-hero-icon"><img class="mode-hero-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></div>
             <h2>Найди пары</h2>
             <p>Одна игра, два режима: спокойный для расслабленной игры и таймер для вызова.</p>
         </div>
@@ -10043,7 +10148,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row spot-title-row">
-            <div class="logo">🔎</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/find_differences.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Найди отличия</h1>
                 <div class="subtitle">Сравни картинки, найди 5 отличий и открывай уровни по порядку</div>
@@ -10096,7 +10201,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🦁</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/my_pet.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Мой питомец</h1>
                 <div id="petRoomSubtitle" class="subtitle">Выбирай питомца, корми, играй, укладывай спать и мой</div>
@@ -10175,7 +10280,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🧩</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/puzzle.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Пазл</h1>
                 <div class="subtitle">Собирай картинки животных или загрузи свою из галереи</div>
@@ -10184,7 +10289,7 @@ body.low-performance .purchase-confirm-overlay {
 
         <div class="puzzle-hero">
             <div class="puzzle-top-panel">
-                <div class="puzzle-title-mini"><span class="puzzle-icon">🧩</span><span id="puzzleTitleText">Собери картинку</span></div>
+                <div class="puzzle-title-mini"><span class="puzzle-icon top-mini-image-icon"><img class="top-mini-icon-img" src="assets/menu_icons/puzzle.png" alt="" aria-hidden="true"/></span><span id="puzzleTitleText">Собери картинку</span></div>
                 <div class="puzzle-stats">
                     <div class="puzzle-stat-chip">Ходы: <span id="puzzleMoves">0</span></div>
                     <div class="puzzle-stat-chip">Этап: <span id="puzzleStageLabel">2x2</span></div>
@@ -10240,7 +10345,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🧱</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/zoo_block.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Zoo Block</h1>
                 <div class="subtitle">Ставь фигуры на поле 8x8, закрывай линии и собирай комбо</div>
@@ -10249,7 +10354,7 @@ body.low-performance .purchase-confirm-overlay {
 
         <div class="block-hero">
             <div class="block-top-panel">
-                <div class="block-title-mini"><span class="block-icon">🧱</span><span>Заполни зоопарк блоками</span></div>
+                <div class="block-title-mini"><span class="block-icon top-mini-image-icon"><img class="top-mini-icon-img" src="assets/menu_icons/zoo_block.png" alt="" aria-hidden="true"/></span><span>Заполни зоопарк блоками</span></div>
                 <div class="block-stats">
                     <div class="block-stat-chip">Очки: <span id="blockScore">0</span></div>
                     <div class="block-stat-chip">Рекорд: <span id="blockBest">0</span></div>
@@ -10300,7 +10405,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🎚️</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/sound_music.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Звук и музыка</h1>
                 <div class="subtitle">Выбор трека, громкость и более природные звуки зверей</div>
@@ -10368,7 +10473,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">👧</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/all_animals.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Профиль игрока</h1>
                 <div class="subtitle">Имя, аватар и общий прогресс</div>
@@ -10408,7 +10513,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🏆</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/tasks.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Достижения</h1>
                 <div class="subtitle">Награды за прогресс, животных и память</div>
@@ -10436,7 +10541,7 @@ body.low-performance .purchase-confirm-overlay {
             <div class="mode-chip" id="mapModeChip">Карта</div>
         </div>
         <div class="title-row">
-            <div class="logo">🗺️</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Карта уровней</h1>
                 <div class="subtitle">Уровни игры «Найди пары» — выбери режим и проходи по порядку</div>
@@ -10455,7 +10560,7 @@ body.low-performance .purchase-confirm-overlay {
             <div class="mode-chip" id="gameModeChip">Игра</div>
         </div>
         <div class="title-row">
-            <div class="logo">⭐</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1 id="levelTitle">Вольер</h1>
                 <div class="subtitle" id="levelSubtitle">Найди пары зверят</div>
@@ -10495,7 +10600,7 @@ body.low-performance .purchase-confirm-overlay {
             <div class="mode-chip">Альбом</div>
         </div>
         <div class="title-row">
-            <div class="logo">📖</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/album.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Альбом животных</h1>
                 <div class="subtitle">Открывай карточки после уровней</div>
@@ -10515,7 +10620,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🐾</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/all_animals.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Мои животные</h1>
                 <div class="subtitle">Выбирай главного питомца, покупай новых за монеты и открывай по этапам</div>
@@ -10595,7 +10700,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">👤</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/find_animal.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Найди животное</h1>
                 <div class="subtitle">Посмотри на тень и выбери правильного зверька</div>
@@ -10655,7 +10760,7 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="title-row">
-            <div class="logo">🖍️</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/coloring.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Раскраска</h1>
                 <div class="subtitle">Выбери цвет и нажимай по областям: картинка чистая, а заливка делит сцену на аккуратные части</div>
@@ -10725,7 +10830,7 @@ body.low-performance .purchase-confirm-overlay {
             <div class="mode-chip">Скины</div>
         </div>
         <div class="title-row">
-            <div class="logo">🎨</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/skins.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Скины карточек</h1>
                 <div class="subtitle">Только визуальные награды, без доната</div>
@@ -10744,7 +10849,7 @@ body.low-performance .purchase-confirm-overlay {
             <div class="mode-chip">Задания</div>
         </div>
         <div class="title-row">
-            <div class="logo">✅</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/tasks.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Задания дня</h1>
                 <div class="subtitle">Без давления: просто маленькие цели</div>
@@ -10763,7 +10868,7 @@ body.low-performance .purchase-confirm-overlay {
             <div class="mode-chip">Родителям</div>
         </div>
         <div class="title-row">
-            <div class="logo">👨‍👩‍👧</div>
+            <div class="logo zoo-top-icon-logo"><img class="top-screen-icon-img" src="assets/menu_icons/for_parents.png" alt="" aria-hidden="true"/></div>
             <div>
                 <h1>Для родителей</h1>
                 <div class="subtitle">Простой экран доверия для Play Market</div>
@@ -12869,6 +12974,10 @@ function buySpotDiffLevel(index) {
         spotDiffCurrentLevel = index;
         spotDiffFound = [];
         spotDiffCanPlay = true;
+
+        // Important: when purchase is opened from the victory popup, close the victory popup too.
+        hideOverlay();
+
         saveSpotDiffProgress();
         updateCoinsViews();
         renderSpotDifferencesScreen();
@@ -12881,14 +12990,17 @@ function completeSpotDiffLevel() {
     spotDiffCanPlay = false;
     const level = getSpotDiffLevel();
     const alreadyDone = isSpotDiffLevelCompleted(spotDiffCurrentLevel);
-    let reward = 0;
+
+    // Match other mini-games: give coins on every successful completion.
+    const reward = Number(level.reward || 18);
+    coins += reward;
+
     if (!alreadyDone) {
-        reward = Number(level.reward || 18);
-        coins += reward;
         spotDiffCompleted.push(spotDiffCurrentLevel);
         if (spotDiffCurrentLevel + 1 < spotDiffLevels.length) spotDiffUnlockedLevels.push(spotDiffCurrentLevel + 1);
-        updateTaskProgress('game', 1);
     }
+
+    updateTaskProgress('game', 1);
     spotDiffCompleted = uniqueSortedSpotDiff(spotDiffCompleted);
     spotDiffUnlockedLevels = uniqueSortedSpotDiff(spotDiffUnlockedLevels);
     saveSpotDiffProgress();
@@ -12928,7 +13040,7 @@ function showSpotDiffCompletePopup(reward, alreadyDone) {
     if (modalStars) modalStars.textContent = '⭐⭐⭐';
     if (modalText) {
         modalText.textContent = alreadyDone
-            ? 'Ты снова нашёл все 5 отличий. Монеты за этот уровень уже получены.'
+            ? `Ты снова нашёл все 5 отличий! Награда: +${reward} 🪙`
             : `Ты нашёл все 5 отличий! Награда: +${reward} 🪙`;
     }
     if (modalButton) {
@@ -12999,6 +13111,8 @@ function restartSpotDiffLevel() {
 function goNextSpotDiffLevel() {
     const next = Math.min(spotDiffCurrentLevel + 1, spotDiffLevels.length - 1);
     if (!isSpotDiffLevelUnlocked(next)) { buySpotDiffLevel(next); return; }
+
+    hideOverlay();
     spotDiffCurrentLevel = next;
     saveSpotDiffProgress();
     spotDiffFound = [];
