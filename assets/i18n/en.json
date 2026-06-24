@@ -282,5 +282,21 @@
   "parent.save_not_zoo": "This does not look like a Zoo Pet World save",
   "parent.save_import_error": "Error importing save",
   "coloring.portrait_hint": "Pick a color and tap an area to fill it neatly ✨",
-  "coloring.canvas_hint": "🤏 2 fingers — zoom • 👆 tap — fill"
+  "coloring.canvas_hint": "🤏 2 fingers — zoom • 👆 tap — fill",
+  "petdecor.progress": "Room decor: {done}/{total} items unlocked",
+  "petdecor.plant.title": "Plant",
+  "petdecor.plant.desc": "Decorates your pet room.",
+  "petdecor.bed.title": "Bed",
+  "petdecor.bed.desc": "A cozy place for your pet to rest.",
+  "petdecor.toys.title": "Toys",
+  "petdecor.toys.desc": "A fun corner for play time.",
+  "petdecor.confirm.title": "Unlock item?",
+  "petdecor.confirm.text": "Unlock “{item}” for {price} coins?",
+  "petdecor.bought": "{item} unlocked! 🎉",
+  "petdecor.already_opened": "This item is already unlocked ✅",
+  "petdecor.no_coins": "Missing {coins} 🪙",
+  "petdecor.need_more": "Need {coins} more coins 🪙",
+  "petdecor.opened_hint": "{item} is already in the room 🏠",
+  "petdecor.aria_opened": "{item} unlocked",
+  "petdecor.aria_locked": "{item} locked. Price {price} coins"
 }

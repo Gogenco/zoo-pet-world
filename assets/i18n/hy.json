@@ -282,5 +282,21 @@
   "parent.save_not_zoo": "Սա Zoo Pet World-ի պահպանում չի թվում",
   "parent.save_import_error": "Ներմուծման սխալ",
   "coloring.portrait_hint": "Ընտրիր գույնը և սեղմիր հատվածի վրա՝ գունավորելու համար ✨",
-  "coloring.canvas_hint": "🤏 2 մատ — մեծացնել • 👆 սեղմիր — ներկել"
+  "coloring.canvas_hint": "🤏 2 մատ — մեծացնել • 👆 սեղմիր — ներկել",
+  "petdecor.progress": "Սենյակի ինտերիեր՝ բացված է {done}/{total} առարկա",
+  "petdecor.plant.title": "Ծաղիկ",
+  "petdecor.plant.desc": "Գեղեցկացնում է կենդանու սենյակը։",
+  "petdecor.bed.title": "Մահճակալ",
+  "petdecor.bed.desc": "Հարմար տեղ կենդանու հանգստի համար։",
+  "petdecor.toys.title": "Խաղալիքներ",
+  "petdecor.toys.desc": "Ուրախ անկյուն խաղալու համար։",
+  "petdecor.confirm.title": "Բացե՞լ առարկան",
+  "petdecor.confirm.text": "Բացել «{item}»-ը {price} մետաղադրամո՞վ։",
+  "petdecor.bought": "{item}-ը բացվեց 🎉",
+  "petdecor.already_opened": "Այս առարկան արդեն բացված է ✅",
+  "petdecor.no_coins": "Պակասում է {coins} 🪙",
+  "petdecor.need_more": "Պետք է ևս {coins} մետաղադրամ 🪙",
+  "petdecor.opened_hint": "{item}-ը արդեն սենյակում է 🏠",
+  "petdecor.aria_opened": "{item} բացված է",
+  "petdecor.aria_locked": "{item} փակ է։ Գինը՝ {price} մետաղադրամ"
 }

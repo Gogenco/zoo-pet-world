@@ -282,5 +282,21 @@
   "parent.save_not_zoo": "Это не похоже на сохранение Zoo Pet World",
   "parent.save_import_error": "Ошибка импорта сохранения",
   "coloring.portrait_hint": "Выбери цвет и нажми на область для аккуратной заливки ✨",
-  "coloring.canvas_hint": "🤏 2 пальца — зум • 👆 нажми — заливка"
+  "coloring.canvas_hint": "🤏 2 пальца — зум • 👆 нажми — заливка",
+  "petdecor.progress": "Интерьер комнаты: {done}/{total} предметов открыто",
+  "petdecor.plant.title": "Цветок",
+  "petdecor.plant.desc": "Украшает комнату питомца.",
+  "petdecor.bed.title": "Кровать",
+  "petdecor.bed.desc": "Уютное место для отдыха питомца.",
+  "petdecor.toys.title": "Игрушки",
+  "petdecor.toys.desc": "Весёлый уголок для игры.",
+  "petdecor.confirm.title": "Открыть предмет?",
+  "petdecor.confirm.text": "Открыть «{item}» за {price} монет?",
+  "petdecor.bought": "{item} открыт! 🎉",
+  "petdecor.already_opened": "Этот предмет уже открыт ✅",
+  "petdecor.no_coins": "Не хватает {coins} 🪙",
+  "petdecor.need_more": "Нужно ещё {coins} монет 🪙",
+  "petdecor.opened_hint": "{item} уже стоит в комнате 🏠",
+  "petdecor.aria_opened": "{item} открыт",
+  "petdecor.aria_locked": "{item} закрыт. Цена {price} монет"
 }

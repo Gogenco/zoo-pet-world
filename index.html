@@ -8909,56 +8909,291 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
 
 
 
-/* ===== Stage 4.5C: Find Differences product refactor ===== */
-.spot-diff-panel { max-width: min(1040px, 100vw - 14px) !important; }
-.spot-title-row { margin-bottom: 8px; }
-.spot-diff-hero { margin-top: 10px; padding: 10px; border-radius: 30px; background: linear-gradient(180deg, rgba(255,255,255,.97), rgba(236,253,245,.94)); box-shadow: 0 8px 0 rgba(14,165,233,.13), 0 14px 24px rgba(0,0,0,.08); }
-.spot-diff-status { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.spot-diff-pill { min-height: 38px; padding: 8px 9px; border-radius: 999px; background: rgba(255,255,255,.94); color: #4c1d95; font-weight: 1000; font-size: 13px; text-align: center; box-shadow: 0 5px 0 rgba(124,58,237,.12), 0 8px 14px rgba(0,0,0,.05); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.spot-diff-pill.progress { background: linear-gradient(180deg, #dcfce7, #bbf7d0); color: #166534; }
-.spot-diff-pill.timer { background: linear-gradient(180deg, #fef9c3, #fde68a); color: #92400e; }
-.spot-diff-pill.timer.danger { background: linear-gradient(180deg, #fee2e2, #fecaca); color: #991b1b; animation: spotTimerPulse .7s infinite alternate ease-in-out; }
-.spot-diff-pill.difficulty { background: linear-gradient(180deg, #dbeafe, #bfdbfe); color: #1d4ed8; }
-@keyframes spotTimerPulse { from { transform: scale(1); } to { transform: scale(1.04); } }
-.spot-diff-message { margin: 10px auto; width: min(100%, 720px); padding: 10px 12px; border-radius: 22px; background: rgba(255,255,255,.9); color: #7c2d12; text-align: center; font-size: 14px; line-height: 1.25; font-weight: 1000; box-shadow: inset 0 0 0 2px rgba(250,204,21,.14); }
-.spot-diff-message.success { color: #166534; background: rgba(220,252,231,.96); }
-.spot-diff-message.wrong { color: #991b1b; background: rgba(254,226,226,.96); }
-.spot-diff-toolbar { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 8px; -webkit-overflow-scrolling: touch; }
-.spot-tool-btn { flex: 0 0 auto; border: 0; border-radius: 18px; min-width: 92px; min-height: 50px; padding: 7px 9px; background: linear-gradient(180deg, #ffffff, #ede9fe); color: #4c1d95; font-weight: 1000; box-shadow: 0 5px 0 rgba(124,58,237,.14), 0 8px 14px rgba(0,0,0,.05); cursor: pointer; }
-.spot-tool-btn.hint { background: linear-gradient(180deg, #fef9c3, #fde68a); color: #92400e; }
-.spot-tool-btn span { display:block; margin-top:2px; font-size:10px; line-height:1; }
-.spot-tool-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 rgba(124,58,237,.12), 0 5px 10px rgba(0,0,0,.05); }
-.spot-zoom-note { margin: 0 auto 10px; width: min(100%, 620px); padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,.78); color: #475569; font-size: 11px; line-height: 1.15; text-align: center; font-weight: 900; }
-.spot-diff-board { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items:stretch; }
-.spot-diff-card { padding: 7px; border-radius: 26px; background: linear-gradient(180deg, #ffffff, #ecfeff); box-shadow: 0 7px 0 rgba(6,182,212,.14), 0 12px 22px rgba(0,0,0,.07); }
-.spot-diff-label { margin-bottom: 6px; text-align:center; color:#4c1d95; font-weight:1000; font-size:12px; }
-.spot-scene { position:relative; width:100%; aspect-ratio:4 / 3; border-radius:22px; overflow:hidden; background:#dbeafe; border:4px solid rgba(255,255,255,.94); box-shadow: inset 0 0 0 2px rgba(14,165,233,.12); user-select:none; cursor: crosshair; touch-action:none; }
-.spot-scene-content { position:absolute; inset:0; transform-origin: 50% 50%; will-change: transform; }
-.spot-scene-svg { position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }
-.spot-scene.shake { animation: spotShake .25s ease-in-out; }
-@keyframes spotShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
-.spot-diff-hit { position:absolute; transform: translate(-50%, -50%); border:0; background:transparent; border-radius:999px; cursor:pointer; z-index:6; -webkit-tap-highlight-color: transparent; }
-.spot-diff-hit.found { border:4px solid rgba(34,197,94,.95); background:rgba(187,247,208,.18); box-shadow:0 0 0 5px rgba(255,255,255,.70), 0 8px 18px rgba(22,163,74,.22); pointer-events:none; }
-.spot-diff-hit.found::after { content:'✓'; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width:24px; height:24px; display:grid; place-items:center; border-radius:999px; background:#22c55e; color:#fff; font-size:15px; font-weight:1000; }
-.spot-diff-hit.hint:not(.found) { border:4px dashed rgba(250,204,21,.95); background:rgba(254,240,138,.18); animation:spotHintPulse .75s infinite alternate ease-in-out; }
-@keyframes spotHintPulse { from{transform:translate(-50%,-50%) scale(.94)} to{transform:translate(-50%,-50%) scale(1.07)} }
-.spot-miss { position:absolute; width:34px; height:34px; border-radius:999px; border:4px solid rgba(239,68,68,.9); transform:translate(-50%, -50%); z-index:9; pointer-events:none; animation:spotMiss .42s ease-out forwards; }
-@keyframes spotMiss { from{opacity:1; transform:translate(-50%,-50%) scale(.65)} to{opacity:0; transform:translate(-50%,-50%) scale(1.35)} }
-.spot-diff-level-rail { display:flex; gap:8px; overflow-x:auto; padding:12px 2px 4px; -webkit-overflow-scrolling:touch; }
-.spot-level-btn { flex:0 0 auto; border:0; border-radius:18px; min-width:86px; padding:9px 10px; background:linear-gradient(180deg,#ffffff,#ede9fe); color:#4c1d95; font-weight:1000; box-shadow:0 5px 0 rgba(124,58,237,.14); position:relative; }
-.spot-level-btn.active { background:linear-gradient(180deg,#dcfce7,#bbf7d0); color:#166534; }
-.spot-level-btn.done { background:linear-gradient(180deg,#fef9c3,#fde68a); color:#92400e; }
-.spot-level-btn.locked { background:linear-gradient(180deg,#f1f5f9,#e2e8f0); color:#64748b; }
-.spot-level-btn small { display:block; font-size:10px; line-height:1.05; margin-top:2px; }
-.spot-diff-modal-overlay { position:fixed; inset:0; z-index:10050; display:flex; align-items:center; justify-content:center; padding:18px; background:rgba(15,23,42,.48); backdrop-filter:blur(3px); }
-.spot-diff-modal-card { position:relative; width:min(92vw, 420px); border-radius:30px; padding:24px 16px 16px; background:linear-gradient(180deg,#fff,#ecfeff); text-align:center; box-shadow:0 20px 50px rgba(15,23,42,.25); border:2px solid rgba(255,255,255,.88); }
-.spot-diff-modal-icon { font-size:48px; line-height:1; margin-bottom:8px; }
-.spot-diff-modal-title { color:#4c1d95; font-size:24px; font-weight:1000; margin-bottom:7px; }
-.spot-diff-modal-text { color:#475569; font-size:14px; line-height:1.35; font-weight:800; white-space:pre-line; }
-.spot-diff-modal-actions { display:grid; gap:8px; margin-top:14px; }
+
+/* ===== Stage 4.5D: Find Differences critical rebuild ===== */
+.spot-diff-panel {
+    max-width: min(980px, 100vw - 14px) !important;
+}
+.spot-title-row {
+    margin-bottom: 8px;
+}
+.spot-diff-hero {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,.97), rgba(236,253,245,.94));
+    box-shadow: 0 8px 0 rgba(14,165,233,.13), 0 14px 24px rgba(0,0,0,.08);
+}
+.spot-diff-status {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+.spot-diff-pill {
+    min-height: 38px;
+    padding: 8px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.94);
+    color: #4c1d95;
+    font-weight: 1000;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: 0 5px 0 rgba(124,58,237,.12), 0 8px 14px rgba(0,0,0,.05);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.spot-diff-pill.progress {
+    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
+    color: #166534;
+}
+.spot-diff-pill.difficulty {
+    background: linear-gradient(180deg, #dbeafe, #bfdbfe);
+    color: #1d4ed8;
+}
+.spot-diff-message {
+    margin: 10px auto;
+    width: min(100%, 720px);
+    padding: 10px 12px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.9);
+    color: #7c2d12;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.25;
+    font-weight: 1000;
+    box-shadow: inset 0 0 0 2px rgba(250,204,21,.14);
+}
+.spot-diff-message.success {
+    color: #166534;
+    background: rgba(220,252,231,.96);
+}
+.spot-diff-message.wrong {
+    color: #991b1b;
+    background: rgba(254,226,226,.96);
+}
+.spot-diff-toolbar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 2px 2px 8px;
+}
+.spot-tool-btn {
+    border: 0;
+    border-radius: 18px;
+    min-width: 96px;
+    min-height: 50px;
+    padding: 7px 9px;
+    background: linear-gradient(180deg, #ffffff, #ede9fe);
+    color: #4c1d95;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(124,58,237,.14), 0 8px 14px rgba(0,0,0,.05);
+    cursor: pointer;
+}
+.spot-tool-btn.hint {
+    background: linear-gradient(180deg, #fef9c3, #fde68a);
+    color: #92400e;
+}
+.spot-tool-btn span {
+    display: block;
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1;
+}
+.spot-tool-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 0 rgba(124,58,237,.12), 0 5px 10px rgba(0,0,0,.05);
+}
+.spot-zoom-note {
+    margin: 0 auto 10px;
+    width: min(100%, 650px);
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.78);
+    color: #475569;
+    font-size: 11px;
+    line-height: 1.15;
+    text-align: center;
+    font-weight: 900;
+}
+.spot-diff-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+}
+.spot-diff-card {
+    padding: 7px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #ffffff, #ecfeff);
+    box-shadow: 0 7px 0 rgba(6,182,212,.14), 0 12px 22px rgba(0,0,0,.07);
+}
+.spot-diff-label {
+    margin-bottom: 6px;
+    text-align: center;
+    color: #4c1d95;
+    font-weight: 1000;
+    font-size: 12px;
+}
+.spot-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 10 / 7;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #dbeafe;
+    border: 4px solid rgba(255,255,255,.94);
+    box-shadow: inset 0 0 0 2px rgba(14,165,233,.12);
+    user-select: none;
+    touch-action: none;
+}
+.spot-scene-content {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 50%;
+    will-change: transform;
+}
+.spot-scene-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+}
+.spot-scene.shake {
+    animation: spotShake .25s ease-in-out;
+}
+@keyframes spotShake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+.spot-found-mark {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 4px solid rgba(34,197,94,.95);
+    border-radius: 999px;
+    background: rgba(187,247,208,.18);
+    box-shadow: 0 0 0 5px rgba(255,255,255,.70), 0 8px 18px rgba(22,163,74,.22);
+    z-index: 8;
+    pointer-events: none;
+}
+.spot-found-mark::after {
+    content: '✓';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #22c55e;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 1000;
+}
+.spot-hint-mark {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 4px dashed rgba(250,204,21,.95);
+    border-radius: 999px;
+    background: rgba(254,240,138,.18);
+    animation: spotHintPulse .75s infinite alternate ease-in-out;
+    z-index: 7;
+    pointer-events: none;
+}
+@keyframes spotHintPulse {
+    from { transform: translate(-50%, -50%) scale(.94); }
+    to { transform: translate(-50%, -50%) scale(1.07); }
+}
+.spot-miss {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 4px solid rgba(239,68,68,.9);
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    pointer-events: none;
+    animation: spotMiss .42s ease-out forwards;
+}
+@keyframes spotMiss {
+    from { opacity: 1; transform: translate(-50%,-50%) scale(.65); }
+    to { opacity: 0; transform: translate(-50%,-50%) scale(1.35); }
+}
+.spot-diff-level-rail {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 2px 4px;
+    -webkit-overflow-scrolling: touch;
+}
+.spot-level-btn {
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 18px;
+    min-width: 86px;
+    padding: 9px 10px;
+    background: linear-gradient(180deg,#ffffff,#ede9fe);
+    color: #4c1d95;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(124,58,237,.14);
+    position: relative;
+}
+.spot-level-btn.active { background: linear-gradient(180deg,#dcfce7,#bbf7d0); color: #166534; }
+.spot-level-btn.done { background: linear-gradient(180deg,#fef9c3,#fde68a); color: #92400e; }
+.spot-level-btn.locked { background: linear-gradient(180deg,#f1f5f9,#e2e8f0); color: #64748b; }
+.spot-level-btn small { display: block; font-size: 10px; line-height: 1.05; margin-top: 2px; }
+.spot-diff-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(15,23,42,.48);
+    backdrop-filter: blur(3px);
+}
+.spot-diff-modal-card {
+    position: relative;
+    width: min(92vw, 420px);
+    border-radius: 30px;
+    padding: 24px 16px 16px;
+    background: linear-gradient(180deg,#fff,#ecfeff);
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(15,23,42,.25);
+    border: 2px solid rgba(255,255,255,.88);
+}
+.spot-diff-modal-icon { font-size: 48px; line-height: 1; margin-bottom: 8px; }
+.spot-diff-modal-title { color: #4c1d95; font-size: 24px; font-weight: 1000; margin-bottom: 7px; }
+.spot-diff-modal-text { color: #475569; font-size: 14px; line-height: 1.35; font-weight: 800; white-space: pre-line; }
+.spot-diff-modal-actions { display: grid; gap: 8px; margin-top: 14px; }
 .spot-diff-modal-actions.two { grid-template-columns: 1fr 1fr; }
-.spot-diff-modal-actions .btn { width:100%; }
-@media (max-width:720px){ .spot-diff-status{grid-template-columns: repeat(2,minmax(0,1fr));} .spot-diff-board{grid-template-columns:1fr; gap:10px;} .spot-scene{aspect-ratio:4 / 3;} .spot-diff-card{padding:7px; border-radius:22px;} .spot-diff-hero{padding:9px;} .spot-tool-btn{min-width:84px;} }
+.spot-diff-modal-actions .btn { width: 100%; }
+@media (max-width:720px) {
+    .spot-diff-status { grid-template-columns: 1fr; }
+    .spot-diff-board { grid-template-columns: 1fr; gap: 10px; }
+    .spot-scene { aspect-ratio: 10 / 7; }
+    .spot-diff-card { padding: 7px; border-radius: 22px; }
+    .spot-diff-hero { padding: 9px; }
+    .spot-tool-btn { min-width: 92px; }
+}
+
+
+/* ===== Stage 4.6B: Find Differences visual pack integration ===== */
+.spot-diff-card {
+    background: linear-gradient(180deg, #ffffff, #f0fdf4);
+}
+.spot-scene-svg {
+    background: #dbeafe;
+}
+.spot-level-btn.locked {
+    opacity: .95;
+}
 
 /* ===== Stage 4.4A: Coloring portrait-first refactor ===== */
 
@@ -9285,275 +9520,231 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     }
 }
 
-/* ===== Stage 4.5B: Find Differences Easybrain-style UX ===== */
-.spot-title-row {
-    margin-bottom: 8px;
-}
-.spot-diff-panel {
-    max-width: min(1040px, 100vw - 14px) !important;
-}
-.spot-diff-hero {
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 30px;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(236,253,245,.94));
-    box-shadow: 0 8px 0 rgba(14,165,233,.13), 0 14px 24px rgba(0,0,0,.08);
-}
-.spot-diff-status {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
-}
-.spot-diff-pill {
-    min-height: 38px;
-    padding: 8px 9px;
-    border-radius: 999px;
-    background: rgba(255,255,255,.94);
-    color: #4c1d95;
-    font-weight: 1000;
-    font-size: 13px;
-    text-align: center;
-    box-shadow: 0 5px 0 rgba(124,58,237,.12), 0 8px 14px rgba(0,0,0,.05);
-}
-.spot-diff-pill.progress {
-    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
-    color: #166534;
-}
-.spot-diff-pill.timer {
-    background: linear-gradient(180deg, #fef9c3, #fde68a);
-    color: #92400e;
-}
-.spot-diff-pill.timer.danger {
-    background: linear-gradient(180deg, #fee2e2, #fecaca);
-    color: #991b1b;
-    animation: spotTimerPulse .7s infinite alternate ease-in-out;
-}
-.spot-diff-pill.reward {
-    background: linear-gradient(180deg, #dbeafe, #bfdbfe);
-    color: #1d4ed8;
-}
-@keyframes spotTimerPulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.04); }
-}
-.spot-diff-message {
-    margin: 10px auto;
-    width: min(100%, 720px);
-    padding: 10px 12px;
-    border-radius: 22px;
-    background: rgba(255,255,255,.9);
-    color: #7c2d12;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.25;
-    font-weight: 1000;
-    box-shadow: inset 0 0 0 2px rgba(250,204,21,.14);
-}
-.spot-diff-message.success {
-    color: #166534;
-    background: rgba(220,252,231,.96);
-}
-.spot-diff-message.wrong {
-    color: #991b1b;
-    background: rgba(254,226,226,.96);
-}
-.spot-diff-toolbar {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 2px 2px 10px;
-    -webkit-overflow-scrolling: touch;
-}
-.spot-tool-btn {
-    flex: 0 0 auto;
-    border: 0;
+
+
+/* ===== Stage 4.6A: Pet Room Decor MVP ===== */
+.pet-room-decor-hint {
+    display: none;
+    margin: 8px 0 0;
+    padding: 9px 12px;
     border-radius: 18px;
-    min-width: 84px;
-    min-height: 50px;
-    padding: 7px 9px;
-    background: linear-gradient(180deg, #ffffff, #ede9fe);
+    background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(237,233,254,.74));
     color: #4c1d95;
+    font-size: 13px;
     font-weight: 1000;
-    box-shadow: 0 5px 0 rgba(124,58,237,.14), 0 8px 14px rgba(0,0,0,.05);
+    text-align: center;
+    box-shadow: inset 0 0 0 2px rgba(124,58,237,.08);
+}
+.pet-room-decor-hint.show { display: block; }
+.pet-room-decor-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+.pet-room-hero.clean-room-scene .pet-room-decor-layer {
+    display: block !important;
+}
+.pet-room-decor-item {
+    position: absolute;
+    border: 0;
+    display: grid;
+    place-items: center;
+    background: transparent;
     cursor: pointer;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    filter: drop-shadow(0 7px 0 rgba(15,23,42,.10));
 }
-.spot-tool-btn span {
+.pet-room-decor-item:active { transform: translateY(2px) scale(.98); }
+.pet-room-decor-item.locked .decor-visual { filter: grayscale(1); opacity: .62; }
+.pet-room-decor-item.unlocked .decor-lock { display: none; }
+.pet-room-decor-item .decor-visual {
+    position: relative;
     display: block;
-    margin-top: 2px;
-    font-size: 10px;
-    line-height: 1;
+    transition: opacity .2s ease, filter .2s ease, transform .2s ease;
 }
-.spot-tool-btn:active {
-    transform: translateY(2px);
-    box-shadow: 0 3px 0 rgba(124,58,237,.12), 0 5px 10px rgba(0,0,0,.05);
+.pet-room-decor-item:hover .decor-visual { transform: translateY(-1px); }
+.pet-room-decor-item .decor-lock {
+    position: absolute;
+    right: -8px;
+    top: -10px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #1e293b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 1000;
+    border: 3px solid rgba(255,255,255,.94);
+    box-shadow: 0 6px 12px rgba(15,23,42,.18);
 }
-.spot-diff-board {
+.pet-room-decor-item.decor-plant { left: 7%; top: 42%; width: 72px; height: 92px; }
+.pet-room-decor-item.decor-bed { right: 5%; bottom: 15%; width: 126px; height: 86px; }
+.pet-room-decor-item.decor-toys { left: 6%; bottom: 15%; width: 108px; height: 76px; }
+.decor-plant-visual {
+    width: 54px;
+    height: 76px;
+}
+.decor-plant-visual::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: 28px;
+    width: 32px;
+    height: 42px;
+    border-radius: 0 0 16px 16px;
+    background: linear-gradient(180deg, #f59e0b, #b45309);
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,.28);
+}
+.decor-plant-visual::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 2px;
+    width: 52px;
+    height: 44px;
+    border-radius: 50% 50% 46% 46%;
+    background:
+        radial-gradient(circle at 18% 68%, #22c55e 0 12px, transparent 13px),
+        radial-gradient(circle at 48% 30%, #16a34a 0 16px, transparent 17px),
+        radial-gradient(circle at 74% 66%, #4ade80 0 13px, transparent 14px);
+}
+.decor-bed-visual {
+    width: 112px;
+    height: 66px;
+    border-radius: 28px 28px 18px 18px;
+    background: linear-gradient(180deg, #f97316, #ea580c);
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,.26), 0 9px 0 rgba(154,52,18,.20);
+}
+.decor-bed-visual::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    width: 38px;
+    height: 24px;
+    border-radius: 16px;
+    background: #fff7ed;
+}
+.decor-bed-visual::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 10px;
+    height: 24px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #bfdbfe, #bbf7d0);
+}
+.decor-toys-visual {
+    width: 96px;
+    height: 62px;
+}
+.decor-toys-visual::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 6px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background:
+        linear-gradient(90deg, transparent 46%, rgba(255,255,255,.78) 47% 53%, transparent 54%),
+        linear-gradient(180deg, #38bdf8 0 50%, #facc15 51% 100%);
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,.45), 0 7px 0 rgba(15,23,42,.12);
+}
+.decor-toys-visual::after {
+    content: "";
+    position: absolute;
+    right: 4px;
+    bottom: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 8px solid #a78bfa;
+    box-shadow: 0 7px 0 rgba(15,23,42,.10);
+}
+.purchase-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 4300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(15, 23, 42, .48);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+.purchase-confirm-overlay.show { display: flex; }
+.purchase-confirm-card {
+    width: min(92vw, 370px);
+    border-radius: 30px;
+    padding: 22px 16px 16px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff, #fef3c7 62%, #dcfce7);
+    border: 4px solid rgba(255,255,255,.92);
+    box-shadow: 0 24px 70px rgba(15,23,42,.28);
+}
+.purchase-confirm-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 8px;
+    display: grid;
+    place-items: center;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #fef3c7, #bbf7d0);
+    font-size: 36px;
+}
+.purchase-confirm-title {
+    margin: 0 42px 8px;
+    color: #4c1d95;
+    font-size: 22px;
+    font-weight: 1000;
+    line-height: 1.14;
+}
+.purchase-confirm-text {
+    margin: 0 auto 12px;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 850;
+    line-height: 1.35;
+}
+.purchase-confirm-price {
+    display: inline-grid;
+    place-items: center;
+    min-height: 34px;
+    margin: 0 0 14px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.9);
+    color: #92400e;
+    font-size: 14px;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(245,158,11,.14);
+}
+.purchase-confirm-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    align-items: stretch;
 }
-.spot-diff-card {
-    padding: 7px;
-    border-radius: 26px;
-    background: linear-gradient(180deg, #ffffff, #ecfeff);
-    box-shadow: 0 7px 0 rgba(6,182,212,.14), 0 12px 22px rgba(0,0,0,.07);
+.purchase-confirm-actions .btn { width: 100%; }
+body.low-performance .purchase-confirm-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 23, 42, .38);
 }
-.spot-diff-label {
-    margin-bottom: 6px;
-    text-align: center;
-    color: #4c1d95;
-    font-weight: 1000;
-    font-size: 12px;
+@media (max-width: 520px) {
+    .pet-room-decor-item.decor-plant { left: 4%; top: 44%; transform: scale(.9); }
+    .pet-room-decor-item.decor-bed { right: 2%; bottom: 15%; transform: scale(.86); transform-origin: right bottom; }
+    .pet-room-decor-item.decor-toys { left: 2%; bottom: 15%; transform: scale(.86); transform-origin: left bottom; }
+    .purchase-confirm-card { width: min(94vw, 360px); border-radius: 26px; padding: 20px 14px 14px; }
+    .purchase-confirm-title { font-size: 20px; }
 }
-.spot-scene {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 22px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #93c5fd 0 48%, #bbf7d0 48% 100%);
-    border: 4px solid rgba(255,255,255,.94);
-    box-shadow: inset 0 0 0 2px rgba(14,165,233,.12);
-    user-select: none;
-    cursor: crosshair;
-    touch-action: manipulation;
-}
-.spot-scene-content {
-    position: absolute;
-    inset: 0;
-    transform-origin: center center;
-    transition: transform .18s ease;
-}
-.spot-scene.shake {
-    animation: spotShake .25s ease-in-out;
-}
-@keyframes spotShake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-.spot-el {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    display: grid;
-    place-items: center;
-    font-weight: 1000;
-    pointer-events: none;
-}
-.spot-sun { width: 17%; aspect-ratio: 1; border-radius: 50%; background: #facc15; box-shadow: 0 0 0 8px rgba(250,204,21,.18); }
-.spot-cloud { width: 21%; height: 10%; border-radius: 999px; background: rgba(255,255,255,.92); box-shadow: 18px -7px 0 rgba(255,255,255,.92), -14px 5px 0 rgba(255,255,255,.9); }
-.spot-tree-trunk { width: 5%; height: 26%; border-radius: 999px; background: #92400e; }
-.spot-tree-top { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #16a34a; box-shadow: 18px 10px 0 #22c55e, -16px 8px 0 #15803d; }
-.spot-animal { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #fef3c7; font-size: clamp(26px, 6vw, 60px); box-shadow: inset 0 -9px 0 rgba(245,158,11,.2), 0 7px 16px rgba(0,0,0,.10); }
-.spot-flower { width: 8%; aspect-ratio: 1; border-radius: 50%; background: #ec4899; box-shadow: 10px 0 0 #f472b6, -10px 0 0 #f472b6, 0 10px 0 #f472b6, 0 -10px 0 #f472b6; }
-.spot-rock { width: 13%; height: 7%; border-radius: 999px 999px 14px 14px; background: #94a3b8; }
-.spot-ball { width: 9%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0 15%, #ef4444 16% 55%, #facc15 56%); }
-.spot-water { width: 28%; height: 11%; border-radius: 50%; background: rgba(56,189,248,.68); box-shadow: inset 0 0 0 4px rgba(255,255,255,.35); }
-.spot-butterfly { font-size: clamp(20px, 4vw, 38px); }
-.spot-star { font-size: clamp(18px, 4vw, 34px); }
-.spot-moon { width: 15%; aspect-ratio: 1; border-radius: 50%; background: #fde68a; box-shadow: -8px 0 0 #93c5fd inset; }
-.spot-berry { width: 7%; aspect-ratio: 1; border-radius: 50%; background: #ef4444; box-shadow: 8px 5px 0 #dc2626, -7px 4px 0 #f87171; }
-.spot-leaf { width: 12%; height: 7%; border-radius: 999px 0 999px 0; background: #22c55e; transform: translate(-50%, -50%) rotate(-22deg); }
-.spot-diff-hit {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    border: 0;
-    background: transparent;
-    border-radius: 999px;
-    cursor: pointer;
-    z-index: 6;
-    -webkit-tap-highlight-color: transparent;
-}
-.spot-diff-hit.found {
-    border: 4px solid rgba(34,197,94,.95);
-    background: rgba(187,247,208,.20);
-    box-shadow: 0 0 0 5px rgba(255,255,255,.7), 0 8px 18px rgba(22,163,74,.22);
-    pointer-events: none;
-}
-.spot-diff-hit.found::after {
-    content: '✓';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
-    border-radius: 999px;
-    background: #22c55e;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 1000;
-}
-.spot-diff-hit.hint:not(.found) {
-    border: 4px dashed rgba(250,204,21,.95);
-    background: rgba(254,240,138,.18);
-    animation: spotHintPulse .75s infinite alternate ease-in-out;
-}
-@keyframes spotHintPulse {
-    from { transform: translate(-50%, -50%) scale(.94); }
-    to { transform: translate(-50%, -50%) scale(1.07); }
-}
-.spot-miss {
-    position: absolute;
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    border: 4px solid rgba(239,68,68,.9);
-    transform: translate(-50%, -50%);
-    z-index: 9;
-    pointer-events: none;
-    animation: spotMiss .42s ease-out forwards;
-}
-@keyframes spotMiss {
-    from { opacity: 1; transform: translate(-50%, -50%) scale(.65); }
-    to { opacity: 0; transform: translate(-50%, -50%) scale(1.35); }
-}
-.spot-diff-level-rail {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 12px 2px 4px;
-    -webkit-overflow-scrolling: touch;
-}
-.spot-level-btn {
-    flex: 0 0 auto;
-    border: 0;
-    border-radius: 18px;
-    min-width: 74px;
-    padding: 9px 10px;
-    background: linear-gradient(180deg, #ffffff, #ede9fe);
-    color: #4c1d95;
-    font-weight: 1000;
-    box-shadow: 0 5px 0 rgba(124,58,237,.14);
-}
-.spot-level-btn.active { background: linear-gradient(180deg, #dcfce7, #bbf7d0); color: #166534; }
-.spot-level-btn.done { background: linear-gradient(180deg, #fef9c3, #fde68a); color: #92400e; }
-@media (max-width: 720px) {
-    .spot-diff-status {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .spot-diff-board {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-    .spot-scene {
-        aspect-ratio: 4 / 3;
-    }
-    .spot-diff-card {
-        padding: 7px;
-        border-radius: 22px;
-    }
-    .spot-diff-hero {
-        padding: 9px;
-    }
-    .spot-tool-btn {
-        min-width: 76px;
-    }
-}
-
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -9770,43 +9961,41 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
     <div class="card-panel spot-diff-panel">
         <div class="top-home-row">
             <button class="home-chip" onclick="goBackOrHome()">← Назад</button>
-            <div class="mode-chip">Найди отличия • монетки: <span id="spotDiffCoins">0</span> 🪙</div>
+            <div class="mode-chip">Найди отличия • <span id="spotDiffCoins">0</span> 🪙</div>
         </div>
 
         <div class="title-row spot-title-row">
             <div class="logo">🔎</div>
             <div>
                 <h1>Найди отличия</h1>
-                <div class="subtitle">Сравни две картинки, найди 5 отличий и открывай уровни по порядку</div>
+                <div class="subtitle">Сравни картинки, найди 5 отличий и открывай уровни по порядку</div>
             </div>
         </div>
 
         <div class="spot-diff-hero">
             <div class="spot-diff-status">
                 <div id="spotDiffLevelBadge" class="spot-diff-pill">Уровень 1</div>
-                <div id="spotDiffDifficulty" class="spot-diff-pill difficulty">Сложность 1</div>
+                <div id="spotDiffDifficulty" class="spot-diff-pill difficulty">Этап 1</div>
                 <div id="spotDiffProgress" class="spot-diff-pill progress">0 / 5</div>
-                <div id="spotDiffTimer" class="spot-diff-pill timer">⏱ 03:00</div>
             </div>
 
-            <div id="spotDiffMessage" class="spot-diff-message">Найди 5 отличий 👀</div>
+            <div id="spotDiffMessage" class="spot-diff-message">Выбери открытый уровень и найди 5 отличий 👀</div>
 
             <div class="spot-diff-toolbar">
                 <button type="button" class="spot-tool-btn hint" onclick="useSpotDiffHint()">💡<span>Подсказка</span></button>
-                <button type="button" class="spot-tool-btn" onclick="openSpotDiffLevelSelect()">🗺️<span>Уровни</span></button>
                 <button type="button" class="spot-tool-btn" onclick="restartSpotDiffLevel()">🔁<span>Заново</span></button>
             </div>
 
-            <div class="spot-zoom-note">🤏 2 пальца — зум • потяни пальцем — двигай • двойной тап — сброс</div>
+            <div class="spot-zoom-note">🤏 2 пальца — зум • потяни — двигай • двойной тап — сброс</div>
 
             <div class="spot-diff-board" aria-label="Две картинки для поиска отличий">
                 <div class="spot-diff-card">
                     <div class="spot-diff-label">Картинка 1</div>
-                    <div id="spotDiffLeft" class="spot-scene"></div>
+                    <div id="spotDiffLeft" class="spot-scene" data-side="left"></div>
                 </div>
                 <div class="spot-diff-card right">
                     <div class="spot-diff-label">Картинка 2</div>
-                    <div id="spotDiffRight" class="spot-scene"></div>
+                    <div id="spotDiffRight" class="spot-scene" data-side="right"></div>
                 </div>
             </div>
 
@@ -9837,6 +10026,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
         </div>
 
         <div class="coins-box">Монетки: <span id="petRoomCoins">0</span> 🪙</div>
+        <div id="petRoomDecorHint" class="pet-room-decor-hint"></div>
         <div id="petRoomReminder" class="pet-room-reminder"></div>
 
         <div class="pet-room-hero" id="petRoomHero">
@@ -9844,6 +10034,7 @@ body.low-performance .puzzle-choice-modal-card { box-shadow: 0 14px 34px rgba(15
             <div class="pet-room-plant"></div>
             <div class="pet-room-bed"></div>
             <div class="pet-room-toys">⚽ 🪢</div>
+            <div id="petRoomDecorLayer" class="pet-room-decor-layer" aria-label="Pet room decor"></div>
             <div id="petRoomBars" class="pet-room-bars"></div>
             <div id="petRoomSpeech" class="pet-room-speech">Привет! Я жду заботы 💚</div>
             <div class="pet-room-bowl" aria-hidden="true"></div>
@@ -12139,84 +12330,346 @@ function openZooTeaser() {
 
 
 
+
 const spotDiffLevels = [
-  { id:'lion', title:'Львёнок в парке', emoji:'🦁', animal:'lion', theme:'park', difficulty:1, reward:18, unlockPrice:0, time:0,
-    diffs:[
-      {id:'sun', label:'солнце ниже', left:[82,15,15,15], right:[82,23,15,15]},
-      {id:'flowerColor', label:'фиолетовый цветок', left:[76,76,12,12], right:[76,76,12,12]},
-      {id:'cloud', label:'облако правее', left:[28,18,22,13], right:[37,18,22,13]},
-      {id:'ball', label:'мяч исчез', left:[64,82,12,12], right:[64,82,12,12]},
-      {id:'butterfly', label:'бабочка появилась', left:[22,37,12,12], right:[22,37,12,12]}
-    ]},
-  { id:'panda', title:'Панда у бамбука', emoji:'🐼', animal:'panda', theme:'bamboo', difficulty:2, reward:20, unlockPrice:55, time:0,
-    diffs:[
-      {id:'animalShift', label:'панда сместилась', left:[50,61,17,17], right:[56,61,17,17]},
-      {id:'pond', label:'пруд стал больше', left:[34,86,22,10], right:[41,86,26,12]},
-      {id:'treeColor', label:'крона темнее', left:[82,43,17,17], right:[82,43,17,17]},
-      {id:'rock', label:'камень исчез', left:[68,84,12,8], right:[68,84,12,8]},
-      {id:'butterfly', label:'бабочка появилась', left:[22,34,11,11], right:[22,34,11,11]}
-    ]},
-  { id:'dolphin', title:'Дельфин у моря', emoji:'🐬', animal:'dolphin', theme:'sea', difficulty:3, reward:22, unlockPrice:75, time:0,
-    diffs:[
-      {id:'sunMove', label:'солнце левее', left:[84,15,12,12], right:[74,20,12,12]},
-      {id:'animalUp', label:'дельфин выше', left:[50,57,16,15], right:[50,50,16,15]},
-      {id:'ballColor', label:'мяч синий', left:[74,50,10,10], right:[74,50,10,10]},
-      {id:'flowerGone', label:'цветок исчез', left:[24,68,10,10], right:[24,68,10,10]},
-      {id:'fish', label:'рыбка появилась', left:[27,60,10,10], right:[27,60,10,10]}
-    ]},
-  { id:'giraffe', title:'Жираф на лугу', emoji:'🦒', animal:'giraffe', theme:'meadow', difficulty:4, reward:24, unlockPrice:95, time:0,
-    diffs:[
-      {id:'sunMove', label:'солнце сместилось', left:[16,15,11,11], right:[25,20,11,11]},
-      {id:'animalDown', label:'жираф ниже', left:[48,60,15,15], right:[48,66,15,15]},
-      {id:'leafGone', label:'лист исчез', left:[64,34,10,9], right:[64,34,10,9]},
-      {id:'rockBlue', label:'синий камень', left:[70,84,10,8], right:[70,84,10,8]},
-      {id:'bird', label:'птичка появилась', left:[35,36,10,10], right:[35,36,10,10]}
-    ]},
-  { id:'parrot', title:'Попугай в джунглях', emoji:'🦜', animal:'parrot', theme:'jungle', difficulty:5, reward:26, unlockPrice:120, time:0,
-    diffs:[
-      {id:'animalShift', label:'попугай правее', left:[52,55,14,14], right:[59,55,14,14]},
-      {id:'cloudLower', label:'облако ниже', left:[30,16,17,10], right:[30,24,17,10]},
-      {id:'flowerOrange', label:'оранжевый цветок', left:[76,77,9,9], right:[76,77,9,9]},
-      {id:'leafGone', label:'лист исчез', left:[62,31,9,8], right:[62,31,9,8]},
-      {id:'berries', label:'ягоды появились', left:[28,37,9,9], right:[28,37,9,9]}
-    ]},
-  { id:'koala', title:'Коала ночью', emoji:'🐨', animal:'koala', theme:'night', difficulty:6, reward:28, unlockPrice:150, time:0,
-    diffs:[
-      {id:'moonLower', label:'луна ниже', left:[82,16,10,10], right:[82,24,10,10]},
-      {id:'starGone', label:'звезда исчезла', left:[62,25,8,8], right:[62,25,8,8]},
-      {id:'animalLeft', label:'коала левее', left:[52,61,13,13], right:[46,61,13,13]},
-      {id:'flowerGreen', label:'зелёный цветок', left:[18,79,8,8], right:[18,79,8,8]},
-      {id:'berries', label:'ягоды появились', left:[70,38,8,8], right:[70,38,8,8]}
-    ]}
+    {
+        "id": "lion_visual",
+        "emoji": "🦁",
+        "animal": "lion",
+        "difficulty": 1,
+        "reward": 18,
+        "unlockPrice": 0,
+        "title": "Львёнок в солнечном парке",
+        "source": "cloud_visual_pack_stage_4_6",
+        "leftSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l1lsky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#7EC8E8\"/>\n      <stop offset=\"100%\" stop-color=\"#C8E8F8\"/>\n    </linearGradient>\n    <linearGradient id=\"l1lgrs\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#72C84A\"/>\n      <stop offset=\"100%\" stop-color=\"#4A9830\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l1lsky)\"/>\n  <rect y=\"480\" width=\"1000\" height=\"220\" fill=\"url(#l1lgrs)\"/>\n  <path d=\"M0,480 Q50,468 100,480 Q160,492 220,480 Q280,468 340,480 Q400,492 460,480 Q520,468 580,480 Q640,492 700,480 Q760,468 820,480 Q880,492 940,480 Q970,474 1000,480 L1000,496 L0,496 Z\" fill=\"#5AB840\"/>\n  <g transform=\"translate(852,86)\">\n    <circle cx=\"0\" cy=\"0\" r=\"72\" fill=\"#FFE080\" opacity=\"0.35\"/>\n    <line x1=\"0\" y1=\"-82\" x2=\"0\" y2=\"-68\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"58\" y1=\"-58\" x2=\"48\" y2=\"-48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"82\" y1=\"0\" x2=\"68\" y2=\"0\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"58\" y1=\"58\" x2=\"48\" y2=\"48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"0\" y1=\"82\" x2=\"0\" y2=\"68\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"-58\" y1=\"58\" x2=\"-48\" y2=\"48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"-82\" y1=\"0\" x2=\"-68\" y2=\"0\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"-58\" y1=\"-58\" x2=\"-48\" y2=\"-48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"55\" fill=\"#FFDC00\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"44\" fill=\"#FFE840\"/>\n    <circle cx=\"-15\" cy=\"-6\" r=\"7\" fill=\"#E8A800\"/>\n    <circle cx=\"15\" cy=\"-6\" r=\"7\" fill=\"#E8A800\"/>\n    <path d=\"M-16,10 Q0,24 16,10\" fill=\"none\" stroke=\"#E8A800\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n  </g>\n  <g transform=\"translate(615,68)\">\n    <circle cx=\"0\" cy=\"0\" r=\"44\" fill=\"white\"/>\n    <circle cx=\"-44\" cy=\"10\" r=\"34\" fill=\"white\"/>\n    <circle cx=\"46\" cy=\"8\" r=\"38\" fill=\"white\"/>\n    <circle cx=\"4\" cy=\"-32\" r=\"28\" fill=\"white\"/>\n  </g>\n  <g>\n    <rect x=\"90\" y=\"255\" width=\"44\" height=\"228\" rx=\"8\" fill=\"#8B5A30\"/>\n    <rect x=\"100\" y=\"270\" width=\"12\" height=\"200\" rx=\"4\" fill=\"#7A4A20\" opacity=\"0.4\"/>\n    <circle cx=\"132\" cy=\"200\" r=\"108\" fill=\"#3A9228\"/>\n    <circle cx=\"158\" cy=\"220\" r=\"92\" fill=\"#2E8020\"/>\n    <circle cx=\"106\" cy=\"178\" r=\"82\" fill=\"#4AAE38\"/>\n    <circle cx=\"132\" cy=\"165\" r=\"58\" fill=\"#56C040\" opacity=\"0.8\"/>\n  </g>\n  <g transform=\"translate(168,98)\">\n    <circle cx=\"0\" cy=\"0\" r=\"55\" fill=\"white\"/>\n    <circle cx=\"-55\" cy=\"12\" r=\"42\" fill=\"white\"/>\n    <circle cx=\"58\" cy=\"10\" r=\"48\" fill=\"white\"/>\n    <circle cx=\"5\" cy=\"-40\" r=\"36\" fill=\"white\"/>\n    <circle cx=\"-24\" cy=\"-28\" r=\"30\" fill=\"white\"/>\n  </g>\n  <path d=\"M185,238 C210,255 228,270 232,282\" fill=\"none\" stroke=\"#7A5028\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <circle cx=\"238\" cy=\"282\" r=\"28\" fill=\"#3A9228\"/>\n  <circle cx=\"222\" cy=\"268\" r=\"20\" fill=\"#4AAE38\"/>\n  <circle cx=\"248\" cy=\"272\" r=\"16\" fill=\"#3A9228\"/>\n  <g transform=\"translate(360,492)\">\n    <line x1=\"0\" y1=\"6\" x2=\"0\" y2=\"36\" stroke=\"#3A7020\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(0)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(51)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(102)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(153)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(204)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(255)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FFD700\" transform=\"rotate(306)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"12\" fill=\"#FF8800\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"7\" fill=\"#FFA820\"/>\n  </g>\n  <g transform=\"translate(258,450)\">\n    <ellipse cx=\"-22\" cy=\"-12\" rx=\"27\" ry=\"17\" fill=\"#FF9030\" transform=\"rotate(-18,-22,-12)\"/>\n    <ellipse cx=\"22\" cy=\"-12\" rx=\"27\" ry=\"17\" fill=\"#FF9030\" transform=\"rotate(18,22,-12)\"/>\n    <ellipse cx=\"-17\" cy=\"9\" rx=\"20\" ry=\"13\" fill=\"#FFB050\" transform=\"rotate(12,-17,9)\"/>\n    <ellipse cx=\"17\" cy=\"9\" rx=\"20\" ry=\"13\" fill=\"#FFB050\" transform=\"rotate(-12,17,9)\"/>\n    <circle cx=\"-22\" cy=\"-10\" r=\"5\" fill=\"#3D2B00\" opacity=\"0.4\"/>\n    <circle cx=\"22\" cy=\"-10\" r=\"5\" fill=\"#3D2B00\" opacity=\"0.4\"/>\n    <ellipse cx=\"0\" cy=\"0\" rx=\"4\" ry=\"15\" fill=\"#3D2B00\"/>\n    <path d=\"M-3,-14 Q-13,-32 -11,-42\" fill=\"none\" stroke=\"#3D2B00\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n    <circle cx=\"-11\" cy=\"-42\" r=\"2.5\" fill=\"#3D2B00\"/>\n    <path d=\"M3,-14 Q13,-32 11,-42\" fill=\"none\" stroke=\"#3D2B00\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n    <circle cx=\"11\" cy=\"-42\" r=\"2.5\" fill=\"#3D2B00\"/>\n  </g>\n  <g transform=\"translate(720,476)\">\n    <circle cx=\"0\" cy=\"0\" r=\"32\" fill=\"#E83030\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"32\" fill=\"none\" stroke=\"#C01818\" stroke-width=\"2\"/>\n    <path d=\"M-28,-5 Q0,15 28,-3\" fill=\"none\" stroke=\"#C01818\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"-9\" cy=\"-11\" rx=\"10\" ry=\"7\" fill=\"white\" opacity=\"0.45\"/>\n  </g>\n\n  <g>\n    <ellipse cx=\"490\" cy=\"504\" rx=\"86\" ry=\"16\" fill=\"#00000018\"/>\n    <path d=\"M565,432 C608,390 618,348 598,298\" fill=\"none\" stroke=\"#D89820\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <circle cx=\"596\" cy=\"294\" r=\"20\" fill=\"#B07018\"/>\n    <circle cx=\"596\" cy=\"294\" r=\"13\" fill=\"#D09030\"/>\n    <ellipse cx=\"490\" cy=\"432\" rx=\"90\" ry=\"78\" fill=\"#E8A830\"/>\n    <ellipse cx=\"492\" cy=\"458\" rx=\"60\" ry=\"54\" fill=\"#F2C060\" opacity=\"0.7\"/>\n    <circle cx=\"490\" cy=\"318\" r=\"94\" fill=\"#C07020\"/>\n    <circle cx=\"490\" cy=\"318\" r=\"86\" fill=\"#D08828\"/>\n    <circle cx=\"490\" cy=\"318\" r=\"76\" fill=\"#E8A830\"/>\n    <ellipse cx=\"472\" cy=\"295\" rx=\"42\" ry=\"30\" fill=\"#F2C060\" opacity=\"0.5\"/>\n    <circle cx=\"430\" cy=\"252\" r=\"26\" fill=\"#E8A830\"/>\n    <circle cx=\"550\" cy=\"252\" r=\"26\" fill=\"#E8A830\"/>\n    <circle cx=\"430\" cy=\"252\" r=\"16\" fill=\"#F09070\"/>\n    <circle cx=\"550\" cy=\"252\" r=\"16\" fill=\"#F09070\"/>\n    <circle cx=\"460\" cy=\"306\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"520\" cy=\"306\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"462\" cy=\"308\" r=\"12\" fill=\"#7B4F00\"/>\n    <circle cx=\"522\" cy=\"308\" r=\"12\" fill=\"#7B4F00\"/>\n    <circle cx=\"463\" cy=\"307\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"523\" cy=\"307\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"467\" cy=\"303\" r=\"3.5\" fill=\"white\"/>\n    <circle cx=\"527\" cy=\"303\" r=\"3.5\" fill=\"white\"/>\n    <ellipse cx=\"490\" cy=\"337\" rx=\"13\" ry=\"10\" fill=\"#D06050\"/>\n    <ellipse cx=\"490\" cy=\"336\" rx=\"9\" ry=\"6\" fill=\"#E07060\"/>\n    <path d=\"M476,349 Q490,363 504,349\" fill=\"none\" stroke=\"#A04030\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <line x1=\"490\" y1=\"347\" x2=\"490\" y2=\"358\" stroke=\"#A04030\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <circle cx=\"462\" cy=\"342\" r=\"3\" fill=\"#B06820\" opacity=\"0.7\"/>\n    <circle cx=\"448\" cy=\"338\" r=\"2.5\" fill=\"#B06820\" opacity=\"0.6\"/>\n    <circle cx=\"518\" cy=\"342\" r=\"3\" fill=\"#B06820\" opacity=\"0.7\"/>\n    <circle cx=\"532\" cy=\"338\" r=\"2.5\" fill=\"#B06820\" opacity=\"0.6\"/>\n    <ellipse cx=\"430\" cy=\"494\" rx=\"36\" ry=\"20\" fill=\"#E8A830\"/>\n    <ellipse cx=\"550\" cy=\"494\" rx=\"36\" ry=\"20\" fill=\"#E8A830\"/>\n    <circle cx=\"413\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"430\" cy=\"506\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"447\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"533\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"550\" cy=\"506\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"567\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n  </g>\n  <g transform=\"translate(598,524)\">\n    <line x1=\"0\" y1=\"6\" x2=\"0\" y2=\"36\" stroke=\"#3A7020\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(0)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(60)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(120)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(180)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(240)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(300)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"10\" fill=\"#FFE040\"/>\n  </g>\n  <g stroke=\"#3A7028\" stroke-width=\"2.5\" fill=\"none\">\n    <path d=\"M445,480 Q450,462 455,480\"/>\n    <path d=\"M464,479 Q469,458 474,479\"/>\n    <path d=\"M655,480 Q660,462 665,480\"/>\n    <path d=\"M682,479 Q687,460 692,479\"/>\n    <path d=\"M318,481 Q323,465 328,481\"/>\n    <path d=\"M828,480 Q833,462 838,480\"/>\n  </g>\n</svg>",
+        "rightSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l1rsky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#7EC8E8\"/>\n      <stop offset=\"100%\" stop-color=\"#C8E8F8\"/>\n    </linearGradient>\n    <linearGradient id=\"l1rgrs\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#72C84A\"/>\n      <stop offset=\"100%\" stop-color=\"#4A9830\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l1rsky)\"/>\n  <rect y=\"480\" width=\"1000\" height=\"220\" fill=\"url(#l1rgrs)\"/>\n  <path d=\"M0,480 Q50,468 100,480 Q160,492 220,480 Q280,468 340,480 Q400,492 460,480 Q520,468 580,480 Q640,492 700,480 Q760,468 820,480 Q880,492 940,480 Q970,474 1000,480 L1000,496 L0,496 Z\" fill=\"#5AB840\"/>\n  <g transform=\"translate(852,86)\">\n    <circle cx=\"0\" cy=\"0\" r=\"72\" fill=\"#FFE080\" opacity=\"0.35\"/>\n    <line x1=\"0\" y1=\"-82\" x2=\"0\" y2=\"-68\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"58\" y1=\"-58\" x2=\"48\" y2=\"-48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"82\" y1=\"0\" x2=\"68\" y2=\"0\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"58\" y1=\"58\" x2=\"48\" y2=\"48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"0\" y1=\"82\" x2=\"0\" y2=\"68\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"-58\" y1=\"58\" x2=\"-48\" y2=\"48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"-82\" y1=\"0\" x2=\"-68\" y2=\"0\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"-58\" y1=\"-58\" x2=\"-48\" y2=\"-48\" stroke=\"#FFD000\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"55\" fill=\"#FFDC00\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"44\" fill=\"#FFE840\"/>\n    <circle cx=\"-15\" cy=\"-6\" r=\"7\" fill=\"#E8A800\"/>\n    <circle cx=\"15\" cy=\"-6\" r=\"7\" fill=\"#E8A800\"/>\n    <path d=\"M-16,10 Q0,24 16,10\" fill=\"none\" stroke=\"#E8A800\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n  </g>\n  <g transform=\"translate(615,68)\">\n    <circle cx=\"0\" cy=\"0\" r=\"44\" fill=\"white\"/>\n    <circle cx=\"-44\" cy=\"10\" r=\"34\" fill=\"white\"/>\n    <circle cx=\"46\" cy=\"8\" r=\"38\" fill=\"white\"/>\n    <circle cx=\"4\" cy=\"-32\" r=\"28\" fill=\"white\"/>\n  </g>\n  <g>\n    <rect x=\"90\" y=\"255\" width=\"44\" height=\"228\" rx=\"8\" fill=\"#8B5A30\"/>\n    <rect x=\"100\" y=\"270\" width=\"12\" height=\"200\" rx=\"4\" fill=\"#7A4A20\" opacity=\"0.4\"/>\n    <circle cx=\"132\" cy=\"200\" r=\"108\" fill=\"#3A9228\"/>\n    <circle cx=\"158\" cy=\"220\" r=\"92\" fill=\"#2E8020\"/>\n    <circle cx=\"106\" cy=\"178\" r=\"82\" fill=\"#4AAE38\"/>\n    <circle cx=\"132\" cy=\"165\" r=\"58\" fill=\"#56C040\" opacity=\"0.8\"/>\n  </g>\n  <g transform=\"translate(168,105)\">\n    <circle cx=\"0\" cy=\"0\" r=\"34\" fill=\"white\"/>\n    <circle cx=\"-34\" cy=\"8\" r=\"26\" fill=\"white\"/>\n    <circle cx=\"36\" cy=\"7\" r=\"30\" fill=\"white\"/>\n    <circle cx=\"3\" cy=\"-24\" r=\"22\" fill=\"white\"/>\n  </g>\n  <g transform=\"translate(360,492)\">\n    <line x1=\"0\" y1=\"6\" x2=\"0\" y2=\"36\" stroke=\"#3A7020\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(0)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(51)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(102)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(153)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(204)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(255)\"/>\n    <ellipse cx=\"0\" cy=\"-16\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(306)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"12\" fill=\"#FF1880\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"7\" fill=\"#FF50A0\"/>\n  </g>\n  <g transform=\"translate(720,476)\">\n    <circle cx=\"0\" cy=\"0\" r=\"32\" fill=\"#3060E8\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"32\" fill=\"none\" stroke=\"#1840C0\" stroke-width=\"2\"/>\n    <path d=\"M-28,-5 Q0,15 28,-3\" fill=\"none\" stroke=\"#1840C0\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"-9\" cy=\"-11\" rx=\"10\" ry=\"7\" fill=\"white\" opacity=\"0.45\"/>\n  </g>\n\n  <g>\n    <ellipse cx=\"490\" cy=\"504\" rx=\"86\" ry=\"16\" fill=\"#00000018\"/>\n    <path d=\"M565,432 C608,390 618,348 598,298\" fill=\"none\" stroke=\"#D89820\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <circle cx=\"596\" cy=\"294\" r=\"20\" fill=\"#B07018\"/>\n    <circle cx=\"596\" cy=\"294\" r=\"13\" fill=\"#D09030\"/>\n    <ellipse cx=\"490\" cy=\"432\" rx=\"90\" ry=\"78\" fill=\"#E8A830\"/>\n    <ellipse cx=\"492\" cy=\"458\" rx=\"60\" ry=\"54\" fill=\"#F2C060\" opacity=\"0.7\"/>\n    <circle cx=\"490\" cy=\"318\" r=\"94\" fill=\"#C07020\"/>\n    <circle cx=\"490\" cy=\"318\" r=\"86\" fill=\"#D08828\"/>\n    <circle cx=\"490\" cy=\"318\" r=\"76\" fill=\"#E8A830\"/>\n    <ellipse cx=\"472\" cy=\"295\" rx=\"42\" ry=\"30\" fill=\"#F2C060\" opacity=\"0.5\"/>\n    <circle cx=\"430\" cy=\"252\" r=\"26\" fill=\"#E8A830\"/>\n    <circle cx=\"550\" cy=\"252\" r=\"26\" fill=\"#E8A830\"/>\n    <circle cx=\"430\" cy=\"252\" r=\"16\" fill=\"#F09070\"/>\n    <circle cx=\"550\" cy=\"252\" r=\"16\" fill=\"#F09070\"/>\n    <circle cx=\"460\" cy=\"306\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"520\" cy=\"306\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"462\" cy=\"308\" r=\"12\" fill=\"#7B4F00\"/>\n    <circle cx=\"522\" cy=\"308\" r=\"12\" fill=\"#7B4F00\"/>\n    <circle cx=\"463\" cy=\"307\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"523\" cy=\"307\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"467\" cy=\"303\" r=\"3.5\" fill=\"white\"/>\n    <circle cx=\"527\" cy=\"303\" r=\"3.5\" fill=\"white\"/>\n    <ellipse cx=\"490\" cy=\"337\" rx=\"13\" ry=\"10\" fill=\"#D06050\"/>\n    <ellipse cx=\"490\" cy=\"336\" rx=\"9\" ry=\"6\" fill=\"#E07060\"/>\n    <path d=\"M476,349 Q490,363 504,349\" fill=\"none\" stroke=\"#A04030\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <line x1=\"490\" y1=\"347\" x2=\"490\" y2=\"358\" stroke=\"#A04030\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <circle cx=\"462\" cy=\"342\" r=\"3\" fill=\"#B06820\" opacity=\"0.7\"/>\n    <circle cx=\"448\" cy=\"338\" r=\"2.5\" fill=\"#B06820\" opacity=\"0.6\"/>\n    <circle cx=\"518\" cy=\"342\" r=\"3\" fill=\"#B06820\" opacity=\"0.7\"/>\n    <circle cx=\"532\" cy=\"338\" r=\"2.5\" fill=\"#B06820\" opacity=\"0.6\"/>\n    <ellipse cx=\"430\" cy=\"494\" rx=\"36\" ry=\"20\" fill=\"#E8A830\"/>\n    <ellipse cx=\"550\" cy=\"494\" rx=\"36\" ry=\"20\" fill=\"#E8A830\"/>\n    <circle cx=\"413\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"430\" cy=\"506\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"447\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"533\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"550\" cy=\"506\" r=\"9\" fill=\"#D89820\"/>\n    <circle cx=\"567\" cy=\"502\" r=\"9\" fill=\"#D89820\"/>\n  </g>\n  <g transform=\"translate(598,524)\">\n    <line x1=\"0\" y1=\"6\" x2=\"0\" y2=\"36\" stroke=\"#3A7020\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(0)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(60)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(120)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(180)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(240)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"9\" ry=\"13\" fill=\"#FF8EC0\" transform=\"rotate(300)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"10\" fill=\"#FFE040\"/>\n  </g>\n  <g stroke=\"#3A7028\" stroke-width=\"2.5\" fill=\"none\">\n    <path d=\"M445,480 Q450,462 455,480\"/>\n    <path d=\"M464,479 Q469,458 474,479\"/>\n    <path d=\"M655,480 Q660,462 665,480\"/>\n    <path d=\"M682,479 Q687,460 692,479\"/>\n    <path d=\"M318,481 Q323,465 328,481\"/>\n    <path d=\"M828,480 Q833,462 838,480\"/>\n  </g>\n</svg>",
+        "diffs": [
+            {
+                "id": "diff_1",
+                "label": "Цвет цветка — жёлтый стал розовым",
+                "left": {
+                    "x": 360,
+                    "y": 492
+                },
+                "right": {
+                    "x": 360,
+                    "y": 492
+                },
+                "radius": 32
+            },
+            {
+                "id": "diff_2",
+                "label": "Бабочка исчезла",
+                "left": {
+                    "x": 258,
+                    "y": 450
+                },
+                "right": {
+                    "x": 258,
+                    "y": 450
+                },
+                "radius": 35
+            },
+            {
+                "id": "diff_3",
+                "label": "Цвет мяча — красный стал синим",
+                "left": {
+                    "x": 720,
+                    "y": 476
+                },
+                "right": {
+                    "x": 720,
+                    "y": 476
+                },
+                "radius": 30
+            },
+            {
+                "id": "diff_4",
+                "label": "Свисающая ветка с листом исчезла",
+                "left": {
+                    "x": 228,
+                    "y": 278
+                },
+                "right": {
+                    "x": 228,
+                    "y": 278
+                },
+                "radius": 36
+            },
+            {
+                "id": "diff_5",
+                "label": "Большое облако стало меньше",
+                "left": {
+                    "x": 168,
+                    "y": 100
+                },
+                "right": {
+                    "x": 168,
+                    "y": 100
+                },
+                "radius": 40
+            }
+        ]
+    },
+    {
+        "id": "panda_visual",
+        "emoji": "🐼",
+        "animal": "panda",
+        "difficulty": 2,
+        "reward": 22,
+        "unlockPrice": 60,
+        "title": "Панда у бамбука",
+        "source": "cloud_visual_pack_stage_4_6",
+        "leftSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l2lsky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#C8EAB8\"/>\n      <stop offset=\"100%\" stop-color=\"#E8F8D0\"/>\n    </linearGradient>\n    <linearGradient id=\"l2lfl\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#D0C890\"/>\n      <stop offset=\"100%\" stop-color=\"#B8A870\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l2lsky)\"/>\n  <rect y=\"505\" width=\"1000\" height=\"195\" fill=\"url(#l2lfl)\"/>\n  <path d=\"M0,505 Q60,494 120,505 Q200,516 280,505 Q360,494 440,505 Q520,516 600,505 Q680,494 760,505 Q840,516 920,505 Q960,500 1000,505 L1000,520 L0,520 Z\" fill=\"#C0B880\"/>\n  <g opacity=\"0.35\">\n    <rect x=\"820\" y=\"80\" width=\"18\" height=\"440\" rx=\"8\" fill=\"#5A9040\"/>\n    <rect x=\"860\" y=\"120\" width=\"16\" height=\"400\" rx=\"7\" fill=\"#4A8030\"/>\n    <rect x=\"900\" y=\"60\" width=\"18\" height=\"460\" rx=\"8\" fill=\"#5A9040\"/>\n    <rect x=\"938\" y=\"100\" width=\"15\" height=\"420\" rx=\"7\" fill=\"#4A8030\"/>\n  </g>\n  <ellipse cx=\"100\" cy=\"580\" rx=\"80\" ry=\"35\" fill=\"#4A9030\" opacity=\"0.5\" transform=\"rotate(-15,100,580)\"/>\n  <ellipse cx=\"880\" cy=\"560\" rx=\"70\" ry=\"30\" fill=\"#4A9030\" opacity=\"0.5\" transform=\"rotate(12,880,560)\"/>\n  <g>\n    <rect x=\"558\" y=\"50\" width=\"28\" height=\"470\" rx=\"12\" fill=\"#6AB448\"/>\n    <rect x=\"558\" y=\"120\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"200\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"285\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"370\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"455\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"566\" y=\"50\" width=\"8\" height=\"470\" rx=\"4\" fill=\"#88D060\" opacity=\"0.5\"/>\n    <rect x=\"640\" y=\"30\" width=\"30\" height=\"490\" rx=\"12\" fill=\"#58A840\"/>\n    <rect x=\"640\" y=\"105\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"195\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"285\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"375\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"460\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"648\" y=\"30\" width=\"8\" height=\"490\" rx=\"4\" fill=\"#78C850\" opacity=\"0.5\"/>\n    <rect x=\"730\" y=\"60\" width=\"26\" height=\"460\" rx=\"11\" fill=\"#6AB448\"/>\n    <rect x=\"730\" y=\"130\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"218\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"308\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"398\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"478\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"737\" y=\"60\" width=\"7\" height=\"460\" rx=\"3\" fill=\"#88D060\" opacity=\"0.5\"/>\n    <ellipse cx=\"610\" cy=\"160\" rx=\"55\" ry=\"16\" fill=\"#4A9830\" transform=\"rotate(-35,610,160)\"/>\n    <ellipse cx=\"610\" cy=\"160\" rx=\"50\" ry=\"10\" fill=\"#5AAA40\" transform=\"rotate(-35,610,160)\"/>\n    <ellipse cx=\"700\" cy=\"240\" rx=\"50\" ry=\"15\" fill=\"#4A9830\" transform=\"rotate(25,700,240)\"/>\n    <ellipse cx=\"700\" cy=\"240\" rx=\"44\" ry=\"9\" fill=\"#5AAA40\" transform=\"rotate(25,700,240)\"/>\n    <ellipse cx=\"750\" cy=\"365\" rx=\"48\" ry=\"14\" fill=\"#4A9830\" transform=\"rotate(-28,750,365)\"/>\n    <ellipse cx=\"750\" cy=\"365\" rx=\"42\" ry=\"9\" fill=\"#5AAA40\" transform=\"rotate(-28,750,365)\"/>\n  </g>\n  <path d=\"M210,258 Q295,225 380,258\" fill=\"none\" stroke=\"#3880E8\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n  <path d=\"M210,258 Q295,240 380,258\" fill=\"none\" stroke=\"#60A0FF\" stroke-width=\"6\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n  <ellipse cx=\"790\" cy=\"145\" rx=\"54\" ry=\"16\" fill=\"#4A9830\" transform=\"rotate(40,790,145)\"/>\n  <ellipse cx=\"790\" cy=\"145\" rx=\"48\" ry=\"10\" fill=\"#5AAA40\" transform=\"rotate(40,790,145)\"/>\n\n  <g>\n    <ellipse cx=\"295\" cy=\"512\" rx=\"92\" ry=\"18\" fill=\"#00000015\"/>\n    <ellipse cx=\"230\" cy=\"500\" rx=\"45\" ry=\"32\" fill=\"#1A1A1A\"/>\n    <ellipse cx=\"230\" cy=\"508\" rx=\"36\" ry=\"22\" fill=\"#252525\"/>\n    <ellipse cx=\"362\" cy=\"500\" rx=\"45\" ry=\"32\" fill=\"#1A1A1A\"/>\n    <ellipse cx=\"362\" cy=\"508\" rx=\"36\" ry=\"22\" fill=\"#252525\"/>\n    <ellipse cx=\"295\" cy=\"420\" rx=\"96\" ry=\"100\" fill=\"white\"/>\n    <ellipse cx=\"295\" cy=\"450\" rx=\"70\" ry=\"72\" fill=\"#F5F5F5\"/>\n    <ellipse cx=\"192\" cy=\"395\" rx=\"30\" ry=\"48\" fill=\"#1A1A1A\" transform=\"rotate(-18,192,395)\"/>\n    <ellipse cx=\"398\" cy=\"395\" rx=\"30\" ry=\"48\" fill=\"#1A1A1A\" transform=\"rotate(18,398,395)\"/>\n    <rect x=\"368\" y=\"340\" width=\"12\" height=\"145\" rx=\"5\" fill=\"#6AB448\"/>\n    <rect x=\"368\" y=\"385\" width=\"12\" height=\"6\" rx=\"2\" fill=\"#4A9030\"/>\n    <rect x=\"368\" y=\"425\" width=\"12\" height=\"6\" rx=\"2\" fill=\"#4A9030\"/>\n    <circle cx=\"295\" cy=\"295\" r=\"90\" fill=\"white\"/>\n    <ellipse cx=\"252\" cy=\"278\" rx=\"30\" ry=\"28\" fill=\"#1A1A1A\" transform=\"rotate(-12,252,278)\"/>\n    <ellipse cx=\"338\" cy=\"278\" rx=\"30\" ry=\"28\" fill=\"#1A1A1A\" transform=\"rotate(12,338,278)\"/>\n    <circle cx=\"222\" cy=\"218\" r=\"32\" fill=\"#1A1A1A\"/>\n    <circle cx=\"368\" cy=\"218\" r=\"32\" fill=\"#1A1A1A\"/>\n    <circle cx=\"222\" cy=\"218\" r=\"20\" fill=\"#3A3A3A\"/>\n    <circle cx=\"368\" cy=\"218\" r=\"20\" fill=\"#3A3A3A\"/>\n    <circle cx=\"252\" cy=\"278\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"338\" cy=\"278\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"254\" cy=\"280\" r=\"12\" fill=\"#3D2B00\"/>\n    <circle cx=\"340\" cy=\"280\" r=\"12\" fill=\"#3D2B00\"/>\n    <circle cx=\"255\" cy=\"279\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"341\" cy=\"279\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"259\" cy=\"275\" r=\"3.5\" fill=\"white\"/>\n    <circle cx=\"345\" cy=\"275\" r=\"3.5\" fill=\"white\"/>\n    <ellipse cx=\"295\" cy=\"316\" rx=\"14\" ry=\"10\" fill=\"#1A1A1A\"/>\n    <ellipse cx=\"295\" cy=\"315\" rx=\"9\" ry=\"6\" fill=\"#3A3A3A\"/>\n    <path d=\"M281,328 Q295,342 309,328\" fill=\"none\" stroke=\"#1A1A1A\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <line x1=\"295\" y1=\"326\" x2=\"295\" y2=\"336\" stroke=\"#1A1A1A\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"240\" cy=\"312\" rx=\"20\" ry=\"12\" fill=\"#FFB0B0\" opacity=\"0.55\"/>\n    <ellipse cx=\"350\" cy=\"312\" rx=\"20\" ry=\"12\" fill=\"#FFB0B0\" opacity=\"0.55\"/>\n  </g>\n  <g stroke=\"#3A7020\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M460,506 Q465,490 470,506\"/>\n    <path d=\"M476,505 Q481,488 486,505\"/>\n    <path d=\"M820,506 Q825,490 830,506\"/>\n    <path d=\"M148,506 Q153,490 158,506\"/>\n    <path d=\"M162,505 Q167,489 172,505\"/>\n  </g>\n  <g transform=\"translate(438,480)\">\n    <ellipse cx=\"0\" cy=\"30\" rx=\"30\" ry=\"8\" fill=\"#28882070\"/>\n    <path d=\"M-28,-8 Q-30,30 0,38 Q30,30 28,-8 Z\" fill=\"#38A830\"/>\n    <path d=\"M-28,-8 Q0,-20 28,-8\" fill=\"#50C040\"/>\n    <path d=\"M28,8 Q46,6 44,22 Q42,36 28,28\" fill=\"none\" stroke=\"#38A830\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <path d=\"M-8,-14 Q-4,-26 -8,-38\" fill=\"none\" stroke=\"#AAAAAA\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n    <path d=\"M8,-14 Q12,-26 8,-38\" fill=\"none\" stroke=\"#AAAAAA\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n  </g>\n  <ellipse cx=\"682\" cy=\"502\" rx=\"28\" ry=\"16\" fill=\"#9A9888\"/>\n  <ellipse cx=\"682\" cy=\"500\" rx=\"24\" ry=\"12\" fill=\"#B0AE9A\"/>\n  <ellipse cx=\"676\" cy=\"497\" rx=\"10\" ry=\"6\" fill=\"#C8C6B2\" opacity=\"0.7\"/>\n  <g transform=\"translate(714,318)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"14\" ry=\"10\" fill=\"#DD2020\"/>\n    <ellipse cx=\"0\" cy=\"-4\" rx=\"14\" ry=\"8\" fill=\"#EE3030\"/>\n    <circle cx=\"-5\" cy=\"2\" r=\"4\" fill=\"#1A1A1A\"/>\n    <circle cx=\"5\" cy=\"2\" r=\"4\" fill=\"#1A1A1A\"/>\n    <circle cx=\"-8\" cy=\"-3\" r=\"3\" fill=\"#1A1A1A\"/>\n    <line x1=\"0\" y1=\"-10\" x2=\"0\" y2=\"-18\" stroke=\"#1A1A1A\" stroke-width=\"1.5\"/>\n    <circle cx=\"0\" cy=\"-10\" r=\"5\" fill=\"#1A1A1A\"/>\n    <line x1=\"-4\" y1=\"-12\" x2=\"-9\" y2=\"-20\" stroke=\"#1A1A1A\" stroke-width=\"1.2\"/>\n    <line x1=\"4\" y1=\"-12\" x2=\"9\" y2=\"-20\" stroke=\"#1A1A1A\" stroke-width=\"1.2\"/>\n  </g>\n</svg>",
+        "rightSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l2rsky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#C8EAB8\"/>\n      <stop offset=\"100%\" stop-color=\"#E8F8D0\"/>\n    </linearGradient>\n    <linearGradient id=\"l2rfl\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#D0C890\"/>\n      <stop offset=\"100%\" stop-color=\"#B8A870\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l2rsky)\"/>\n  <rect y=\"505\" width=\"1000\" height=\"195\" fill=\"url(#l2rfl)\"/>\n  <path d=\"M0,505 Q60,494 120,505 Q200,516 280,505 Q360,494 440,505 Q520,516 600,505 Q680,494 760,505 Q840,516 920,505 Q960,500 1000,505 L1000,520 L0,520 Z\" fill=\"#C0B880\"/>\n  <g opacity=\"0.35\">\n    <rect x=\"820\" y=\"80\" width=\"18\" height=\"440\" rx=\"8\" fill=\"#5A9040\"/>\n    <rect x=\"860\" y=\"120\" width=\"16\" height=\"400\" rx=\"7\" fill=\"#4A8030\"/>\n    <rect x=\"900\" y=\"60\" width=\"18\" height=\"460\" rx=\"8\" fill=\"#5A9040\"/>\n    <rect x=\"938\" y=\"100\" width=\"15\" height=\"420\" rx=\"7\" fill=\"#4A8030\"/>\n  </g>\n  <ellipse cx=\"100\" cy=\"580\" rx=\"80\" ry=\"35\" fill=\"#4A9030\" opacity=\"0.5\" transform=\"rotate(-15,100,580)\"/>\n  <ellipse cx=\"880\" cy=\"560\" rx=\"70\" ry=\"30\" fill=\"#4A9030\" opacity=\"0.5\" transform=\"rotate(12,880,560)\"/>\n  <g>\n    <rect x=\"558\" y=\"50\" width=\"28\" height=\"470\" rx=\"12\" fill=\"#6AB448\"/>\n    <rect x=\"558\" y=\"120\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"200\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"285\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"370\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"558\" y=\"455\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"566\" y=\"50\" width=\"8\" height=\"470\" rx=\"4\" fill=\"#88D060\" opacity=\"0.5\"/>\n    <rect x=\"640\" y=\"30\" width=\"30\" height=\"490\" rx=\"12\" fill=\"#58A840\"/>\n    <rect x=\"640\" y=\"105\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"195\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"285\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"375\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"640\" y=\"460\" width=\"30\" height=\"8\" rx=\"3\" fill=\"#3A8028\"/>\n    <rect x=\"648\" y=\"30\" width=\"8\" height=\"490\" rx=\"4\" fill=\"#78C850\" opacity=\"0.5\"/>\n    <rect x=\"730\" y=\"60\" width=\"26\" height=\"460\" rx=\"11\" fill=\"#6AB448\"/>\n    <rect x=\"730\" y=\"130\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"218\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"308\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"398\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"730\" y=\"478\" width=\"26\" height=\"8\" rx=\"3\" fill=\"#4A9030\"/>\n    <rect x=\"737\" y=\"60\" width=\"7\" height=\"460\" rx=\"3\" fill=\"#88D060\" opacity=\"0.5\"/>\n    <ellipse cx=\"610\" cy=\"160\" rx=\"55\" ry=\"16\" fill=\"#4A9830\" transform=\"rotate(-35,610,160)\"/>\n    <ellipse cx=\"610\" cy=\"160\" rx=\"50\" ry=\"10\" fill=\"#5AAA40\" transform=\"rotate(-35,610,160)\"/>\n    <ellipse cx=\"700\" cy=\"240\" rx=\"50\" ry=\"15\" fill=\"#4A9830\" transform=\"rotate(25,700,240)\"/>\n    <ellipse cx=\"700\" cy=\"240\" rx=\"44\" ry=\"9\" fill=\"#5AAA40\" transform=\"rotate(25,700,240)\"/>\n    <ellipse cx=\"750\" cy=\"365\" rx=\"48\" ry=\"14\" fill=\"#4A9830\" transform=\"rotate(-28,750,365)\"/>\n    <ellipse cx=\"750\" cy=\"365\" rx=\"42\" ry=\"9\" fill=\"#5AAA40\" transform=\"rotate(-28,750,365)\"/>\n  </g>\n  <path d=\"M210,258 Q295,225 380,258\" fill=\"none\" stroke=\"#8840CC\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n  <path d=\"M210,258 Q295,240 380,258\" fill=\"none\" stroke=\"#AA70FF\" stroke-width=\"6\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n\n  <g>\n    <ellipse cx=\"295\" cy=\"512\" rx=\"92\" ry=\"18\" fill=\"#00000015\"/>\n    <ellipse cx=\"230\" cy=\"500\" rx=\"45\" ry=\"32\" fill=\"#1A1A1A\"/>\n    <ellipse cx=\"230\" cy=\"508\" rx=\"36\" ry=\"22\" fill=\"#252525\"/>\n    <ellipse cx=\"362\" cy=\"500\" rx=\"45\" ry=\"32\" fill=\"#1A1A1A\"/>\n    <ellipse cx=\"362\" cy=\"508\" rx=\"36\" ry=\"22\" fill=\"#252525\"/>\n    <ellipse cx=\"295\" cy=\"420\" rx=\"96\" ry=\"100\" fill=\"white\"/>\n    <ellipse cx=\"295\" cy=\"450\" rx=\"70\" ry=\"72\" fill=\"#F5F5F5\"/>\n    <ellipse cx=\"192\" cy=\"395\" rx=\"30\" ry=\"48\" fill=\"#1A1A1A\" transform=\"rotate(-18,192,395)\"/>\n    <ellipse cx=\"398\" cy=\"395\" rx=\"30\" ry=\"48\" fill=\"#1A1A1A\" transform=\"rotate(18,398,395)\"/>\n    <rect x=\"368\" y=\"340\" width=\"12\" height=\"145\" rx=\"5\" fill=\"#6AB448\"/>\n    <rect x=\"368\" y=\"385\" width=\"12\" height=\"6\" rx=\"2\" fill=\"#4A9030\"/>\n    <rect x=\"368\" y=\"425\" width=\"12\" height=\"6\" rx=\"2\" fill=\"#4A9030\"/>\n    <circle cx=\"295\" cy=\"295\" r=\"90\" fill=\"white\"/>\n    <ellipse cx=\"252\" cy=\"278\" rx=\"30\" ry=\"28\" fill=\"#1A1A1A\" transform=\"rotate(-12,252,278)\"/>\n    <ellipse cx=\"338\" cy=\"278\" rx=\"30\" ry=\"28\" fill=\"#1A1A1A\" transform=\"rotate(12,338,278)\"/>\n    <circle cx=\"222\" cy=\"218\" r=\"32\" fill=\"#1A1A1A\"/>\n    <circle cx=\"368\" cy=\"218\" r=\"32\" fill=\"#1A1A1A\"/>\n    <circle cx=\"222\" cy=\"218\" r=\"20\" fill=\"#3A3A3A\"/>\n    <circle cx=\"368\" cy=\"218\" r=\"20\" fill=\"#3A3A3A\"/>\n    <circle cx=\"252\" cy=\"278\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"338\" cy=\"278\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"254\" cy=\"280\" r=\"12\" fill=\"#3D2B00\"/>\n    <circle cx=\"340\" cy=\"280\" r=\"12\" fill=\"#3D2B00\"/>\n    <circle cx=\"255\" cy=\"279\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"341\" cy=\"279\" r=\"7\" fill=\"#1A0800\"/>\n    <circle cx=\"259\" cy=\"275\" r=\"3.5\" fill=\"white\"/>\n    <circle cx=\"345\" cy=\"275\" r=\"3.5\" fill=\"white\"/>\n    <ellipse cx=\"295\" cy=\"316\" rx=\"14\" ry=\"10\" fill=\"#1A1A1A\"/>\n    <ellipse cx=\"295\" cy=\"315\" rx=\"9\" ry=\"6\" fill=\"#3A3A3A\"/>\n    <path d=\"M281,328 Q295,342 309,328\" fill=\"none\" stroke=\"#1A1A1A\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <line x1=\"295\" y1=\"326\" x2=\"295\" y2=\"336\" stroke=\"#1A1A1A\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"240\" cy=\"312\" rx=\"20\" ry=\"12\" fill=\"#FFB0B0\" opacity=\"0.55\"/>\n    <ellipse cx=\"350\" cy=\"312\" rx=\"20\" ry=\"12\" fill=\"#FFB0B0\" opacity=\"0.55\"/>\n  </g>\n  <g stroke=\"#3A7020\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M460,506 Q465,490 470,506\"/>\n    <path d=\"M476,505 Q481,488 486,505\"/>\n    <path d=\"M820,506 Q825,490 830,506\"/>\n    <path d=\"M148,506 Q153,490 158,506\"/>\n    <path d=\"M162,505 Q167,489 172,505\"/>\n  </g>\n  <g transform=\"translate(438,480)\">\n    <ellipse cx=\"0\" cy=\"30\" rx=\"30\" ry=\"8\" fill=\"#881820\" opacity=\"0.7\"/>\n    <path d=\"M-28,-8 Q-30,30 0,38 Q30,30 28,-8 Z\" fill=\"#D02828\"/>\n    <path d=\"M-28,-8 Q0,-20 28,-8\" fill=\"#E84040\"/>\n    <path d=\"M28,8 Q46,6 44,22 Q42,36 28,28\" fill=\"none\" stroke=\"#D02828\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <path d=\"M-8,-14 Q-4,-26 -8,-38\" fill=\"none\" stroke=\"#AAAAAA\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n    <path d=\"M8,-14 Q12,-26 8,-38\" fill=\"none\" stroke=\"#AAAAAA\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n  </g>\n  <g transform=\"translate(714,318)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"14\" ry=\"10\" fill=\"#E87020\"/>\n    <ellipse cx=\"0\" cy=\"-4\" rx=\"14\" ry=\"8\" fill=\"#F08030\"/>\n    <circle cx=\"-5\" cy=\"2\" r=\"4\" fill=\"#1A1A1A\"/>\n    <circle cx=\"5\" cy=\"2\" r=\"4\" fill=\"#1A1A1A\"/>\n    <circle cx=\"-8\" cy=\"-3\" r=\"3\" fill=\"#1A1A1A\"/>\n    <line x1=\"0\" y1=\"-10\" x2=\"0\" y2=\"-18\" stroke=\"#1A1A1A\" stroke-width=\"1.5\"/>\n    <circle cx=\"0\" cy=\"-10\" r=\"5\" fill=\"#1A1A1A\"/>\n    <line x1=\"-4\" y1=\"-12\" x2=\"-9\" y2=\"-20\" stroke=\"#1A1A1A\" stroke-width=\"1.2\"/>\n    <line x1=\"4\" y1=\"-12\" x2=\"9\" y2=\"-20\" stroke=\"#1A1A1A\" stroke-width=\"1.2\"/>\n  </g>\n</svg>",
+        "diffs": [
+            {
+                "id": "diff_1",
+                "label": "Лист бамбука исчез (правый стебель сверху)",
+                "left": {
+                    "x": 790,
+                    "y": 145
+                },
+                "right": {
+                    "x": 790,
+                    "y": 145
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_2",
+                "label": "Цвет чашки — зелёная стала красной",
+                "left": {
+                    "x": 438,
+                    "y": 480
+                },
+                "right": {
+                    "x": 438,
+                    "y": 480
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_3",
+                "label": "Камень исчез",
+                "left": {
+                    "x": 682,
+                    "y": 500
+                },
+                "right": {
+                    "x": 682,
+                    "y": 500
+                },
+                "radius": 25
+            },
+            {
+                "id": "diff_4",
+                "label": "Цвет повязки — синяя стала фиолетовой",
+                "left": {
+                    "x": 295,
+                    "y": 242
+                },
+                "right": {
+                    "x": 295,
+                    "y": 242
+                },
+                "radius": 30
+            },
+            {
+                "id": "diff_5",
+                "label": "Цвет жучка — красный стал оранжевым",
+                "left": {
+                    "x": 714,
+                    "y": 318
+                },
+                "right": {
+                    "x": 714,
+                    "y": 318
+                },
+                "radius": 22
+            }
+        ]
+    },
+    {
+        "id": "dolphin_visual",
+        "emoji": "🐬",
+        "animal": "dolphin",
+        "difficulty": 3,
+        "reward": 26,
+        "unlockPrice": 80,
+        "title": "Дельфин у моря",
+        "source": "cloud_visual_pack_stage_4_6",
+        "leftSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l3lsky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#A8DCFA\"/>\n      <stop offset=\"100%\" stop-color=\"#D8F0FF\"/>\n    </linearGradient>\n    <linearGradient id=\"l3lsea\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#1878B8\"/>\n      <stop offset=\"100%\" stop-color=\"#0A4878\"/>\n    </linearGradient>\n    <linearGradient id=\"l3lsnd\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#E8D890\"/>\n      <stop offset=\"100%\" stop-color=\"#C8B870\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l3lsky)\"/>\n  <rect y=\"320\" width=\"1000\" height=\"380\" fill=\"url(#l3lsea)\"/>\n  <path d=\"M0,320 Q80,308 160,320 Q240,332 320,320 Q400,308 480,320 Q560,332 640,320 Q720,308 800,320 Q880,332 960,320 Q980,316 1000,320 L1000,340 L0,340 Z\" fill=\"#2090D0\"/>\n  <ellipse cx=\"820\" cy=\"610\" rx=\"220\" ry=\"90\" fill=\"url(#l3lsnd)\"/>\n  <ellipse cx=\"120\" cy=\"620\" rx=\"80\" ry=\"40\" fill=\"#8A8880\"/>\n  <ellipse cx=\"165\" cy=\"608\" rx=\"55\" ry=\"30\" fill=\"#9A9890\"/>\n  <ellipse cx=\"85\" cy=\"615\" rx=\"45\" ry=\"28\" fill=\"#7A7870\"/>\n  <ellipse cx=\"760\" cy=\"318\" rx=\"90\" ry=\"30\" fill=\"#B8D890\" opacity=\"0.7\"/>\n  <ellipse cx=\"760\" cy=\"312\" rx=\"65\" ry=\"22\" fill=\"#C8E8A0\" opacity=\"0.7\"/>\n  <g transform=\"translate(150,80)\">\n    <circle cx=\"0\" cy=\"0\" r=\"40\" fill=\"white\"/>\n    <circle cx=\"-38\" cy=\"8\" r=\"30\" fill=\"white\"/>\n    <circle cx=\"40\" cy=\"6\" r=\"34\" fill=\"white\"/>\n    <circle cx=\"2\" cy=\"-28\" r=\"24\" fill=\"white\"/>\n  </g>\n  <g transform=\"translate(440,55)\">\n    <circle cx=\"0\" cy=\"0\" r=\"36\" fill=\"white\"/>\n    <circle cx=\"-35\" cy=\"7\" r=\"27\" fill=\"white\"/>\n    <circle cx=\"37\" cy=\"5\" r=\"30\" fill=\"white\"/>\n  </g>\n  <g transform=\"translate(832,168)\">\n    <path d=\"M-55,18 Q-52,-8 -35,-18 L35,-18 Q52,-8 55,18 Z\" fill=\"#F8F2E0\"/>\n    <path d=\"M-55,18 Q0,28 55,18\" fill=\"#E0D8C0\"/>\n    <path d=\"M-52,8 Q0,18 52,8\" fill=\"none\" stroke=\"#E83030\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <line x1=\"0\" y1=\"-18\" x2=\"0\" y2=\"-72\" stroke=\"#8B5A30\" stroke-width=\"4\"/>\n    <path d=\"M0,-68 L32,-38 L0,-18 Z\" fill=\"#FFFAF0\" stroke=\"#DDD0B0\" stroke-width=\"1\"/>\n    <circle cx=\"-20\" cy=\"-2\" r=\"8\" fill=\"#90D0F0\"/>\n    <circle cx=\"-20\" cy=\"-2\" r=\"8\" fill=\"none\" stroke=\"#C0C0A0\" stroke-width=\"2\"/>\n    <circle cx=\"18\" cy=\"-2\" r=\"8\" fill=\"#90D0F0\"/>\n    <circle cx=\"18\" cy=\"-2\" r=\"8\" fill=\"none\" stroke=\"#C0C0A0\" stroke-width=\"2\"/>\n  </g>\n\n  <g>\n    <path d=\"M160,390 Q200,280 310,240 Q400,215 470,260 Q540,305 520,360 Q500,410 440,420 Q380,430 320,400 Q260,375 210,360 Z\" fill=\"#5890C8\"/>\n    <path d=\"M200,368 Q240,295 318,262 Q385,240 446,270 Q505,298 498,348 Q490,390 440,400 Q385,412 330,388 Q275,368 230,358 Z\" fill=\"#A0C8E8\"/>\n    <path d=\"M160,390 Q130,370 105,338 Q88,314 120,308 Q145,305 158,330 Q168,318 188,320 Q210,322 200,348 Z\" fill=\"#5890C8\"/>\n    <path d=\"M330,245 Q348,195 368,210 Q382,222 365,248 Z\" fill=\"#4878B0\"/>\n    <path d=\"M380,300 Q420,340 410,370 Q388,360 372,328 Z\" fill=\"#4878B0\"/>\n    <circle cx=\"450\" cy=\"268\" r=\"14\" fill=\"white\"/>\n    <circle cx=\"452\" cy=\"270\" r=\"9\" fill=\"#1A3858\"/>\n    <circle cx=\"454\" cy=\"268\" r=\"4\" fill=\"#0A1828\"/>\n    <circle cx=\"457\" cy=\"265\" r=\"2.5\" fill=\"white\"/>\n    <path d=\"M440,285 Q458,295 470,285\" fill=\"none\" stroke=\"#4878B0\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"415\" cy=\"250\" rx=\"32\" ry=\"16\" fill=\"white\" opacity=\"0.3\" transform=\"rotate(-20,415,250)\"/>\n  </g>\n  <g fill=\"#60B0E0\" opacity=\"0.8\">\n    <ellipse cx=\"300\" cy=\"380\" rx=\"60\" ry=\"18\"/>\n    <path d=\"M250,375 Q255,358 260,375\"/>\n    <path d=\"M275,372 Q280,352 285,372\"/>\n    <path d=\"M318,370 Q323,350 328,370\"/>\n    <path d=\"M342,374 Q347,356 352,374\"/>\n  </g>\n  <path d=\"M680,420 Q700,390 690,360 Q680,330 700,305\" fill=\"none\" stroke=\"#2A9840\" stroke-width=\"6\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n  <path d=\"M720,440 Q740,408 730,375 Q720,345 740,318\" fill=\"none\" stroke=\"#2A9840\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n  <g transform=\"translate(758,518)\">\n    <path d=\"M0,-30 L6,-10 L28,-10 L12,4 L18,26 L0,14 L-18,26 L-12,4 L-28,-10 L-6,-10 Z\" fill=\"#FF8830\"/>\n    <path d=\"M0,-24 L5,-8 L22,-8 L10,3 L14,21 L0,11 L-14,21 L-10,3 L-22,-8 L-5,-8 Z\" fill=\"#FFA040\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"8\" fill=\"#FFBA50\"/>\n  </g>\n  <circle cx=\"340\" cy=\"285\" r=\"14\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <circle cx=\"340\" cy=\"285\" r=\"8\" fill=\"#B8E0F8\" opacity=\"0.4\"/>\n  <circle cx=\"368\" cy=\"265\" r=\"10\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <circle cx=\"368\" cy=\"265\" r=\"6\" fill=\"#B8E0F8\" opacity=\"0.4\"/>\n  <circle cx=\"320\" cy=\"262\" r=\"8\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <circle cx=\"320\" cy=\"262\" r=\"4\" fill=\"#B8E0F8\" opacity=\"0.4\"/>\n  <circle cx=\"356\" cy=\"295\" r=\"6\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <g transform=\"translate(782,358)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"24\" ry=\"12\" fill=\"#FF8028\"/>\n    <path d=\"M24,0 L38,-12 L38,12 Z\" fill=\"#FF8028\"/>\n    <ellipse cx=\"-6\" cy=\"-2\" rx=\"14\" ry=\"7\" fill=\"#FFA040\"/>\n    <circle cx=\"-14\" cy=\"-3\" r=\"5\" fill=\"white\"/>\n    <circle cx=\"-13\" cy=\"-3\" r=\"3\" fill=\"#1A1A1A\"/>\n    <path d=\"M4,-12 Q8,-22 12,-12 Z\" fill=\"#FF8028\"/>\n    <path d=\"M4,12 Q8,22 12,12 Z\" fill=\"#FF8028\"/>\n  </g>\n  <g transform=\"translate(492,578)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"26\" ry=\"18\" fill=\"#E8C890\"/>\n    <path d=\"M-24,0 Q-8,-22 8,-20 Q22,-18 26,0\" fill=\"#D8B870\" stroke=\"#C8A850\" stroke-width=\"1.5\" fill-opacity=\"0.8\"/>\n    <path d=\"M-20,0 Q-6,-18 8,-16\" fill=\"none\" stroke=\"#C8A850\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n    <path d=\"M-14,0 Q-2,-20 12,-16\" fill=\"none\" stroke=\"#C8A850\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n    <path d=\"M-6,0 Q6,-22 18,-16\" fill=\"none\" stroke=\"#C8A850\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"0\" cy=\"2\" rx=\"20\" ry=\"12\" fill=\"#F0D8A0\" opacity=\"0.6\"/>\n  </g>\n</svg>",
+        "rightSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l3rsky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#A8DCFA\"/>\n      <stop offset=\"100%\" stop-color=\"#D8F0FF\"/>\n    </linearGradient>\n    <linearGradient id=\"l3rsea\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#1878B8\"/>\n      <stop offset=\"100%\" stop-color=\"#0A4878\"/>\n    </linearGradient>\n    <linearGradient id=\"l3rsnd\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#E8D890\"/>\n      <stop offset=\"100%\" stop-color=\"#C8B870\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l3rsky)\"/>\n  <rect y=\"320\" width=\"1000\" height=\"380\" fill=\"url(#l3rsea)\"/>\n  <path d=\"M0,320 Q80,308 160,320 Q240,332 320,320 Q400,308 480,320 Q560,332 640,320 Q720,308 800,320 Q880,332 960,320 Q980,316 1000,320 L1000,340 L0,340 Z\" fill=\"#2090D0\"/>\n  <ellipse cx=\"820\" cy=\"610\" rx=\"220\" ry=\"90\" fill=\"url(#l3rsnd)\"/>\n  <ellipse cx=\"120\" cy=\"620\" rx=\"80\" ry=\"40\" fill=\"#8A8880\"/>\n  <ellipse cx=\"165\" cy=\"608\" rx=\"55\" ry=\"30\" fill=\"#9A9890\"/>\n  <ellipse cx=\"85\" cy=\"615\" rx=\"45\" ry=\"28\" fill=\"#7A7870\"/>\n  <ellipse cx=\"760\" cy=\"318\" rx=\"90\" ry=\"30\" fill=\"#B8D890\" opacity=\"0.7\"/>\n  <ellipse cx=\"760\" cy=\"312\" rx=\"65\" ry=\"22\" fill=\"#C8E8A0\" opacity=\"0.7\"/>\n  <g transform=\"translate(150,80)\">\n    <circle cx=\"0\" cy=\"0\" r=\"40\" fill=\"white\"/>\n    <circle cx=\"-38\" cy=\"8\" r=\"30\" fill=\"white\"/>\n    <circle cx=\"40\" cy=\"6\" r=\"34\" fill=\"white\"/>\n    <circle cx=\"2\" cy=\"-28\" r=\"24\" fill=\"white\"/>\n  </g>\n  <g transform=\"translate(440,55)\">\n    <circle cx=\"0\" cy=\"0\" r=\"36\" fill=\"white\"/>\n    <circle cx=\"-35\" cy=\"7\" r=\"27\" fill=\"white\"/>\n    <circle cx=\"37\" cy=\"5\" r=\"30\" fill=\"white\"/>\n  </g>\n  <g transform=\"translate(832,168)\">\n    <path d=\"M-55,18 Q-52,-8 -35,-18 L35,-18 Q52,-8 55,18 Z\" fill=\"#F8F2E0\"/>\n    <path d=\"M-55,18 Q0,28 55,18\" fill=\"#E0D8C0\"/>\n    <path d=\"M-52,8 Q0,18 52,8\" fill=\"none\" stroke=\"#3060E8\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <line x1=\"0\" y1=\"-18\" x2=\"0\" y2=\"-72\" stroke=\"#8B5A30\" stroke-width=\"4\"/>\n    <path d=\"M0,-68 L32,-38 L0,-18 Z\" fill=\"#FFFAF0\" stroke=\"#DDD0B0\" stroke-width=\"1\"/>\n    <circle cx=\"-20\" cy=\"-2\" r=\"8\" fill=\"#90D0F0\"/>\n    <circle cx=\"-20\" cy=\"-2\" r=\"8\" fill=\"none\" stroke=\"#C0C0A0\" stroke-width=\"2\"/>\n    <circle cx=\"18\" cy=\"-2\" r=\"8\" fill=\"#90D0F0\"/>\n    <circle cx=\"18\" cy=\"-2\" r=\"8\" fill=\"none\" stroke=\"#C0C0A0\" stroke-width=\"2\"/>\n  </g>\n\n  <g>\n    <path d=\"M160,390 Q200,280 310,240 Q400,215 470,260 Q540,305 520,360 Q500,410 440,420 Q380,430 320,400 Q260,375 210,360 Z\" fill=\"#5890C8\"/>\n    <path d=\"M200,368 Q240,295 318,262 Q385,240 446,270 Q505,298 498,348 Q490,390 440,400 Q385,412 330,388 Q275,368 230,358 Z\" fill=\"#A0C8E8\"/>\n    <path d=\"M160,390 Q130,370 105,338 Q88,314 120,308 Q145,305 158,330 Q168,318 188,320 Q210,322 200,348 Z\" fill=\"#5890C8\"/>\n    <path d=\"M330,245 Q348,195 368,210 Q382,222 365,248 Z\" fill=\"#4878B0\"/>\n    <path d=\"M380,300 Q420,340 410,370 Q388,360 372,328 Z\" fill=\"#4878B0\"/>\n    <circle cx=\"450\" cy=\"268\" r=\"14\" fill=\"white\"/>\n    <circle cx=\"452\" cy=\"270\" r=\"9\" fill=\"#1A3858\"/>\n    <circle cx=\"454\" cy=\"268\" r=\"4\" fill=\"#0A1828\"/>\n    <circle cx=\"457\" cy=\"265\" r=\"2.5\" fill=\"white\"/>\n    <path d=\"M440,285 Q458,295 470,285\" fill=\"none\" stroke=\"#4878B0\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"415\" cy=\"250\" rx=\"32\" ry=\"16\" fill=\"white\" opacity=\"0.3\" transform=\"rotate(-20,415,250)\"/>\n  </g>\n  <g fill=\"#60B0E0\" opacity=\"0.8\">\n    <ellipse cx=\"300\" cy=\"380\" rx=\"60\" ry=\"18\"/>\n    <path d=\"M250,375 Q255,358 260,375\"/>\n    <path d=\"M275,372 Q280,352 285,372\"/>\n    <path d=\"M318,370 Q323,350 328,370\"/>\n    <path d=\"M342,374 Q347,356 352,374\"/>\n  </g>\n  <path d=\"M680,420 Q700,390 690,360 Q680,330 700,305\" fill=\"none\" stroke=\"#2A9840\" stroke-width=\"6\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n  <path d=\"M720,440 Q740,408 730,375 Q720,345 740,318\" fill=\"none\" stroke=\"#2A9840\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n  <g transform=\"translate(758,518)\">\n    <path d=\"M0,-30 L6,-10 L28,-10 L12,4 L18,26 L0,14 L-18,26 L-12,4 L-28,-10 L-6,-10 Z\" fill=\"#E8D020\"/>\n    <path d=\"M0,-24 L5,-8 L22,-8 L10,3 L14,21 L0,11 L-14,21 L-10,3 L-22,-8 L-5,-8 Z\" fill=\"#F0E040\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"8\" fill=\"#F8EA60\"/>\n  </g>\n  <circle cx=\"340\" cy=\"285\" r=\"14\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <circle cx=\"340\" cy=\"285\" r=\"8\" fill=\"#B8E0F8\" opacity=\"0.4\"/>\n  <circle cx=\"368\" cy=\"265\" r=\"10\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <circle cx=\"368\" cy=\"265\" r=\"6\" fill=\"#B8E0F8\" opacity=\"0.4\"/>\n  <circle cx=\"320\" cy=\"262\" r=\"8\" fill=\"none\" stroke=\"#90CCF0\" stroke-width=\"2.5\"/>\n  <circle cx=\"320\" cy=\"262\" r=\"4\" fill=\"#B8E0F8\" opacity=\"0.4\"/>\n</svg>",
+        "diffs": [
+            {
+                "id": "diff_1",
+                "label": "Цвет морской звезды — оранжевая стала жёлтой",
+                "left": {
+                    "x": 758,
+                    "y": 518
+                },
+                "right": {
+                    "x": 758,
+                    "y": 518
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_2",
+                "label": "Один пузырёк исчез (было 4, стало 3)",
+                "left": {
+                    "x": 344,
+                    "y": 280
+                },
+                "right": {
+                    "x": 344,
+                    "y": 280
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_3",
+                "label": "Рыбка исчезла",
+                "left": {
+                    "x": 782,
+                    "y": 358
+                },
+                "right": {
+                    "x": 782,
+                    "y": 358
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_4",
+                "label": "Ракушка исчезла",
+                "left": {
+                    "x": 492,
+                    "y": 578
+                },
+                "right": {
+                    "x": 492,
+                    "y": 578
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_5",
+                "label": "Полоска на лодке — красная стала синей",
+                "left": {
+                    "x": 832,
+                    "y": 168
+                },
+                "right": {
+                    "x": 832,
+                    "y": 168
+                },
+                "radius": 30
+            }
+        ]
+    },
+    {
+        "id": "parrot_visual",
+        "emoji": "🦜",
+        "animal": "parrot",
+        "difficulty": 4,
+        "reward": 30,
+        "unlockPrice": 100,
+        "title": "Попугай в джунглях",
+        "source": "cloud_visual_pack_stage_4_6",
+        "leftSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l4lbg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#1A5A28\"/>\n      <stop offset=\"100%\" stop-color=\"#286838\"/>\n    </linearGradient>\n    <linearGradient id=\"l4lgrd\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#1A4820\"/>\n      <stop offset=\"100%\" stop-color=\"#0E2E14\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l4lbg)\"/>\n  <circle cx=\"300\" cy=\"150\" r=\"80\" fill=\"#208030\" opacity=\"0.6\"/>\n  <circle cx=\"680\" cy=\"200\" r=\"70\" fill=\"#208030\" opacity=\"0.5\"/>\n  <circle cx=\"150\" cy=\"400\" r=\"60\" fill=\"#208030\" opacity=\"0.5\"/>\n  <circle cx=\"900\" cy=\"350\" r=\"65\" fill=\"#208030\" opacity=\"0.5\"/>\n  <ellipse cx=\"50\" cy=\"220\" rx=\"160\" ry=\"58\" fill=\"#186828\" transform=\"rotate(-25,50,220)\"/>\n  <ellipse cx=\"50\" cy=\"220\" rx=\"150\" ry=\"42\" fill=\"#1E7830\" transform=\"rotate(-25,50,220)\"/>\n  <path d=\"M50,162 L50,282\" stroke=\"#1A6020\" stroke-width=\"4\" transform=\"rotate(-25,50,220)\"/>\n  <ellipse cx=\"960\" cy=\"250\" rx=\"155\" ry=\"55\" fill=\"#186828\" transform=\"rotate(22,960,250)\"/>\n  <ellipse cx=\"960\" cy=\"250\" rx=\"145\" ry=\"40\" fill=\"#1E7830\" transform=\"rotate(22,960,250)\"/>\n  <ellipse cx=\"80\" cy=\"560\" rx=\"170\" ry=\"60\" fill=\"#186828\" transform=\"rotate(18,80,560)\"/>\n  <ellipse cx=\"80\" cy=\"560\" rx=\"158\" ry=\"44\" fill=\"#1E7830\" transform=\"rotate(18,80,560)\"/>\n  <ellipse cx=\"920\" cy=\"520\" rx=\"150\" ry=\"55\" fill=\"#186828\" transform=\"rotate(-20,920,520)\"/>\n  <ellipse cx=\"920\" cy=\"520\" rx=\"140\" ry=\"40\" fill=\"#1E7830\" transform=\"rotate(-20,920,520)\"/>\n  <ellipse cx=\"200\" cy=\"340\" rx=\"130\" ry=\"48\" fill=\"#207838\" transform=\"rotate(30,200,340)\"/>\n  <ellipse cx=\"200\" cy=\"340\" rx=\"120\" ry=\"34\" fill=\"#28884A\" transform=\"rotate(30,200,340)\"/>\n  <path d=\"M200,292 L200,392\" stroke=\"#1A6820\" stroke-width=\"3\" transform=\"rotate(30,200,340)\"/>\n  <ellipse cx=\"840\" cy=\"440\" rx=\"125\" ry=\"46\" fill=\"#207838\" transform=\"rotate(-28,840,440)\"/>\n  <ellipse cx=\"840\" cy=\"440\" rx=\"115\" ry=\"32\" fill=\"#28884A\" transform=\"rotate(-28,840,440)\"/>\n  <rect y=\"620\" width=\"1000\" height=\"80\" fill=\"url(#l4lgrd)\"/>\n  <path d=\"M0,620 Q70,608 140,620 Q210,632 280,620 Q350,608 420,620 Q490,632 560,620 Q630,608 700,620 Q770,632 840,620 Q910,608 980,620 Q990,616 1000,620 L1000,635 L0,635 Z\" fill=\"#1A4A22\"/>\n  <g stroke=\"#28A840\" stroke-width=\"3\" fill=\"none\" opacity=\"0.8\">\n    <path d=\"M180,622 Q188,605 196,622\"/>\n    <path d=\"M200,620 Q208,600 216,620\"/>\n    <path d=\"M640,622 Q648,605 656,622\"/>\n    <path d=\"M770,620 Q778,602 786,620\"/>\n  </g>\n  <path d=\"M60,342 Q250,325 490,338 Q700,350 940,332\" fill=\"none\" stroke=\"#6A3E18\" stroke-width=\"36\" stroke-linecap=\"round\"/>\n  <path d=\"M60,342 Q250,325 490,338 Q700,350 940,332\" fill=\"none\" stroke=\"#8B5020\" stroke-width=\"24\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n  <path d=\"M60,338 Q250,321 490,334 Q700,346 940,328\" fill=\"none\" stroke=\"#A06030\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.35\"/>\n  <path d=\"M120,348 Q200,338 280,348\" fill=\"none\" stroke=\"#3A8828\" stroke-width=\"4\" opacity=\"0.6\"/>\n  <path d=\"M560,352 Q640,342 720,352\" fill=\"none\" stroke=\"#3A8828\" stroke-width=\"4\" opacity=\"0.6\"/>\n  <g transform=\"translate(180,172)\">\n    <circle cx=\"-20\" cy=\"10\" r=\"14\" fill=\"#CC2020\"/>\n    <circle cx=\"0\" cy=\"-2\" r=\"14\" fill=\"#DD2020\"/>\n    <circle cx=\"20\" cy=\"8\" r=\"14\" fill=\"#CC2020\"/>\n    <circle cx=\"-10\" cy=\"22\" r=\"13\" fill=\"#BB1818\"/>\n    <circle cx=\"12\" cy=\"24\" r=\"13\" fill=\"#BB1818\"/>\n    <circle cx=\"-25\" cy=\"5\" r=\"4\" fill=\"white\" opacity=\"0.45\"/>\n    <circle cx=\"-5\" cy=\"-7\" r=\"4\" fill=\"white\" opacity=\"0.45\"/>\n    <circle cx=\"15\" cy=\"3\" r=\"4\" fill=\"white\" opacity=\"0.45\"/>\n    <path d=\"M0,-18 L0,0 M-18,0 L0,0 M18,0 L0,0\" fill=\"none\" stroke=\"#2A6010\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"-12\" cy=\"-22\" rx=\"16\" ry=\"8\" fill=\"#2A8828\" transform=\"rotate(-25,-12,-22)\"/>\n  </g>\n  <g transform=\"translate(858,138)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"20\" ry=\"12\" fill=\"#3898E0\"/>\n    <ellipse cx=\"-6\" cy=\"-2\" rx=\"12\" ry=\"7\" fill=\"#58B0F8\"/>\n    <path d=\"M20,0 L34,-8 L34,8 Z\" fill=\"#3898E0\"/>\n    <circle cx=\"-12\" cy=\"-3\" r=\"5\" fill=\"white\"/>\n    <circle cx=\"-11\" cy=\"-3\" r=\"3\" fill=\"#0A1820\"/>\n    <path d=\"M-20,-4 L-28,-2\" stroke=\"#E8C820\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n  </g>\n\n  <g>\n    <path d=\"M490,462 Q470,520 448,558\" fill=\"none\" stroke=\"#1E88E8\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <path d=\"M500,460 Q500,525 498,565\" fill=\"none\" stroke=\"#3AC060\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <path d=\"M510,462 Q528,518 548,555\" fill=\"none\" stroke=\"#E8B820\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"496\" cy=\"408\" rx=\"72\" ry=\"82\" fill=\"#28B840\"/>\n    <ellipse cx=\"496\" cy=\"415\" rx=\"52\" ry=\"62\" fill=\"#38D050\"/>\n    <ellipse cx=\"496\" cy=\"430\" rx=\"38\" ry=\"45\" fill=\"#60E070\"/>\n    <path d=\"M428,380 Q380,400 365,450 Q378,470 410,448 Q425,430 435,405 Z\" fill=\"#1E98E0\"/>\n    <path d=\"M428,380 Q385,398 372,442 Q385,458 415,440 Z\" fill=\"#28B0F8\"/>\n    <line x1=\"390\" y1=\"415\" x2=\"375\" y2=\"448\" stroke=\"#1878B8\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n    <circle cx=\"496\" cy=\"308\" r=\"72\" fill=\"#28B840\"/>\n    <ellipse cx=\"478\" cy=\"284\" rx=\"38\" ry=\"26\" fill=\"#40D060\" opacity=\"0.5\"/>\n    <ellipse cx=\"496\" cy=\"262\" rx=\"44\" ry=\"32\" fill=\"#E03030\"/>\n    <ellipse cx=\"496\" cy=\"258\" rx=\"35\" ry=\"22\" fill=\"#F04040\"/>\n    <ellipse cx=\"452\" cy=\"312\" rx=\"28\" ry=\"22\" fill=\"#F0D020\"/>\n    <ellipse cx=\"540\" cy=\"312\" rx=\"28\" ry=\"22\" fill=\"#F0D020\"/>\n    <circle cx=\"462\" cy=\"295\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"463\" cy=\"296\" r=\"12\" fill=\"#1A3A1A\"/>\n    <circle cx=\"464\" cy=\"295\" r=\"7\" fill=\"#0A0A0A\"/>\n    <circle cx=\"467\" cy=\"292\" r=\"3\" fill=\"white\"/>\n    <circle cx=\"530\" cy=\"295\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"531\" cy=\"296\" r=\"12\" fill=\"#1A3A1A\"/>\n    <circle cx=\"532\" cy=\"295\" r=\"7\" fill=\"#0A0A0A\"/>\n    <circle cx=\"535\" cy=\"292\" r=\"3\" fill=\"white\"/>\n    <path d=\"M480,328 Q496,348 512,328 Q506,318 496,316 Q486,318 480,328 Z\" fill=\"#E8D820\"/>\n    <path d=\"M480,328 Q496,338 512,328\" fill=\"none\" stroke=\"#C8B010\" stroke-width=\"2\"/>\n    <g stroke=\"#C8A040\" stroke-width=\"4\" stroke-linecap=\"round\" fill=\"none\">\n      <path d=\"M462,456 L450,482 M462,456 L455,488 M462,456 L472,488\"/>\n      <path d=\"M530,456 L518,482 M530,456 L523,488 M530,456 L540,488\"/>\n    </g>\n  </g>\n  <path d=\"M564,380 Q612,400 626,450 Q612,468 582,448 Q566,430 558,405 Z\" fill=\"#1E98E0\"/>\n  <path d=\"M564,380 Q608,396 620,440 Q608,454 580,440 Z\" fill=\"#28B0F8\"/>\n  <path d=\"M580,395 Q610,420 615,445\" fill=\"none\" stroke=\"#F0D020\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n  <line x1=\"598\" y1=\"415\" x2=\"614\" y2=\"448\" stroke=\"#1878B8\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n  <ellipse cx=\"812\" cy=\"390\" rx=\"125\" ry=\"46\" fill=\"#2A9040\" transform=\"rotate(-15,812,390)\"/>\n  <ellipse cx=\"812\" cy=\"390\" rx=\"115\" ry=\"32\" fill=\"#38A850\" transform=\"rotate(-15,812,390)\"/>\n  <path d=\"M750,358 L874,422\" stroke=\"#1E7030\" stroke-width=\"4\" stroke-linecap=\"round\" transform=\"rotate(-15,812,390)\"/>\n  <g transform=\"translate(782,528)\">\n    <line x1=\"0\" y1=\"8\" x2=\"0\" y2=\"50\" stroke=\"#1E6818\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#F8D820\" transform=\"rotate(0)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#F8D820\" transform=\"rotate(60)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#F8D820\" transform=\"rotate(120)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#F8D820\" transform=\"rotate(180)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#F8D820\" transform=\"rotate(240)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#F8D820\" transform=\"rotate(300)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"11\" fill=\"#FF8800\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"6\" fill=\"#FFA820\"/>\n  </g>\n</svg>",
+        "rightSvg": "<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <linearGradient id=\"l4rbg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#1A5A28\"/>\n      <stop offset=\"100%\" stop-color=\"#286838\"/>\n    </linearGradient>\n    <linearGradient id=\"l4rgrd\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#1A4820\"/>\n      <stop offset=\"100%\" stop-color=\"#0E2E14\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1000\" height=\"700\" fill=\"url(#l4rbg)\"/>\n  <circle cx=\"300\" cy=\"150\" r=\"80\" fill=\"#208030\" opacity=\"0.6\"/>\n  <circle cx=\"680\" cy=\"200\" r=\"70\" fill=\"#208030\" opacity=\"0.5\"/>\n  <circle cx=\"150\" cy=\"400\" r=\"60\" fill=\"#208030\" opacity=\"0.5\"/>\n  <circle cx=\"900\" cy=\"350\" r=\"65\" fill=\"#208030\" opacity=\"0.5\"/>\n  <ellipse cx=\"50\" cy=\"220\" rx=\"160\" ry=\"58\" fill=\"#186828\" transform=\"rotate(-25,50,220)\"/>\n  <ellipse cx=\"50\" cy=\"220\" rx=\"150\" ry=\"42\" fill=\"#1E7830\" transform=\"rotate(-25,50,220)\"/>\n  <path d=\"M50,162 L50,282\" stroke=\"#1A6020\" stroke-width=\"4\" transform=\"rotate(-25,50,220)\"/>\n  <ellipse cx=\"960\" cy=\"250\" rx=\"155\" ry=\"55\" fill=\"#186828\" transform=\"rotate(22,960,250)\"/>\n  <ellipse cx=\"960\" cy=\"250\" rx=\"145\" ry=\"40\" fill=\"#1E7830\" transform=\"rotate(22,960,250)\"/>\n  <ellipse cx=\"80\" cy=\"560\" rx=\"170\" ry=\"60\" fill=\"#186828\" transform=\"rotate(18,80,560)\"/>\n  <ellipse cx=\"80\" cy=\"560\" rx=\"158\" ry=\"44\" fill=\"#1E7830\" transform=\"rotate(18,80,560)\"/>\n  <ellipse cx=\"920\" cy=\"520\" rx=\"150\" ry=\"55\" fill=\"#186828\" transform=\"rotate(-20,920,520)\"/>\n  <ellipse cx=\"920\" cy=\"520\" rx=\"140\" ry=\"40\" fill=\"#1E7830\" transform=\"rotate(-20,920,520)\"/>\n  <ellipse cx=\"200\" cy=\"340\" rx=\"130\" ry=\"48\" fill=\"#207838\" transform=\"rotate(30,200,340)\"/>\n  <ellipse cx=\"200\" cy=\"340\" rx=\"120\" ry=\"34\" fill=\"#28884A\" transform=\"rotate(30,200,340)\"/>\n  <path d=\"M200,292 L200,392\" stroke=\"#1A6820\" stroke-width=\"3\" transform=\"rotate(30,200,340)\"/>\n  <ellipse cx=\"840\" cy=\"440\" rx=\"125\" ry=\"46\" fill=\"#207838\" transform=\"rotate(-28,840,440)\"/>\n  <ellipse cx=\"840\" cy=\"440\" rx=\"115\" ry=\"32\" fill=\"#28884A\" transform=\"rotate(-28,840,440)\"/>\n  <rect y=\"620\" width=\"1000\" height=\"80\" fill=\"url(#l4rgrd)\"/>\n  <path d=\"M0,620 Q70,608 140,620 Q210,632 280,620 Q350,608 420,620 Q490,632 560,620 Q630,608 700,620 Q770,632 840,620 Q910,608 980,620 Q990,616 1000,620 L1000,635 L0,635 Z\" fill=\"#1A4A22\"/>\n  <g stroke=\"#28A840\" stroke-width=\"3\" fill=\"none\" opacity=\"0.8\">\n    <path d=\"M180,622 Q188,605 196,622\"/>\n    <path d=\"M200,620 Q208,600 216,620\"/>\n    <path d=\"M640,622 Q648,605 656,622\"/>\n    <path d=\"M770,620 Q778,602 786,620\"/>\n  </g>\n  <path d=\"M60,342 Q250,325 490,338 Q700,350 940,332\" fill=\"none\" stroke=\"#6A3E18\" stroke-width=\"36\" stroke-linecap=\"round\"/>\n  <path d=\"M60,342 Q250,325 490,338 Q700,350 940,332\" fill=\"none\" stroke=\"#8B5020\" stroke-width=\"24\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n  <path d=\"M60,338 Q250,321 490,334 Q700,346 940,328\" fill=\"none\" stroke=\"#A06030\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.35\"/>\n  <path d=\"M120,348 Q200,338 280,348\" fill=\"none\" stroke=\"#3A8828\" stroke-width=\"4\" opacity=\"0.6\"/>\n  <path d=\"M560,352 Q640,342 720,352\" fill=\"none\" stroke=\"#3A8828\" stroke-width=\"4\" opacity=\"0.6\"/>\n  <g transform=\"translate(180,172)\">\n    <circle cx=\"-20\" cy=\"10\" r=\"14\" fill=\"#7820CC\"/>\n    <circle cx=\"0\" cy=\"-2\" r=\"14\" fill=\"#8830DD\"/>\n    <circle cx=\"20\" cy=\"8\" r=\"14\" fill=\"#7820CC\"/>\n    <circle cx=\"-10\" cy=\"22\" r=\"13\" fill=\"#6818BB\"/>\n    <circle cx=\"12\" cy=\"24\" r=\"13\" fill=\"#6818BB\"/>\n    <circle cx=\"-25\" cy=\"5\" r=\"4\" fill=\"white\" opacity=\"0.45\"/>\n    <circle cx=\"-5\" cy=\"-7\" r=\"4\" fill=\"white\" opacity=\"0.45\"/>\n    <circle cx=\"15\" cy=\"3\" r=\"4\" fill=\"white\" opacity=\"0.45\"/>\n    <path d=\"M0,-18 L0,0 M-18,0 L0,0 M18,0 L0,0\" fill=\"none\" stroke=\"#2A6010\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"-12\" cy=\"-22\" rx=\"16\" ry=\"8\" fill=\"#2A8828\" transform=\"rotate(-25,-12,-22)\"/>\n  </g>\n\n  <g>\n    <path d=\"M490,462 Q470,520 448,558\" fill=\"none\" stroke=\"#1E88E8\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <path d=\"M500,460 Q500,525 498,565\" fill=\"none\" stroke=\"#3AC060\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <path d=\"M510,462 Q528,518 548,555\" fill=\"none\" stroke=\"#E8B820\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n    <ellipse cx=\"496\" cy=\"408\" rx=\"72\" ry=\"82\" fill=\"#28B840\"/>\n    <ellipse cx=\"496\" cy=\"415\" rx=\"52\" ry=\"62\" fill=\"#38D050\"/>\n    <ellipse cx=\"496\" cy=\"430\" rx=\"38\" ry=\"45\" fill=\"#60E070\"/>\n    <path d=\"M428,380 Q380,400 365,450 Q378,470 410,448 Q425,430 435,405 Z\" fill=\"#1E98E0\"/>\n    <path d=\"M428,380 Q385,398 372,442 Q385,458 415,440 Z\" fill=\"#28B0F8\"/>\n    <line x1=\"390\" y1=\"415\" x2=\"375\" y2=\"448\" stroke=\"#1878B8\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n    <circle cx=\"496\" cy=\"308\" r=\"72\" fill=\"#28B840\"/>\n    <ellipse cx=\"478\" cy=\"284\" rx=\"38\" ry=\"26\" fill=\"#40D060\" opacity=\"0.5\"/>\n    <ellipse cx=\"496\" cy=\"262\" rx=\"44\" ry=\"32\" fill=\"#E03030\"/>\n    <ellipse cx=\"496\" cy=\"258\" rx=\"35\" ry=\"22\" fill=\"#F04040\"/>\n    <ellipse cx=\"452\" cy=\"312\" rx=\"28\" ry=\"22\" fill=\"#F0D020\"/>\n    <ellipse cx=\"540\" cy=\"312\" rx=\"28\" ry=\"22\" fill=\"#F0D020\"/>\n    <circle cx=\"462\" cy=\"295\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"463\" cy=\"296\" r=\"12\" fill=\"#1A3A1A\"/>\n    <circle cx=\"464\" cy=\"295\" r=\"7\" fill=\"#0A0A0A\"/>\n    <circle cx=\"467\" cy=\"292\" r=\"3\" fill=\"white\"/>\n    <circle cx=\"530\" cy=\"295\" r=\"18\" fill=\"white\"/>\n    <circle cx=\"531\" cy=\"296\" r=\"12\" fill=\"#1A3A1A\"/>\n    <circle cx=\"532\" cy=\"295\" r=\"7\" fill=\"#0A0A0A\"/>\n    <circle cx=\"535\" cy=\"292\" r=\"3\" fill=\"white\"/>\n    <path d=\"M480,328 Q496,348 512,328 Q506,318 496,316 Q486,318 480,328 Z\" fill=\"#E8D820\"/>\n    <path d=\"M480,328 Q496,338 512,328\" fill=\"none\" stroke=\"#C8B010\" stroke-width=\"2\"/>\n    <g stroke=\"#C8A040\" stroke-width=\"4\" stroke-linecap=\"round\" fill=\"none\">\n      <path d=\"M462,456 L450,482 M462,456 L455,488 M462,456 L472,488\"/>\n      <path d=\"M530,456 L518,482 M530,456 L523,488 M530,456 L540,488\"/>\n    </g>\n  </g>\n  <path d=\"M564,380 Q612,400 626,450 Q612,468 582,448 Q566,430 558,405 Z\" fill=\"#1E98E0\"/>\n  <path d=\"M564,380 Q608,396 620,440 Q608,454 580,440 Z\" fill=\"#28B0F8\"/>\n  <line x1=\"598\" y1=\"415\" x2=\"614\" y2=\"448\" stroke=\"#1878B8\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.7\"/>\n  <g transform=\"translate(782,528)\">\n    <line x1=\"0\" y1=\"8\" x2=\"0\" y2=\"50\" stroke=\"#1E6818\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(0)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(60)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(120)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(180)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(240)\"/>\n    <ellipse cx=\"0\" cy=\"-14\" rx=\"10\" ry=\"14\" fill=\"#FF60A0\" transform=\"rotate(300)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"11\" fill=\"#FF1880\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"6\" fill=\"#FF50A0\"/>\n  </g>\n</svg>",
+        "diffs": [
+            {
+                "id": "diff_1",
+                "label": "Цвет ягод — красные стали фиолетовыми",
+                "left": {
+                    "x": 180,
+                    "y": 172
+                },
+                "right": {
+                    "x": 180,
+                    "y": 172
+                },
+                "radius": 28
+            },
+            {
+                "id": "diff_2",
+                "label": "Большой лист справа исчез",
+                "left": {
+                    "x": 812,
+                    "y": 390
+                },
+                "right": {
+                    "x": 812,
+                    "y": 390
+                },
+                "radius": 35
+            },
+            {
+                "id": "diff_3",
+                "label": "Маленькая птица исчезла",
+                "left": {
+                    "x": 858,
+                    "y": 138
+                },
+                "right": {
+                    "x": 858,
+                    "y": 138
+                },
+                "radius": 25
+            },
+            {
+                "id": "diff_4",
+                "label": "Жёлтая полоска на правом крыле попугая исчезла",
+                "left": {
+                    "x": 594,
+                    "y": 418
+                },
+                "right": {
+                    "x": 594,
+                    "y": 418
+                },
+                "radius": 30
+            },
+            {
+                "id": "diff_5",
+                "label": "Цвет цветка — жёлтый стал розовым",
+                "left": {
+                    "x": 782,
+                    "y": 528
+                },
+                "right": {
+                    "x": 782,
+                    "y": 528
+                },
+                "radius": 28
+            }
+        ]
+    }
 ];
 
 let spotDiffCurrentLevel = Number(safeStorage.get('zooSpotDiffCurrentLevel', '0')) || 0;
-let spotDiffCompleted = parseSpotDiffList(safeStorage.get('zooSpotDiffCompleted', ''));
-let spotDiffUnlockedLevels = migrateSpotDiffUnlockedLevels();
+let spotDiffCompleted = [];
+let spotDiffUnlockedLevels = [];
 let spotDiffFound = [];
-let spotDiffTimeLeft = 0;
-let spotDiffTimerId = null;
 let spotDiffCanPlay = true;
-let spotDiffGuidePending = false;
 let spotDiffTransform = { scale: 1, tx: 0, ty: 0 };
-let spotPointerState = { pointers: new Map(), pan: null, pinch: null, moved: false, suppressClick: false, lastTap: 0, lastTapX: 0, lastTapY: 0 };
+let spotPointerState = { pointers: new Map(), pan: null, pinch: null, moved: false, suppressTap: false, lastTap: 0, lastTapX: 0, lastTapY: 0 };
 
 const spotDiffCoins = document.getElementById('spotDiffCoins');
 const spotDiffLevelBadge = document.getElementById('spotDiffLevelBadge');
 const spotDiffDifficulty = document.getElementById('spotDiffDifficulty');
 const spotDiffProgress = document.getElementById('spotDiffProgress');
-const spotDiffTimer = document.getElementById('spotDiffTimer');
 const spotDiffMessage = document.getElementById('spotDiffMessage');
 const spotDiffLeft = document.getElementById('spotDiffLeft');
 const spotDiffRight = document.getElementById('spotDiffRight');
 const spotDiffLevelRail = document.getElementById('spotDiffLevelRail');
 
-function parseSpotDiffList(raw) {
-    return String(raw || '').split(',').map(v => Number(v)).filter(v => Number.isFinite(v));
-}
-function uniqueSortedSpotDiff(list) {
-    return Array.from(new Set((list || []).filter(v => Number.isFinite(v) && v >= 0 && v < spotDiffLevels.length))).sort((a, b) => a - b);
-}
+function stopSpotDiffTimer() {}
+function parseSpotDiffList(raw) { return String(raw || '').split(',').map(v => Number(v)).filter(v => Number.isFinite(v)); }
+function uniqueSortedSpotDiff(list) { return Array.from(new Set((list || []).filter(v => Number.isFinite(v) && v >= 0 && v < spotDiffLevels.length))).sort((a, b) => a - b); }
 function migrateSpotDiffUnlockedLevels() {
     const saved = parseSpotDiffList(safeStorage.get('zooSpotDiffUnlockedLevels', ''));
     const completed = parseSpotDiffList(safeStorage.get('zooSpotDiffCompleted', ''));
@@ -12226,255 +12679,469 @@ function migrateSpotDiffUnlockedLevels() {
     safeStorage.set('zooSpotDiffUnlockedLevels', result.join(','));
     return result;
 }
+function initSpotDiffProgress() {
+    spotDiffCompleted = uniqueSortedSpotDiff(parseSpotDiffList(safeStorage.get('zooSpotDiffCompleted', '')));
+    spotDiffUnlockedLevels = migrateSpotDiffUnlockedLevels();
+    if (!spotDiffUnlockedLevels.includes(0)) spotDiffUnlockedLevels.push(0);
+    spotDiffUnlockedLevels = uniqueSortedSpotDiff(spotDiffUnlockedLevels);
+    spotDiffCurrentLevel = Math.max(0, Math.min(spotDiffCurrentLevel, spotDiffLevels.length - 1));
+    if (!isSpotDiffLevelUnlocked(spotDiffCurrentLevel)) spotDiffCurrentLevel = spotDiffUnlockedLevels[0] || 0;
+}
 function saveSpotDiffProgress() {
     safeStorage.set('zooSpotDiffCompleted', uniqueSortedSpotDiff(spotDiffCompleted).join(','));
     safeStorage.set('zooSpotDiffUnlockedLevels', uniqueSortedSpotDiff(spotDiffUnlockedLevels).join(','));
     safeStorage.set('zooSpotDiffCurrentLevel', String(spotDiffCurrentLevel));
     saveProgress();
 }
-function isSpotDiffGuideSeen() {
-    return safeStorage.get('zooSpotDiffGuideSeen', '0') === '1';
-}
-function isSpotDiffLevelUnlocked(index) {
-    return index === 0 || spotDiffUnlockedLevels.includes(index) || spotDiffCompleted.includes(index);
-}
-function getSpotDiffLevel(index = spotDiffCurrentLevel) {
-    return spotDiffLevels[index] || spotDiffLevels[0];
-}
+function isSpotDiffGuideSeen() { return safeStorage.get('zooSpotDiffGuideSeen', '0') === '1'; }
+function isSpotDiffLevelUnlocked(index) { return uniqueSortedSpotDiff(spotDiffUnlockedLevels).includes(index); }
+function isSpotDiffLevelCompleted(index) { return uniqueSortedSpotDiff(spotDiffCompleted).includes(index); }
+function getSpotDiffLevel() { return spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0]; }
 
 function openSpotDifferences() {
     playSound('click');
-    if (musicEnabled && !musicTimer) startBackgroundMusic();
-    spotDiffCurrentLevel = Math.max(0, Math.min(spotDiffCurrentLevel, spotDiffLevels.length - 1));
-    if (!isSpotDiffLevelUnlocked(spotDiffCurrentLevel)) spotDiffCurrentLevel = 0;
-    spotDiffGuidePending = !isSpotDiffGuideSeen();
+    initSpotDiffProgress();
     showScreen('spotDiffScreen');
-    if (spotDiffGuidePending) setTimeout(showSpotDiffGuide, 120);
+    setTimeout(() => { try { showSpotDiffGuide(); } catch(e) {} }, 160);
 }
-function stopSpotDiffTimer() {
-    if (spotDiffTimerId) { clearInterval(spotDiffTimerId); spotDiffTimerId = null; }
-}
-function startSpotDiffTimer() {
-    stopSpotDiffTimer();
-    const level = getSpotDiffLevel();
-    if (!level.time) { if (spotDiffTimer) spotDiffTimer.textContent = '🧘 Без таймера'; return; }
-    spotDiffTimeLeft = Number(level.time || 180);
-    updateSpotDiffTimerText();
-    spotDiffTimerId = setInterval(() => {
-        if (!document.getElementById('spotDiffScreen')?.classList.contains('show')) { stopSpotDiffTimer(); return; }
-        spotDiffTimeLeft -= 1;
-        updateSpotDiffTimerText();
-        if (spotDiffTimeLeft <= 0) showSpotDiffTimeoutPopup();
-    }, 1000);
-}
-function updateSpotDiffTimerText() {
-    if (!spotDiffTimer) return;
-    const t = Math.max(0, spotDiffTimeLeft || 0);
-    const mm = String(Math.floor(t / 60)).padStart(2, '0');
-    const ss = String(t % 60).padStart(2, '0');
-    spotDiffTimer.textContent = `⏱ ${mm}:${ss}`;
-    spotDiffTimer.classList.toggle('danger', t <= 20 && t > 0);
-}
+
 function renderSpotDifferencesScreen() {
-    if (!spotDiffLeft || !spotDiffRight) return;
+    initSpotDiffProgress();
     if (spotDiffCoins) spotDiffCoins.textContent = String(coins);
-    if (!isSpotDiffLevelUnlocked(spotDiffCurrentLevel)) spotDiffCurrentLevel = 0;
+    if (!isSpotDiffLevelUnlocked(spotDiffCurrentLevel)) spotDiffCurrentLevel = spotDiffUnlockedLevels[0] || 0;
     spotDiffFound = [];
+    spotDiffCanPlay = true;
     resetSpotDiffZoom(false);
     renderSpotDiffLevelRail();
     renderSpotDiffLevel();
-    if (spotDiffGuidePending) { spotDiffCanPlay = false; stopSpotDiffTimer(); }
-    else { spotDiffCanPlay = true; startSpotDiffTimer(); }
 }
+
 function renderSpotDiffLevel() {
     const level = getSpotDiffLevel();
+    if (!spotDiffLeft || !spotDiffRight) return;
     spotDiffLeft.innerHTML = '<div class="spot-scene-content"></div>';
     spotDiffRight.innerHTML = '<div class="spot-scene-content"></div>';
     [spotDiffLeft, spotDiffRight].forEach(scene => installSpotDiffSceneEvents(scene));
     if (spotDiffLevelBadge) spotDiffLevelBadge.textContent = `${level.emoji} Уровень ${spotDiffCurrentLevel + 1}`;
-    if (spotDiffDifficulty) spotDiffDifficulty.textContent = `Сложность ${level.difficulty}`;
+    if (spotDiffDifficulty) spotDiffDifficulty.textContent = `Этап ${level.difficulty}`;
     updateSpotDiffProgress();
     setSpotDiffMessage(`Найди 5 отличий. Этап ${level.difficulty}: ${getSpotDiffDifficultyText(level.difficulty)} 👀`);
     const leftContent = spotDiffLeft.querySelector('.spot-scene-content');
     const rightContent = spotDiffRight.querySelector('.spot-scene-content');
-    leftContent.innerHTML = renderSpotDiffSvg(level, 'left');
-    rightContent.innerHTML = renderSpotDiffSvg(level, 'right');
-    level.diffs.forEach(diff => {
-        leftContent.appendChild(createSpotDiffHit(diff, 'left'));
-        rightContent.appendChild(createSpotDiffHit(diff, 'right'));
-    });
+    if (leftContent) leftContent.innerHTML = normalizeSpotDiffSvg(level.leftSvg);
+    if (rightContent) rightContent.innerHTML = normalizeSpotDiffSvg(level.rightSvg);
     applySpotDiffTransform();
+}
+function normalizeSpotDiffSvg(svg) {
+    const raw = String(svg || '');
+    if (!raw.trim()) return '';
+    if (raw.includes('class="spot-scene-svg"')) return raw;
+    return raw.replace('<svg ', '<svg class="spot-scene-svg" preserveAspectRatio="xMidYMid meet" ');
 }
 function getSpotDiffDifficultyText(d) {
     if (d <= 2) return 'крупные отличия';
     if (d <= 4) return 'больше деталей';
     return 'мелкие отличия';
 }
+function svgEl(name, attrs = '', children = '') { return `<${name} ${attrs}>${children}</${name}>`; }
 function renderSpotDiffSvg(level, side) {
     const right = side === 'right';
-    const has = id => right && level.diffs.some(d => d.id === id);
-    const animalX = has('animalShift') ? (level.id === 'parrot' ? 59 : 56) : has('animalLeft') ? 46 : 50;
-    const animalY = has('animalUp') ? 50 : has('animalDown') ? 66 : 61;
-    const sunX = has('sunMove') ? (level.id === 'dolphin' ? 74 : 25) : 82;
-    const sunY = has('sun') || has('sunMove') ? (level.id === 'dolphin' ? 20 : 23) : 15;
-    const cloudX = has('cloud') || has('cloudRight') ? 37 : has('cloudLower') ? 30 : 28;
-    const cloudY = has('cloudLower') ? 24 : 18;
+    const diff = id => right && level.diffs.some(d => d.id === id);
     const night = level.theme === 'night';
-    const water = level.theme === 'sea';
+    const sea = level.theme === 'sea';
     const jungle = level.theme === 'jungle' || level.theme === 'bamboo';
-    const sky = night ? '#1e3a8a' : water ? '#7dd3fc' : '#93c5fd';
-    const ground = water ? '#38bdf8' : level.theme === 'bamboo' ? '#86efac' : '#bbf7d0';
-    const animal = renderSpotAnimal(level.animal, animalX, animalY);
-    const showBall = !(right && (has('ball') || has('ballGone')));
-    const showRock = !(right && has('rock'));
-    const showLeaf = !(right && has('leafGone'));
-    const showStar = !(right && has('starGone'));
-    const showFlower = !(right && has('flowerGone'));
-    const flowerColor = has('flowerColor') ? '#8b5cf6' : has('flowerOrange') ? '#f59e0b' : has('flowerGreen') ? '#22c55e' : '#ec4899';
-    const rockColor = has('rockBlue') ? '#60a5fa' : '#94a3b8';
-    const ballColor = has('ballColor') ? '#0ea5e9' : '#ef4444';
-    const pondScale = has('pond') ? 1.18 : 1;
+    const savanna = level.theme === 'savanna';
+    const sky = night ? '#1d4ed8' : sea ? '#7dd3fc' : '#93c5fd';
+    const ground = sea ? '#38bdf8' : savanna ? '#fde68a' : jungle ? '#86efac' : '#bbf7d0';
+    const hill = sea ? '#0ea5e9' : savanna ? '#facc15' : jungle ? '#4ade80' : '#86efac';
+    const sunX = diff('sunMove') ? 74 : 82;
+    const sunY = diff('sunLower') || diff('moonLower') ? 25 : diff('sunMove') ? 22 : 17;
+    const cloudX = diff('cloudRight') ? 38 : 28;
+    const cloudVisible = !diff('cloudGone');
+    const animalX = diff('pandaShift') ? 57 : diff('koalaLeft') ? 46 : 50;
+    const animalY = diff('dolphinUp') ? 51 : diff('giraffeDown') ? 67 : 62;
+    let extras = '';
+    if (!night) extras += `<circle cx="${sunX}" cy="${sunY}" r="7" fill="#facc15"/><g stroke="#facc15" stroke-width="1.4"><line x1="${sunX}" y1="${sunY-12}" x2="${sunX}" y2="${sunY-16}"/><line x1="${sunX}" y1="${sunY+12}" x2="${sunX}" y2="${sunY+16}"/><line x1="${sunX-12}" y1="${sunY}" x2="${sunX-16}" y2="${sunY}"/><line x1="${sunX+12}" y1="${sunY}" x2="${sunX+16}" y2="${sunY}"/></g>`;
+    if (night) extras += `<circle cx="82" cy="${sunY}" r="8" fill="#fde68a"/><circle cx="86" cy="${sunY-1}" r="8" fill="${sky}"/>`;
+    if (cloudVisible) extras += `<g fill="#fff"><ellipse cx="${cloudX}" cy="19" rx="11" ry="5"/><circle cx="${cloudX-5}" cy="17" r="5"/><circle cx="${cloudX+3}" cy="16" r="6"/></g>`;
+    if (!diff('starGone')) extras += `<polygon points="63,18 65,23 70,23 66,27 68,32 63,29 58,32 60,27 56,23 61,23" fill="#fde047" stroke="#f59e0b" stroke-width="0.8"/>`;
+    if (diff('butterflyNew') || diff('birdNew') || diff('fishNew') || diff('butterflySmall')) extras += renderSmallCreature(level.id, right);
+    if (diff('berriesNew') || diff('berryNew')) extras += `<g fill="#ef4444"><circle cx="70" cy="42" r="2.6"/><circle cx="74" cy="44" r="2.4"/><circle cx="32" cy="54" r="2.5"/></g>`;
+    if (!diff('vineGone') && level.id === 'parrot') extras += `<path d="M18 0 C16 14 21 26 18 40" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="round"/>`;
+    if (level.id === 'panda' && !diff('bambooMissing')) extras += `<g stroke="#15803d" stroke-width="3" stroke-linecap="round"><line x1="82" y1="28" x2="82" y2="62"/><line x1="88" y1="31" x2="88" y2="64"/><path d="M82 42 C72 39 72 35 82 35"/><path d="M88 50 C98 47 98 42 88 42"/></g>`;
+    if (diff('fruitNew')) extras += `<circle cx="78" cy="44" r="3" fill="#ef4444"/>`;
+
+    const details = renderSpotSceneDetails(level, right, diff);
+    const animal = renderSpotAnimal(level.animal, animalX, animalY, diff('parrotWing'));
     return `<svg class="spot-scene-svg" viewBox="0 0 100 75" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="g-${level.id}-${side}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${sky}"/><stop offset=".58" stop-color="${sky}"/><stop offset=".59" stop-color="${ground}"/><stop offset="1" stop-color="${ground}"/></linearGradient></defs>
-      <rect width="100" height="75" fill="url(#g-${level.id}-${side})"/>
-      ${night ? `<circle cx="${has('moonLower')?82:82}" cy="${has('moonLower')?24:16}" r="6" fill="#fde68a"/><circle cx="${has('moonLower')?79:79}" cy="${has('moonLower')?22:14}" r="6" fill="${sky}"/>` : `<circle cx="${sunX}" cy="${sunY}" r="6.5" fill="#facc15"/><g stroke="#facc15" stroke-width="1.2" opacity=".8"><line x1="${sunX}" y1="${sunY-11}" x2="${sunX}" y2="${sunY-8}"/><line x1="${sunX}" y1="${sunY+8}" x2="${sunX}" y2="${sunY+11}"/><line x1="${sunX-11}" y1="${sunY}" x2="${sunX-8}" y2="${sunY}"/><line x1="${sunX+8}" y1="${sunY}" x2="${sunX+11}" y2="${sunY}"/></g>`}
-      <g opacity=".96"><ellipse cx="${cloudX}" cy="${cloudY}" rx="10" ry="4.2" fill="#fff"/><circle cx="${cloudX-4}" cy="${cloudY-2}" r="4" fill="#fff"/><circle cx="${cloudX+4}" cy="${cloudY-2}" r="5" fill="#fff"/></g>
-      ${jungle ? `<rect x="13" y="36" width="4" height="26" rx="2" fill="#92400e"/><circle cx="15" cy="35" r="11" fill="${has('treeColor')?'#65a30d':'#16a34a'}"/><circle cx="8" cy="40" r="8" fill="#22c55e"/><rect x="82" y="38" width="4" height="25" rx="2" fill="#92400e"/><circle cx="84" cy="35" r="11" fill="#16a34a"/>` : `<rect x="18" y="42" width="4" height="22" rx="2" fill="#92400e"/><circle cx="20" cy="38" r="11" fill="${has('treeColor')?'#65a30d':'#16a34a'}"/><circle cx="11" cy="42" r="7" fill="#22c55e"/>`}
-      ${water ? `<ellipse cx="50" cy="66" rx="45" ry="9" fill="#0ea5e9" opacity=".56"/>` : `<path d="M0 62 C20 56, 38 62, 55 58 C72 53, 86 60, 100 55 L100 75 L0 75 Z" fill="#86efac" opacity=".75"/>`}
-      ${level.theme==='bamboo' ? `<g stroke="#16a34a" stroke-width="2"><line x1="12" y1="25" x2="10" y2="62"/><line x1="20" y1="23" x2="18" y2="64"/><line x1="88" y1="25" x2="86" y2="63"/></g>` : ''}
-      ${animal}
-      ${showFlower ? renderFlower(76, has('flowerLower')?78:76, flowerColor) : ''}
-      ${showRock ? `<ellipse cx="70" cy="66" rx="7" ry="3.5" fill="${rockColor}"/>` : ''}
-      ${showBall ? renderBall(64,82,ballColor) : ''}
-      ${level.theme==='bamboo'||level.theme==='sea' ? `<ellipse cx="${has('pond')?41:34}" cy="66" rx="${12*pondScale}" ry="${5*pondScale}" fill="#38bdf8" opacity=".68"/>` : ''}
-      ${showLeaf ? `<ellipse cx="64" cy="34" rx="6" ry="3" fill="${has('leafRed')?'#ef4444':'#22c55e'}" transform="rotate(-25 64 34)"/>` : ''}
-      ${showStar ? `<text x="62" y="25" text-anchor="middle" font-size="7">⭐</text>` : ''}
-      ${right && has('butterfly') ? `<text x="22" y="37" text-anchor="middle" font-size="7">🦋</text>` : ''}
-      ${right && has('bird') ? `<text x="35" y="36" text-anchor="middle" font-size="7">🐦</text>` : ''}
-      ${right && has('berries') ? `<g fill="#ef4444"><circle cx="28" cy="37" r="2"/><circle cx="31" cy="39" r="2"/><circle cx="25" cy="39" r="2"/></g>` : ''}
-      ${right && has('fish') ? `<text x="27" y="60" text-anchor="middle" font-size="7">🐟</text>` : ''}
+        <rect width="100" height="75" fill="${sky}"/>
+        <path d="M0 46 C22 42 35 47 52 44 C70 41 82 45 100 42 V75 H0 Z" fill="${ground}"/>
+        <path d="M0 60 C24 55 42 61 62 57 C80 54 90 57 100 55 V75 H0 Z" fill="${hill}" opacity=".65"/>
+        ${sea ? '<path d="M0 58 C18 54 36 61 54 57 C72 52 86 59 100 55 V75 H0 Z" fill="#0284c7" opacity=".45"/>' : ''}
+        ${extras}
+        ${renderTree(level.theme)}
+        ${details}
+        ${animal}
     </svg>`;
 }
-function renderSpotAnimal(type, x, y) {
-    const body = {lion:'#f59e0b', panda:'#f8fafc', dolphin:'#38bdf8', giraffe:'#fbbf24', parrot:'#22c55e', koala:'#94a3b8'}[type] || '#fbbf24';
-    const ear = type==='panda'||type==='koala' ? '#111827' : body;
-    const spot = type==='giraffe' ? `<g fill="#92400e" opacity=".9"><circle cx="${x-4}" cy="${y+1}" r="1.3"/><circle cx="${x+2}" cy="${y-3}" r="1.2"/><circle cx="${x+5}" cy="${y+4}" r="1.1"/></g>` : '';
-    if (type === 'dolphin' || type === 'whale') return `<g><ellipse cx="${x}" cy="${y}" rx="12" ry="6" fill="${body}"/><path d="M${x-12} ${y} L${x-20} ${y-5} L${x-18} ${y+5} Z" fill="${body}"/><path d="M${x+5} ${y-5} L${x+11} ${y-13} L${x+10} ${y-3} Z" fill="${body}"/><circle cx="${x+6}" cy="${y-1}" r="1" fill="#0f172a"/></g>`;
-    if (type === 'parrot') return `<g><ellipse cx="${x}" cy="${y}" rx="8" ry="11" fill="#22c55e"/><circle cx="${x}" cy="${y-8}" r="6" fill="#ef4444"/><path d="M${x+5} ${y-8} L${x+12} ${y-6} L${x+5} ${y-4} Z" fill="#facc15"/><path d="M${x-6} ${y} C${x-18} ${y+2},${x-14} ${y+15},${x-3} ${y+8}" fill="#3b82f6"/><circle cx="${x+2}" cy="${y-9}" r="1" fill="#0f172a"/></g>`;
-    return `<g><ellipse cx="${x}" cy="${y+8}" rx="11" ry="8" fill="${body}"/><circle cx="${x}" cy="${y}" r="9" fill="${body}"/><circle cx="${x-6}" cy="${y-7}" r="4" fill="${ear}"/><circle cx="${x+6}" cy="${y-7}" r="4" fill="${ear}"/>${spot}<circle cx="${x-3}" cy="${y-1}" r="1.1" fill="#0f172a"/><circle cx="${x+3}" cy="${y-1}" r="1.1" fill="#0f172a"/><ellipse cx="${x}" cy="${y+3}" rx="3" ry="2" fill="#fff7ed"/><circle cx="${x}" cy="${y+2}" r=".9" fill="#0f172a"/></g>`;
+function renderSpotSceneDetails(level, right, diff) {
+    let out = '';
+    if (level.id === 'lion') {
+        out += renderFlower(76, 78, diff('flowerColor') ? '#8b5cf6' : '#ec4899');
+        if (!diff('stoneGone')) out += '<ellipse cx="66" cy="83" rx="7" ry="4" fill="#94a3b8"/>';
+        out += '<circle cx="73" cy="51" r="5" fill="#ef4444"/><path d="M69 51 H77" stroke="#fff" stroke-width="1.2"/>';
+    } else if (level.id === 'panda') {
+        const fx = diff('flowerMove') ? 31 : 25;
+        const fy = diff('flowerMove') ? 75 : 79;
+        out += renderFlower(fx, fy, '#ec4899');
+        out += diff('pondBigger') ? '<ellipse cx="40" cy="86" rx="15" ry="6" fill="rgba(56,189,248,.65)"/>' : '<ellipse cx="34" cy="86" rx="11" ry="5" fill="rgba(56,189,248,.65)"/>';
+    } else if (level.id === 'dolphin') {
+        if (!diff('shellGone')) out += '<path d="M18 72 Q23 64 28 72 Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="1"/>';
+        out += `<circle cx="73" cy="51" r="5" fill="${diff('ballBlue') ? '#3b82f6' : '#ef4444'}"/><path d="M69 51 H77" stroke="#fff" stroke-width="1.2"/>`;
+    } else if (level.id === 'giraffe') {
+        out += `<ellipse cx="70" cy="84" rx="7" ry="4" fill="${diff('rockBlue') ? '#60a5fa' : '#94a3b8'}"/>`;
+        if (diff('butterflySmall')) out += renderSmallCreature(level.id, true);
+    } else if (level.id === 'parrot') {
+        out += renderFlower(78, diff('flowerLower') ? 83 : 76, '#ec4899');
+        out += `<ellipse cx="64" cy="32" rx="8" ry="4" transform="rotate(-20 64 32)" fill="${diff('leafColor') ? '#ef4444' : '#22c55e'}"/>`;
+    } else if (level.id === 'koala') {
+        out += `<ellipse cx="38" cy="38" rx="8" ry="4" transform="rotate(-20 38 38)" fill="${diff('leafYellow') ? '#fde047' : '#22c55e'}"/>`;
+        out += '<rect x="35" y="63" width="34" height="5" rx="3" fill="#92400e"/>';
+    }
+    return out;
 }
-function renderFlower(x,y,color) { return `<g><circle cx="${x}" cy="${y}" r="2.4" fill="${color}"/><circle cx="${x-3}" cy="${y}" r="2.2" fill="${color}"/><circle cx="${x+3}" cy="${y}" r="2.2" fill="${color}"/><circle cx="${x}" cy="${y-3}" r="2.2" fill="${color}"/><circle cx="${x}" cy="${y+3}" r="2.2" fill="${color}"/><circle cx="${x}" cy="${y}" r="1.5" fill="#fde047"/></g>`; }
-function renderBall(x,y,color) { return `<g><circle cx="${x}" cy="${y}" r="4.5" fill="${color}"/><path d="M${x-4} ${y} C${x-1} ${y-2},${x+1} ${y+2},${x+4} ${y}" stroke="#fff" stroke-width="1" fill="none"/></g>`; }
-function getSpotDiffHitBox(diff, side) { return side === 'left' ? (diff.left || diff.right) : (diff.right || diff.left); }
-function createSpotDiffHit(diff, side) {
-    const hit = document.createElement('button');
-    hit.type = 'button';
-    hit.className = 'spot-diff-hit';
-    hit.dataset.diffId = diff.id;
-    hit.setAttribute('aria-label', `Отличие: ${diff.label}`);
-    const [x, y, w, h] = getSpotDiffHitBox(diff, side);
-    hit.style.left = `${x}%`; hit.style.top = `${y}%`; hit.style.width = `${w}%`; hit.style.height = `${h}%`;
-    hit.addEventListener('pointerdown', e => { e.stopPropagation(); }, true);
-    hit.onclick = event => { event.preventDefault(); event.stopPropagation(); markSpotDiffFound(diff.id, diff.label); };
-    return hit;
+function renderFlower(x, y, color) { return `<g><circle cx="${x}" cy="${y}" r="2.4" fill="${color}"/><circle cx="${x-3}" cy="${y}" r="2.2" fill="${color}" opacity=".8"/><circle cx="${x+3}" cy="${y}" r="2.2" fill="${color}" opacity=".8"/><circle cx="${x}" cy="${y-3}" r="2.2" fill="${color}" opacity=".8"/><circle cx="${x}" cy="${y+3}" r="2.2" fill="${color}" opacity=".8"/><circle cx="${x}" cy="${y}" r="1.1" fill="#fde68a"/></g>`; }
+function renderTree(theme) {
+    const trunk = theme === 'sea' ? '' : '<rect x="18" y="45" width="5" height="23" rx="2" fill="#92400e"/>';
+    const crown = theme === 'sea' ? '' : '<circle cx="21" cy="40" r="12" fill="#16a34a"/><circle cx="14" cy="47" r="8" fill="#22c55e"/><circle cx="28" cy="48" r="7" fill="#15803d"/>';
+    return trunk + crown;
 }
-function markSpotDiffFound(id, label) {
-    if (!spotDiffCanPlay || spotDiffFound.includes(id)) return;
-    spotDiffFound.push(id);
-    document.querySelectorAll(`.spot-diff-hit[data-diff-id="${id}"]`).forEach(hit => { hit.classList.remove('hint'); hit.classList.add('found'); });
-    playSound('match'); setSpotDiffMessage(`Отличие найдено: ${label} ✨`, 'success'); updateSpotDiffProgress();
-    if (spotDiffFound.length >= 5) completeSpotDiffLevel();
+function renderSmallCreature(levelId, right) {
+    if (!right) return '';
+    if (levelId === 'dolphin') return '<g fill="#0ea5e9"><path d="M24 42 C30 38 34 43 28 47 C25 45 23 45 21 48 C21 45 22 43 24 42 Z"/></g>';
+    if (levelId === 'panda') return '<path d="M18 34 Q22 29 26 34 Q22 38 18 34 Z" fill="#f97316"/>';
+    return '<g><ellipse cx="22" cy="38" rx="3" ry="5" fill="#60a5fa"/><ellipse cx="27" cy="38" rx="3" ry="5" fill="#a78bfa"/><line x1="24.5" y1="34" x2="24.5" y2="43" stroke="#334155" stroke-width="1"/></g>';
 }
-function updateSpotDiffProgress() { if (spotDiffProgress) spotDiffProgress.textContent = `${spotDiffFound.length} / 5`; }
-function setSpotDiffMessage(text, type = '') { if (!spotDiffMessage) return; spotDiffMessage.textContent = text; spotDiffMessage.classList.remove('success','wrong'); if (type) spotDiffMessage.classList.add(type); }
+function renderSpotAnimal(animal, x, y, altWing) {
+    if (animal === 'dolphin') return `<g transform="translate(${x-14} ${y-8})"><path d="M4 12 C14 1 33 2 39 13 C31 11 23 16 15 20 C13 17 9 15 4 12 Z" fill="#38bdf8"/><path d="M24 7 L30 0 L31 10" fill="#0284c7"/><circle cx="30" cy="9" r="1.4" fill="#0f172a"/></g>`;
+    if (animal === 'giraffe') return `<g transform="translate(${x-10} ${y-18})"><rect x="7" y="8" width="8" height="28" rx="4" fill="#f59e0b"/><circle cx="12" cy="8" r="7" fill="#fbbf24"/><rect x="5" y="33" width="18" height="18" rx="8" fill="#f59e0b"/><circle cx="9" cy="8" r="1.2"/><circle cx="15" cy="8" r="1.2"/><circle cx="11" cy="22" r="1.4" fill="#92400e"/><circle cx="18" cy="40" r="1.6" fill="#92400e"/></g>`;
+    if (animal === 'parrot') return `<g transform="translate(${x-11} ${y-13})"><ellipse cx="12" cy="14" rx="9" ry="12" fill="#22c55e"/><ellipse cx="16" cy="17" rx="5" ry="8" fill="${altWing ? '#f97316' : '#0ea5e9'}"/><circle cx="11" cy="6" r="7" fill="#ef4444"/><path d="M17 7 L24 10 L17 13 Z" fill="#facc15"/><circle cx="12" cy="5" r="1.2" fill="#111827"/></g>`;
+    if (animal === 'koala') return `<g transform="translate(${x-12} ${y-12})"><circle cx="6" cy="10" r="5" fill="#94a3b8"/><circle cx="20" cy="10" r="5" fill="#94a3b8"/><circle cx="13" cy="13" r="10" fill="#cbd5e1"/><circle cx="9" cy="12" r="1.3"/><circle cx="17" cy="12" r="1.3"/><ellipse cx="13" cy="16" rx="3" ry="2" fill="#334155"/></g>`;
+    const color = animal === 'panda' ? '#f8fafc' : animal === 'lion' ? '#f59e0b' : '#fbbf24';
+    const ear = animal === 'panda' ? '#111827' : color;
+    return `<g transform="translate(${x-12} ${y-12})"><circle cx="6" cy="8" r="5" fill="${ear}"/><circle cx="20" cy="8" r="5" fill="${ear}"/><circle cx="13" cy="14" r="11" fill="${color}"/><circle cx="9" cy="13" r="1.4" fill="#111827"/><circle cx="17" cy="13" r="1.4" fill="#111827"/><ellipse cx="13" cy="18" rx="5" ry="3.6" fill="#fff7ed"/><circle cx="13" cy="16" r="1.7" fill="#111827"/></g>`;
+}
+
+function getSpotTapPoint(event, scene) {
+    const rect = scene.getBoundingClientRect();
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const localX = event.clientX - rect.left;
+    const localY = event.clientY - rect.top;
+    const contentX = (localX - cx - spotDiffTransform.tx) / spotDiffTransform.scale + cx;
+    const contentY = (localY - cy - spotDiffTransform.ty) / spotDiffTransform.scale + cy;
+    return {
+        x: Math.max(0, Math.min(1000, contentX / Math.max(1, rect.width) * 1000)),
+        y: Math.max(0, Math.min(700, contentY / Math.max(1, rect.height) * 700)),
+        localX,
+        localY
+    };
+}
+function getDiffPoint(diff, side) { return side === 'right' ? diff.right : diff.left; }
+function findSpotDiffAtPoint(point, side) {
+    const level = getSpotDiffLevel();
+    let best = null;
+    let bestDist = Infinity;
+    level.diffs.forEach(diff => {
+        if (spotDiffFound.includes(diff.id)) return;
+        const p = getDiffPoint(diff, side);
+        const dist = Math.hypot(point.x - p.x, point.y - p.y);
+        if (dist <= Number(diff.radius || 4) && dist < bestDist) { best = diff; bestDist = dist; }
+    });
+    return best;
+}
+function markSpotDiffFound(diff) {
+    if (!spotDiffCanPlay || !diff || spotDiffFound.includes(diff.id)) return;
+    spotDiffFound.push(diff.id);
+    renderSpotDiffMarks();
+    playSound('match');
+    setSpotDiffMessage(`Отличие найдено: ${diff.label} ✨`, 'success');
+    updateSpotDiffProgress();
+    if (spotDiffFound.length >= getSpotDiffLevel().diffs.length) completeSpotDiffLevel();
+}
+function renderSpotDiffMarks() {
+    document.querySelectorAll('#spotDiffScreen .spot-found-mark, #spotDiffScreen .spot-hint-mark').forEach(el => el.remove());
+    const level = getSpotDiffLevel();
+    spotDiffFound.forEach(id => {
+        const diff = level.diffs.find(item => item.id === id);
+        if (!diff) return;
+        addSpotMark(spotDiffLeft, diff.left, diff.radius, 'spot-found-mark');
+        addSpotMark(spotDiffRight, diff.right, diff.radius, 'spot-found-mark');
+    });
+}
+function addSpotMark(scene, point, radius, cls) {
+    const content = scene && scene.querySelector('.spot-scene-content');
+    if (!content || !point) return;
+    const mark = document.createElement('div');
+    mark.className = cls;
+    const r = Number(radius || 28);
+    mark.style.left = `${point.x / 10}%`;
+    mark.style.top = `${point.y / 7}%`;
+    mark.style.width = `${Math.max(2.2, (r * 2 / 1000) * 100)}%`;
+    mark.style.height = `${Math.max(3.1, (r * 2 / 700) * 100)}%`;
+    content.appendChild(mark);
+}
+function showSpotMiss(scene, point) {
+    if (!scene || !point) return;
+    const mark = document.createElement('div');
+    mark.className = 'spot-miss';
+    mark.style.left = `${point.localX}px`;
+    mark.style.top = `${point.localY}px`;
+    scene.appendChild(mark);
+    setTimeout(() => mark.remove(), 460);
+    scene.classList.remove('shake');
+    void scene.offsetWidth;
+    scene.classList.add('shake');
+    setSpotDiffMessage('Тут отличия нет. Посмотри внимательнее 🙂', 'wrong');
+    playSound('wrong');
+}
+function updateSpotDiffProgress() {
+    const level = getSpotDiffLevel();
+    if (spotDiffProgress) spotDiffProgress.textContent = `${spotDiffFound.length} / ${level.diffs.length}`;
+}
+function setSpotDiffMessage(text, type = '') {
+    if (!spotDiffMessage) return;
+    spotDiffMessage.textContent = text;
+    spotDiffMessage.classList.remove('success', 'wrong');
+    if (type) spotDiffMessage.classList.add(type);
+}
+function renderSpotDiffLevelRail() {
+    if (!spotDiffLevelRail) return;
+    spotDiffLevelRail.innerHTML = '';
+    spotDiffLevels.forEach((level, index) => {
+        const unlocked = isSpotDiffLevelUnlocked(index);
+        const done = isSpotDiffLevelCompleted(index);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'spot-level-btn' + (index === spotDiffCurrentLevel ? ' active' : '') + (done ? ' done' : '') + (!unlocked ? ' locked' : '');
+        btn.innerHTML = `${unlocked ? level.emoji : '🔒'} ${index + 1}<small>${done ? 'готово' : unlocked ? `этап ${level.difficulty}` : `${level.unlockPrice} 🪙`}</small>`;
+        btn.onclick = () => unlocked ? selectSpotDiffLevel(index) : buySpotDiffLevel(index);
+        spotDiffLevelRail.appendChild(btn);
+    });
+}
+function selectSpotDiffLevel(index) {
+    if (!isSpotDiffLevelUnlocked(index)) { buySpotDiffLevel(index); return; }
+    spotDiffCurrentLevel = index;
+    spotDiffFound = [];
+    spotDiffCanPlay = true;
+    saveSpotDiffProgress();
+    resetSpotDiffZoom(false);
+    renderSpotDiffLevelRail();
+    renderSpotDiffLevel();
+    playSound('click');
+}
+function buySpotDiffLevel(index) {
+    const level = spotDiffLevels[index];
+    if (!level) return;
+    const price = Number(level.unlockPrice || 0);
+    if (price > coins) {
+        const missing = price - coins;
+        if (typeof showCoinShortPopup === 'function') showCoinShortPopup(`Не хватает ${missing} 🪙`);
+        else setSpotDiffMessage(`Не хватает ${missing} 🪙`, 'wrong');
+        playSound('wrong');
+        return;
+    }
+    const onConfirm = () => {
+        coins -= price;
+        spotDiffUnlockedLevels.push(index);
+        spotDiffUnlockedLevels = uniqueSortedSpotDiff(spotDiffUnlockedLevels);
+        spotDiffCurrentLevel = index;
+        spotDiffFound = [];
+        spotDiffCanPlay = true;
+        saveSpotDiffProgress();
+        updateCoinsViews();
+        renderSpotDifferencesScreen();
+        if (typeof showFoodToast === 'function') showFoodToast(`Уровень открыт за ${price} 🪙`);
+    };
+    if (typeof showPurchaseConfirm === 'function') showPurchaseConfirm({ icon: '🔎', title: 'Открыть уровень?', text: `Открыть «${level.title}» за ${price} монет?`, price, onConfirm });
+    else onConfirm();
+}
+function completeSpotDiffLevel() {
+    spotDiffCanPlay = false;
+    const level = getSpotDiffLevel();
+    const alreadyDone = isSpotDiffLevelCompleted(spotDiffCurrentLevel);
+    let reward = 0;
+    if (!alreadyDone) {
+        reward = Number(level.reward || 18);
+        coins += reward;
+        spotDiffCompleted.push(spotDiffCurrentLevel);
+        if (spotDiffCurrentLevel + 1 < spotDiffLevels.length) spotDiffUnlockedLevels.push(spotDiffCurrentLevel + 1);
+        updateTaskProgress('game', 1);
+    }
+    spotDiffCompleted = uniqueSortedSpotDiff(spotDiffCompleted);
+    spotDiffUnlockedLevels = uniqueSortedSpotDiff(spotDiffUnlockedLevels);
+    saveSpotDiffProgress();
+    updateCoinsViews();
+    if (spotDiffCoins) spotDiffCoins.textContent = String(coins);
+    renderSpotDiffLevelRail();
+    showSpotDiffCompletePopup(reward, alreadyDone);
+}
+function finishSpotDiffGuide() {
+    safeStorage.set('zooSpotDiffGuideSeen', '1');
+    spotDiffCanPlay = true;
+}
+function showSpotDiffGuide() {
+    if (isSpotDiffGuideSeen()) return;
+    spotDiffCanPlay = false;
+    showSpotDiffDialog({ icon:'🔎', title:'Как играть?', text:'1. Сравни две картинки\n2. Найди 5 отличий\n3. Нажимай прямо на отличие\n4. Увеличивай картинку двумя пальцами\n5. Уровни становятся сложнее по порядку', onClose: finishSpotDiffGuide, actions:[{text:'Понятно, играть', className:'btn-green', onClick: finishSpotDiffGuide}] });
+}
+function showSpotDiffCompletePopup(reward, alreadyDone) {
+    const level = getSpotDiffLevel();
+    showSpotDiffDialog({ icon: level.emoji, title: 'Уровень пройден!', text: alreadyDone ? 'Ты снова нашёл все 5 отличий. Монеты за этот уровень уже получены.' : `Ты нашёл все 5 отличий!\nНаграда: +${reward} 🪙`, actions:[{text:'Следующий уровень', className:'btn-green', onClick: goNextSpotDiffLevel}, {text:'Играть снова', className:'btn-purple', onClick: restartSpotDiffLevel}, {text:'Главное меню', className:'btn-light', onClick: goHome}] });
+}
+function showSpotDiffDialog({ icon='🔎', title='', text='', actions=[], onClose=null }) {
+    const old = document.getElementById('spotDiffDialogOverlay');
+    if (old) old.remove();
+    const overlay = document.createElement('div');
+    overlay.id = 'spotDiffDialogOverlay';
+    overlay.className = 'spot-diff-modal-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.innerHTML = `<div class="spot-diff-modal-card"><button type="button" class="zoo-modal-close" aria-label="Закрыть">×</button><div class="spot-diff-modal-icon">${icon}</div><div class="spot-diff-modal-title"></div><div class="spot-diff-modal-text"></div><div class="spot-diff-modal-actions ${actions.length === 2 ? 'two' : ''}"></div></div>`;
+    document.body.appendChild(overlay);
+    document.body.classList.add('zoo-modal-open');
+    const titleEl = overlay.querySelector('.spot-diff-modal-title');
+    const textEl = overlay.querySelector('.spot-diff-modal-text');
+    const actionsEl = overlay.querySelector('.spot-diff-modal-actions');
+    if (titleEl) titleEl.textContent = title;
+    if (textEl) textEl.textContent = text;
+    let closed = false;
+    const close = () => {
+        if (closed) return;
+        closed = true;
+        overlay.remove();
+        document.body.classList.remove('zoo-modal-open');
+        if (typeof onClose === 'function') onClose();
+    };
+    overlay.querySelector('.zoo-modal-close').onclick = close;
+    overlay.onclick = event => { if (event.target === overlay) close(); };
+    actions.forEach(action => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `btn ${action.className || 'btn-green'}`;
+        btn.textContent = action.text;
+        btn.onclick = () => { close(); if (typeof action.onClick === 'function') action.onClick(); };
+        actionsEl.appendChild(btn);
+    });
+}
+function restartSpotDiffLevel() {
+    playSound('click');
+    spotDiffFound = [];
+    spotDiffCanPlay = true;
+    resetSpotDiffZoom(false);
+    renderSpotDiffLevel();
+}
+function goNextSpotDiffLevel() {
+    const next = Math.min(spotDiffCurrentLevel + 1, spotDiffLevels.length - 1);
+    if (!isSpotDiffLevelUnlocked(next)) { buySpotDiffLevel(next); return; }
+    spotDiffCurrentLevel = next;
+    saveSpotDiffProgress();
+    spotDiffFound = [];
+    spotDiffCanPlay = true;
+    resetSpotDiffZoom(false);
+    renderSpotDifferencesScreen();
+}
 function useSpotDiffHint() {
     if (!spotDiffCanPlay) return;
     const level = getSpotDiffLevel();
     const next = level.diffs.find(diff => !spotDiffFound.includes(diff.id));
     if (!next) { setSpotDiffMessage('Все отличия уже найдены 🎉', 'success'); return; }
-    document.querySelectorAll(`.spot-diff-hit[data-diff-id="${next.id}"]`).forEach(hit => { hit.classList.add('hint'); setTimeout(() => hit.classList.remove('hint'), 2700); });
-    playSound('click'); setSpotDiffMessage('Подсказка мигает на обеих картинках 💡');
-}
-function renderSpotDiffLevelRail() {
-    if (!spotDiffLevelRail) return; spotDiffLevelRail.innerHTML = '';
-    spotDiffLevels.forEach((level, index) => {
-        const btn = document.createElement('button'); btn.type = 'button';
-        const unlocked = isSpotDiffLevelUnlocked(index); const done = spotDiffCompleted.includes(index);
-        btn.className = 'spot-level-btn' + (index === spotDiffCurrentLevel ? ' active' : '') + (done ? ' done' : '') + (!unlocked ? ' locked' : '');
-        btn.innerHTML = `${unlocked ? level.emoji : '🔒'} ${index + 1}<small>${done ? 'готово' : unlocked ? 'этап ' + level.difficulty : level.unlockPrice + ' 🪙'}</small>`;
-        btn.onclick = () => selectSpotDiffLevel(index);
-        spotDiffLevelRail.appendChild(btn);
-    });
-}
-function selectSpotDiffLevel(index) {
-    if (isSpotDiffLevelUnlocked(index)) { stopSpotDiffTimer(); spotDiffCurrentLevel = index; saveSpotDiffProgress(); playSound('click'); renderSpotDifferencesScreen(); return; }
-    buySpotDiffLevel(index);
-}
-function buySpotDiffLevel(index) {
-    const level = spotDiffLevels[index]; if (!level) return;
-    const price = Number(level.unlockPrice || 0);
-    const missing = Math.max(0, price - coins);
-    if (missing > 0) { playSound('wrong'); if (typeof showCoinShortPopup === 'function') showCoinShortPopup(`Не хватает ${missing} 🪙`); else setSpotDiffMessage(`Не хватает ${missing} 🪙`, 'wrong'); return; }
-    const onConfirm = () => { coins -= price; spotDiffUnlockedLevels = uniqueSortedSpotDiff([...spotDiffUnlockedLevels, index]); spotDiffCurrentLevel = index; saveSpotDiffProgress(); updateCoinsViews(); playSound('buy'); renderSpotDifferencesScreen(); };
-    if (typeof showPurchaseConfirm === 'function') showPurchaseConfirm({ icon:'🔎', title:'Открыть уровень?', text:`Открыть «${level.title}» за ${price} монет?`, price, onConfirm });
-    else onConfirm();
-}
-function completeSpotDiffLevel() {
-    stopSpotDiffTimer(); spotDiffCanPlay = false;
-    const level = getSpotDiffLevel(); const alreadyDone = spotDiffCompleted.includes(spotDiffCurrentLevel); let reward = 0;
-    if (!alreadyDone) { reward = Number(level.reward || 18); coins += reward; spotDiffCompleted.push(spotDiffCurrentLevel); if (spotDiffCurrentLevel + 1 < spotDiffLevels.length) spotDiffUnlockedLevels.push(spotDiffCurrentLevel + 1); updateTaskProgress('game', 1); }
-    spotDiffCompleted = uniqueSortedSpotDiff(spotDiffCompleted); spotDiffUnlockedLevels = uniqueSortedSpotDiff(spotDiffUnlockedLevels); saveSpotDiffProgress(); updateCoinsViews(); if (spotDiffCoins) spotDiffCoins.textContent = String(coins); renderSpotDiffLevelRail();
-    showSpotDiffCompletePopup(reward, alreadyDone);
-}
-function finishSpotDiffGuide() {
-    safeStorage.set('zooSpotDiffGuideSeen','1');
-    spotDiffGuidePending = false;
-    spotDiffCanPlay = true;
-    startSpotDiffTimer();
-}
-function showSpotDiffGuide() {
-    if (isSpotDiffGuideSeen()) return;
-    spotDiffCanPlay = false; stopSpotDiffTimer();
-    showSpotDiffDialog({ icon:'🔎', title:'Как играть?', text:'1. Сравни две картинки\n2. Найди 5 отличий\n3. Нажимай прямо на отличие\n4. Увеличивай картинку двумя пальцами\n5. Проходи уровни и получай монеты', onClose: finishSpotDiffGuide, actions:[{text:'Понятно, играть', className:'btn-green', onClick: finishSpotDiffGuide}] });
-}
-function showSpotDiffCompletePopup(reward, alreadyDone) {
-    const level = getSpotDiffLevel();
-    showSpotDiffDialog({ icon:level.emoji, title:'Уровень пройден!', text: alreadyDone ? 'Ты снова нашёл все 5 отличий. Этот уровень уже был пройден.' : `Ты нашёл все 5 отличий!\nНаграда: +${reward} 🪙`, actions:[{text:'Следующий уровень', className:'btn-green', onClick:goNextSpotDiffLevel}, {text:'Играть снова', className:'btn-purple', onClick:restartSpotDiffLevel}, {text:'Главное меню', className:'btn-light', onClick:goHome}] });
-}
-function showSpotDiffTimeoutPopup() {
-    stopSpotDiffTimer(); spotDiffCanPlay = false; playSound('wrong');
-    showSpotDiffDialog({ icon:'⏳', title:'Время вышло', text:'Попробуй ещё раз или выбери другой уровень.', actions:[{text:'Попробовать снова', className:'btn-green', onClick:restartSpotDiffLevel}, {text:'Выбор уровня', className:'btn-purple', onClick:openSpotDiffLevelSelect}, {text:'Главное меню', className:'btn-light', onClick:goHome}] });
-}
-function showSpotDiffDialog({icon='🔎', title='', text='', actions=[], onClose=null}) {
-    const old = document.getElementById('spotDiffDialogOverlay'); if (old) old.remove();
-    const overlay = document.createElement('div'); overlay.id='spotDiffDialogOverlay'; overlay.className='spot-diff-modal-overlay'; overlay.setAttribute('role','dialog'); overlay.setAttribute('aria-modal','true');
-    overlay.innerHTML = `<div class="spot-diff-modal-card"><button type="button" class="zoo-modal-close" aria-label="Закрыть">×</button><div class="spot-diff-modal-icon">${icon}</div><div class="spot-diff-modal-title">${title}</div><div class="spot-diff-modal-text">${text}</div><div class="spot-diff-modal-actions ${actions.length===2?'two':''}"></div></div>`;
-    document.body.appendChild(overlay); document.body.classList.add('zoo-modal-open');
-    let closed = false;
-    const close = (runClose=true) => { if (closed) return; closed = true; overlay.remove(); document.body.classList.remove('zoo-modal-open'); if (runClose && typeof onClose === 'function') onClose(); };
-    overlay.querySelector('.zoo-modal-close').onclick = () => close(true); overlay.onclick = e => { if (e.target === overlay) close(true); };
-    const box = overlay.querySelector('.spot-diff-modal-actions');
-    actions.forEach(action => { const btn=document.createElement('button'); btn.type='button'; btn.className='btn '+(action.className||'btn-green'); btn.textContent=action.text; btn.onclick=()=>{ close(false); action.onClick && action.onClick(); }; box.appendChild(btn); });
+    document.querySelectorAll('#spotDiffScreen .spot-hint-mark').forEach(el => el.remove());
+    addSpotMark(spotDiffLeft, next.left, next.radius, 'spot-hint-mark');
+    addSpotMark(spotDiffRight, next.right, next.radius, 'spot-hint-mark');
+    setTimeout(() => document.querySelectorAll('#spotDiffScreen .spot-hint-mark').forEach(el => el.remove()), 2600);
+    setSpotDiffMessage('Подсказка мигает на одном ненайденном отличии 💡');
     playSound('click');
 }
-function openSpotDiffLevelSelect() { renderSpotDiffLevelRail(); setSpotDiffMessage('Выбери открытый уровень или открой закрытый за монеты 🗺️'); }
-function restartSpotDiffLevel() { playSound('click'); spotDiffFound=[]; resetSpotDiffZoom(false); renderSpotDiffLevel(); spotDiffCanPlay=true; startSpotDiffTimer(); }
-function goNextSpotDiffLevel() { stopSpotDiffTimer(); const next = Math.min(spotDiffCurrentLevel + 1, spotDiffLevels.length - 1); if (!isSpotDiffLevelUnlocked(next)) { buySpotDiffLevel(next); return; } spotDiffCurrentLevel = next; saveSpotDiffProgress(); renderSpotDifferencesScreen(); }
-function resetSpotDiffZoom(showMessage = true) { spotDiffTransform = { scale:1, tx:0, ty:0 }; applySpotDiffTransform(); if (showMessage) setSpotDiffMessage('Масштаб сброшен'); }
-function applySpotDiffTransform() { document.querySelectorAll('#spotDiffScreen .spot-scene-content').forEach(el => { el.style.transform = `translate(${spotDiffTransform.tx}px, ${spotDiffTransform.ty}px) scale(${spotDiffTransform.scale})`; }); }
-function clampSpotDiffPan(scene) { const rect=scene.getBoundingClientRect(); const maxX=rect.width*(spotDiffTransform.scale-1)/2; const maxY=rect.height*(spotDiffTransform.scale-1)/2; spotDiffTransform.tx=Math.min(maxX,Math.max(-maxX,spotDiffTransform.tx)); spotDiffTransform.ty=Math.min(maxY,Math.max(-maxY,spotDiffTransform.ty)); }
-function distanceSpot(a,b){ return Math.hypot(a.x-b.x,a.y-b.y); }
-function midSpot(a,b){ return {x:(a.x+b.x)/2,y:(a.y+b.y)/2}; }
-function installSpotDiffSceneEvents(scene) {
-    if (!scene || scene.__spotProductEvents) return; scene.__spotProductEvents=true;
-    scene.addEventListener('pointerdown', e => { if (!spotDiffCanPlay) return; scene.setPointerCapture && scene.setPointerCapture(e.pointerId); spotPointerState.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY}); spotPointerState.moved=false; if (spotPointerState.pointers.size===1) spotPointerState.pan={x:e.clientX,y:e.clientY,tx:spotDiffTransform.tx,ty:spotDiffTransform.ty}; if (spotPointerState.pointers.size===2){ const pts=[...spotPointerState.pointers.values()]; spotPointerState.pinch={dist:distanceSpot(pts[0],pts[1]), mid:midSpot(pts[0],pts[1]), scale:spotDiffTransform.scale, tx:spotDiffTransform.tx, ty:spotDiffTransform.ty}; } }, {passive:false});
-    scene.addEventListener('pointermove', e => { if (!spotPointerState.pointers.has(e.pointerId)) return; spotPointerState.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY}); if (spotPointerState.pointers.size===2 && spotPointerState.pinch){ e.preventDefault(); const pts=[...spotPointerState.pointers.values()]; const d=distanceSpot(pts[0],pts[1]); const m=midSpot(pts[0],pts[1]); spotDiffTransform.scale=Math.max(1,Math.min(2.6,spotPointerState.pinch.scale*(d/Math.max(1,spotPointerState.pinch.dist)))); spotDiffTransform.tx=spotPointerState.pinch.tx+(m.x-spotPointerState.pinch.mid.x); spotDiffTransform.ty=spotPointerState.pinch.ty+(m.y-spotPointerState.pinch.mid.y); clampSpotDiffPan(scene); applySpotDiffTransform(); spotPointerState.moved=true; spotPointerState.suppressClick=true; return; } if (spotPointerState.pan && spotDiffTransform.scale>1.02){ const dx=e.clientX-spotPointerState.pan.x; const dy=e.clientY-spotPointerState.pan.y; if (Math.abs(dx)+Math.abs(dy)>5){ e.preventDefault(); spotDiffTransform.tx=spotPointerState.pan.tx+dx; spotDiffTransform.ty=spotPointerState.pan.ty+dy; clampSpotDiffPan(scene); applySpotDiffTransform(); spotPointerState.moved=true; spotPointerState.suppressClick=true; } } }, {passive:false});
-    scene.addEventListener('pointerup', e => { spotPointerState.pointers.delete(e.pointerId); spotPointerState.pan=null; spotPointerState.pinch=null; setTimeout(()=>{ spotPointerState.suppressClick=false; },80); }, {passive:true});
-    scene.addEventListener('pointercancel', e => { spotPointerState.pointers.delete(e.pointerId); spotPointerState.pan=null; spotPointerState.pinch=null; }, {passive:true});
-    scene.addEventListener('click', e => { if (!spotDiffCanPlay || e.target.closest('.spot-diff-hit')) return; if (spotPointerState.suppressClick || spotPointerState.moved) return; const now=Date.now(); if (now-spotPointerState.lastTap<320 && Math.hypot(e.clientX-spotPointerState.lastTapX,e.clientY-spotPointerState.lastTapY)<32){ resetSpotDiffZoom(); spotPointerState.lastTap=0; return; } spotPointerState.lastTap=now; spotPointerState.lastTapX=e.clientX; spotPointerState.lastTapY=e.clientY; handleSpotSceneMiss(e, scene); });
+function resetSpotDiffZoom(showMessage = true) {
+    spotDiffTransform = { scale: 1, tx: 0, ty: 0 };
+    applySpotDiffTransform();
+    if (showMessage) setSpotDiffMessage('Масштаб сброшен');
 }
-function handleSpotSceneMiss(event, scene) { const rect=scene.getBoundingClientRect(); const mark=document.createElement('div'); mark.className='spot-miss'; mark.style.left=`${event.clientX-rect.left}px`; mark.style.top=`${event.clientY-rect.top}px`; scene.appendChild(mark); setTimeout(()=>mark.remove(),450); scene.classList.remove('shake'); void scene.offsetWidth; scene.classList.add('shake'); setSpotDiffMessage('Тут отличия нет. Посмотри внимательнее 🙂','wrong'); playSound('wrong'); }
-(function patchSpotDiffScreenCleanup(){ const originalShowScreenForSpotDiff = showScreen; if (!originalShowScreenForSpotDiff.__spotDiff45CWrapped) { const wrapped = function(screenId, navOptions = {}) { if (screenId !== 'spotDiffScreen') stopSpotDiffTimer(); return originalShowScreenForSpotDiff(screenId, navOptions); }; wrapped.__spotDiff45CWrapped = true; showScreen = wrapped; }})();
+function applySpotDiffTransform() {
+    document.querySelectorAll('#spotDiffScreen .spot-scene-content').forEach(el => { el.style.transform = `translate(${spotDiffTransform.tx}px, ${spotDiffTransform.ty}px) scale(${spotDiffTransform.scale})`; });
+}
+function clampSpotDiffPan(scene) {
+    const rect = scene.getBoundingClientRect();
+    const maxX = rect.width * (spotDiffTransform.scale - 1) / 2;
+    const maxY = rect.height * (spotDiffTransform.scale - 1) / 2;
+    spotDiffTransform.tx = Math.min(maxX, Math.max(-maxX, spotDiffTransform.tx));
+    spotDiffTransform.ty = Math.min(maxY, Math.max(-maxY, spotDiffTransform.ty));
+}
+function distanceSpot(a,b) { return Math.hypot(a.x-b.x, a.y-b.y); }
+function midSpot(a,b) { return { x:(a.x+b.x)/2, y:(a.y+b.y)/2 }; }
+function installSpotDiffSceneEvents(scene) {
+    if (!scene || scene.__spotCriticalEvents) return;
+    scene.__spotCriticalEvents = true;
+    scene.addEventListener('pointerdown', event => {
+        if (!spotDiffCanPlay) return;
+        try { scene.setPointerCapture(event.pointerId); } catch(e) {}
+        spotPointerState.pointers.set(event.pointerId, { x:event.clientX, y:event.clientY });
+        spotPointerState.moved = false;
+        spotPointerState.suppressTap = false;
+        if (spotPointerState.pointers.size === 1) spotPointerState.pan = { x:event.clientX, y:event.clientY, tx:spotDiffTransform.tx, ty:spotDiffTransform.ty };
+        if (spotPointerState.pointers.size === 2) {
+            const pts = Array.from(spotPointerState.pointers.values());
+            spotPointerState.pinch = { dist: distanceSpot(pts[0], pts[1]), scale: spotDiffTransform.scale };
+        }
+    });
+    scene.addEventListener('pointermove', event => {
+        if (!spotDiffCanPlay || !spotPointerState.pointers.has(event.pointerId)) return;
+        const prev = spotPointerState.pointers.get(event.pointerId);
+        if (Math.hypot(event.clientX - prev.x, event.clientY - prev.y) > 5) spotPointerState.moved = true;
+        spotPointerState.pointers.set(event.pointerId, { x:event.clientX, y:event.clientY });
+        if (spotPointerState.pointers.size === 2 && spotPointerState.pinch) {
+            event.preventDefault();
+            spotPointerState.suppressTap = true;
+            const pts = Array.from(spotPointerState.pointers.values());
+            const nextScale = Math.max(1, Math.min(2.5, spotPointerState.pinch.scale * (distanceSpot(pts[0], pts[1]) / Math.max(1, spotPointerState.pinch.dist))));
+            spotDiffTransform.scale = Math.round(nextScale * 100) / 100;
+            clampSpotDiffPan(scene);
+            applySpotDiffTransform();
+        } else if (spotDiffTransform.scale > 1.02 && spotPointerState.pan && spotPointerState.pointers.size === 1) {
+            event.preventDefault();
+            spotPointerState.suppressTap = true;
+            spotDiffTransform.tx = spotPointerState.pan.tx + (event.clientX - spotPointerState.pan.x);
+            spotDiffTransform.ty = spotPointerState.pan.ty + (event.clientY - spotPointerState.pan.y);
+            clampSpotDiffPan(scene);
+            applySpotDiffTransform();
+        }
+    }, { passive:false });
+    function finishPointer(event) {
+        if (!spotPointerState.pointers.has(event.pointerId)) return;
+        const wasGesture = spotPointerState.suppressTap || spotPointerState.pointers.size > 1;
+        spotPointerState.pointers.delete(event.pointerId);
+        if (spotPointerState.pointers.size < 2) spotPointerState.pinch = null;
+        if (spotPointerState.pointers.size === 0) spotPointerState.pan = null;
+        if (wasGesture || spotPointerState.moved) return;
+        const now = Date.now();
+        if (now - spotPointerState.lastTap < 320 && Math.hypot(event.clientX - spotPointerState.lastTapX, event.clientY - spotPointerState.lastTapY) < 24) {
+            resetSpotDiffZoom(true);
+            spotPointerState.lastTap = 0;
+            return;
+        }
+        spotPointerState.lastTap = now;
+        spotPointerState.lastTapX = event.clientX;
+        spotPointerState.lastTapY = event.clientY;
+        const point = getSpotTapPoint(event, scene);
+        const side = scene.dataset.side || 'left';
+        const diff = findSpotDiffAtPoint(point, side);
+        if (diff) markSpotDiffFound(diff); else showSpotMiss(scene, point);
+    }
+    scene.addEventListener('pointerup', finishPointer);
+    scene.addEventListener('pointercancel', event => { spotPointerState.pointers.delete(event.pointerId); spotPointerState.pan = null; spotPointerState.pinch = null; });
+}
+
 
 function setModeAndOpenMap(mode) {
     const requestedMode = normalizeMemoryMode(mode);
@@ -19557,6 +20224,239 @@ body.guide-open #guideFab { pointer-events: none !important; }
     }
 })();
 
+
+
+/* ===== Stage 4.6A: Pet Room Decor MVP — safe small progression ===== */
+(function(){
+    'use strict';
+
+    const DECOR_STORAGE_KEY = 'zooPetRoomDecorUnlocked';
+    const DECOR_ITEMS = [
+        { id: 'plant', icon: '🪴', titleKey: 'petdecor.plant.title', descKey: 'petdecor.plant.desc', price: 60, className: 'decor-plant', visualClass: 'decor-plant-visual' },
+        { id: 'bed', icon: '🛏️', titleKey: 'petdecor.bed.title', descKey: 'petdecor.bed.desc', price: 120, className: 'decor-bed', visualClass: 'decor-bed-visual' },
+        { id: 'toys', icon: '🎾', titleKey: 'petdecor.toys.title', descKey: 'petdecor.toys.desc', price: 90, className: 'decor-toys', visualClass: 'decor-toys-visual' }
+    ];
+
+    function tDecor(key, params){
+        try {
+            if (typeof window.t === 'function') return window.t(key, params || {});
+        } catch(e) {}
+        return key;
+    }
+
+    function storageGet(key, fallback){
+        try {
+            if (window.safeStorage && typeof safeStorage.get === 'function') return safeStorage.get(key, fallback);
+            const value = localStorage.getItem(key);
+            return value === null || value === undefined ? fallback : value;
+        } catch(e) { return fallback; }
+    }
+
+    function storageSet(key, value){
+        try {
+            if (window.safeStorage && typeof safeStorage.set === 'function') safeStorage.set(key, value);
+            else localStorage.setItem(key, value);
+        } catch(e) {}
+    }
+
+    function readDecorState(){
+        const raw = storageGet(DECOR_STORAGE_KEY, '{}');
+        try {
+            const parsed = JSON.parse(raw || '{}');
+            return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+        } catch(e) { return {}; }
+    }
+
+    let petRoomDecorUnlocked = readDecorState();
+    window.petRoomDecorUnlocked = petRoomDecorUnlocked;
+
+    function saveDecorState(){
+        storageSet(DECOR_STORAGE_KEY, JSON.stringify(petRoomDecorUnlocked));
+    }
+
+    function countUnlockedDecor(){
+        return DECOR_ITEMS.filter(item => !!petRoomDecorUnlocked[item.id]).length;
+    }
+
+    function showDecorToast(key, params){
+        const text = tDecor(key, params || {});
+        try {
+            if (typeof showPetRoomToast === 'function') showPetRoomToast(text);
+            else if (typeof showFoodToast === 'function') showFoodToast(text);
+        } catch(e) {}
+    }
+
+    if (typeof window.showCoinShortPopup !== 'function') {
+        window.showCoinShortPopup = function showCoinShortPopup(text){
+            const old = document.querySelector('.coin-short-popup');
+            if (old) old.remove();
+            const popup = document.createElement('div');
+            popup.className = 'coin-short-popup';
+            popup.textContent = text;
+            document.body.appendChild(popup);
+            window.setTimeout(() => { try { popup.remove(); } catch(e) {} }, 2100);
+        };
+    }
+
+    function closePurchaseConfirm(){
+        const overlay = document.getElementById('purchaseConfirmOverlay');
+        if (!overlay) return;
+        overlay.classList.remove('show');
+        overlay.setAttribute('aria-hidden', 'true');
+        try { document.body.classList.remove('zoo-modal-open'); } catch(e) {}
+        window.setTimeout(() => { try { overlay.remove(); } catch(e) {} }, 180);
+    }
+
+    window.closePurchaseConfirm = window.closePurchaseConfirm || closePurchaseConfirm;
+
+    if (typeof window.showPurchaseConfirm !== 'function') {
+        window.showPurchaseConfirm = function showPurchaseConfirm(config){
+            const cfg = config || {};
+            const old = document.getElementById('purchaseConfirmOverlay');
+            if (old) old.remove();
+            const overlay = document.createElement('div');
+            overlay.id = 'purchaseConfirmOverlay';
+            overlay.className = 'purchase-confirm-overlay show';
+            overlay.dataset.zooModalOverlay = 'true';
+            overlay.setAttribute('role', 'dialog');
+            overlay.setAttribute('aria-modal', 'true');
+            overlay.innerHTML = `
+                <div class="purchase-confirm-card">
+                    <button type="button" class="zoo-modal-close" data-action="cancel" aria-label="${tDecor('nav.close')}">×</button>
+                    <div class="purchase-confirm-icon">${cfg.icon || '🪙'}</div>
+                    <div class="purchase-confirm-title">${cfg.title || tDecor('petdecor.confirm.title')}</div>
+                    <div class="purchase-confirm-text">${cfg.text || ''}</div>
+                    <div class="purchase-confirm-price">${cfg.price ? cfg.price + ' 🪙' : ''}</div>
+                    <div class="purchase-confirm-actions">
+                        <button type="button" class="btn btn-light" data-action="cancel">${tDecor('btn.cancel')}</button>
+                        <button type="button" class="btn btn-green" data-action="confirm">${tDecor('btn.confirm')}</button>
+                    </div>
+                </div>`;
+            document.body.appendChild(overlay);
+            document.body.classList.add('zoo-modal-open');
+            try { if (typeof auditModalCloseButtons === 'function') auditModalCloseButtons(); } catch(e) {}
+            overlay.addEventListener('click', function(event){
+                if (event.target === overlay) window.closePurchaseConfirm();
+            });
+            overlay.querySelector('[data-action="cancel"]')?.addEventListener('click', function(event){
+                event.preventDefault();
+                window.closePurchaseConfirm();
+            });
+            overlay.querySelector('[data-action="confirm"]')?.addEventListener('click', function(event){
+                event.preventDefault();
+                window.closePurchaseConfirm();
+                try { if (typeof cfg.onConfirm === 'function') cfg.onConfirm(); } catch(e) { console.error(e); }
+            });
+        };
+    }
+
+    function buyDecorItem(item){
+        if (!item || petRoomDecorUnlocked[item.id]) {
+            showDecorToast('petdecor.already_opened');
+            return;
+        }
+        const currentCoins = Number(window.coins !== undefined ? window.coins : (typeof coins !== 'undefined' ? coins : 0));
+        if (currentCoins < item.price) {
+            const missing = item.price - currentCoins;
+            if (typeof window.showCoinShortPopup === 'function') window.showCoinShortPopup(tDecor('petdecor.no_coins', {coins: missing}));
+            showDecorToast('petdecor.need_more', {coins: missing});
+            try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
+            return;
+        }
+        const title = tDecor('petdecor.confirm.title');
+        const itemName = tDecor(item.titleKey);
+        const text = tDecor('petdecor.confirm.text', {item: itemName, price: item.price});
+        window.showPurchaseConfirm({
+            icon: item.icon,
+            title,
+            text,
+            price: item.price,
+            onConfirm: function(){
+                if (typeof coins !== 'undefined') {
+                    if (coins < item.price) {
+                        const missing = item.price - coins;
+                        if (typeof window.showCoinShortPopup === 'function') window.showCoinShortPopup(tDecor('petdecor.no_coins', {coins: missing}));
+                        return;
+                    }
+                    coins -= item.price;
+                }
+                petRoomDecorUnlocked[item.id] = true;
+                window.petRoomDecorUnlocked = petRoomDecorUnlocked;
+                saveDecorState();
+                try { if (typeof saveProgress === 'function') saveProgress(); } catch(e) {}
+                try { if (typeof updateCoinsViews === 'function') updateCoinsViews(); } catch(e) {}
+                try { if (typeof playSound === 'function') playSound('coin'); } catch(e) {}
+                renderPetRoomDecor();
+                showDecorToast('petdecor.bought', {item: itemName});
+            }
+        });
+    }
+
+    function renderPetRoomDecor(){
+        const hero = document.getElementById('petRoomHero');
+        if (!hero) return;
+        let layer = document.getElementById('petRoomDecorLayer');
+        if (!layer) {
+            layer = document.createElement('div');
+            layer.id = 'petRoomDecorLayer';
+            layer.className = 'pet-room-decor-layer';
+            hero.insertBefore(layer, hero.firstChild);
+        }
+        layer.innerHTML = '';
+        DECOR_ITEMS.forEach(item => {
+            const unlocked = !!petRoomDecorUnlocked[item.id];
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `pet-room-decor-item ${item.className} ${unlocked ? 'unlocked' : 'locked'}`;
+            const itemName = tDecor(item.titleKey);
+            btn.setAttribute('aria-label', unlocked
+                ? tDecor('petdecor.aria_opened', {item: itemName})
+                : tDecor('petdecor.aria_locked', {item: itemName, price: item.price})
+            );
+            btn.innerHTML = `<span class="decor-visual ${item.visualClass}" aria-hidden="true"></span>${unlocked ? '' : '<span class="decor-lock" aria-hidden="true">🔒</span>'}`;
+            btn.addEventListener('click', function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                if (unlocked) {
+                    showDecorToast('petdecor.opened_hint', {item: itemName});
+                    try { if (typeof playSound === 'function') playSound('click'); } catch(e) {}
+                } else {
+                    buyDecorItem(item);
+                }
+            });
+            layer.appendChild(btn);
+        });
+
+        const hint = document.getElementById('petRoomDecorHint');
+        if (hint) {
+            const count = countUnlockedDecor();
+            hint.textContent = tDecor('petdecor.progress', {done: count, total: DECOR_ITEMS.length});
+            hint.classList.add('show');
+        }
+    }
+
+    const originalRenderPetRoom = window.renderPetRoom;
+    if (typeof originalRenderPetRoom === 'function' && !originalRenderPetRoom.__stage46aDecorWrapped) {
+        const wrapped = function(){
+            const result = originalRenderPetRoom.apply(this, arguments);
+            try { renderPetRoomDecor(); } catch(e) { console.warn('pet room decor render failed', e); }
+            return result;
+        };
+        wrapped.__stage46aDecorWrapped = true;
+        window.renderPetRoom = wrapped;
+    }
+
+    window.renderPetRoomDecor = renderPetRoomDecor;
+    window.buyPetRoomDecorItem = buyDecorItem;
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function(){
+            if (document.getElementById('petRoomScreen')?.classList.contains('show')) renderPetRoomDecor();
+        }, { once: true });
+    } else if (document.getElementById('petRoomScreen')?.classList.contains('show')) {
+        renderPetRoomDecor();
+    }
+})();
 </script>
 
 </body>

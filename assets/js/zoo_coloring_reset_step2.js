@@ -1258,3 +1258,154 @@
     }, 80);
   };
 })();
+
+
+// Stage 4.5E — Coloring tap-fill boundary hotfix.
+// The previous 4.4C fit patch drew the original PNG into the hidden boundary canvas.
+// Some PNG pages contain near-white pixels, so the flood-fill treated too much of
+// the picture as a boundary and taps did not color the selected area. This final
+// pass rebuilds outline/boundary canvases as a transparent black-line mask.
+(function(){
+  const maskCache = new Map();
+
+  function coloringImageReady(img){
+    return !!(img && (img.complete || (img.naturalWidth && img.naturalHeight)));
+  }
+
+  function getFitRect(canvasWidth, canvasHeight, imgWidth, imgHeight){
+    const pad = 8;
+    const availW = Math.max(1, canvasWidth - pad * 2);
+    const availH = Math.max(1, canvasHeight - pad * 2);
+    const scale = Math.min(availW / imgWidth, availH / imgHeight);
+    const drawWidth = Math.round(imgWidth * scale);
+    const drawHeight = Math.round(imgHeight * scale);
+    const dx = Math.round((canvasWidth - drawWidth) / 2);
+    const dy = Math.round((canvasHeight - drawHeight) / 2);
+    return { dx, dy, drawWidth, drawHeight };
+  }
+
+  function buildTransparentLineMask(img){
+    const key = (img.currentSrc || img.src || String(img)) + '::stage45e-transparent-line-mask';
+    if (maskCache.has(key)) return maskCache.get(key);
+
+    const w = img.naturalWidth || img.width || 1024;
+    const h = img.naturalHeight || img.height || 1024;
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(img, 0, 0, w, h);
+
+    try {
+      const image = ctx.getImageData(0, 0, w, h);
+      const data = image.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const alpha = data[i + 3];
+        const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        // Keep only real dark contour pixels as boundary. Everything else is
+        // transparent so the fill can color the white areas normally.
+        const line = alpha > 20 && gray < 232;
+        data[i] = 0;
+        data[i + 1] = 0;
+        data[i + 2] = 0;
+        data[i + 3] = line ? 255 : 0;
+      }
+      ctx.putImageData(image, 0, 0);
+    } catch (e) {
+      // If the canvas is tainted, keep the old image fallback rather than
+      // crashing the coloring screen.
+      console.warn('Stage 4.5E coloring mask skipped:', e);
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+    }
+
+    maskCache.set(key, canvas);
+    return canvas;
+  }
+
+  function drawLineMaskFit(ctx, img, options = {}){
+    if (!ctx || !coloringImageReady(img)) return false;
+    const mask = buildTransparentLineMask(img);
+    const cw = ctx.canvas.width;
+    const ch = ctx.canvas.height;
+    const iw = mask.width || img.naturalWidth || img.width || cw;
+    const ih = mask.height || img.naturalHeight || img.height || ch;
+    const r = getFitRect(cw, ch, iw, ih);
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+
+    if (options.boundary) {
+      // Slightly thicken the invisible boundary to avoid color leaking through
+      // tiny anti-aliased gaps in the line-art.
+      const offsets = [[0,0],[-2,0],[2,0],[0,-2],[0,2],[-1,-1],[1,1],[-1,1],[1,-1]];
+      offsets.forEach(([ox, oy]) => ctx.drawImage(mask, r.dx + ox, r.dy + oy, r.drawWidth, r.drawHeight));
+      lockColoringOuterMargins(ctx, r);
+    } else {
+      ctx.drawImage(mask, r.dx, r.dy, r.drawWidth, r.drawHeight);
+    }
+
+    ctx.restore();
+    return true;
+  }
+
+  function lockColoringOuterMargins(ctx, r){
+    const cw = ctx.canvas.width;
+    const ch = ctx.canvas.height;
+    ctx.save();
+    ctx.fillStyle = '#000000';
+    if (r.dy > 0) ctx.fillRect(0, 0, cw, r.dy);
+    if (r.dy + r.drawHeight < ch) ctx.fillRect(0, r.dy + r.drawHeight, cw, ch - (r.dy + r.drawHeight));
+    if (r.dx > 0) ctx.fillRect(0, r.dy, r.dx, r.drawHeight);
+    if (r.dx + r.drawWidth < cw) ctx.fillRect(r.dx + r.drawWidth, r.dy, cw - (r.dx + r.drawWidth), r.drawHeight);
+    ctx.restore();
+  }
+
+  const prevDrawColoringTemplateById = drawColoringTemplateById;
+  drawColoringTemplateById = function(ctx, templateId){
+    const img = coloringLineArtImages && coloringLineArtImages[templateId];
+    const isBoundary = ctx === coloringBoundaryCtx || (ctx && ctx.__coloringBoundary);
+    if (drawLineMaskFit(ctx, img, { boundary: isBoundary })) return;
+    return prevDrawColoringTemplateById(ctx, templateId);
+  };
+
+  const prevRedrawColoringOutline = redrawColoringOutline;
+  redrawColoringOutline = function(){
+    try { prevRedrawColoringOutline(); } catch(e) { console.warn('Stage 4.5E previous redraw failed:', e); }
+    try {
+      const img = coloringLineArtImages && coloringLineArtImages[coloringCurrentTemplateId];
+      const outlineCtx = getColoringOutlineCtx && getColoringOutlineCtx();
+      if (outlineCtx) drawLineMaskFit(outlineCtx, img, { boundary: false });
+      if (coloringBoundaryCtx) drawLineMaskFit(coloringBoundaryCtx, img, { boundary: true });
+      coloringOutlineReady = true;
+    } catch(e) {
+      console.warn('Stage 4.5E coloring redraw fallback:', e);
+    }
+  };
+
+  // A softer boundary test: only dark opaque pixels block fill. This prevents
+  // near-white image pixels from blocking the whole selected region.
+  isBoundaryPixel = function(boundaryData, idx) {
+    const alpha = boundaryData[idx + 3];
+    if (alpha < 20) return false;
+    const brightness = (boundaryData[idx] + boundaryData[idx + 1] + boundaryData[idx + 2]) / 3;
+    return brightness < 235;
+  };
+
+  const previousRenderColoringScreen = renderColoringScreen;
+  renderColoringScreen = function(){
+    previousRenderColoringScreen();
+    setTimeout(() => {
+      try { redrawColoringOutline(); } catch(e) {}
+    }, 120);
+  };
+
+  const previousSelectColoringTemplate = selectColoringTemplate;
+  selectColoringTemplate = function(id){
+    previousSelectColoringTemplate(id);
+    setTimeout(() => {
+      try { redrawColoringOutline(); } catch(e) {}
+    }, 120);
+  };
+})();
