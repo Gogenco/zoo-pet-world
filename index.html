@@ -9927,6 +9927,351 @@ body.low-performance .purchase-confirm-overlay {
     filter: drop-shadow(0 5px 8px rgba(15,23,42,.15));
 }
 
+
+/* ===== Stage 4.8B — Find Differences level rail previews ===== */
+#spotDiffScreen .spot-diff-level-rail {
+    justify-content: flex-start !important;
+    gap: 14px !important;
+    overflow-x: auto !important;
+    padding: 16px 14px 10px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    scroll-padding-left: 14px !important;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+}
+
+#spotDiffScreen .spot-diff-level-rail::before,
+#spotDiffScreen .spot-diff-level-rail::after {
+    content: none !important;
+    display: none !important;
+}
+
+#spotDiffScreen .spot-level-btn.spot-level-preview-btn {
+    flex: 0 0 132px !important;
+    min-width: 132px !important;
+    width: 132px !important;
+    min-height: 134px !important;
+    padding: 8px 8px 10px !important;
+    border-radius: 24px !important;
+    scroll-snap-align: start;
+    display: grid;
+    grid-template-rows: 76px auto auto;
+    align-items: center;
+    justify-items: center;
+}
+
+#spotDiffScreen .spot-level-preview-wrap {
+    position: relative;
+    width: 112px;
+    height: 76px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #ffffff, #eef2ff);
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,.95), 0 7px 12px rgba(15,23,42,.10);
+}
+
+#spotDiffScreen .spot-level-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+}
+
+#spotDiffScreen .spot-level-preview-fallback {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 34px;
+}
+
+#spotDiffScreen .spot-level-lock-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(241,245,249,.62);
+    color: #475569;
+    font-size: 25px;
+    backdrop-filter: blur(1px);
+}
+
+#spotDiffScreen .spot-level-preview-title {
+    margin-top: 5px;
+    font-size: 17px;
+    line-height: 1;
+    font-weight: 1000;
+}
+
+#spotDiffScreen .spot-level-btn.spot-level-preview-btn small {
+    font-size: 12px !important;
+    margin-top: 4px !important;
+}
+
+#spotDiffScreen .spot-level-btn.spot-level-preview-btn.active {
+    outline: 4px solid rgba(34,197,94,.35);
+    outline-offset: 2px;
+}
+
+#spotDiffScreen .spot-level-btn.spot-level-preview-btn.locked .spot-level-preview-img {
+    filter: grayscale(.25) brightness(.94);
+}
+
+
+/* ===== Stage 4.8C — First launch intro guide carousel ===== */
+.intro-guide-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    background: rgba(15, 23, 42, .48);
+    backdrop-filter: blur(5px);
+}
+
+.intro-guide-overlay.show {
+    display: flex !important;
+}
+
+.intro-guide-card {
+    position: relative;
+    width: min(960px, 96vw);
+    max-height: min(92vh, 860px);
+    overflow: hidden;
+    border-radius: 38px;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,.82), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, #fff7ed 52%, #ecfeff 100%);
+    box-shadow: 0 22px 70px rgba(15,23,42,.30), 0 9px 0 rgba(124,58,237,.14);
+    border: 3px solid rgba(255,255,255,.92);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
+}
+
+.intro-guide-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    width: 56px;
+    height: 56px;
+    border: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #4c1d95;
+    font-size: 34px;
+    font-weight: 1000;
+    box-shadow: 0 8px 0 rgba(124,58,237,.16), 0 12px 24px rgba(15,23,42,.12);
+}
+
+.intro-guide-image-wrap {
+    min-height: 0;
+    padding: 20px 20px 0;
+    display: grid;
+    place-items: center;
+}
+
+.intro-guide-image {
+    width: 100%;
+    max-height: min(54vh, 520px);
+    object-fit: contain;
+    border-radius: 28px;
+    box-shadow: 0 12px 26px rgba(15,23,42,.12);
+    background: #fff;
+}
+
+.intro-guide-content {
+    text-align: center;
+    padding: 14px 30px 6px;
+}
+
+.intro-guide-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 6px 18px;
+    border-radius: 999px;
+    color: #166534;
+    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
+    font-size: 15px;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(34,197,94,.14);
+}
+
+.intro-guide-content h2 {
+    margin: 12px 0 6px;
+    color: #4c1d95;
+    font-size: clamp(30px, 5vw, 54px);
+    line-height: 1;
+    font-weight: 1000;
+    text-shadow: 0 4px 0 rgba(124,58,237,.10);
+}
+
+.intro-guide-content p {
+    margin: 0 auto;
+    max-width: 760px;
+    color: #4b3a2a;
+    font-size: clamp(16px, 2vw, 23px);
+    font-weight: 900;
+    line-height: 1.25;
+}
+
+.intro-guide-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0 8px;
+}
+
+.intro-guide-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: #ddd6fe;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.8);
+}
+
+.intro-guide-dot.active {
+    width: 34px;
+    background: linear-gradient(135deg, #8b5cf6, #22c55e);
+}
+
+.intro-guide-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 10px 26px 24px;
+}
+
+.intro-guide-btn {
+    border: 0;
+    min-height: 64px;
+    border-radius: 24px;
+    color: #ffffff;
+    font-size: clamp(19px, 2.2vw, 27px);
+    font-weight: 1000;
+    cursor: pointer;
+    box-shadow: 0 8px 0 rgba(15,23,42,.18);
+}
+
+.intro-guide-btn.primary {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.intro-guide-btn.secondary {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.intro-guide-btn:disabled {
+    opacity: .45;
+    cursor: default;
+    filter: grayscale(.2);
+}
+
+@media (max-width: 720px) {
+    .intro-guide-card {
+        border-radius: 30px;
+        width: min(96vw, 520px);
+    }
+    .intro-guide-image-wrap {
+        padding: 16px 14px 0;
+    }
+    .intro-guide-image {
+        max-height: 46vh;
+        border-radius: 22px;
+    }
+    .intro-guide-content {
+        padding: 12px 18px 4px;
+    }
+    .intro-guide-actions {
+        padding: 8px 16px 18px;
+        gap: 10px;
+    }
+    .intro-guide-btn {
+        min-height: 56px;
+        border-radius: 20px;
+    }
+    .intro-guide-close {
+        width: 48px;
+        height: 48px;
+        font-size: 30px;
+    }
+}
+
+
+/* ===== Stage 4.8D — Replace internal shortcut emoji icons everywhere ===== */
+.pet-room-mini-games .mini-games-title,
+.mini-game-cross-links .mini-games-title {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 9px;
+}
+
+.mini-title-icon {
+    width: 34px;
+    height: 34px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff, #fff7ed);
+    box-shadow: 0 5px 9px rgba(76,29,149,.12);
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+.mini-title-icon-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
+}
+
+.pet-room-mini-card .mini-icon,
+.mini-game-cross-card .mini-icon {
+    display: grid !important;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 7px !important;
+    border-radius: 17px;
+    background: linear-gradient(180deg, #ffffff, #fff7ed);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.92), 0 6px 10px rgba(76,29,149,.12);
+    overflow: hidden;
+    font-size: 0 !important;
+}
+
+.mini-game-cross-card .mini-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 15px;
+    margin-bottom: 5px !important;
+}
+
+.mini-card-icon-img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 4px 6px rgba(15,23,42,.13));
+}
+
+.mini-game-cross-card .mini-card-icon-img {
+    width: 40px;
+    height: 40px;
+}
+
+.pet-room-mini-card {
+    min-height: 118px !important;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -9980,6 +10325,30 @@ body.low-performance .purchase-confirm-overlay {
         <div class="subtitle">Загружаем питомца и 50 уровней зоопарка...</div>
         <div class="loader-bar"><div class="loader-fill"></div></div>
         <button class="btn btn-green" style="margin-top:16px;width:100%;" onclick="forceOpenMenu()">Открыть игру</button>
+    </div>
+</div>
+
+
+<div id="introGuideOverlay" class="intro-guide-overlay" style="display:none;" aria-hidden="true">
+    <div class="intro-guide-card" role="dialog" aria-modal="true" aria-label="Добро пожаловать в Zoo Pet World">
+        <button type="button" class="intro-guide-close" onclick="finishIntroGuide()" aria-label="Закрыть">×</button>
+
+        <div class="intro-guide-image-wrap">
+            <img id="introGuideImage" class="intro-guide-image" src="assets/intro_guide/intro_full.png" alt="Zoo Pet World intro"/>
+        </div>
+
+        <div class="intro-guide-content">
+            <div id="introGuideKicker" class="intro-guide-kicker">Добро пожаловать</div>
+            <h2 id="introGuideTitle">Zoo Pet World</h2>
+            <p id="introGuideText">Весёлый зоопарк, мини-игры, питомцы и награды в одном месте.</p>
+        </div>
+
+        <div id="introGuideDots" class="intro-guide-dots"></div>
+
+        <div class="intro-guide-actions">
+            <button type="button" id="introGuideBack" class="intro-guide-btn secondary" onclick="prevIntroGuideSlide()">Назад</button>
+            <button type="button" id="introGuideNext" class="intro-guide-btn primary" onclick="nextIntroGuideSlide()">Вперёд</button>
+        </div>
     </div>
 </div>
 
@@ -10256,12 +10625,12 @@ body.low-performance .purchase-confirm-overlay {
         </div>
 
         <div class="pet-room-mini-games">
-            <div class="mini-games-title">🎮 Поиграй в другую игру</div>
-            <button class="pet-room-mini-card" onclick="setModeAndOpenMap('calm')"><span class="mini-icon">🃏</span>Найди пары<small>уже работает</small></button>
-            <button class="pet-room-mini-card" onclick="openPuzzle()"><span class="mini-icon">🧩</span>Пазл<small>уже работает</small></button>
-            <button class="pet-room-mini-card" onclick="openZooBlock()"><span class="mini-icon">🧱</span>Zoo Block<small>уже работает</small></button>
-            <button class="pet-room-mini-card" onclick="openColoring()"><span class="mini-icon">🖍️</span>Раскраска<small>новая мини‑игра</small></button>
-            <button class="pet-room-mini-card" onclick="openShadowGame()"><span class="mini-icon">👤</span>Найди животное<small>тени зверьков</small></button>
+            <div class="mini-games-title"><span class="mini-title-icon"><img class="mini-title-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></span>Поиграй в другую игру</div>
+            <button class="pet-room-mini-card" onclick="setModeAndOpenMap('calm')"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></span>Найди пары<small>уже работает</small></button>
+            <button class="pet-room-mini-card" onclick="openPuzzle()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/puzzle.png" alt="" aria-hidden="true"/></span>Пазл<small>уже работает</small></button>
+            <button class="pet-room-mini-card" onclick="openZooBlock()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/zoo_block.png" alt="" aria-hidden="true"/></span>Zoo Block<small>уже работает</small></button>
+            <button class="pet-room-mini-card" onclick="openColoring()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/coloring.png" alt="" aria-hidden="true"/></span>Раскраска<small>новая мини‑игра</small></button>
+            <button class="pet-room-mini-card" onclick="openShadowGame()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/find_animal.png" alt="" aria-hidden="true"/></span>Найди животное<small>тени зверьков</small></button>
         </div>
 
         <div class="screen-footer-nav">
@@ -12460,6 +12829,135 @@ window.resetGuideSeen = resetGuideSeen;
 
 
 let __menuOpenInProgress = false;
+
+/* ===== Stage 4.8C — First launch intro guide carousel logic ===== */
+const INTRO_GUIDE_STORAGE_KEY = 'zooIntroGuideSeen_v1';
+let introGuideIndex = 0;
+
+const introGuideSlides = [
+    {
+        image: 'assets/intro_guide/intro_full.png',
+        kicker: 'Добро пожаловать',
+        title: 'Zoo Pet World',
+        text: 'Весёлый зоопарк, мини-игры, питомцы и награды в одном месте.'
+    },
+    {
+        image: 'assets/intro_guide/my_zoo.png',
+        kicker: 'Мой зоопарк',
+        title: 'Питомцы и коллекция',
+        text: 'Выбирай питомца, открывай новых животных, смотри альбом и меняй скины карточек.'
+    },
+    {
+        image: 'assets/intro_guide/mini_games.png',
+        kicker: 'Мини-игры',
+        title: 'Играй и развивайся',
+        text: 'Найди пары, отличия, животное по тени, собирай пазлы, играй в Zoo Block и раскрашивай картинки.'
+    },
+    {
+        image: 'assets/intro_guide/profile.png',
+        kicker: 'Профиль',
+        title: 'Задания и музыка',
+        text: 'Выполняй задания, получай монеты, включай музыку и настрой игру под себя.'
+    },
+    {
+        image: 'assets/intro_guide/how_to_play.png',
+        kicker: 'Как играть',
+        title: 'Готов начать?',
+        text: 'Выбирай питомца, играй в мини-игры, собирай карточки и открывай новые награды.'
+    }
+];
+
+function isIntroGuideSeen() {
+    try { return safeStorage.get(INTRO_GUIDE_STORAGE_KEY, '0') === '1'; }
+    catch(e) { return localStorage.getItem(INTRO_GUIDE_STORAGE_KEY) === '1'; }
+}
+
+function markIntroGuideSeen() {
+    try { safeStorage.set(INTRO_GUIDE_STORAGE_KEY, '1'); }
+    catch(e) { localStorage.setItem(INTRO_GUIDE_STORAGE_KEY, '1'); }
+}
+
+function renderIntroGuideSlide() {
+    const overlayEl = document.getElementById('introGuideOverlay');
+    const imageEl = document.getElementById('introGuideImage');
+    const kickerEl = document.getElementById('introGuideKicker');
+    const titleEl = document.getElementById('introGuideTitle');
+    const textEl = document.getElementById('introGuideText');
+    const dotsEl = document.getElementById('introGuideDots');
+    const backBtn = document.getElementById('introGuideBack');
+    const nextBtn = document.getElementById('introGuideNext');
+
+    if (!overlayEl || !imageEl || !kickerEl || !titleEl || !textEl || !dotsEl || !backBtn || !nextBtn) return;
+
+    introGuideIndex = Math.max(0, Math.min(introGuideIndex, introGuideSlides.length - 1));
+    const slide = introGuideSlides[introGuideIndex];
+
+    imageEl.src = slide.image;
+    kickerEl.textContent = slide.kicker;
+    titleEl.textContent = slide.title;
+    textEl.textContent = slide.text;
+
+    dotsEl.innerHTML = introGuideSlides.map((_, index) =>
+        `<span class="intro-guide-dot${index === introGuideIndex ? ' active' : ''}"></span>`
+    ).join('');
+
+    backBtn.disabled = introGuideIndex === 0;
+    nextBtn.textContent = introGuideIndex === introGuideSlides.length - 1 ? 'Играть' : 'Вперёд';
+}
+
+function showIntroGuide(force = false) {
+    const overlayEl = document.getElementById('introGuideOverlay');
+    if (!overlayEl) return;
+    if (!force && isIntroGuideSeen()) return;
+
+    introGuideIndex = 0;
+    renderIntroGuideSlide();
+    overlayEl.style.display = 'flex';
+    overlayEl.setAttribute('aria-hidden', 'false');
+    overlayEl.classList.add('show');
+    document.body.classList.add('zoo-modal-open');
+}
+
+function finishIntroGuide() {
+    const overlayEl = document.getElementById('introGuideOverlay');
+    markIntroGuideSeen();
+    if (overlayEl) {
+        overlayEl.classList.remove('show');
+        overlayEl.style.display = 'none';
+        overlayEl.setAttribute('aria-hidden', 'true');
+    }
+    document.body.classList.remove('zoo-modal-open');
+    try { playSound('click'); } catch(e) {}
+}
+
+function nextIntroGuideSlide() {
+    if (introGuideIndex >= introGuideSlides.length - 1) {
+        finishIntroGuide();
+        return;
+    }
+    introGuideIndex += 1;
+    renderIntroGuideSlide();
+    try { playSound('click'); } catch(e) {}
+}
+
+function prevIntroGuideSlide() {
+    if (introGuideIndex <= 0) return;
+    introGuideIndex -= 1;
+    renderIntroGuideSlide();
+    try { playSound('click'); } catch(e) {}
+}
+
+function maybeShowIntroGuideAfterMenu() {
+    if (isIntroGuideSeen()) return;
+    setTimeout(() => showIntroGuide(false), 450);
+}
+
+window.showIntroGuide = showIntroGuide;
+window.finishIntroGuide = finishIntroGuide;
+window.nextIntroGuideSlide = nextIntroGuideSlide;
+window.prevIntroGuideSlide = prevIntroGuideSlide;
+
+
 function forceOpenMenu() {
     if (__menuOpenInProgress) return;
     __menuOpenInProgress = true;
@@ -12473,6 +12971,7 @@ function forceOpenMenu() {
     } catch(e) {}
     try { loadingScreen.style.display = "none"; } catch(e) {}
     try { showScreen("menuScreen", { skipHistory: true, clearHistory: true }); } catch(e) {}
+    try { maybeShowIntroGuideAfterMenu(); } catch(e) {}
     try { translatePageToEnglish(); } catch(e) {}
     try { applyI18nPlaceholders(); } catch(e) {}
     try { installTranslationObserver(); } catch(e) {}
@@ -12931,18 +13430,53 @@ function setSpotDiffMessage(text, type = '') {
     spotDiffMessage.classList.remove('success', 'wrong');
     if (type) spotDiffMessage.classList.add(type);
 }
+function getSpotDiffLevelPreviewSrc(level) {
+    const raw = String(level && level.leftSvg ? level.leftSvg : '');
+    const match = raw.match(/<image[^>]+href="([^"]+)"/i);
+    return match ? match[1] : '';
+}
+
 function renderSpotDiffLevelRail() {
     if (!spotDiffLevelRail) return;
+    const previousScrollLeft = spotDiffLevelRail.scrollLeft || 0;
     spotDiffLevelRail.innerHTML = '';
+
     spotDiffLevels.forEach((level, index) => {
         const unlocked = isSpotDiffLevelUnlocked(index);
         const done = isSpotDiffLevelCompleted(index);
+        const previewSrc = getSpotDiffLevelPreviewSrc(level);
+
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'spot-level-btn' + (index === spotDiffCurrentLevel ? ' active' : '') + (done ? ' done' : '') + (!unlocked ? ' locked' : '');
-        btn.innerHTML = `${unlocked ? level.emoji : '🔒'} ${index + 1}<small>${done ? 'готово' : unlocked ? `этап ${level.difficulty}` : `${level.unlockPrice} 🪙`}</small>`;
+        btn.className = 'spot-level-btn spot-level-preview-btn' + (index === spotDiffCurrentLevel ? ' active' : '') + (done ? ' done' : '') + (!unlocked ? ' locked' : '');
+
+        btn.innerHTML = `
+            <span class="spot-level-preview-wrap">
+                ${previewSrc ? `<img class="spot-level-preview-img" src="${previewSrc}" alt="" loading="lazy"/>` : `<span class="spot-level-preview-fallback">${level.emoji || '🔎'}</span>`}
+                ${!unlocked ? '<span class="spot-level-lock-overlay">🔒</span>' : ''}
+            </span>
+            <span class="spot-level-preview-title">${unlocked ? level.emoji : '🔒'} ${index + 1}</span>
+            <small>${done ? 'готово' : unlocked ? `этап ${level.difficulty}` : `${level.unlockPrice} 🪙`}</small>
+        `;
+
         btn.onclick = () => unlocked ? selectSpotDiffLevel(index) : buySpotDiffLevel(index);
         spotDiffLevelRail.appendChild(btn);
+    });
+
+    requestAnimationFrame(() => {
+        if (!spotDiffLevelRail) return;
+        if (spotDiffCurrentLevel <= 0) {
+            spotDiffLevelRail.scrollLeft = 0;
+            return;
+        }
+
+        const active = spotDiffLevelRail.querySelector('.spot-level-btn.active');
+        if (active && typeof active.scrollIntoView === 'function') {
+            active.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
+            if (spotDiffLevelRail.scrollLeft < 12) spotDiffLevelRail.scrollLeft = 0;
+        } else {
+            spotDiffLevelRail.scrollLeft = previousScrollLeft;
+        }
     });
 }
 function selectSpotDiffLevel(index) {
@@ -20187,17 +20721,18 @@ body.guide-open #guideFab { pointer-events: none !important; }
         const btn = document.getElementById('petRoomVoiceBtn');
         if (btn && btn.textContent !== dict().voice) btn.textContent = dict().voice;
         const title = document.querySelector('.pet-room-mini-games .mini-games-title');
-        const titleText = '🎮 ' + dict().playOther;
-        if (title && title.textContent !== titleText) title.textContent = titleText;
+        if (title && !title.querySelector('.mini-title-icon-img')) {
+            title.innerHTML = '<span class="mini-title-icon"><img class="mini-title-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></span>' + dict().playOther;
+        }
     }
     function miniGameLinksHtml(){
         const d = dict();
         return `<div class="mini-game-cross-links">
-            <div class="mini-games-title">🎮 ${d.playOther}</div>
-            <button type="button" class="mini-game-cross-card" onclick="setModeAndOpenMap('calm')"><span class="mini-icon">🃏</span>${currentLang()==='en'?'Pairs':currentLang()==='hy'?'Զույգեր':'Найди пары'}</button>
-            <button type="button" class="mini-game-cross-card" onclick="openPuzzle()"><span class="mini-icon">🧩</span>${currentLang()==='en'?'Puzzle':currentLang()==='hy'?'Փազլ':'Пазл'}</button>
-            <button type="button" class="mini-game-cross-card" onclick="openZooBlock()"><span class="mini-icon">🧱</span>Zoo Block</button>
-            <button type="button" class="mini-game-cross-card" onclick="openShadowGame()"><span class="mini-icon">🦁</span>${currentLang()==='en'?'Find animal':currentLang()==='hy'?'Գտիր կենդանուն':'Найди животное'}</button>
+            <div class="mini-games-title"><span class="mini-title-icon"><img class="mini-title-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></span>${d.playOther}</div>
+            <button type="button" class="mini-game-cross-card" onclick="setModeAndOpenMap('calm')"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/memory.png" alt="" aria-hidden="true"/></span>${currentLang()==='en'?'Pairs':currentLang()==='hy'?'Զույգեր':'Найди пары'}</button>
+            <button type="button" class="mini-game-cross-card" onclick="openPuzzle()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/puzzle.png" alt="" aria-hidden="true"/></span>${currentLang()==='en'?'Puzzle':currentLang()==='hy'?'Փազլ':'Пազլ'}</button>
+            <button type="button" class="mini-game-cross-card" onclick="openZooBlock()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/zoo_block.png" alt="" aria-hidden="true"/></span>Zoo Block</button>
+            <button type="button" class="mini-game-cross-card" onclick="openShadowGame()"><span class="mini-icon"><img class="mini-card-icon-img" src="assets/menu_icons/find_animal.png" alt="" aria-hidden="true"/></span>${currentLang()==='en'?'Find animal':currentLang()==='hy'?'Գտիր կենդանուն':'Найди животное'}</button>
         </div>`;
     }
     function getNextUnlockedPuzzleImage(){
