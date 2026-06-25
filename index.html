@@ -10542,6 +10542,292 @@ body.guide-open {
     .stage49-lock-badge { border-width: 3px; }
 }
 
+
+/* ===== Stage 4.9B — Room UI popup polish + clean unlocked slots ===== */
+.stage49-room-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 15000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    background: rgba(15,23,42,.54);
+    backdrop-filter: blur(4px);
+}
+
+.stage49-room-modal-card {
+    width: min(92vw, 520px);
+    border-radius: 34px;
+    padding: 18px 16px 16px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff, #f8fafc 52%, #ecfeff);
+    border: 4px solid rgba(255,255,255,.95);
+    box-shadow: 0 22px 60px rgba(15,23,42,.32), 0 9px 0 rgba(124,58,237,.16);
+    position: relative;
+}
+
+.stage49-room-modal-close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 14px;
+    background: #1f2937;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(15,23,42,.28);
+}
+
+.stage49-room-modal-icon {
+    width: 82px;
+    height: 82px;
+    margin: 6px auto 8px;
+    display: grid;
+    place-items: center;
+    border-radius: 24px;
+    font-size: 44px;
+    background: linear-gradient(135deg, #dbeafe, #bbf7d0);
+    box-shadow: 0 8px 0 rgba(124,58,237,.14);
+}
+
+.stage49-room-modal-title {
+    margin: 4px auto 8px;
+    color: #4c1d95;
+    font-size: clamp(30px, 6vw, 48px);
+    font-weight: 1000;
+    line-height: .96;
+    text-shadow: 0 4px 0 rgba(124,58,237,.10);
+}
+
+.stage49-room-modal-subtitle {
+    margin: 0 auto 12px;
+    max-width: 430px;
+    color: #334155;
+    font-size: clamp(17px, 3.5vw, 23px);
+    font-weight: 950;
+    line-height: 1.18;
+}
+
+.stage49-room-modal-resource-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px auto 14px;
+}
+
+.stage49-room-resource-pill {
+    min-height: 58px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    padding: 8px 10px;
+    color: #111827;
+    background: linear-gradient(180deg, #f8fafc, #dbeafe);
+    border: 3px solid #111827;
+    font-size: clamp(19px, 4vw, 28px);
+    font-weight: 1000;
+    box-shadow: 0 6px 0 rgba(15,23,42,.18);
+}
+
+.stage49-room-resource-pill.old-price {
+    opacity: .62;
+    text-decoration: line-through;
+}
+
+.stage49-room-resource-pill.best-price {
+    background: linear-gradient(180deg, #dcfce7, #86efac);
+    color: #14532d;
+    border-color: #22c55e;
+}
+
+.stage49-room-modal-actions {
+    display: grid;
+    gap: 10px;
+}
+
+.stage49-room-modal-actions.two {
+    grid-template-columns: 1fr 1fr;
+}
+
+.stage49-room-btn {
+    border: 0;
+    min-height: 62px;
+    border-radius: 18px;
+    font-size: clamp(18px, 4.5vw, 26px);
+    font-weight: 1000;
+    color: #fff;
+    box-shadow: 0 7px 0 rgba(15,23,42,.22);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.stage49-room-btn.green {
+    background: linear-gradient(180deg, #22c55e, #16a34a);
+}
+
+.stage49-room-btn.purple {
+    background: linear-gradient(180deg, #a855f7, #7c3aed);
+    position: relative;
+    overflow: visible;
+}
+
+.stage49-room-btn.purple::before {
+    content: "🎬";
+    margin-right: 8px;
+}
+
+.stage49-room-btn.light {
+    background: linear-gradient(180deg, #fff7ed, #fef3c7);
+    color: #4c1d95;
+}
+
+.stage49-room-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 4px 0 rgba(15,23,42,.22);
+}
+
+.stage49-room-ad-badge {
+    display: inline-grid;
+    place-items: center;
+    min-height: 34px;
+    margin: 4px auto 12px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: #111827;
+    color: #fff;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(15,23,42,.25);
+}
+
+.stage49-slot.unlocked {
+    display: none !important;
+}
+
+.stage49-slot.ready-pop .stage49-slot-box {
+    animation: stage49ReadyPulse 900ms ease-out 1;
+}
+
+@keyframes stage49ReadyPulse {
+    0% { transform: scale(.72); opacity: .2; }
+    55% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Mobile room clean-up */
+@media (max-width: 620px) {
+    .pet-room-hero.stage49-room-scene {
+        min-height: 520px !important;
+        background-size: cover !important;
+        background-position: center top !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-bars {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        transform: scale(.78);
+        transform-origin: top center;
+        z-index: 14;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-speech {
+        position: absolute;
+        top: 132px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(88%, 360px);
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.12;
+        z-index: 15;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-stage {
+        top: auto !important;
+        bottom: 24px !important;
+        width: 220px !important;
+        height: 190px !important;
+        z-index: 9;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 148px !important;
+        height: 148px !important;
+        bottom: 12px !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-voice-btn {
+        right: 10px;
+        bottom: 10px;
+        min-height: 42px;
+        padding: 8px 12px;
+        font-size: 0;
+        z-index: 18;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-voice-btn::after {
+        content: "🔊";
+        font-size: 22px;
+    }
+
+    .stage49-lock-badge {
+        width: 46px;
+        height: 46px;
+        font-size: 24px;
+    }
+
+    .stage49-price {
+        min-width: 54px;
+        min-height: 23px;
+        font-size: 11px;
+        bottom: -8px;
+        padding: 3px 8px;
+    }
+
+    .stage49-building-badge {
+        padding: 5px 7px;
+        border-radius: 14px;
+    }
+
+    .stage49-building-badge b {
+        font-size: 18px;
+    }
+
+    .stage49-building-badge small {
+        font-size: 10px;
+    }
+
+    .stage49-room-modal-card {
+        width: min(94vw, 390px);
+        padding: 16px 12px 14px;
+        border-radius: 28px;
+    }
+
+    .stage49-room-modal-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 38px;
+    }
+
+    .stage49-room-modal-resource-row {
+        gap: 8px;
+    }
+
+    .stage49-room-modal-actions.two {
+        grid-template-columns: 1fr;
+    }
+
+    .stage49-room-btn {
+        min-height: 56px;
+        border-radius: 16px;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -21211,6 +21497,66 @@ body.guide-open #guideFab { pointer-events: none !important; }
         } catch(e) {}
     }
 
+    function closeStage49RoomModal(){
+        const old = document.getElementById('stage49RoomModalOverlay');
+        if (old) old.remove();
+        try { document.body.classList.remove('zoo-modal-open'); } catch(e) {}
+    }
+
+    function showStage49RoomModal(config){
+        const cfg = config || {};
+        closeStage49RoomModal();
+        const overlay = document.createElement('div');
+        overlay.id = 'stage49RoomModalOverlay';
+        overlay.className = 'stage49-room-modal-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+
+        const resource = Array.isArray(cfg.resources) && cfg.resources.length
+            ? `<div class="stage49-room-modal-resource-row">${cfg.resources.map(item => `<div class="stage49-room-resource-pill ${item.className || ''}">${item.text}</div>`).join('')}</div>`
+            : '';
+
+        const adBadge = cfg.adBadge ? `<div class="stage49-room-ad-badge">${cfg.adBadge}</div>` : '';
+        const actionsClass = cfg.actions && cfg.actions.length === 2 ? 'two' : '';
+
+        overlay.innerHTML = `
+            <div class="stage49-room-modal-card">
+                <button type="button" class="stage49-room-modal-close" data-role="close">×</button>
+                <div class="stage49-room-modal-icon">${cfg.icon || '🔒'}</div>
+                <div class="stage49-room-modal-title">${cfg.title || ''}</div>
+                <div class="stage49-room-modal-subtitle">${cfg.subtitle || ''}</div>
+                ${resource}
+                ${adBadge}
+                <div class="stage49-room-modal-actions ${actionsClass}">
+                    ${(cfg.actions || []).map((action, index) => `<button type="button" class="stage49-room-btn ${action.className || 'green'}" data-action-index="${index}">${action.text}</button>`).join('')}
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.classList.add('zoo-modal-open');
+        overlay.querySelector('[data-role="close"]')?.addEventListener('click', function(){
+            closeStage49RoomModal();
+            try { cfg.onClose && cfg.onClose(); } catch(e) {}
+        });
+        overlay.addEventListener('click', function(event){
+            if (event.target === overlay) {
+                closeStage49RoomModal();
+                try { cfg.onClose && cfg.onClose(); } catch(e) {}
+            }
+        });
+        overlay.querySelectorAll('[data-action-index]').forEach(btn => {
+            btn.addEventListener('click', function(event){
+                event.preventDefault();
+                const action = (cfg.actions || [])[Number(btn.dataset.actionIndex)];
+                closeStage49RoomModal();
+                try { action && action.onClick && action.onClick(); } catch(e) { console.error(e); }
+            });
+        });
+        return overlay;
+    }
+
+
     if (typeof window.showCoinShortPopup !== 'function') {
         window.showCoinShortPopup = function showCoinShortPopup(text){
             const old = document.querySelector('.coin-short-popup');
@@ -21274,32 +21620,17 @@ body.guide-open #guideFab { pointer-events: none !important; }
     };
 
     function showRoomChoicePopup(cfg){
-        const overlay = window.showPurchaseConfirm({
-            icon: cfg.icon || '🔒',
+        return showStage49RoomModal({
+            icon: cfg.icon || '🎬',
             title: cfg.title || '',
-            text: `${cfg.text || ''}<div class="stage49-discount-note">${cfg.note || ''}</div>`,
-            price: cfg.price || 0,
-            confirmText: cfg.primaryText || 'Купить',
-            cancelText: 'Отмена',
-            onConfirm: cfg.onPrimary
+            subtitle: cfg.subtitle || cfg.text || '',
+            resources: cfg.resources || [],
+            adBadge: cfg.adBadge || '',
+            actions: cfg.actions || [],
+            onClose: cfg.onClose
         });
-        const actions = overlay && overlay.querySelector('.purchase-confirm-actions');
-        if (actions && cfg.secondaryText) {
-            const secondary = document.createElement('button');
-            secondary.type = 'button';
-            secondary.className = 'btn btn-purple';
-            secondary.textContent = cfg.secondaryText;
-            secondary.addEventListener('click', function(event){
-                event.preventDefault();
-                window.closePurchaseConfirm();
-                try { cfg.onSecondary && cfg.onSecondary(); } catch(e) { console.error(e); }
-            });
-            actions.insertBefore(secondary, actions.firstChild);
-            actions.style.gridTemplateColumns = '1fr';
-            actions.classList.add('stage49-choice-actions');
-        }
-        return overlay;
     }
+
 
     function getRoomIdForAnimal(key){
         return ANIMAL_TO_ROOM[key] || '01_lion';
@@ -21441,44 +21772,56 @@ body.guide-open #guideFab { pointer-events: none !important; }
             openSlotSpeedup(room, slot);
             return;
         }
+
         const name = getSlotLabel(slot);
         const price = Number(slot.price || 100);
-        window.showPurchaseConfirm({
+
+        showStage49RoomModal({
             icon: '🔒',
-            title: tDecorText('buyTitle'),
-            text: tDecorText('buyText', {item: name, price}),
-            price,
-            confirmText: 'Купить',
-            onConfirm: function(){
-                openSlotDiscountOffer(room, slot, price);
-            }
+            title: 'Открыть?',
+            subtitle: name,
+            resources: [
+                { text: `🪙 ${price}` },
+                { text: `у тебя ${currentCoins()}` }
+            ],
+            actions: [
+                { text: 'Отмена', className: 'light', onClick: function(){} },
+                { text: 'Купить', className: 'green', onClick: function(){ openSlotDiscountOffer(room, slot, price); } }
+            ]
         });
     }
 
+
     function openSlotDiscountOffer(room, slot, price){
         const discounted = Math.max(1, Math.ceil(price * 0.5));
-        showRoomChoicePopup({
+
+        showStage49RoomModal({
             icon: '🎬',
-            title: tDecorText('discountTitle'),
-            text: tDecorText('discountText', {price, discount: discounted}),
-            note: 'В браузере это тестовая rewarded-реклама. В Android подключим реальный AdMob bridge.',
-            price: discounted,
-            primaryText: `Купить за ${price}`,
-            secondaryText: `2 рекламы → ${discounted} 🪙`,
-            onPrimary: function(){ startSlotBuild(room, slot, price); },
-            onSecondary: function(){
-                simulateRewardedAds(2, function(){ startSlotBuild(room, slot, discounted); });
-            }
+            title: 'Скидка 50%',
+            subtitle: 'Посмотри 2 рекламы',
+            adBadge: 'rewarded ad',
+            resources: [
+                { text: `🪙 ${price}`, className: 'old-price' },
+                { text: `🪙 ${discounted}`, className: 'best-price' }
+            ],
+            actions: [
+                { text: `Купить ${price}`, className: 'green', onClick: function(){ startSlotBuild(room, slot, price); } },
+                { text: `2 рекламы`, className: 'purple', onClick: function(){
+                    simulateRewardedAds(2, function(){ startSlotBuild(room, slot, discounted); });
+                } }
+            ]
         });
     }
+
 
     function finishSlotNow(room, slot){
         setSlotState(room.roomId, slot.id, { status: 'unlocked', completedAt: Date.now() });
         spawnRoomSmoke(slot);
         try { if (typeof playSound === 'function') playSound('win'); } catch(e) {}
-        renderPetRoomDecor();
-        showRoomToast(tDecorText('speedCoins'));
+        setTimeout(() => renderPetRoomDecor(), 180);
+        showRoomToast('Предмет открыт!');
     }
+
 
     function openSlotSpeedup(room, slot){
         const state = getSlotState(room.roomId, slot.id);
@@ -21488,41 +21831,49 @@ body.guide-open #guideFab { pointer-events: none !important; }
             finishSlotNow(room, slot);
             return;
         }
+
         const speedCoins = Number(slot.speedupCoins || 25);
-        showRoomChoicePopup({
+
+        showStage49RoomModal({
             icon: '⏱️',
-            title: tDecorText('speedTitle'),
-            text: tDecorText('speedText', {time: formatTime(remaining)}),
-            note: 'Можно ускорить за монеты или посмотреть рекламу и сократить время наполовину.',
-            price: speedCoins,
-            primaryText: `Ускорить за ${speedCoins}`,
-            secondaryText: 'Реклама −50% времени',
-            onPrimary: function(){
-                if (currentCoins() < speedCoins) {
-                    const missing = speedCoins - currentCoins();
-                    if (window.showCoinShortPopup) window.showCoinShortPopup(tDecorText('noCoins', {coins: missing}));
-                    try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
-                    return;
-                }
-                spendCoins(speedCoins);
-                finishSlotNow(room, slot);
-            },
-            onSecondary: function(){
-                simulateRewardedAds(1, function(){
-                    const item = getSlotState(room.roomId, slot.id);
-                    const left = Math.max(0, Number(item.finishAt || 0) - Date.now());
-                    item.finishAt = Date.now() + Math.ceil(left * 0.5);
-                    item.status = 'building';
-                    setSlotState(room.roomId, slot.id, item);
-                    showRoomToast(tDecorText('adShort'));
-                    renderPetRoomDecor();
-                });
-            }
+            title: 'Ускорить?',
+            subtitle: `Осталось ${formatTime(remaining)}`,
+            adBadge: 'ускорение',
+            resources: [
+                { text: `🪙 ${speedCoins}` },
+                { text: `−50% ⏱️`, className: 'best-price' }
+            ],
+            actions: [
+                { text: `За ${speedCoins}`, className: 'green', onClick: function(){
+                    if (currentCoins() < speedCoins) {
+                        const missing = speedCoins - currentCoins();
+                        if (window.showCoinShortPopup) window.showCoinShortPopup(tDecorText('noCoins', {coins: missing}));
+                        try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
+                        return;
+                    }
+                    spendCoins(speedCoins);
+                    finishSlotNow(room, slot);
+                }},
+                { text: 'Реклама', className: 'purple', onClick: function(){
+                    simulateRewardedAds(1, function(){
+                        const item = getSlotState(room.roomId, slot.id);
+                        const left = Math.max(0, Number(item.finishAt || 0) - Date.now());
+                        item.finishAt = Date.now() + Math.ceil(left * 0.5);
+                        item.status = 'building';
+                        setSlotState(room.roomId, slot.id, item);
+                        showRoomToast(tDecorText('adShort'));
+                        renderPetRoomDecor();
+                    });
+                }}
+            ]
         });
     }
 
+
     function renderSlotButton(room, slot){
         const state = getSlotState(room.roomId, slot.id);
+        if (state.status === 'unlocked') return null;
+
         const bbox = slot.bbox || {x: slot.x - 80, y: slot.y - 80, w: 160, h: 160};
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -21537,8 +21888,6 @@ body.guide-open #guideFab { pointer-events: none !important; }
         if (state.status === 'building') {
             const remaining = Math.max(0, Number(state.finishAt || 0) - now);
             btn.innerHTML = `<span class="stage49-slot-box"><span class="stage49-building-badge"><b>⏳</b><small>${formatTime(remaining)}</small></span></span>`;
-        } else if (state.status === 'unlocked') {
-            btn.innerHTML = '<span class="stage49-slot-box"><span class="stage49-unlocked-spark">✓</span></span>';
         } else {
             btn.innerHTML = `<span class="stage49-slot-box"><span class="stage49-lock-badge">🔒</span><span class="stage49-price">${slot.price} 🪙</span></span>`;
         }
@@ -21550,6 +21899,7 @@ body.guide-open #guideFab { pointer-events: none !important; }
         });
         return btn;
     }
+
 
     function scheduleRoomTicker(hasBuilding){
         if (roomDecorTicker) {
@@ -21590,7 +21940,8 @@ body.guide-open #guideFab { pointer-events: none !important; }
             const state = getSlotState(room.roomId, slot.id);
             if (state.status === 'unlocked') unlocked += 1;
             if (state.status === 'building') building += 1;
-            layer.appendChild(renderSlotButton(room, slot));
+            const slotButton = renderSlotButton(room, slot);
+            if (slotButton) layer.appendChild(slotButton);
             const completedKey = room.roomId + ':' + slot.id;
             if (roomDecorLastCompleted.has(completedKey)) {
                 roomDecorLastCompleted.delete(completedKey);
