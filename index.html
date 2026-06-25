@@ -10317,6 +10317,231 @@ body.low-performance .purchase-confirm-overlay {
     }
 }
 
+
+/* ===== Stage 4.8G — Disable old animated helper guide, keep intro popups only ===== */
+#guideFab,
+#guideOverlay,
+#guideHighlight,
+#guideArrow,
+#guideHand {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+body.guide-open {
+    overflow: auto !important;
+}
+
+.intro-guide-overlay {
+    z-index: 14000 !important;
+}
+
+.intro-guide-card {
+    will-change: auto;
+}
+
+.intro-guide-image {
+    max-height: min(50vh, 460px) !important;
+}
+
+
+/* ===== Stage 4.9A — Pet rooms locked slots rebuild ===== */
+.pet-room-hero.stage49-room-scene {
+    position: relative;
+    min-height: clamp(460px, 72vw, 720px) !important;
+    padding: 0 !important;
+    border-radius: 34px !important;
+    overflow: hidden !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    box-shadow: inset 0 0 0 4px rgba(255,255,255,.84), 0 16px 36px rgba(15,23,42,.16) !important;
+}
+.pet-room-hero.stage49-room-scene::before,
+.pet-room-hero.stage49-room-scene::after,
+.pet-room-hero.stage49-room-scene .pet-room-window,
+.pet-room-hero.stage49-room-scene .pet-room-plant,
+.pet-room-hero.stage49-room-scene .pet-room-bed,
+.pet-room-hero.stage49-room-scene .pet-room-toys,
+.pet-room-hero.stage49-room-scene .pet-room-bowl {
+    display: none !important;
+}
+.pet-room-hero.stage49-room-scene .pet-room-decor-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+.pet-room-hero.stage49-room-scene .pet-room-bars { z-index: 12; }
+.pet-room-hero.stage49-room-scene .pet-room-speech {
+    z-index: 12;
+    background: rgba(255,255,255,.86);
+    backdrop-filter: blur(2px);
+}
+.pet-room-hero.stage49-room-scene .pet-room-stage {
+    z-index: 9;
+    bottom: 46px;
+    width: min(72vw, 310px);
+    height: 245px;
+}
+.pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+    width: 205px;
+    height: 205px;
+    bottom: 16px;
+    filter: drop-shadow(0 16px 18px rgba(15,23,42,.24));
+}
+.stage49-slot {
+    position: absolute;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transform: translateZ(0);
+}
+.stage49-slot:active { transform: translateY(2px) scale(.985); }
+.stage49-slot-box {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: rgba(255,255,255,.10);
+}
+.stage49-slot.locked .stage49-slot-box {
+    background: radial-gradient(circle at 50% 42%, rgba(255,255,255,.82), rgba(255,255,255,.22) 58%, rgba(255,255,255,.05));
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,.22), 0 8px 18px rgba(15,23,42,.12);
+}
+.stage49-lock-badge {
+    width: clamp(42px, 8vw, 72px);
+    height: clamp(42px, 8vw, 72px);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: clamp(22px, 4.6vw, 38px);
+    background: linear-gradient(180deg, #ffffff, #fef3c7);
+    box-shadow: 0 8px 0 rgba(124,58,237,.18), 0 12px 22px rgba(15,23,42,.18);
+    border: 4px solid rgba(255,255,255,.92);
+}
+.stage49-price {
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    min-width: 72px;
+    min-height: 28px;
+    display: grid;
+    place-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    color: #4c1d95;
+    background: rgba(255,255,255,.94);
+    font-weight: 1000;
+    font-size: 13px;
+    box-shadow: 0 5px 0 rgba(124,58,237,.12);
+}
+.stage49-slot.building .stage49-slot-box {
+    background: rgba(255,255,255,.30);
+    box-shadow: inset 0 0 0 3px rgba(34,197,94,.18), 0 9px 18px rgba(15,23,42,.13);
+}
+.stage49-building-badge {
+    display: grid;
+    gap: 3px;
+    place-items: center;
+    padding: 8px 10px;
+    border-radius: 18px;
+    color: #065f46;
+    background: rgba(220,252,231,.94);
+    border: 3px solid rgba(255,255,255,.92);
+    font-weight: 1000;
+    box-shadow: 0 7px 0 rgba(34,197,94,.16);
+}
+.stage49-building-badge b { font-size: clamp(16px, 3vw, 24px); }
+.stage49-building-badge small { font-size: 11px; color: #047857; }
+.stage49-slot.unlocked { pointer-events: auto; }
+.stage49-slot.unlocked .stage49-slot-box { background: transparent; box-shadow: none; }
+.stage49-unlocked-spark {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.82);
+    color: #16a34a;
+    font-weight: 1000;
+    box-shadow: 0 5px 0 rgba(34,197,94,.12);
+    opacity: .75;
+}
+.stage49-room-smoke {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    pointer-events: none;
+    z-index: 16;
+    transform: translate(-50%, -50%);
+}
+.stage49-room-smoke span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: stage49SmokePop 980ms ease-out forwards;
+}
+.stage49-room-smoke span:nth-child(1) { background: #f472b6; transform: translate(-50%, -50%); animation-delay: 0ms; --dx:-42px; --dy:-36px; }
+.stage49-room-smoke span:nth-child(2) { background: #60a5fa; transform: translate(-50%, -50%); animation-delay: 70ms; --dx:38px; --dy:-28px; }
+.stage49-room-smoke span:nth-child(3) { background: #34d399; transform: translate(-50%, -50%); animation-delay: 120ms; --dx:-28px; --dy:38px; }
+.stage49-room-smoke span:nth-child(4) { background: #fbbf24; transform: translate(-50%, -50%); animation-delay: 180ms; --dx:42px; --dy:34px; }
+@keyframes stage49SmokePop {
+    0% { opacity: .9; transform: translate(-50%, -50%) scale(.35); filter: blur(0); }
+    65% { opacity: .72; filter: blur(1px); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.55); filter: blur(5px); }
+}
+.stage49-choice-actions {
+    display: grid;
+    gap: 9px;
+    margin-top: 12px;
+}
+.stage49-choice-actions .btn { width: 100%; }
+.stage49-discount-note {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: 16px;
+    background: rgba(220,252,231,.88);
+    color: #166534;
+    font-size: 13px;
+    font-weight: 900;
+}
+@media (max-width: 520px) {
+    .pet-room-hero.stage49-room-scene {
+        min-height: 520px !important;
+        border-radius: 30px !important;
+    }
+    .pet-room-hero.stage49-room-scene .pet-room-stage {
+        bottom: 50px;
+        width: 260px;
+        height: 215px;
+    }
+    .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 172px;
+        height: 172px;
+    }
+    .stage49-price {
+        font-size: 11px;
+        min-width: 58px;
+    }
+    .stage49-lock-badge { border-width: 3px; }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -10379,7 +10604,7 @@ body.low-performance .purchase-confirm-overlay {
         <button type="button" class="intro-guide-close" onclick="finishIntroGuide()" aria-label="Закрыть">×</button>
 
         <div class="intro-guide-image-wrap">
-            <img id="introGuideImage" class="intro-guide-image" src="assets/intro_guide/intro_full.png" alt="Zoo Pet World intro"/>
+            <img id="introGuideImage" class="intro-guide-image" src="assets/intro_guide/intro_full.jpg" alt="Zoo Pet World intro"/>
         </div>
 
         <div class="intro-guide-content">
@@ -12921,31 +13146,31 @@ let introGuideIndex = 0;
 
 const introGuideSlides = [
     {
-        image: 'assets/intro_guide/intro_full.png',
+        image: 'assets/intro_guide/intro_full.jpg',
         kicker: 'Добро пожаловать',
         title: 'Zoo Pet World',
         text: 'Весёлый зоопарк, мини-игры, питомцы и награды в одном месте.'
     },
     {
-        image: 'assets/intro_guide/my_zoo.png',
+        image: 'assets/intro_guide/my_zoo.jpg',
         kicker: 'Мой зоопарк',
         title: 'Питомцы и коллекция',
         text: 'Выбирай питомца, открывай новых животных, смотри альбом и меняй скины карточек.'
     },
     {
-        image: 'assets/intro_guide/mini_games.png',
+        image: 'assets/intro_guide/mini_games.jpg',
         kicker: 'Мини-игры',
         title: 'Играй и развивайся',
         text: 'Найди пары, отличия, животное по тени, собирай пазлы, играй в Zoo Block и раскрашивай картинки.'
     },
     {
-        image: 'assets/intro_guide/profile.png',
+        image: 'assets/intro_guide/profile.jpg',
         kicker: 'Профиль',
         title: 'Задания и музыка',
         text: 'Выполняй задания, получай монеты, включай музыку и настрой игру под себя.'
     },
     {
-        image: 'assets/intro_guide/how_to_play.png',
+        image: 'assets/intro_guide/how_to_play.jpg',
         kicker: 'Как играть',
         title: 'Готов начать?',
         text: 'Выбирай питомца, играй в мини-игры, собирай карточки и открывай новые награды.'
@@ -12960,6 +13185,17 @@ function isIntroGuideSeen() {
 function markIntroGuideSeen() {
     try { safeStorage.set(INTRO_GUIDE_STORAGE_KEY, '1'); }
     catch(e) { localStorage.setItem(INTRO_GUIDE_STORAGE_KEY, '1'); }
+}
+
+
+function preloadIntroGuideImage(index) {
+    try {
+        const slide = introGuideSlides[index];
+        if (!slide || !slide.image) return;
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = slide.image;
+    } catch(e) {}
 }
 
 function renderIntroGuideSlide() {
@@ -12978,6 +13214,7 @@ function renderIntroGuideSlide() {
     const slide = introGuideSlides[introGuideIndex];
 
     imageEl.src = slide.image;
+    preloadIntroGuideImage(introGuideIndex + 1);
     kickerEl.textContent = slide.kicker;
     titleEl.textContent = slide.title;
     textEl.textContent = slide.text;
@@ -13098,7 +13335,7 @@ function openZooTeaser() {
 
 
 
-const spotDiffLevels = [{"id":"01_lion_premium_png","emoji":"🦁","animal":"lion","difficulty":1,"reward":20,"unlockPrice":0,"title":"Львёнок","source":"stage_4_8E_cloud_verified_coords_1_3","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/01_lion_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/01_lion_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_butterfly","left":{"x":727,"y":183},"right":{"x":727,"y":183},"radius":82,"hitZones":[{"x":727,"y":183,"radius":82}],"label":"Бабочка исчезла"},{"id":"diff_cloud","left":{"x":107,"y":593},"right":{"x":107,"y":593},"radius":118,"hitZones":[{"x":107,"y":593,"radius":118}],"label":"Облако изменилось"},{"id":"diff_tree","left":{"x":785,"y":530},"right":{"x":785,"y":530},"radius":56,"hitZones":[{"x":785,"y":530,"radius":56}],"label":"Дерево/крона отличается"},{"id":"diff_flower","left":{"x":522,"y":220},"right":{"x":522,"y":220},"radius":60,"hitZones":[{"x":522,"y":220,"radius":60}],"label":"Цветок изменился"},{"id":"diff_ball","left":{"x":230,"y":211},"right":{"x":230,"y":211},"radius":55,"hitZones":[{"x":230,"y":211,"radius":55}],"label":"Мяч появился"}]},{"id":"02_panda_premium_png","emoji":"🐼","animal":"panda","difficulty":1,"reward":22,"unlockPrice":0,"title":"Панда","source":"stage_4_8E_cloud_verified_coords_1_3","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/02_panda_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/02_panda_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_leaf_top","left":{"x":527,"y":562},"right":{"x":527,"y":562},"radius":136,"hitZones":[{"x":527,"y":562,"radius":136}],"label":"Листья сверху"},{"id":"diff_cloud","left":{"x":703,"y":59},"right":{"x":703,"y":59},"radius":59,"hitZones":[{"x":703,"y":59,"radius":59}],"label":"Облако"},{"id":"diff_cup","left":{"x":575,"y":113},"right":{"x":575,"y":113},"radius":70,"hitZones":[{"x":575,"y":113,"radius":70}],"label":"Чашка/горшок"},{"id":"diff_bug","left":{"x":748,"y":540},"right":{"x":748,"y":540},"radius":65,"hitZones":[{"x":748,"y":540,"radius":65}],"label":"Жук/насекомое"},{"id":"diff_flower","left":{"x":273,"y":616},"right":{"x":273,"y":616},"radius":51,"hitZones":[{"x":273,"y":616,"radius":51}],"label":"Цветок"}]},{"id":"03_dolphin_premium_png","emoji":"🐬","animal":"dolphin","difficulty":1,"reward":24,"unlockPrice":120,"title":"Дельфин","source":"stage_4_8E_cloud_verified_coords_1_3","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/03_dolphin_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/03_dolphin_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_boat","left":{"x":721,"y":622},"right":{"x":721,"y":622},"radius":78,"hitZones":[{"x":721,"y":622,"radius":78}],"label":"Лодка"},{"id":"diff_bubbles","left":{"x":367,"y":495},"right":{"x":367,"y":495},"radius":74,"hitZones":[{"x":367,"y":495,"radius":74}],"label":"Пузыри"},{"id":"diff_fish","left":{"x":804,"y":282},"right":{"x":804,"y":282},"radius":60,"hitZones":[{"x":804,"y":282,"radius":60}],"label":"Рыба"},{"id":"diff_starfish","left":{"x":208,"y":621},"right":{"x":208,"y":621},"radius":76,"hitZones":[{"x":208,"y":621,"radius":76}],"label":"Морская звезда"},{"id":"diff_shell","left":{"x":65,"y":392},"right":{"x":65,"y":392},"radius":91,"hitZones":[{"x":65,"y":392,"radius":91}],"label":"Ракушка"}]},{"id":"04_parrot_premium_png","emoji":"🦜","animal":"parrot","difficulty":2,"reward":26,"unlockPrice":140,"title":"Попугай","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/04_parrot_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/04_parrot_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_leaf","left":{"x":205,"y":70},"right":{"x":205,"y":70},"radius":140,"hitZones":[{"x":205,"y":70,"radius":140}],"label":"Большой лист изменился"},{"id":"diff_cloud","left":{"x":600,"y":115},"right":{"x":600,"y":115},"radius":100,"hitZones":[{"x":600,"y":115,"radius":100}],"label":"Облако изменилось"},{"id":"diff_berries","left":{"x":825,"y":230},"right":{"x":825,"y":230},"radius":95,"hitZones":[{"x":825,"y":230,"radius":95}],"label":"Ягоды изменились"},{"id":"diff_flower_left","left":{"x":70,"y":430},"right":{"x":70,"y":430},"radius":120,"hitZones":[{"x":70,"y":430,"radius":120}],"label":"Цветы слева отличаются"},{"id":"diff_flower_bottom","left":{"x":95,"y":625},"right":{"x":95,"y":625},"radius":120,"hitZones":[{"x":95,"y":625,"radius":120}],"label":"Нижний цветок отличается"}]},{"id":"05_elephant_premium_png","emoji":"🐘","animal":"elephant","difficulty":2,"reward":28,"unlockPrice":160,"title":"Слонёнок","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/05_elephant_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/05_elephant_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_top_flower","left":{"x":700,"y":75},"right":{"x":700,"y":75},"radius":80,"hitZones":[{"x":700,"y":75,"radius":80}],"label":"Цветок сверху отличается"},{"id":"diff_left_leaf","left":{"x":260,"y":395},"right":{"x":260,"y":395},"radius":85,"hitZones":[{"x":260,"y":395,"radius":85}],"label":"Лист/куст слева отличается"},{"id":"diff_butterfly","left":{"x":675,"y":310},"right":{"x":675,"y":310},"radius":90,"hitZones":[{"x":675,"y":310,"radius":90}],"label":"Бабочка справа отличается"},{"id":"diff_bottom_flower","left":{"x":635,"y":590},"right":{"x":635,"y":590},"radius":105,"hitZones":[{"x":635,"y":590,"radius":105}],"label":"Цветы снизу отличаются"},{"id":"diff_pink_flower","left":{"x":735,"y":520},"right":{"x":735,"y":520},"radius":95,"hitZones":[{"x":735,"y":520,"radius":95}],"label":"Правый цветок отличается"}]},{"id":"06_giraffe_premium_png","emoji":"🦒","animal":"giraffe","difficulty":2,"reward":30,"unlockPrice":180,"title":"Жираф","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/06_giraffe_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/06_giraffe_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud","left":{"x":660,"y":95},"right":{"x":660,"y":95},"radius":115,"hitZones":[{"x":660,"y":95,"radius":115}],"label":"Облако отличается"},{"id":"diff_head","left":{"x":405,"y":145},"right":{"x":405,"y":145},"radius":80,"hitZones":[{"x":405,"y":145,"radius":80}],"label":"Деталь у головы отличается"},{"id":"diff_tree","left":{"x":240,"y":235},"right":{"x":240,"y":235},"radius":110,"hitZones":[{"x":240,"y":235,"radius":110}],"label":"Дерево/листья отличаются"},{"id":"diff_rock","left":{"x":325,"y":525},"right":{"x":325,"y":525},"radius":110,"hitZones":[{"x":325,"y":525,"radius":110}],"label":"Камни отличаются"},{"id":"diff_flowers","left":{"x":680,"y":585},"right":{"x":680,"y":585},"radius":110,"hitZones":[{"x":680,"y":585,"radius":110}],"label":"Цветы справа отличаются"}]},{"id":"07_zebra_premium_png","emoji":"🦓","animal":"zebra","difficulty":3,"reward":32,"unlockPrice":200,"title":"Зебра","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/07_zebra_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/07_zebra_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_tree","left":{"x":300,"y":155},"right":{"x":300,"y":155},"radius":130,"hitZones":[{"x":300,"y":155,"radius":130}],"label":"Дерево слева отличается"},{"id":"diff_cloud","left":{"x":700,"y":90},"right":{"x":700,"y":90},"radius":110,"hitZones":[{"x":700,"y":90,"radius":110}],"label":"Облако отличается"},{"id":"diff_zebra_side","left":{"x":520,"y":365},"right":{"x":520,"y":365},"radius":105,"hitZones":[{"x":520,"y":365,"radius":105}],"label":"Деталь на зебре отличается"},{"id":"diff_flower_left","left":{"x":255,"y":575},"right":{"x":255,"y":575},"radius":95,"hitZones":[{"x":255,"y":575,"radius":95}],"label":"Левые цветы отличаются"},{"id":"diff_flowers_right","left":{"x":705,"y":610},"right":{"x":705,"y":610},"radius":105,"hitZones":[{"x":705,"y":610,"radius":105}],"label":"Правые цветы отличаются"}]},{"id":"08_hippo_premium_png","emoji":"🦛","animal":"hippo","difficulty":3,"reward":34,"unlockPrice":220,"title":"Бегемот","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/08_hippo_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/08_hippo_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_tree_cloud","left":{"x":675,"y":120},"right":{"x":675,"y":120},"radius":100,"hitZones":[{"x":675,"y":120,"radius":100}],"label":"Верхний фон отличается"},{"id":"diff_eye_face","left":{"x":595,"y":300},"right":{"x":595,"y":300},"radius":95,"hitZones":[{"x":595,"y":300,"radius":95}],"label":"Деталь лица отличается"},{"id":"diff_water_left","left":{"x":250,"y":445},"right":{"x":250,"y":445},"radius":95,"hitZones":[{"x":250,"y":445,"radius":95}],"label":"Вода/листья слева отличаются"},{"id":"diff_water_center","left":{"x":510,"y":555},"right":{"x":510,"y":555},"radius":95,"hitZones":[{"x":510,"y":555,"radius":95}],"label":"Листья в воде отличаются"},{"id":"diff_flowers_right","left":{"x":730,"y":425},"right":{"x":730,"y":425},"radius":105,"hitZones":[{"x":730,"y":425,"radius":105}],"label":"Цветы справа отличаются"}]},{"id":"09_kangaroo_premium_png","emoji":"🦘","animal":"kangaroo","difficulty":3,"reward":36,"unlockPrice":240,"title":"Кенгуру","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/09_kangaroo_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/09_kangaroo_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud","left":{"x":675,"y":120},"right":{"x":675,"y":120},"radius":105,"hitZones":[{"x":675,"y":120,"radius":105}],"label":"Облако отличается"},{"id":"diff_left_flowers","left":{"x":250,"y":520},"right":{"x":250,"y":520},"radius":100,"hitZones":[{"x":250,"y":520,"radius":100}],"label":"Левые цветы отличаются"},{"id":"diff_right_bush","left":{"x":690,"y":435},"right":{"x":690,"y":435},"radius":110,"hitZones":[{"x":690,"y":435,"radius":110}],"label":"Правый куст отличается"},{"id":"diff_bottom_flower","left":{"x":715,"y":600},"right":{"x":715,"y":600},"radius":110,"hitZones":[{"x":715,"y":600,"radius":110}],"label":"Нижний цветок отличается"},{"id":"diff_bottom_left","left":{"x":260,"y":625},"right":{"x":260,"y":625},"radius":100,"hitZones":[{"x":260,"y":625,"radius":100}],"label":"Нижние листья отличаются"}]},{"id":"10_koala_premium_png","emoji":"🐨","animal":"koala","difficulty":4,"reward":38,"unlockPrice":260,"title":"Коала","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/10_koala_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/10_koala_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_left_tree","left":{"x":285,"y":130},"right":{"x":285,"y":130},"radius":130,"hitZones":[{"x":285,"y":130,"radius":130}],"label":"Левое дерево отличается"},{"id":"diff_head","left":{"x":485,"y":280},"right":{"x":485,"y":280},"radius":90,"hitZones":[{"x":485,"y":280,"radius":90}],"label":"Деталь головы отличается"},{"id":"diff_right_leaves","left":{"x":705,"y":145},"right":{"x":705,"y":145},"radius":130,"hitZones":[{"x":705,"y":145,"radius":130}],"label":"Правые листья отличаются"},{"id":"diff_left_flowers","left":{"x":260,"y":590},"right":{"x":260,"y":590},"radius":115,"hitZones":[{"x":260,"y":590,"radius":115}],"label":"Левые цветы отличаются"},{"id":"diff_right_flowers","left":{"x":730,"y":590},"right":{"x":730,"y":590},"radius":115,"hitZones":[{"x":730,"y":590,"radius":115}],"label":"Правые цветы отличаются"}]},{"id":"11_turtle_premium_png","emoji":"🐢","animal":"turtle","difficulty":4,"reward":40,"unlockPrice":280,"title":"Черепаха","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/11_turtle_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/11_turtle_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud","left":{"x":520,"y":110},"right":{"x":520,"y":110},"radius":120,"hitZones":[{"x":520,"y":110,"radius":120}],"label":"Облако отличается"},{"id":"diff_palm","left":{"x":710,"y":110},"right":{"x":710,"y":110},"radius":130,"hitZones":[{"x":710,"y":110,"radius":130}],"label":"Пальма отличается"},{"id":"diff_turtle_head","left":{"x":330,"y":330},"right":{"x":330,"y":330},"radius":95,"hitZones":[{"x":330,"y":330,"radius":95}],"label":"Деталь черепахи отличается"},{"id":"diff_shell","left":{"x":650,"y":430},"right":{"x":650,"y":430},"radius":110,"hitZones":[{"x":650,"y":430,"radius":110}],"label":"Панцирь отличается"},{"id":"diff_beach","left":{"x":310,"y":610},"right":{"x":310,"y":610},"radius":115,"hitZones":[{"x":310,"y":610,"radius":115}],"label":"Песок/ракушки отличаются"}]},{"id":"12_penguin_premium_png","emoji":"🐧","animal":"penguin","difficulty":4,"reward":42,"unlockPrice":300,"title":"Пингвин","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/12_penguin_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/12_penguin_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud_left","left":{"x":405,"y":95},"right":{"x":405,"y":95},"radius":110,"hitZones":[{"x":405,"y":95,"radius":110}],"label":"Левое облако отличается"},{"id":"diff_cloud_right","left":{"x":675,"y":90},"right":{"x":675,"y":90},"radius":110,"hitZones":[{"x":675,"y":90,"radius":110}],"label":"Правое облако отличается"},{"id":"diff_ice_right","left":{"x":735,"y":350},"right":{"x":735,"y":350},"radius":100,"hitZones":[{"x":735,"y":350,"radius":100}],"label":"Лёд справа отличается"},{"id":"diff_body","left":{"x":510,"y":430},"right":{"x":510,"y":430},"radius":95,"hitZones":[{"x":510,"y":430,"radius":95}],"label":"Деталь пингвина отличается"},{"id":"diff_ice_bottom","left":{"x":555,"y":640},"right":{"x":555,"y":640},"radius":100,"hitZones":[{"x":555,"y":640,"radius":100}],"label":"Льдина снизу отличается"}]},{"id":"13_rabbit_premium_png","emoji":"🐰","animal":"rabbit","difficulty":5,"reward":42,"unlockPrice":320,"title":"Кролик","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/13_rabbit_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/13_rabbit_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_left_tree","left":{"x":260,"y":150},"right":{"x":260,"y":150},"radius":120,"hitZones":[{"x":260,"y":150,"radius":120}],"label":"Левые листья отличаются"},{"id":"diff_right_tree","left":{"x":705,"y":180},"right":{"x":705,"y":180},"radius":120,"hitZones":[{"x":705,"y":180,"radius":120}],"label":"Правые листья отличаются"},{"id":"diff_face","left":{"x":455,"y":360},"right":{"x":455,"y":360},"radius":95,"hitZones":[{"x":455,"y":360,"radius":95}],"label":"Деталь кролика отличается"},{"id":"diff_carrots","left":{"x":285,"y":620},"right":{"x":285,"y":620},"radius":105,"hitZones":[{"x":285,"y":620,"radius":105}],"label":"Морковки отличаются"},{"id":"diff_flowers","left":{"x":685,"y":580},"right":{"x":685,"y":580},"radius":110,"hitZones":[{"x":685,"y":580,"radius":110}],"label":"Цветы справа отличаются"}]},{"id":"14_fox_premium_png","emoji":"🦊","animal":"fox","difficulty":5,"reward":42,"unlockPrice":340,"title":"Лисёнок","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/14_fox_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/14_fox_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_tree_top","left":{"x":660,"y":115},"right":{"x":660,"y":115},"radius":125,"hitZones":[{"x":660,"y":115,"radius":125}],"label":"Верхние листья отличаются"},{"id":"diff_face","left":{"x":420,"y":245},"right":{"x":420,"y":245},"radius":95,"hitZones":[{"x":420,"y":245,"radius":95}],"label":"Деталь лисы отличается"},{"id":"diff_mushroom","left":{"x":285,"y":515},"right":{"x":285,"y":515},"radius":95,"hitZones":[{"x":285,"y":515,"radius":95}],"label":"Гриб отличается"},{"id":"diff_flower_left","left":{"x":315,"y":620},"right":{"x":315,"y":620},"radius":110,"hitZones":[{"x":315,"y":620,"radius":110}],"label":"Левые цветы отличаются"},{"id":"diff_flower_right","left":{"x":725,"y":625},"right":{"x":725,"y":625},"radius":110,"hitZones":[{"x":725,"y":625,"radius":110}],"label":"Правые цветы отличаются"}]},{"id":"15_deer_premium_png","emoji":"🦌","animal":"deer","difficulty":5,"reward":42,"unlockPrice":360,"title":"Олень","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/15_deer_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/15_deer_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_sky_leaf","left":{"x":325,"y":160},"right":{"x":325,"y":160},"radius":100,"hitZones":[{"x":325,"y":160,"radius":100}],"label":"Фон сверху отличается"},{"id":"diff_face","left":{"x":505,"y":275},"right":{"x":505,"y":275},"radius":90,"hitZones":[{"x":505,"y":275,"radius":90}],"label":"Деталь оленя отличается"},{"id":"diff_left_flower","left":{"x":270,"y":585},"right":{"x":270,"y":585},"radius":100,"hitZones":[{"x":270,"y":585,"radius":100}],"label":"Левые цветы отличаются"},{"id":"diff_rock","left":{"x":680,"y":505},"right":{"x":680,"y":505},"radius":100,"hitZones":[{"x":680,"y":505,"radius":100}],"label":"Камень/трава отличаются"},{"id":"diff_right_flower","left":{"x":700,"y":625},"right":{"x":700,"y":625},"radius":110,"hitZones":[{"x":700,"y":625,"radius":110}],"label":"Правые цветы отличаются"}]},{"id":"16_squirrel_premium_png","emoji":"🐿️","animal":"squirrel","difficulty":6,"reward":42,"unlockPrice":380,"title":"Белка","source":"stage_4_7D_manual_object_hitzones","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/16_squirrel_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/16_squirrel_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_left_tree","left":{"x":260,"y":235},"right":{"x":260,"y":235},"radius":125,"hitZones":[{"x":260,"y":235,"radius":125}],"label":"Левый фон отличается"},{"id":"diff_tail","left":{"x":720,"y":350},"right":{"x":720,"y":350},"radius":110,"hitZones":[{"x":720,"y":350,"radius":110}],"label":"Хвост/фон справа отличается"},{"id":"diff_acorn","left":{"x":505,"y":545},"right":{"x":505,"y":545},"radius":95,"hitZones":[{"x":505,"y":545,"radius":95}],"label":"Жёлудь отличается"},{"id":"diff_bottom_left","left":{"x":275,"y":600},"right":{"x":275,"y":600},"radius":115,"hitZones":[{"x":275,"y":600,"radius":115}],"label":"Нижние предметы слева отличаются"},{"id":"diff_bottom_right","left":{"x":700,"y":605},"right":{"x":700,"y":605},"radius":110,"hitZones":[{"x":700,"y":605,"radius":110}],"label":"Нижние предметы справа отличаются"}]}]
+const spotDiffLevels = [{"id":"01_lion_premium_png","emoji":"🦁","animal":"lion","difficulty":1,"reward":20,"unlockPrice":0,"title":"Львёнок","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/01_lion_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/01_lion_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_butterfly","left":{"x":255,"y":135},"right":{"x":255,"y":135},"radius":80,"hitZones":[{"x":255,"y":135,"radius":80}],"label":"Бабочка исчезла"},{"id":"diff_cloud","left":{"x":520,"y":150},"right":{"x":520,"y":150},"radius":105,"hitZones":[{"x":520,"y":150,"radius":105}],"label":"Облако изменилось"},{"id":"diff_tree","left":{"x":800,"y":185},"right":{"x":800,"y":185},"radius":145,"hitZones":[{"x":800,"y":185,"radius":145}],"label":"Дерево/крона отличается"},{"id":"diff_flower","left":{"x":105,"y":590},"right":{"x":105,"y":590},"radius":115,"hitZones":[{"x":105,"y":590,"radius":115}],"label":"Цветы отличаются"},{"id":"diff_ball","left":{"x":785,"y":548},"right":{"x":785,"y":548},"radius":80,"hitZones":[{"x":785,"y":548,"radius":80}],"label":"Мяч отличается"}]},{"id":"02_panda_premium_png","emoji":"🐼","animal":"panda","difficulty":1,"reward":22,"unlockPrice":0,"title":"Панда","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/02_panda_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/02_panda_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_leaf_top","left":{"x":845,"y":55},"right":{"x":845,"y":55},"radius":105,"hitZones":[{"x":845,"y":55,"radius":105}],"label":"Верхний лист отличается"},{"id":"diff_cloud","left":{"x":375,"y":65},"right":{"x":375,"y":65},"radius":90,"hitZones":[{"x":375,"y":65,"radius":90}],"label":"Облако отличается"},{"id":"diff_cup","left":{"x":775,"y":565},"right":{"x":775,"y":565},"radius":95,"hitZones":[{"x":775,"y":565,"radius":95}],"label":"Чашка изменилась"},{"id":"diff_bug","left":{"x":245,"y":650},"right":{"x":245,"y":650},"radius":80,"hitZones":[{"x":245,"y":650,"radius":80}],"label":"Жучок изменился"},{"id":"diff_flower","left":{"x":105,"y":575},"right":{"x":105,"y":575},"radius":115,"hitZones":[{"x":105,"y":575,"radius":115}],"label":"Цветок/листья отличаются"}]},{"id":"03_dolphin_premium_png","emoji":"🐬","animal":"dolphin","difficulty":1,"reward":24,"unlockPrice":120,"title":"Дельфин","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/03_dolphin_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/03_dolphin_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_boat","left":{"x":770,"y":160},"right":{"x":770,"y":160},"radius":80,"hitZones":[{"x":770,"y":160,"radius":80}],"label":"Лодка отличается"},{"id":"diff_bubbles","left":{"x":365,"y":450},"right":{"x":365,"y":450},"radius":90,"hitZones":[{"x":365,"y":450,"radius":90}],"label":"Пузырьки изменились"},{"id":"diff_fish","left":{"x":585,"y":470},"right":{"x":585,"y":470},"radius":95,"hitZones":[{"x":585,"y":470,"radius":95}],"label":"Рыбка изменилась"},{"id":"diff_starfish","left":{"x":195,"y":615},"right":{"x":195,"y":615},"radius":95,"hitZones":[{"x":195,"y":615,"radius":95}],"label":"Морская звезда изменилась"},{"id":"diff_shell","left":{"x":735,"y":610},"right":{"x":735,"y":610},"radius":105,"hitZones":[{"x":735,"y":610,"radius":105}],"label":"Ракушка изменилась"}]},{"id":"04_parrot_premium_png","emoji":"🦜","animal":"parrot","difficulty":2,"reward":26,"unlockPrice":140,"title":"Попугай","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/04_parrot_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/04_parrot_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_leaf","left":{"x":205,"y":70},"right":{"x":205,"y":70},"radius":140,"hitZones":[{"x":205,"y":70,"radius":140}],"label":"Большой лист изменился"},{"id":"diff_cloud","left":{"x":600,"y":115},"right":{"x":600,"y":115},"radius":100,"hitZones":[{"x":600,"y":115,"radius":100}],"label":"Облако изменилось"},{"id":"diff_berries","left":{"x":825,"y":230},"right":{"x":825,"y":230},"radius":95,"hitZones":[{"x":825,"y":230,"radius":95}],"label":"Ягоды изменились"},{"id":"diff_flower_left","left":{"x":70,"y":430},"right":{"x":70,"y":430},"radius":120,"hitZones":[{"x":70,"y":430,"radius":120}],"label":"Цветы слева отличаются"},{"id":"diff_flower_bottom","left":{"x":95,"y":625},"right":{"x":95,"y":625},"radius":120,"hitZones":[{"x":95,"y":625,"radius":120}],"label":"Нижний цветок отличается"}]},{"id":"05_elephant_premium_png","emoji":"🐘","animal":"elephant","difficulty":2,"reward":28,"unlockPrice":160,"title":"Слонёнок","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/05_elephant_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/05_elephant_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_top_flower","left":{"x":700,"y":75},"right":{"x":700,"y":75},"radius":80,"hitZones":[{"x":700,"y":75,"radius":80}],"label":"Цветок сверху отличается"},{"id":"diff_left_leaf","left":{"x":260,"y":395},"right":{"x":260,"y":395},"radius":85,"hitZones":[{"x":260,"y":395,"radius":85}],"label":"Лист/куст слева отличается"},{"id":"diff_butterfly","left":{"x":675,"y":310},"right":{"x":675,"y":310},"radius":90,"hitZones":[{"x":675,"y":310,"radius":90}],"label":"Бабочка справа отличается"},{"id":"diff_bottom_flower","left":{"x":635,"y":590},"right":{"x":635,"y":590},"radius":105,"hitZones":[{"x":635,"y":590,"radius":105}],"label":"Цветы снизу отличаются"},{"id":"diff_pink_flower","left":{"x":735,"y":520},"right":{"x":735,"y":520},"radius":95,"hitZones":[{"x":735,"y":520,"radius":95}],"label":"Правый цветок отличается"}]},{"id":"06_giraffe_premium_png","emoji":"🦒","animal":"giraffe","difficulty":2,"reward":30,"unlockPrice":180,"title":"Жираф","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/06_giraffe_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/06_giraffe_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud","left":{"x":660,"y":95},"right":{"x":660,"y":95},"radius":115,"hitZones":[{"x":660,"y":95,"radius":115}],"label":"Облако отличается"},{"id":"diff_head","left":{"x":405,"y":145},"right":{"x":405,"y":145},"radius":80,"hitZones":[{"x":405,"y":145,"radius":80}],"label":"Деталь у головы отличается"},{"id":"diff_tree","left":{"x":240,"y":235},"right":{"x":240,"y":235},"radius":110,"hitZones":[{"x":240,"y":235,"radius":110}],"label":"Дерево/листья отличаются"},{"id":"diff_rock","left":{"x":325,"y":525},"right":{"x":325,"y":525},"radius":110,"hitZones":[{"x":325,"y":525,"radius":110}],"label":"Камни отличаются"},{"id":"diff_flowers","left":{"x":680,"y":585},"right":{"x":680,"y":585},"radius":110,"hitZones":[{"x":680,"y":585,"radius":110}],"label":"Цветы справа отличаются"}]},{"id":"07_zebra_premium_png","emoji":"🦓","animal":"zebra","difficulty":3,"reward":32,"unlockPrice":200,"title":"Зебра","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/07_zebra_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/07_zebra_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_tree","left":{"x":300,"y":155},"right":{"x":300,"y":155},"radius":130,"hitZones":[{"x":300,"y":155,"radius":130}],"label":"Дерево слева отличается"},{"id":"diff_cloud","left":{"x":700,"y":90},"right":{"x":700,"y":90},"radius":110,"hitZones":[{"x":700,"y":90,"radius":110}],"label":"Облако отличается"},{"id":"diff_zebra_side","left":{"x":520,"y":365},"right":{"x":520,"y":365},"radius":105,"hitZones":[{"x":520,"y":365,"radius":105}],"label":"Деталь на зебре отличается"},{"id":"diff_flower_left","left":{"x":255,"y":575},"right":{"x":255,"y":575},"radius":95,"hitZones":[{"x":255,"y":575,"radius":95}],"label":"Левые цветы отличаются"},{"id":"diff_flowers_right","left":{"x":705,"y":610},"right":{"x":705,"y":610},"radius":105,"hitZones":[{"x":705,"y":610,"radius":105}],"label":"Правые цветы отличаются"}]},{"id":"08_hippo_premium_png","emoji":"🦛","animal":"hippo","difficulty":3,"reward":34,"unlockPrice":220,"title":"Бегемот","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/08_hippo_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/08_hippo_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_tree_cloud","left":{"x":675,"y":120},"right":{"x":675,"y":120},"radius":100,"hitZones":[{"x":675,"y":120,"radius":100}],"label":"Верхний фон отличается"},{"id":"diff_eye_face","left":{"x":595,"y":300},"right":{"x":595,"y":300},"radius":95,"hitZones":[{"x":595,"y":300,"radius":95}],"label":"Деталь лица отличается"},{"id":"diff_water_left","left":{"x":250,"y":445},"right":{"x":250,"y":445},"radius":95,"hitZones":[{"x":250,"y":445,"radius":95}],"label":"Вода/листья слева отличаются"},{"id":"diff_water_center","left":{"x":510,"y":555},"right":{"x":510,"y":555},"radius":95,"hitZones":[{"x":510,"y":555,"radius":95}],"label":"Листья в воде отличаются"},{"id":"diff_flowers_right","left":{"x":730,"y":425},"right":{"x":730,"y":425},"radius":105,"hitZones":[{"x":730,"y":425,"radius":105}],"label":"Цветы справа отличаются"}]},{"id":"09_kangaroo_premium_png","emoji":"🦘","animal":"kangaroo","difficulty":3,"reward":36,"unlockPrice":240,"title":"Кенгуру","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/09_kangaroo_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/09_kangaroo_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud","left":{"x":675,"y":120},"right":{"x":675,"y":120},"radius":105,"hitZones":[{"x":675,"y":120,"radius":105}],"label":"Облако отличается"},{"id":"diff_left_flowers","left":{"x":250,"y":520},"right":{"x":250,"y":520},"radius":100,"hitZones":[{"x":250,"y":520,"radius":100}],"label":"Левые цветы отличаются"},{"id":"diff_right_bush","left":{"x":690,"y":435},"right":{"x":690,"y":435},"radius":110,"hitZones":[{"x":690,"y":435,"radius":110}],"label":"Правый куст отличается"},{"id":"diff_bottom_flower","left":{"x":715,"y":600},"right":{"x":715,"y":600},"radius":110,"hitZones":[{"x":715,"y":600,"radius":110}],"label":"Нижний цветок отличается"},{"id":"diff_bottom_left","left":{"x":260,"y":625},"right":{"x":260,"y":625},"radius":100,"hitZones":[{"x":260,"y":625,"radius":100}],"label":"Нижние листья отличаются"}]},{"id":"10_koala_premium_png","emoji":"🐨","animal":"koala","difficulty":4,"reward":38,"unlockPrice":260,"title":"Коала","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/10_koala_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/10_koala_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_left_tree","left":{"x":285,"y":130},"right":{"x":285,"y":130},"radius":130,"hitZones":[{"x":285,"y":130,"radius":130}],"label":"Левое дерево отличается"},{"id":"diff_head","left":{"x":485,"y":280},"right":{"x":485,"y":280},"radius":90,"hitZones":[{"x":485,"y":280,"radius":90}],"label":"Деталь головы отличается"},{"id":"diff_right_leaves","left":{"x":705,"y":145},"right":{"x":705,"y":145},"radius":130,"hitZones":[{"x":705,"y":145,"radius":130}],"label":"Правые листья отличаются"},{"id":"diff_left_flowers","left":{"x":260,"y":590},"right":{"x":260,"y":590},"radius":115,"hitZones":[{"x":260,"y":590,"radius":115}],"label":"Левые цветы отличаются"},{"id":"diff_right_flowers","left":{"x":730,"y":590},"right":{"x":730,"y":590},"radius":115,"hitZones":[{"x":730,"y":590,"radius":115}],"label":"Правые цветы отличаются"}]},{"id":"11_turtle_premium_png","emoji":"🐢","animal":"turtle","difficulty":4,"reward":40,"unlockPrice":280,"title":"Черепаха","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/11_turtle_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/11_turtle_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud","left":{"x":520,"y":110},"right":{"x":520,"y":110},"radius":120,"hitZones":[{"x":520,"y":110,"radius":120}],"label":"Облако отличается"},{"id":"diff_palm","left":{"x":710,"y":110},"right":{"x":710,"y":110},"radius":130,"hitZones":[{"x":710,"y":110,"radius":130}],"label":"Пальма отличается"},{"id":"diff_turtle_head","left":{"x":330,"y":330},"right":{"x":330,"y":330},"radius":95,"hitZones":[{"x":330,"y":330,"radius":95}],"label":"Деталь черепахи отличается"},{"id":"diff_shell","left":{"x":650,"y":430},"right":{"x":650,"y":430},"radius":110,"hitZones":[{"x":650,"y":430,"radius":110}],"label":"Панцирь отличается"},{"id":"diff_beach","left":{"x":310,"y":610},"right":{"x":310,"y":610},"radius":115,"hitZones":[{"x":310,"y":610,"radius":115}],"label":"Песок/ракушки отличаются"}]},{"id":"12_penguin_premium_png","emoji":"🐧","animal":"penguin","difficulty":4,"reward":42,"unlockPrice":300,"title":"Пингвин","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/12_penguin_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/12_penguin_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_cloud_left","left":{"x":405,"y":95},"right":{"x":405,"y":95},"radius":110,"hitZones":[{"x":405,"y":95,"radius":110}],"label":"Левое облако отличается"},{"id":"diff_cloud_right","left":{"x":675,"y":90},"right":{"x":675,"y":90},"radius":110,"hitZones":[{"x":675,"y":90,"radius":110}],"label":"Правое облако отличается"},{"id":"diff_ice_right","left":{"x":735,"y":350},"right":{"x":735,"y":350},"radius":100,"hitZones":[{"x":735,"y":350,"radius":100}],"label":"Лёд справа отличается"},{"id":"diff_body","left":{"x":510,"y":430},"right":{"x":510,"y":430},"radius":95,"hitZones":[{"x":510,"y":430,"radius":95}],"label":"Деталь пингвина отличается"},{"id":"diff_ice_bottom","left":{"x":555,"y":640},"right":{"x":555,"y":640},"radius":100,"hitZones":[{"x":555,"y":640,"radius":100}],"label":"Льдина снизу отличается"}]},{"id":"13_rabbit_premium_png","emoji":"🐰","animal":"rabbit","difficulty":5,"reward":42,"unlockPrice":320,"title":"Кролик","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/13_rabbit_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/13_rabbit_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_left_tree","left":{"x":260,"y":150},"right":{"x":260,"y":150},"radius":120,"hitZones":[{"x":260,"y":150,"radius":120}],"label":"Левые листья отличаются"},{"id":"diff_right_tree","left":{"x":705,"y":180},"right":{"x":705,"y":180},"radius":120,"hitZones":[{"x":705,"y":180,"radius":120}],"label":"Правые листья отличаются"},{"id":"diff_face","left":{"x":455,"y":360},"right":{"x":455,"y":360},"radius":95,"hitZones":[{"x":455,"y":360,"radius":95}],"label":"Деталь кролика отличается"},{"id":"diff_carrots","left":{"x":285,"y":620},"right":{"x":285,"y":620},"radius":105,"hitZones":[{"x":285,"y":620,"radius":105}],"label":"Морковки отличаются"},{"id":"diff_flowers","left":{"x":685,"y":580},"right":{"x":685,"y":580},"radius":110,"hitZones":[{"x":685,"y":580,"radius":110}],"label":"Цветы справа отличаются"}]},{"id":"14_fox_premium_png","emoji":"🦊","animal":"fox","difficulty":5,"reward":42,"unlockPrice":340,"title":"Лисёнок","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/14_fox_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/14_fox_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_tree_top","left":{"x":660,"y":115},"right":{"x":660,"y":115},"radius":125,"hitZones":[{"x":660,"y":115,"radius":125}],"label":"Верхние листья отличаются"},{"id":"diff_face","left":{"x":420,"y":245},"right":{"x":420,"y":245},"radius":95,"hitZones":[{"x":420,"y":245,"radius":95}],"label":"Деталь лисы отличается"},{"id":"diff_mushroom","left":{"x":285,"y":515},"right":{"x":285,"y":515},"radius":95,"hitZones":[{"x":285,"y":515,"radius":95}],"label":"Гриб отличается"},{"id":"diff_flower_left","left":{"x":315,"y":620},"right":{"x":315,"y":620},"radius":110,"hitZones":[{"x":315,"y":620,"radius":110}],"label":"Левые цветы отличаются"},{"id":"diff_flower_right","left":{"x":725,"y":625},"right":{"x":725,"y":625},"radius":110,"hitZones":[{"x":725,"y":625,"radius":110}],"label":"Правые цветы отличаются"}]},{"id":"15_deer_premium_png","emoji":"🦌","animal":"deer","difficulty":5,"reward":42,"unlockPrice":360,"title":"Олень","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/15_deer_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/15_deer_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_sky_leaf","left":{"x":325,"y":160},"right":{"x":325,"y":160},"radius":100,"hitZones":[{"x":325,"y":160,"radius":100}],"label":"Фон сверху отличается"},{"id":"diff_face","left":{"x":505,"y":275},"right":{"x":505,"y":275},"radius":90,"hitZones":[{"x":505,"y":275,"radius":90}],"label":"Деталь оленя отличается"},{"id":"diff_left_flower","left":{"x":270,"y":585},"right":{"x":270,"y":585},"radius":100,"hitZones":[{"x":270,"y":585,"radius":100}],"label":"Левые цветы отличаются"},{"id":"diff_rock","left":{"x":680,"y":505},"right":{"x":680,"y":505},"radius":100,"hitZones":[{"x":680,"y":505,"radius":100}],"label":"Камень/трава отличаются"},{"id":"diff_right_flower","left":{"x":700,"y":625},"right":{"x":700,"y":625},"radius":110,"hitZones":[{"x":700,"y":625,"radius":110}],"label":"Правые цветы отличаются"}]},{"id":"16_squirrel_premium_png","emoji":"🐿️","animal":"squirrel","difficulty":6,"reward":42,"unlockPrice":380,"title":"Белка","source":"stage_4_8F_restored_working_object_hitzones_from_4_8D","leftSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/16_squirrel_left.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","rightSvg":"<svg viewBox=\"0 0 1000 700\" xmlns=\"http://www.w3.org/2000/svg\"><image href=\"assets/spotdiff_png/16_squirrel_right.png\" x=\"0\" y=\"0\" width=\"1000\" height=\"700\" preserveAspectRatio=\"none\"/></svg>","diffs":[{"id":"diff_left_tree","left":{"x":260,"y":235},"right":{"x":260,"y":235},"radius":125,"hitZones":[{"x":260,"y":235,"radius":125}],"label":"Левый фон отличается"},{"id":"diff_tail","left":{"x":720,"y":350},"right":{"x":720,"y":350},"radius":110,"hitZones":[{"x":720,"y":350,"radius":110}],"label":"Хвост/фон справа отличается"},{"id":"diff_acorn","left":{"x":505,"y":545},"right":{"x":505,"y":545},"radius":95,"hitZones":[{"x":505,"y":545,"radius":95}],"label":"Жёлудь отличается"},{"id":"diff_bottom_left","left":{"x":275,"y":600},"right":{"x":275,"y":600},"radius":115,"hitZones":[{"x":275,"y":600,"radius":115}],"label":"Нижние предметы слева отличаются"},{"id":"diff_bottom_right","left":{"x":700,"y":605},"right":{"x":700,"y":605},"radius":110,"hitZones":[{"x":700,"y":605,"radius":110}],"label":"Нижние предметы справа отличаются"}]}]
 
 let spotDiffCurrentLevel = Number(safeStorage.get('zooSpotDiffCurrentLevel', '0')) || 0;
 let spotDiffCompleted = [];
@@ -13297,6 +13534,38 @@ function getSpotTapPoint(event, scene) {
         localX,
         localY
     };
+}
+
+function findSpotDiffAtPoint(point) {
+    const level = getSpotDiffLevel();
+    if (!point || !Number.isFinite(point.x) || !Number.isFinite(point.y)) return null;
+    if (point.x < 0 || point.x > 1000 || point.y < 0 || point.y > 700) return null;
+
+    let best = null;
+    let bestDist = Infinity;
+
+    level.diffs.forEach(diff => {
+        if (spotDiffFound.includes(diff.id)) return;
+
+        const zones = Array.isArray(diff.hitZones) && diff.hitZones.length
+            ? diff.hitZones
+            : [{ x: diff.left.x, y: diff.left.y, radius: diff.radius || 4 }];
+
+        zones.forEach(zone => {
+            if (!zone || !Number.isFinite(zone.x) || !Number.isFinite(zone.y)) return;
+
+            const rawRadius = Number(zone.radius || diff.radius || 4);
+            const safeRadius = Math.max(24, Math.min(125, rawRadius));
+            const dist = Math.hypot(point.x - zone.x, point.y - zone.y);
+
+            if (dist <= safeRadius && dist < bestDist) {
+                best = diff;
+                bestDist = dist;
+            }
+        });
+    });
+
+    return best;
 }
 
 function markSpotDiffFound(diff) {
@@ -13670,8 +13939,7 @@ function installSpotDiffSceneEvents(scene) {
         spotPointerState.lastTapX = event.clientX;
         spotPointerState.lastTapY = event.clientY;
         const point = getSpotTapPoint(event, scene);
-        const side = scene.dataset.side || 'left';
-        const diff = findSpotDiffAtPoint(point, side);
+        const diff = findSpotDiffAtPoint(point);
         if (diff) markSpotDiffFound(diff); else showSpotMiss(scene, point);
     }
     scene.addEventListener('pointerup', finishPointer);
@@ -14968,6 +15236,8 @@ function renderPetRoom() {
     renderPetActorInto(petRoomAnimatedMount, selectedMainPetKey, getPetRoomMode(care), lastFedFoodEmoji);
     maybeShowPetReminder(reminderText);
     updateCoinsViews();
+
+    try { if (typeof renderPetRoomDecor === 'function') renderPetRoomDecor(); } catch(e) {}
 }
 
 function setPetRoomMode(mode, autoReturnMs = 0) {
@@ -20816,22 +21086,81 @@ body.guide-open #guideFab { pointer-events: none !important; }
 
 
 
-/* ===== Stage 4.6A: Pet Room Decor MVP — safe small progression ===== */
+
+/* ===== Stage 4.9A: Pet Room Rooms + Locked Decor Slots ===== */
 (function(){
     'use strict';
 
-    const DECOR_STORAGE_KEY = 'zooPetRoomDecorUnlocked';
-    const DECOR_ITEMS = [
-        { id: 'plant', icon: '🪴', titleKey: 'petdecor.plant.title', descKey: 'petdecor.plant.desc', price: 60, className: 'decor-plant', visualClass: 'decor-plant-visual' },
-        { id: 'bed', icon: '🛏️', titleKey: 'petdecor.bed.title', descKey: 'petdecor.bed.desc', price: 120, className: 'decor-bed', visualClass: 'decor-bed-visual' },
-        { id: 'toys', icon: '🎾', titleKey: 'petdecor.toys.title', descKey: 'petdecor.toys.desc', price: 90, className: 'decor-toys', visualClass: 'decor-toys-visual' }
-    ];
+    const ROOM_DECOR_STATE_KEY = 'zpwRoomDecorSlotsState_v1';
+    const ROOM_SLOT_COORD = { width: 1536, height: 1024 };
+    const ROOM_SLOT_DATA = {"01_lion":{"roomId":"01_lion","title":"Lion — Safari Lodge","theme":"savanna_lodge","imageFile":"safari_lodge_themed_cozy_interior_design.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/01_lion_room_slots.jpg"},"02_panda":{"roomId":"02_panda","title":"Panda — Bamboo Cozy Room","theme":"bamboo","imageFile":"zen_inspired_bamboo_room_with_placeholders.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/02_panda_room_slots.jpg"},"03_fox":{"roomId":"03_fox","title":"Fox — Autumn Forest Room","theme":"autumn_forest","imageFile":"autumn_forest_themed_cozy_interior.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/03_fox_room_slots.jpg"},"08_koala":{"roomId":"08_koala","title":"Koala — Eucalyptus Room","theme":"eucalyptus","imageFile":"cozy_animal_themed_room_with_eucalyptus_view.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/08_koala_room_slots.jpg"},"09_rabbit":{"roomId":"09_rabbit","title":"Rabbit — Flower Meadow Room","theme":"flower_meadow","imageFile":"springtime_nursery_with_whimsical_details.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/09_rabbit_room_slots.jpg"},"16_deer":{"roomId":"16_deer","title":"Deer — Woodland Fairy Room","theme":"woodland_fairy","imageFile":"whimsical_woodland_room_with_soft_lighting.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/16_deer_room_slots.jpg"},"20_dog":{"roomId":"20_dog","title":"Dog — Playful Pet Home","theme":"playful_pet_home","imageFile":"cozy_dog_themed_nursery_room_design.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/20_dog_room_slots.jpg"},"21_cat":{"roomId":"21_cat","title":"Cat — Cozy Home Room","theme":"cozy_cat_home","imageFile":"cozy_pastel_cat_themed_room_design.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26},{"id":"cat_tower_left_center","type":"cat_tower","recommendedAsset":"whimsical_cat_playtower_with_plush_accents.png","x":470,"y":520,"bbox":{"x":405,"y":350,"w":180,"h":320},"radius":150,"layer":"furniture_mid_left","note":"Вертикальная зона под кошачий игровой комплекс","price":220,"buildMinSec":220,"buildMaxSec":360,"speedupCoins":62}],"assetImage":"assets/room_slots/21_cat_room_slots.jpg"},"37_squirrel":{"roomId":"37_squirrel","title":"Squirrel — Acorn Woodland Room","theme":"acorn_woodland","imageFile":"whimsical_woodland_game_room_decor.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/37_squirrel_room_slots.jpg"},"40_hedgehog":{"roomId":"40_hedgehog","title":"Hedgehog — Autumn Leaf Room","theme":"autumn_leaf","imageFile":"autumn_woodland_room_with_cozy_placeholders.png","coordinateSystem":{"width":1536,"height":1024,"origin":"top-left","units":"px"},"decorSlots":[{"id":"wardrobe_left","type":"wardrobe","recommendedAsset":"cute_animal_themed_wardrobe_with_playful_accents.png","x":285,"y":430,"bbox":{"x":175,"y":175,"w":275,"h":520},"radius":150,"layer":"furniture_back_left","note":"Высокий шкаф слева","price":180,"buildMinSec":180,"buildMaxSec":300,"speedupCoins":51},{"id":"media_cabinet_center","type":"tv_cabinet","recommendedAsset":"colorful_toy_tv_on_wooden_stand.png","x":690,"y":575,"bbox":{"x":535,"y":500,"w":330,"h":145},"radius":170,"layer":"furniture_mid_center","note":"Низкая тумба / TV cabinet под окном","price":140,"buildMinSec":120,"buildMaxSec":220,"speedupCoins":40},{"id":"armchair_right","type":"armchair","recommendedAsset":"adorable_paw_shaped_plush_sofa.png","x":1035,"y":555,"bbox":{"x":895,"y":385,"w":285,"h":310},"radius":155,"layer":"furniture_mid_right","note":"Кресло справа","price":160,"buildMinSec":150,"buildMaxSec":260,"speedupCoins":45},{"id":"side_table_right","type":"side_table","recommendedAsset":"cute_pastel_bedside_table_with_lamp.png","x":1285,"y":580,"bbox":{"x":1185,"y":455,"w":210,"h":260},"radius":125,"layer":"furniture_front_right","note":"Тумба / комод справа","price":95,"buildMinSec":90,"buildMaxSec":160,"speedupCoins":27},{"id":"wall_shelf_top_right","type":"wall_shelf","recommendedAsset":"kawaii_pastel_shelf_with_cute_cat.png","x":1160,"y":240,"bbox":{"x":1010,"y":150,"w":340,"h":135},"radius":160,"layer":"wall_decor","note":"Полка на стене справа","price":110,"buildMinSec":100,"buildMaxSec":180,"speedupCoins":31},{"id":"pet_bed_front_left","type":"pet_bed","recommendedAsset":"cozy_plush_pet_bed_with_accents.png","x":190,"y":835,"bbox":{"x":50,"y":755,"w":325,"h":175},"radius":170,"layer":"floor_front_left","note":"Лежанка внизу слева","price":125,"buildMinSec":110,"buildMaxSec":200,"speedupCoins":35},{"id":"floor_decor_front_right","type":"floor_decor","recommendedAsset":"cute_leafy_rug_with_paw_print.png","x":1190,"y":845,"bbox":{"x":1030,"y":780,"w":360,"h":145},"radius":185,"layer":"floor_front_right","note":"Свободная зона под коврик / пуф / игрушки","price":90,"buildMinSec":80,"buildMaxSec":150,"speedupCoins":26}],"assetImage":"assets/room_slots/40_hedgehog_room_slots.jpg"}};
 
-    function tDecor(key, params){
-        try {
-            if (typeof window.t === 'function') return window.t(key, params || {});
-        } catch(e) {}
-        return key;
+    const ANIMAL_TO_ROOM = {
+        lion: '01_lion',
+        giraffe: '01_lion',
+        zebra: '01_lion',
+        deer: '16_deer',
+        camel: '01_lion',
+        horse: '16_deer',
+        cow: '16_deer',
+        panda: '02_panda',
+        bear: '02_panda',
+        koala: '08_koala',
+        dog: '20_dog',
+        cat: '21_cat',
+        fox: '03_fox',
+        rabbit: '09_rabbit',
+        squirrel: '37_squirrel',
+        hedgehog: '40_hedgehog',
+        raccoon: '03_fox',
+        kangaroo: '09_rabbit',
+        elephant: '01_lion',
+        hippo: '01_lion',
+        turtle: '09_rabbit',
+        tiger: '01_lion',
+        wolf: '03_fox',
+        owl: '37_squirrel',
+        bat: '40_hedgehog',
+        snake: '40_hedgehog',
+        penguin: '02_panda',
+        seal: '02_panda',
+        polarBear: '02_panda',
+        whale: '02_panda',
+        dolphin: '02_panda',
+        octopus: '02_panda',
+        parrot: '37_squirrel',
+        monkey: '37_squirrel',
+        flamingo: '09_rabbit',
+        frog: '09_rabbit',
+        crocodile: '01_lion',
+        chicken: '09_rabbit',
+        duck: '09_rabbit',
+        sheep: '16_deer',
+        goat: '16_deer'
+    };
+
+    let roomDecorTicker = null;
+    let roomDecorLastCompleted = new Set();
+
+    function tDecorText(key, params){
+        const p = params || {};
+        const map = {
+            opened: 'Уже открыто',
+            noCoins: `Не хватает ${p.coins || 0} монет`,
+            buyTitle: 'Открыть предмет?',
+            buyText: `Открыть «${p.item || 'предмет'}» за ${p.price || 0} монет?`,
+            discountTitle: 'Скидка за рекламу',
+            discountText: `Можно посмотреть 2 рекламы и открыть предмет за ${p.discount || 0} монет вместо ${p.price || 0}.`,
+            buildStarted: `Предмет появится через ${p.time || ''}`,
+            speedTitle: 'Ускорить появление?',
+            speedText: `До появления осталось ${p.time || ''}.`,
+            adShort: 'Реклама сократила таймер на 50%',
+            speedCoins: 'Предмет готов!',
+            roomProgress: `Комната: открыто ${p.done || 0}/${p.total || 0} • строится ${p.building || 0}`,
+            adStub: `Реклама ${p.done || 1}/${p.total || 2} просмотрена`,
+            cancelled: 'Отменено'
+        };
+        return map[key] || key;
     }
 
     function storageGet(key, fallback){
@@ -20849,30 +21178,36 @@ body.guide-open #guideFab { pointer-events: none !important; }
         } catch(e) {}
     }
 
-    function readDecorState(){
-        const raw = storageGet(DECOR_STORAGE_KEY, '{}');
+    function readRoomDecorState(){
         try {
-            const parsed = JSON.parse(raw || '{}');
+            const parsed = JSON.parse(storageGet(ROOM_DECOR_STATE_KEY, '{}') || '{}');
             return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
         } catch(e) { return {}; }
     }
 
-    let petRoomDecorUnlocked = readDecorState();
-    window.petRoomDecorUnlocked = petRoomDecorUnlocked;
+    let roomDecorState = readRoomDecorState();
 
-    function saveDecorState(){
-        storageSet(DECOR_STORAGE_KEY, JSON.stringify(petRoomDecorUnlocked));
+    function saveRoomDecorState(){
+        storageSet(ROOM_DECOR_STATE_KEY, JSON.stringify(roomDecorState));
     }
 
-    function countUnlockedDecor(){
-        return DECOR_ITEMS.filter(item => !!petRoomDecorUnlocked[item.id]).length;
+    function currentCoins(){
+        return Number(typeof coins !== 'undefined' ? coins : (window.coins || 0));
     }
 
-    function showDecorToast(key, params){
-        const text = tDecor(key, params || {});
+    function spendCoins(amount){
+        const price = Number(amount || 0);
+        if (typeof coins !== 'undefined') coins = Math.max(0, coins - price);
+        else window.coins = Math.max(0, (window.coins || 0) - price);
+        try { if (typeof updateCoinsViews === 'function') updateCoinsViews(); } catch(e) {}
+        try { if (typeof saveProgress === 'function') saveProgress(); } catch(e) {}
+    }
+
+    function showRoomToast(text){
         try {
             if (typeof showPetRoomToast === 'function') showPetRoomToast(text);
             else if (typeof showFoodToast === 'function') showFoodToast(text);
+            else if (window.showCoinShortPopup) window.showCoinShortPopup(text);
         } catch(e) {}
     }
 
@@ -20888,103 +21223,358 @@ body.guide-open #guideFab { pointer-events: none !important; }
         };
     }
 
-    function closePurchaseConfirm(){
+    window.closePurchaseConfirm = function closePurchaseConfirm(){
         const overlay = document.getElementById('purchaseConfirmOverlay');
         if (!overlay) return;
         overlay.classList.remove('show');
         overlay.setAttribute('aria-hidden', 'true');
         try { document.body.classList.remove('zoo-modal-open'); } catch(e) {}
         window.setTimeout(() => { try { overlay.remove(); } catch(e) {} }, 180);
-    }
+    };
 
-    window.closePurchaseConfirm = window.closePurchaseConfirm || closePurchaseConfirm;
+    window.showPurchaseConfirm = function showPurchaseConfirm(config){
+        const cfg = config || {};
+        const old = document.getElementById('purchaseConfirmOverlay');
+        if (old) old.remove();
+        const overlay = document.createElement('div');
+        overlay.id = 'purchaseConfirmOverlay';
+        overlay.className = 'purchase-confirm-overlay show';
+        overlay.dataset.zooModalOverlay = 'true';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.innerHTML = `
+            <div class="purchase-confirm-card">
+                <button type="button" class="zoo-modal-close" data-action="cancel" aria-label="Закрыть">×</button>
+                <div class="purchase-confirm-icon">${cfg.icon || '🪙'}</div>
+                <div class="purchase-confirm-title">${cfg.title || 'Подтвердить'}</div>
+                <div class="purchase-confirm-text">${cfg.text || ''}</div>
+                <div class="purchase-confirm-price">${cfg.price ? cfg.price + ' 🪙' : ''}</div>
+                <div class="purchase-confirm-actions">
+                    <button type="button" class="btn btn-light" data-action="cancel">${cfg.cancelText || 'Отмена'}</button>
+                    <button type="button" class="btn btn-green" data-action="confirm">${cfg.confirmText || 'Купить'}</button>
+                </div>
+            </div>`;
+        document.body.appendChild(overlay);
+        document.body.classList.add('zoo-modal-open');
+        try { if (typeof auditModalCloseButtons === 'function') auditModalCloseButtons(); } catch(e) {}
+        overlay.addEventListener('click', function(event){
+            if (event.target === overlay) window.closePurchaseConfirm();
+        });
+        overlay.querySelector('[data-action="cancel"]')?.addEventListener('click', function(event){
+            event.preventDefault();
+            window.closePurchaseConfirm();
+            try { if (typeof cfg.onCancel === 'function') cfg.onCancel(); } catch(e) {}
+        });
+        overlay.querySelector('[data-action="confirm"]')?.addEventListener('click', function(event){
+            event.preventDefault();
+            window.closePurchaseConfirm();
+            try { if (typeof cfg.onConfirm === 'function') cfg.onConfirm(); } catch(e) { console.error(e); }
+        });
+        return overlay;
+    };
 
-    if (typeof window.showPurchaseConfirm !== 'function') {
-        window.showPurchaseConfirm = function showPurchaseConfirm(config){
-            const cfg = config || {};
-            const old = document.getElementById('purchaseConfirmOverlay');
-            if (old) old.remove();
-            const overlay = document.createElement('div');
-            overlay.id = 'purchaseConfirmOverlay';
-            overlay.className = 'purchase-confirm-overlay show';
-            overlay.dataset.zooModalOverlay = 'true';
-            overlay.setAttribute('role', 'dialog');
-            overlay.setAttribute('aria-modal', 'true');
-            overlay.innerHTML = `
-                <div class="purchase-confirm-card">
-                    <button type="button" class="zoo-modal-close" data-action="cancel" aria-label="${tDecor('nav.close')}">×</button>
-                    <div class="purchase-confirm-icon">${cfg.icon || '🪙'}</div>
-                    <div class="purchase-confirm-title">${cfg.title || tDecor('petdecor.confirm.title')}</div>
-                    <div class="purchase-confirm-text">${cfg.text || ''}</div>
-                    <div class="purchase-confirm-price">${cfg.price ? cfg.price + ' 🪙' : ''}</div>
-                    <div class="purchase-confirm-actions">
-                        <button type="button" class="btn btn-light" data-action="cancel">${tDecor('btn.cancel')}</button>
-                        <button type="button" class="btn btn-green" data-action="confirm">${tDecor('btn.confirm')}</button>
-                    </div>
-                </div>`;
-            document.body.appendChild(overlay);
-            document.body.classList.add('zoo-modal-open');
-            try { if (typeof auditModalCloseButtons === 'function') auditModalCloseButtons(); } catch(e) {}
-            overlay.addEventListener('click', function(event){
-                if (event.target === overlay) window.closePurchaseConfirm();
-            });
-            overlay.querySelector('[data-action="cancel"]')?.addEventListener('click', function(event){
+    function showRoomChoicePopup(cfg){
+        const overlay = window.showPurchaseConfirm({
+            icon: cfg.icon || '🔒',
+            title: cfg.title || '',
+            text: `${cfg.text || ''}<div class="stage49-discount-note">${cfg.note || ''}</div>`,
+            price: cfg.price || 0,
+            confirmText: cfg.primaryText || 'Купить',
+            cancelText: 'Отмена',
+            onConfirm: cfg.onPrimary
+        });
+        const actions = overlay && overlay.querySelector('.purchase-confirm-actions');
+        if (actions && cfg.secondaryText) {
+            const secondary = document.createElement('button');
+            secondary.type = 'button';
+            secondary.className = 'btn btn-purple';
+            secondary.textContent = cfg.secondaryText;
+            secondary.addEventListener('click', function(event){
                 event.preventDefault();
                 window.closePurchaseConfirm();
+                try { cfg.onSecondary && cfg.onSecondary(); } catch(e) { console.error(e); }
             });
-            overlay.querySelector('[data-action="confirm"]')?.addEventListener('click', function(event){
-                event.preventDefault();
-                window.closePurchaseConfirm();
-                try { if (typeof cfg.onConfirm === 'function') cfg.onConfirm(); } catch(e) { console.error(e); }
-            });
-        };
-    }
-
-    function buyDecorItem(item){
-        if (!item || petRoomDecorUnlocked[item.id]) {
-            showDecorToast('petdecor.already_opened');
-            return;
+            actions.insertBefore(secondary, actions.firstChild);
+            actions.style.gridTemplateColumns = '1fr';
+            actions.classList.add('stage49-choice-actions');
         }
-        const currentCoins = Number(window.coins !== undefined ? window.coins : (typeof coins !== 'undefined' ? coins : 0));
-        if (currentCoins < item.price) {
-            const missing = item.price - currentCoins;
-            if (typeof window.showCoinShortPopup === 'function') window.showCoinShortPopup(tDecor('petdecor.no_coins', {coins: missing}));
-            showDecorToast('petdecor.need_more', {coins: missing});
+        return overlay;
+    }
+
+    function getRoomIdForAnimal(key){
+        return ANIMAL_TO_ROOM[key] || '01_lion';
+    }
+
+    function getCurrentRoomData(){
+        const key = (typeof selectedMainPetKey !== 'undefined' && selectedMainPetKey) ? selectedMainPetKey : 'lion';
+        const roomId = getRoomIdForAnimal(key);
+        return ROOM_SLOT_DATA[roomId] || ROOM_SLOT_DATA['01_lion'];
+    }
+
+    function getRoomState(roomId){
+        if (!roomDecorState[roomId] || typeof roomDecorState[roomId] !== 'object') roomDecorState[roomId] = {};
+        return roomDecorState[roomId];
+    }
+
+    function getSlotState(roomId, slotId){
+        return getRoomState(roomId)[slotId] || { status: 'locked' };
+    }
+
+    function setSlotState(roomId, slotId, state){
+        getRoomState(roomId)[slotId] = state;
+        saveRoomDecorState();
+    }
+
+    function randomBuildMs(slot){
+        const min = Number(slot.buildMinSec || 90);
+        const max = Number(slot.buildMaxSec || min);
+        const sec = Math.round(min + Math.random() * Math.max(0, max - min));
+        return sec * 1000;
+    }
+
+    function formatTime(ms){
+        const total = Math.max(0, Math.ceil(Number(ms || 0) / 1000));
+        const min = Math.floor(total / 60);
+        const sec = total % 60;
+        return min > 0 ? `${min}:${String(sec).padStart(2, '0')}` : `${sec}с`;
+    }
+
+    function getSlotLabel(slot){
+        const labels = {
+            wardrobe: 'Шкаф',
+            tv_cabinet: 'Тумба',
+            armchair: 'Кресло',
+            side_table: 'Столик',
+            wall_shelf: 'Полка',
+            pet_bed: 'Лежанка',
+            floor_decor: 'Коврик',
+            cat_tower: 'Кошачья башня'
+        };
+        return labels[slot.type] || slot.note || 'Декор';
+    }
+
+    function normalizeRoomBuildState(room){
+        const state = getRoomState(room.roomId);
+        const now = Date.now();
+        let changed = false;
+        room.decorSlots.forEach(slot => {
+            const item = state[slot.id];
+            if (item && item.status === 'building' && Number(item.finishAt || 0) <= now) {
+                state[slot.id] = { status: 'unlocked', completedAt: now };
+                roomDecorLastCompleted.add(room.roomId + ':' + slot.id);
+                changed = true;
+            }
+        });
+        if (changed) saveRoomDecorState();
+    }
+
+    function applyStage49RoomBackground(hero, room){
+        if (!hero || !room) return;
+        hero.classList.add('clean-room-scene', 'stage49-room-scene');
+        hero.style.setProperty('--clean-room-bg', `url("${room.assetImage}")`);
+        hero.style.backgroundImage = `url("${room.assetImage}")`;
+        hero.style.backgroundSize = '100% 100%';
+        hero.style.backgroundPosition = 'center';
+        hero.style.backgroundRepeat = 'no-repeat';
+    }
+
+    window.applyCleanRoomBackground = function(element, key){
+        const room = ROOM_SLOT_DATA[getRoomIdForAnimal(key || 'lion')] || ROOM_SLOT_DATA['01_lion'];
+        applyStage49RoomBackground(element, room);
+    };
+
+    function spawnRoomSmoke(slot){
+        const hero = document.getElementById('petRoomHero');
+        if (!hero || !slot) return;
+        const smoke = document.createElement('div');
+        smoke.className = 'stage49-room-smoke';
+        smoke.style.left = (slot.x / ROOM_SLOT_COORD.width * 100) + '%';
+        smoke.style.top = (slot.y / ROOM_SLOT_COORD.height * 100) + '%';
+        smoke.innerHTML = '<span></span><span></span><span></span><span></span>';
+        hero.appendChild(smoke);
+        setTimeout(() => { try { smoke.remove(); } catch(e) {} }, 1200);
+    }
+
+    function simulateRewardedAds(count, onDone){
+        let done = 0;
+        function step(){
+            done += 1;
+            showRoomToast(tDecorText('adStub', {done, total: count}));
+            try { if (typeof playSound === 'function') playSound('coin'); } catch(e) {}
+            if (done >= count) {
+                setTimeout(() => { try { onDone && onDone(); } catch(e) { console.error(e); } }, 350);
+            } else {
+                setTimeout(step, 650);
+            }
+        }
+        setTimeout(step, 250);
+    }
+
+    function startSlotBuild(room, slot, price){
+        if (currentCoins() < price) {
+            const missing = price - currentCoins();
+            if (window.showCoinShortPopup) window.showCoinShortPopup(tDecorText('noCoins', {coins: missing}));
             try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
             return;
         }
-        const title = tDecor('petdecor.confirm.title');
-        const itemName = tDecor(item.titleKey);
-        const text = tDecor('petdecor.confirm.text', {item: itemName, price: item.price});
+        spendCoins(price);
+        const buildMs = randomBuildMs(slot);
+        setSlotState(room.roomId, slot.id, {
+            status: 'building',
+            startedAt: Date.now(),
+            finishAt: Date.now() + buildMs,
+            totalMs: buildMs,
+            paid: price
+        });
+        try { if (typeof playSound === 'function') playSound('coin'); } catch(e) {}
+        showRoomToast(tDecorText('buildStarted', {time: formatTime(buildMs)}));
+        renderPetRoomDecor();
+    }
+
+    function openSlotPurchase(room, slot){
+        const state = getSlotState(room.roomId, slot.id);
+        if (state.status === 'unlocked') {
+            showRoomToast(tDecorText('opened'));
+            return;
+        }
+        if (state.status === 'building') {
+            openSlotSpeedup(room, slot);
+            return;
+        }
+        const name = getSlotLabel(slot);
+        const price = Number(slot.price || 100);
         window.showPurchaseConfirm({
-            icon: item.icon,
-            title,
-            text,
-            price: item.price,
+            icon: '🔒',
+            title: tDecorText('buyTitle'),
+            text: tDecorText('buyText', {item: name, price}),
+            price,
+            confirmText: 'Купить',
             onConfirm: function(){
-                if (typeof coins !== 'undefined') {
-                    if (coins < item.price) {
-                        const missing = item.price - coins;
-                        if (typeof window.showCoinShortPopup === 'function') window.showCoinShortPopup(tDecor('petdecor.no_coins', {coins: missing}));
-                        return;
-                    }
-                    coins -= item.price;
-                }
-                petRoomDecorUnlocked[item.id] = true;
-                window.petRoomDecorUnlocked = petRoomDecorUnlocked;
-                saveDecorState();
-                try { if (typeof saveProgress === 'function') saveProgress(); } catch(e) {}
-                try { if (typeof updateCoinsViews === 'function') updateCoinsViews(); } catch(e) {}
-                try { if (typeof playSound === 'function') playSound('coin'); } catch(e) {}
-                renderPetRoomDecor();
-                showDecorToast('petdecor.bought', {item: itemName});
+                openSlotDiscountOffer(room, slot, price);
             }
         });
+    }
+
+    function openSlotDiscountOffer(room, slot, price){
+        const discounted = Math.max(1, Math.ceil(price * 0.5));
+        showRoomChoicePopup({
+            icon: '🎬',
+            title: tDecorText('discountTitle'),
+            text: tDecorText('discountText', {price, discount: discounted}),
+            note: 'В браузере это тестовая rewarded-реклама. В Android подключим реальный AdMob bridge.',
+            price: discounted,
+            primaryText: `Купить за ${price}`,
+            secondaryText: `2 рекламы → ${discounted} 🪙`,
+            onPrimary: function(){ startSlotBuild(room, slot, price); },
+            onSecondary: function(){
+                simulateRewardedAds(2, function(){ startSlotBuild(room, slot, discounted); });
+            }
+        });
+    }
+
+    function finishSlotNow(room, slot){
+        setSlotState(room.roomId, slot.id, { status: 'unlocked', completedAt: Date.now() });
+        spawnRoomSmoke(slot);
+        try { if (typeof playSound === 'function') playSound('win'); } catch(e) {}
+        renderPetRoomDecor();
+        showRoomToast(tDecorText('speedCoins'));
+    }
+
+    function openSlotSpeedup(room, slot){
+        const state = getSlotState(room.roomId, slot.id);
+        if (!state || state.status !== 'building') return;
+        const remaining = Math.max(0, Number(state.finishAt || 0) - Date.now());
+        if (remaining <= 0) {
+            finishSlotNow(room, slot);
+            return;
+        }
+        const speedCoins = Number(slot.speedupCoins || 25);
+        showRoomChoicePopup({
+            icon: '⏱️',
+            title: tDecorText('speedTitle'),
+            text: tDecorText('speedText', {time: formatTime(remaining)}),
+            note: 'Можно ускорить за монеты или посмотреть рекламу и сократить время наполовину.',
+            price: speedCoins,
+            primaryText: `Ускорить за ${speedCoins}`,
+            secondaryText: 'Реклама −50% времени',
+            onPrimary: function(){
+                if (currentCoins() < speedCoins) {
+                    const missing = speedCoins - currentCoins();
+                    if (window.showCoinShortPopup) window.showCoinShortPopup(tDecorText('noCoins', {coins: missing}));
+                    try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
+                    return;
+                }
+                spendCoins(speedCoins);
+                finishSlotNow(room, slot);
+            },
+            onSecondary: function(){
+                simulateRewardedAds(1, function(){
+                    const item = getSlotState(room.roomId, slot.id);
+                    const left = Math.max(0, Number(item.finishAt || 0) - Date.now());
+                    item.finishAt = Date.now() + Math.ceil(left * 0.5);
+                    item.status = 'building';
+                    setSlotState(room.roomId, slot.id, item);
+                    showRoomToast(tDecorText('adShort'));
+                    renderPetRoomDecor();
+                });
+            }
+        });
+    }
+
+    function renderSlotButton(room, slot){
+        const state = getSlotState(room.roomId, slot.id);
+        const bbox = slot.bbox || {x: slot.x - 80, y: slot.y - 80, w: 160, h: 160};
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `stage49-slot ${state.status || 'locked'}`;
+        btn.style.left = (bbox.x / ROOM_SLOT_COORD.width * 100) + '%';
+        btn.style.top = (bbox.y / ROOM_SLOT_COORD.height * 100) + '%';
+        btn.style.width = (bbox.w / ROOM_SLOT_COORD.width * 100) + '%';
+        btn.style.height = (bbox.h / ROOM_SLOT_COORD.height * 100) + '%';
+        btn.setAttribute('aria-label', getSlotLabel(slot));
+        const now = Date.now();
+
+        if (state.status === 'building') {
+            const remaining = Math.max(0, Number(state.finishAt || 0) - now);
+            btn.innerHTML = `<span class="stage49-slot-box"><span class="stage49-building-badge"><b>⏳</b><small>${formatTime(remaining)}</small></span></span>`;
+        } else if (state.status === 'unlocked') {
+            btn.innerHTML = '<span class="stage49-slot-box"><span class="stage49-unlocked-spark">✓</span></span>';
+        } else {
+            btn.innerHTML = `<span class="stage49-slot-box"><span class="stage49-lock-badge">🔒</span><span class="stage49-price">${slot.price} 🪙</span></span>`;
+        }
+
+        btn.addEventListener('click', function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            openSlotPurchase(room, slot);
+        });
+        return btn;
+    }
+
+    function scheduleRoomTicker(hasBuilding){
+        if (roomDecorTicker) {
+            clearInterval(roomDecorTicker);
+            roomDecorTicker = null;
+        }
+        if (!hasBuilding) return;
+        roomDecorTicker = setInterval(function(){
+            const screen = document.getElementById('petRoomScreen');
+            if (!screen || !screen.classList.contains('show')) {
+                clearInterval(roomDecorTicker);
+                roomDecorTicker = null;
+                return;
+            }
+            renderPetRoomDecor();
+        }, 1000);
     }
 
     function renderPetRoomDecor(){
         const hero = document.getElementById('petRoomHero');
         if (!hero) return;
+        const room = getCurrentRoomData();
+        normalizeRoomBuildState(room);
+        applyStage49RoomBackground(hero, room);
+
         let layer = document.getElementById('petRoomDecorLayer');
         if (!layer) {
             layer = document.createElement('div');
@@ -20993,51 +21583,43 @@ body.guide-open #guideFab { pointer-events: none !important; }
             hero.insertBefore(layer, hero.firstChild);
         }
         layer.innerHTML = '';
-        DECOR_ITEMS.forEach(item => {
-            const unlocked = !!petRoomDecorUnlocked[item.id];
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = `pet-room-decor-item ${item.className} ${unlocked ? 'unlocked' : 'locked'}`;
-            const itemName = tDecor(item.titleKey);
-            btn.setAttribute('aria-label', unlocked
-                ? tDecor('petdecor.aria_opened', {item: itemName})
-                : tDecor('petdecor.aria_locked', {item: itemName, price: item.price})
-            );
-            btn.innerHTML = `<span class="decor-visual ${item.visualClass}" aria-hidden="true"></span>${unlocked ? '' : '<span class="decor-lock" aria-hidden="true">🔒</span>'}`;
-            btn.addEventListener('click', function(event){
-                event.preventDefault();
-                event.stopPropagation();
-                if (unlocked) {
-                    showDecorToast('petdecor.opened_hint', {item: itemName});
-                    try { if (typeof playSound === 'function') playSound('click'); } catch(e) {}
-                } else {
-                    buyDecorItem(item);
-                }
-            });
-            layer.appendChild(btn);
+
+        let unlocked = 0;
+        let building = 0;
+        room.decorSlots.forEach(slot => {
+            const state = getSlotState(room.roomId, slot.id);
+            if (state.status === 'unlocked') unlocked += 1;
+            if (state.status === 'building') building += 1;
+            layer.appendChild(renderSlotButton(room, slot));
+            const completedKey = room.roomId + ':' + slot.id;
+            if (roomDecorLastCompleted.has(completedKey)) {
+                roomDecorLastCompleted.delete(completedKey);
+                setTimeout(() => spawnRoomSmoke(slot), 80);
+            }
         });
 
         const hint = document.getElementById('petRoomDecorHint');
         if (hint) {
-            const count = countUnlockedDecor();
-            hint.textContent = tDecor('petdecor.progress', {done: count, total: DECOR_ITEMS.length});
+            hint.textContent = tDecorText('roomProgress', {done: unlocked, total: room.decorSlots.length, building});
             hint.classList.add('show');
         }
-    }
 
-    const originalRenderPetRoom = window.renderPetRoom;
-    if (typeof originalRenderPetRoom === 'function' && !originalRenderPetRoom.__stage46aDecorWrapped) {
-        const wrapped = function(){
-            const result = originalRenderPetRoom.apply(this, arguments);
-            try { renderPetRoomDecor(); } catch(e) { console.warn('pet room decor render failed', e); }
-            return result;
-        };
-        wrapped.__stage46aDecorWrapped = true;
-        window.renderPetRoom = wrapped;
+        scheduleRoomTicker(building > 0);
     }
 
     window.renderPetRoomDecor = renderPetRoomDecor;
-    window.buyPetRoomDecorItem = buyDecorItem;
+    window.buyPetRoomDecorItem = openSlotPurchase;
+
+    const originalRenderPetRoom = window.renderPetRoom;
+    if (typeof originalRenderPetRoom === 'function' && !originalRenderPetRoom.__stage49DecorWrapped) {
+        const wrapped = function(){
+            const result = originalRenderPetRoom.apply(this, arguments);
+            try { renderPetRoomDecor(); } catch(e) { console.warn('stage49 render failed', e); }
+            return result;
+        };
+        wrapped.__stage49DecorWrapped = true;
+        window.renderPetRoom = wrapped;
+    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function(){
@@ -21047,6 +21629,37 @@ body.guide-open #guideFab { pointer-events: none !important; }
         renderPetRoomDecor();
     }
 })();
+
+
+
+/* ===== Stage 4.8G — Old guide runtime disabled ===== */
+(function disableOldAnimatedGuide(){
+    function closeOldGuide(){
+        try {
+            document.body.classList.remove('guide-open');
+            const overlay = document.getElementById('guideOverlay');
+            if (overlay) overlay.classList.remove('show');
+        } catch(e) {}
+    }
+
+    window.startGuideForCurrentScreen = function(){ closeOldGuide(); return false; };
+    window.openGuideFromFab = function(event){
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        closeOldGuide();
+        return false;
+    };
+    window.hardBindGuideFab = function(){ closeOldGuide(); return false; };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', closeOldGuide, { once: true });
+    } else {
+        closeOldGuide();
+    }
+})();
+
 </script>
 
 </body>
