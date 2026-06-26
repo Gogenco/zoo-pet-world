@@ -11631,6 +11631,71 @@ body.guide-open {
     }
 }
 
+
+/* ===== Stage 4.9G-6B — PRICE ONLY: lock + price grouped, pet unchanged ===== */
+/* This stage intentionally does NOT change pet size, pet position, storage, or progress. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row {
+    position: absolute;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row .stage49-mini-lock,
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row .stage49-mini-price {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    flex: 0 0 auto;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row.left {
+    top: 5px;
+    right: 5px;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row.right {
+    top: 5px;
+    left: 5px;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row.center {
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Phone: keep group compact so it does not cover the slot. */
+@media (max-width: 620px) {
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row {
+        gap: 3px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row.left {
+        top: 3px;
+        right: 3px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row.right {
+        top: 3px;
+        left: 3px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-price-row.center {
+        top: 3px;
+        gap: 1px;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -22919,7 +22984,10 @@ body.guide-open #guideFab { pointer-events: none !important; }
         const bbox = slot.bbox || {x: slot.x - 80, y: slot.y - 80, w: 160, h: 160};
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `stage49-slot ${state.status || 'locked'}`;
+        const centerX = Number(bbox.x || 0) + (Number(bbox.w || 0) / 2);
+        const roomMidX = Number(ROOM_SLOT_COORD.width || 1536) / 2;
+        const sideClass = centerX < roomMidX - 120 ? 'side-left' : (centerX > roomMidX + 120 ? 'side-right' : 'side-center');
+        btn.className = `stage49-slot ${state.status || 'locked'} ${sideClass}`;
         btn.style.left = (bbox.x / ROOM_SLOT_COORD.width * 100) + '%';
         btn.style.top = (bbox.y / ROOM_SLOT_COORD.height * 100) + '%';
         btn.style.width = (bbox.w / ROOM_SLOT_COORD.width * 100) + '%';
@@ -22931,7 +22999,15 @@ body.guide-open #guideFab { pointer-events: none !important; }
             const remaining = Math.max(0, Number(state.finishAt || 0) - now);
             btn.innerHTML = `<span class="stage49-mini-timer"><b>⏳</b><small>${formatTime(remaining)}</small></span>`;
         } else {
-            btn.innerHTML = `<span class="stage49-mini-lock">🔒</span><span class="stage49-mini-price">${slot.price} 🪙</span>`;
+            const lockMarkup = `<span class="stage49-mini-lock">🔒</span>`;
+            const priceMarkup = `<span class="stage49-mini-price">${slot.price} 🪙</span>`;
+            if (sideClass === 'side-left') {
+                btn.innerHTML = `<span class="stage49-lock-price-row left">${priceMarkup}${lockMarkup}</span>`;
+            } else if (sideClass === 'side-right') {
+                btn.innerHTML = `<span class="stage49-lock-price-row right">${lockMarkup}${priceMarkup}</span>`;
+            } else {
+                btn.innerHTML = `<span class="stage49-lock-price-row center">${lockMarkup}${priceMarkup}</span>`;
+            }
         }
 
         btn.addEventListener('click', function(event){
