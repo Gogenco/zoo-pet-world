@@ -11376,6 +11376,132 @@ body.guide-open {
     }
 }
 
+
+/* ===== Stage 4.9G-3B — real small lock render, no old lock badge markup ===== */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-slot {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* Hide old classes defensively if cached/old state injects them somewhere. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-slot-box,
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-lock-badge,
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-building-badge,
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-price {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* New mini lock: small, corner-only, no big white circle. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-lock {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 1;
+    background: rgba(49, 31, 101, .82);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,.72);
+    box-shadow: 0 3px 8px rgba(15,23,42,.18);
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    z-index: 4;
+}
+
+/* New price: compact and not a central plate. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-price {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 1000;
+    color: #4c1d95;
+    background: rgba(255,255,255,.82);
+    border: 1px solid rgba(124,58,237,.16);
+    box-shadow: 0 2px 6px rgba(15,23,42,.10);
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    z-index: 4;
+}
+
+/* New timer: compact corner-only. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-timer {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 3px 6px;
+    border-radius: 999px;
+    font-weight: 1000;
+    color: #065f46;
+    background: rgba(220,252,231,.88);
+    border: 1.5px solid rgba(255,255,255,.75);
+    box-shadow: 0 3px 8px rgba(15,23,42,.15);
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    z-index: 4;
+}
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-timer b {
+    font-size: 11px;
+    line-height: 1;
+}
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-timer small {
+    font-size: 8.5px;
+    line-height: 1;
+}
+
+/* Phone tuning */
+@media (max-width: 620px) {
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-lock {
+        top: 3px;
+        right: 3px;
+        width: 19px;
+        height: 19px;
+        font-size: 10px;
+        border-width: 1px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-price {
+        min-height: 15px;
+        padding: 1px 4px;
+        font-size: 7.5px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-timer {
+        top: 3px;
+        right: 3px;
+        min-height: 19px;
+        padding: 2px 4px;
+        gap: 2px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-timer b {
+        font-size: 9px;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-timer small {
+        font-size: 7px;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -13247,6 +13373,10 @@ function showUnifiedCompletionPopup(config) {
     modalButton.textContent = cfg.primaryText || "Следующий уровень";
     modalButton.onclick = cfg.primaryAction || hideOverlay;
 
+    setVictoryPopupForMode(cfg.mode || 'completion', Array.isArray(cfg.secondaryButtons) ? cfg.secondaryButtons : [
+        { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+    ]);
+
     forceShowVictoryPopup();
 }
 
@@ -14673,17 +14803,17 @@ function showSpotDiffCompletePopup(reward, alreadyDone) {
         modalButton.onclick = goNextSpotDiffLevel;
     }
 
-    try {
-        const extraButtons = overlay ? overlay.querySelectorAll('.two-col button') : [];
-        if (extraButtons[0]) {
-            extraButtons[0].textContent = 'Играть снова';
-            extraButtons[0].onclick = restartSpotDiffLevel;
-        }
-        if (extraButtons[1]) {
-            extraButtons[1].textContent = 'Главное меню';
-            extraButtons[1].onclick = goHome;
-        }
-    } catch (_) {}
+    setVictoryPopupForMode('spotdiff', [
+        {
+            text: 'Играть снова',
+            className: 'btn btn-purple',
+            action: () => {
+                hideOverlay();
+                restartSpotDiffLevel();
+            }
+        },
+        { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+    ]);
 
     if (overlay) {
         void overlay.offsetWidth;
@@ -15772,18 +15902,56 @@ function calculateStars() {
 
 
 
+
+/* ===== Stage 4.9G-1 — strict victory popup buttons per game ===== */
+function getVictoryModalSecondaryButtons() {
+    if (!overlay) return [];
+    return Array.from(overlay.querySelectorAll('.two-col button'));
+}
+
+function setVictoryModalSecondaryButtons(buttons) {
+    const wrap = overlay ? overlay.querySelector('.two-col') : null;
+    const extraButtons = getVictoryModalSecondaryButtons();
+    if (!wrap || !extraButtons.length) return;
+
+    const list = Array.isArray(buttons) ? buttons : [];
+    let visibleCount = 0;
+
+    extraButtons.forEach((btn, index) => {
+        const cfg = list[index];
+        if (!cfg) {
+            btn.style.display = 'none';
+            btn.textContent = '';
+            btn.onclick = null;
+            return;
+        }
+
+        btn.style.display = '';
+        btn.textContent = cfg.text || '';
+        btn.className = cfg.className || (index === 0 ? 'btn btn-purple' : 'btn btn-light');
+        btn.onclick = function(event) {
+            try { event && event.preventDefault && event.preventDefault(); } catch(e) {}
+            try { cfg.action && cfg.action(); } catch(e) { console.error(e); }
+        };
+        visibleCount += 1;
+    });
+
+    wrap.style.display = visibleCount > 0 ? '' : 'none';
+    if (visibleCount === 1) wrap.style.gridTemplateColumns = '1fr';
+    else wrap.style.gridTemplateColumns = '';
+}
+
+function setVictoryPopupForMode(mode, buttons) {
+    if (overlay) overlay.dataset.victoryMode = mode || '';
+    setVictoryModalSecondaryButtons(buttons || []);
+}
+
 function restoreDefaultVictoryModalButtons() {
     try {
-        if (!overlay) return;
-        const extraButtons = overlay.querySelectorAll('.two-col button');
-        if (extraButtons[0]) {
-            extraButtons[0].textContent = 'Карта уровней';
-            extraButtons[0].onclick = openMapFromModal;
-        }
-        if (extraButtons[1]) {
-            extraButtons[1].textContent = 'Главное меню';
-            extraButtons[1].onclick = goHome;
-        }
+        setVictoryPopupForMode('memory', [
+            { text: 'Карта уровней', className: 'btn btn-purple', action: openMapFromModal },
+            { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+        ]);
     } catch (_) {}
 }
 
@@ -15872,7 +16040,15 @@ function winLevel() {
         hideOverlay();
         startLevel(nextIndex);
     };
+    setVictoryPopupForMode('memory', [
+        { text: 'Карта уровней', className: 'btn btn-purple', action: openMapFromModal },
+        { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+    ]);
     hideOverlay();
+    setVictoryPopupForMode('memory', [
+        { text: 'Карта уровней', className: 'btn btn-purple', action: openMapFromModal },
+        { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+    ]);
     void overlay.offsetWidth;
     overlay.classList.add("show");
     forceShowVictoryPopup();
@@ -17698,7 +17874,20 @@ function showPuzzleWinPop(reward, unlockedStageText = "") {
                     shufflePuzzle(false);
                 }
             } catch(e) {}
-        }
+        },
+        mode: 'puzzle',
+        secondaryButtons: [
+            {
+                text: 'Этапы пазла',
+                className: 'btn btn-purple',
+                action: () => {
+                    hideOverlay();
+                    showScreen('puzzleScreen');
+                    try { renderPuzzleStages(); renderPuzzleImageRail(); updatePuzzleUI(); } catch(e) {}
+                }
+            },
+            { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+        ]
     });
 }
 
@@ -18346,7 +18535,19 @@ function showZooBlockGameOverModal(reward) {
         primaryAction: () => {
             hideOverlay();
             restartZooBlock(true);
-        }
+        },
+        mode: 'block',
+        secondaryButtons: [
+            {
+                text: 'Играть снова',
+                className: 'btn btn-purple',
+                action: () => {
+                    hideOverlay();
+                    restartZooBlock(true);
+                }
+            },
+            { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+        ]
     });
 }
 
@@ -18767,7 +18968,19 @@ function showShadowCelebration() {
         extra2: `🎯 Ошибки: ${shadowWrongCount}`,
         extra3: `⭐ ${currentShadowLevel.difficulty.label}`,
         primaryText: 'Следующий уровень ➜',
-        primaryAction: goNextShadowLevel
+        primaryAction: goNextShadowLevel,
+        mode: 'shadow',
+        secondaryButtons: [
+            {
+                text: 'Играть снова',
+                className: 'btn btn-purple',
+                action: () => {
+                    hideOverlay();
+                    restartShadowLevel();
+                }
+            },
+            { text: 'Главное меню', className: 'btn btn-light', action: goHome }
+        ]
     });
 }
 
@@ -22560,9 +22773,9 @@ body.guide-open #guideFab { pointer-events: none !important; }
 
         if (state.status === 'building') {
             const remaining = Math.max(0, Number(state.finishAt || 0) - now);
-            btn.innerHTML = `<span class="stage49-slot-box"><span class="stage49-building-badge"><b>⏳</b><small>${formatTime(remaining)}</small></span></span>`;
+            btn.innerHTML = `<span class="stage49-mini-timer"><b>⏳</b><small>${formatTime(remaining)}</small></span>`;
         } else {
-            btn.innerHTML = `<span class="stage49-slot-box"><span class="stage49-lock-badge">🔒</span><span class="stage49-price">${slot.price} 🪙</span></span>`;
+            btn.innerHTML = `<span class="stage49-mini-lock">🔒</span><span class="stage49-mini-price">${slot.price} 🪙</span>`;
         }
 
         btn.addEventListener('click', function(event){
