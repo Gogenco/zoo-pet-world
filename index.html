@@ -10828,6 +10828,117 @@ body.guide-open {
     }
 }
 
+
+/* ===== Stage 4.9C — Pet room mobile alignment / click safety / coin guard ===== */
+.pet-room-hero.stage49-room-scene {
+    background-size: 100% 100% !important;
+    background-position: center center !important;
+}
+
+.pet-room-hero.stage49-room-scene .pet-room-decor-layer {
+    z-index: 24 !important;
+}
+
+.pet-room-hero.stage49-room-scene .stage49-slot {
+    z-index: 25 !important;
+}
+
+.pet-room-hero.stage49-room-scene .pet-room-stage {
+    z-index: 9 !important;
+    pointer-events: none !important;
+}
+
+.pet-room-hero.stage49-room-scene .pet-stage-sprite,
+.pet-room-hero.stage49-room-scene .pet-stage-shadow {
+    pointer-events: none !important;
+}
+
+.pet-room-hero.stage49-room-scene .pet-room-bars,
+.pet-room-hero.stage49-room-scene .pet-room-speech {
+    z-index: 30 !important;
+}
+
+.pet-room-hero.stage49-room-scene .pet-room-voice-btn {
+    z-index: 31 !important;
+}
+
+.stage49-slot.locked,
+.stage49-slot.building {
+    min-width: 46px;
+    min-height: 46px;
+}
+
+.stage49-slot.locked .stage49-slot-box,
+.stage49-slot.building .stage49-slot-box {
+    pointer-events: auto;
+}
+
+/* iPhone / small phones: do NOT use cover, because cover crops room image and breaks JSON slot alignment */
+@media (max-width: 620px) {
+    .pet-room-hero.stage49-room-scene {
+        background-size: 100% 100% !important;
+        background-position: center center !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-decor-layer {
+        z-index: 24 !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .stage49-slot {
+        z-index: 25 !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-stage {
+        z-index: 8 !important;
+        pointer-events: none !important;
+        bottom: 20px !important;
+        width: 205px !important;
+        height: 176px !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 138px !important;
+        height: 138px !important;
+        bottom: 10px !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-shadow {
+        width: 90px !important;
+        bottom: 8px !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-voice-btn {
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        padding: 0 !important;
+        right: 8px !important;
+        bottom: 8px !important;
+        border-radius: 50% !important;
+        font-size: 0 !important;
+    }
+
+    .pet-room-hero.stage49-room-scene .pet-room-voice-btn::after {
+        content: "🔊";
+        font-size: 22px;
+    }
+
+    .stage49-lock-badge {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 22px !important;
+    }
+
+    .stage49-price {
+        min-width: 54px !important;
+        min-height: 22px !important;
+        font-size: 11px !important;
+        padding: 3px 7px !important;
+        bottom: -7px !important;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -21481,13 +21592,24 @@ body.guide-open #guideFab { pointer-events: none !important; }
         return Number(typeof coins !== 'undefined' ? coins : (window.coins || 0));
     }
 
-    function spendCoins(amount){
-        const price = Number(amount || 0);
-        if (typeof coins !== 'undefined') coins = Math.max(0, coins - price);
-        else window.coins = Math.max(0, (window.coins || 0) - price);
+    function setGameCoins(value){
+        const next = Math.max(0, Math.floor(Number(value || 0)));
+        try { if (typeof coins !== 'undefined') coins = next; } catch(e) {}
+        try { window.coins = next; } catch(e) {}
+        try { if (window.safeStorage && typeof safeStorage.set === 'function') safeStorage.set("zooCoins", String(next)); } catch(e) {}
         try { if (typeof updateCoinsViews === 'function') updateCoinsViews(); } catch(e) {}
-        try { if (typeof saveProgress === 'function') saveProgress(); } catch(e) {}
     }
+
+
+    function spendCoins(amount){
+        const price = Math.max(0, Math.floor(Number(amount || 0)));
+        const next = currentCoins() - price;
+        if (next < 0) return false;
+        setGameCoins(next);
+        try { if (typeof saveProgress === 'function') saveProgress(); } catch(e) {}
+        return true;
+    }
+
 
     function showRoomToast(text){
         try {
@@ -21742,20 +21864,22 @@ body.guide-open #guideFab { pointer-events: none !important; }
     }
 
     function startSlotBuild(room, slot, price){
-        if (currentCoins() < price) {
-            const missing = price - currentCoins();
+        const finalPrice = Math.max(0, Math.floor(Number(price || 0)));
+        if (currentCoins() < finalPrice) {
+            const missing = finalPrice - currentCoins();
             if (window.showCoinShortPopup) window.showCoinShortPopup(tDecorText('noCoins', {coins: missing}));
             try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
             return;
         }
-        spendCoins(price);
+        if (!spendCoins(finalPrice)) return;
+
         const buildMs = randomBuildMs(slot);
         setSlotState(room.roomId, slot.id, {
             status: 'building',
             startedAt: Date.now(),
             finishAt: Date.now() + buildMs,
             totalMs: buildMs,
-            paid: price
+            paid: finalPrice
         });
         try { if (typeof playSound === 'function') playSound('coin'); } catch(e) {}
         showRoomToast(tDecorText('buildStarted', {time: formatTime(buildMs)}));
@@ -21851,7 +21975,7 @@ body.guide-open #guideFab { pointer-events: none !important; }
                         try { if (typeof playSound === 'function') playSound('wrong'); } catch(e) {}
                         return;
                     }
-                    spendCoins(speedCoins);
+                    if (!spendCoins(speedCoins)) return;
                     finishSlotNow(room, slot);
                 }},
                 { text: 'Реклама', className: 'purple', onClick: function(){
@@ -21918,9 +22042,46 @@ body.guide-open #guideFab { pointer-events: none !important; }
         }, 1000);
     }
 
+
+    function installStage49HeroClickProxy(hero){
+        if (!hero || hero.__stage49ClickProxyInstalled) return;
+        hero.__stage49ClickProxyInstalled = true;
+        hero.addEventListener('click', function(event){
+            if (!hero.classList.contains('stage49-room-scene')) return;
+            if (event.target.closest('.stage49-slot')) return;
+            if (event.target.closest('.pet-room-bars, .pet-room-speech, .pet-room-actions, .pet-room-mini-games, .stage49-room-modal-overlay, .purchase-confirm-overlay')) return;
+
+            const x = event.clientX;
+            const y = event.clientY;
+            const slots = Array.from(hero.querySelectorAll('.stage49-slot.locked, .stage49-slot.building'));
+            let best = null;
+            let bestScore = Infinity;
+
+            slots.forEach(slotEl => {
+                const r = slotEl.getBoundingClientRect();
+                const inside = x >= r.left - 8 && x <= r.right + 8 && y >= r.top - 8 && y <= r.bottom + 8;
+                if (!inside) return;
+                const cx = r.left + r.width / 2;
+                const cy = r.top + r.height / 2;
+                const score = Math.hypot(x - cx, y - cy) + Math.max(r.width, r.height) * 0.03;
+                if (score < bestScore) {
+                    bestScore = score;
+                    best = slotEl;
+                }
+            });
+
+            if (best) {
+                event.preventDefault();
+                event.stopPropagation();
+                best.click();
+            }
+        }, true);
+    }
+
     function renderPetRoomDecor(){
         const hero = document.getElementById('petRoomHero');
         if (!hero) return;
+        installStage49HeroClickProxy(hero);
         const room = getCurrentRoomData();
         normalizeRoomBuildState(room);
         applyStage49RoomBackground(hero, room);
