@@ -11502,6 +11502,135 @@ body.guide-open {
     }
 }
 
+
+/* ===== Stage 4.9G-4 — Transparent real objects and state-synced object layer ===== */
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-object-layer {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 8 !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    contain: layout paint;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-object {
+    position: absolute !important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+    pointer-events: none !important;
+    will-change: opacity, transform;
+    filter: drop-shadow(0 7px 5px rgba(40, 20, 8, .13)) !important;
+    mix-blend-mode: normal;
+    animation: stage49ObjectAppearSoft 460ms ease-out both;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-object.side_table,
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-object.wall_shelf,
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-object.center_cabinet {
+    filter: drop-shadow(0 4px 3px rgba(40, 20, 8, .10)) !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-object.floor_rug {
+    filter: none !important;
+}
+
+@keyframes stage49ObjectAppearSoft {
+    0% { opacity: 0; transform: scale(.92) translateY(5px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+
+/* ===== Stage 4.9G-5 — bigger pet centered on carpet ===== */
+/* Only pet placement/scale. Does not touch room objects, locks, prices, timers or background. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage {
+    left: 50% !important;
+    top: 75.5% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 17 !important;
+    width: min(48vw, 318px) !important;
+    height: 260px !important;
+    pointer-events: none !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+    width: 212px !important;
+    height: 212px !important;
+    bottom: 12px !important;
+    filter: drop-shadow(0 16px 14px rgba(40,20,8,.22)) saturate(1.04) contrast(1.02) !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-stage-shadow {
+    width: 138px !important;
+    bottom: 8px !important;
+    opacity: .62 !important;
+}
+
+/* Keep voice button clickable, but stage itself must not steal lock clicks. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-voice-btn {
+    pointer-events: auto !important;
+}
+
+/* Tablet / narrow desktop */
+@media (max-width: 920px) {
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage {
+        top: 76.2% !important;
+        width: 272px !important;
+        height: 224px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 178px !important;
+        height: 178px !important;
+        bottom: 10px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-stage-shadow {
+        width: 116px !important;
+        bottom: 7px !important;
+    }
+}
+
+/* iPhone / small Android */
+@media (max-width: 620px) {
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage {
+        left: 50% !important;
+        top: 76.8% !important;
+        width: 218px !important;
+        height: 178px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 146px !important;
+        height: 146px !important;
+        bottom: 8px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-stage-shadow {
+        width: 94px !important;
+        bottom: 5px !important;
+    }
+}
+
+/* Very small height phones: still centered on rug, but not over action buttons. */
+@media (max-width: 420px) and (max-height: 740px) {
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage {
+        top: 77.4% !important;
+        width: 198px !important;
+        height: 162px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 132px !important;
+        height: 132px !important;
+        bottom: 7px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-stage-shadow {
+        width: 86px !important;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -22758,16 +22887,21 @@ body.guide-open #guideFab { pointer-events: none !important; }
         const bbox = slot.bbox || {x: slot.x - 80, y: slot.y - 80, w: 160, h: 160};
         const el = document.createElement('div');
         el.className = `stage49-room-object ${obj.type || ''}`.trim();
+        el.dataset.roomId = room.roomId;
+        el.dataset.slotId = slot.id;
+        el.dataset.state = 'unlocked';
+        el.setAttribute('aria-hidden', 'true');
         el.style.left = (bbox.x / ROOM_SLOT_COORD.width * 100) + '%';
         el.style.top = (bbox.y / ROOM_SLOT_COORD.height * 100) + '%';
         el.style.width = (bbox.w / ROOM_SLOT_COORD.width * 100) + '%';
         el.style.height = (bbox.h / ROOM_SLOT_COORD.height * 100) + '%';
         el.style.backgroundImage = `url("${roomObjects.atlas}")`;
 
-        const bw = obj.tileW || bbox.w || 1;
-        const bh = obj.tileH || bbox.h || 1;
-        const aw = roomObjects.atlasW || bw;
-        const ah = roomObjects.atlasH || bh;
+        const bw = Number(obj.tileW || bbox.w || 1);
+        const bh = Number(obj.tileH || bbox.h || 1);
+        const aw = Number(roomObjects.atlasW || bw);
+        const ah = Number(roomObjects.atlasH || bh);
+
         el.style.backgroundSize = `${(aw / bw) * 100}% ${(ah / bh) * 100}%`;
 
         const pxDen = Math.max(1, aw - bw);
@@ -22871,7 +23005,8 @@ body.guide-open #guideFab { pointer-events: none !important; }
         applyStage49RoomBackground(hero, room);
 
         let objectLayer = document.getElementById('petRoomObjectLayer');
-        if (!objectLayer) {
+        if (!objectLayer || objectLayer.parentElement !== hero) {
+            if (objectLayer) objectLayer.remove();
             objectLayer = document.createElement('div');
             objectLayer.id = 'petRoomObjectLayer';
             objectLayer.className = 'pet-room-object-layer';
@@ -22879,26 +23014,36 @@ body.guide-open #guideFab { pointer-events: none !important; }
         }
 
         let layer = document.getElementById('petRoomDecorLayer');
-        if (!layer) {
+        if (!layer || layer.parentElement !== hero) {
+            if (layer) layer.remove();
             layer = document.createElement('div');
             layer.id = 'petRoomDecorLayer';
             layer.className = 'pet-room-decor-layer';
             hero.appendChild(layer);
         }
-        objectLayer.innerHTML = '';
-        layer.innerHTML = '';
 
-        let unlocked = 0;
+        objectLayer.replaceChildren();
+        layer.replaceChildren();
+
+        let unlockedStateCount = 0;
+        let visibleObjectCount = 0;
         let building = 0;
+
         room.decorSlots.forEach(slot => {
             const state = getSlotState(room.roomId, slot.id);
-            if (state.status === 'unlocked') unlocked += 1;
+            if (state.status === 'unlocked') unlockedStateCount += 1;
             if (state.status === 'building') building += 1;
-            const slotButton = renderSlotButton(room, slot);
-            if (slotButton) {
-                if (slotButton.classList && slotButton.classList.contains('stage49-room-object')) objectLayer.appendChild(slotButton);
-                else layer.appendChild(slotButton);
+
+            const slotElement = renderSlotButton(room, slot);
+            if (slotElement) {
+                if (slotElement.classList && slotElement.classList.contains('stage49-room-object')) {
+                    objectLayer.appendChild(slotElement);
+                    visibleObjectCount += 1;
+                } else {
+                    layer.appendChild(slotElement);
+                }
             }
+
             const completedKey = room.roomId + ':' + slot.id;
             if (roomDecorLastCompleted.has(completedKey)) {
                 roomDecorLastCompleted.delete(completedKey);
@@ -22906,11 +23051,21 @@ body.guide-open #guideFab { pointer-events: none !important; }
             }
         });
 
+        // If state says unlocked but asset is missing, surface what player can actually see.
+        const displayUnlocked = visibleObjectCount;
+
         const hint = document.getElementById('petRoomDecorHint');
         if (hint) {
-            hint.textContent = tDecorText('roomProgress', {done: unlocked, total: room.decorSlots.length, building});
+            hint.textContent = tDecorText('roomProgress', {done: displayUnlocked, total: room.decorSlots.length, building});
             hint.classList.add('show');
+            hint.dataset.unlockedStateCount = String(unlockedStateCount);
+            hint.dataset.visibleObjectCount = String(visibleObjectCount);
         }
+
+        hero.dataset.roomId = room.roomId;
+        hero.dataset.unlockedStateCount = String(unlockedStateCount);
+        hero.dataset.visibleObjectCount = String(visibleObjectCount);
+        hero.dataset.buildingCount = String(building);
 
         scheduleRoomTicker(building > 0);
     }
