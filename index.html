@@ -12872,6 +12872,66 @@ function updateCoinsViews() {
     if (shadowCoins) shadowCoins.textContent = String(coins);
 }
 
+/* ===== Stage 4.9D — Global unlock/coin progression guard ===== */
+function setCoinsSafe(value) {
+    const next = Math.max(0, Math.floor(Number(value || 0)));
+    coins = next;
+    try { window.coins = next; } catch(e) {}
+    try { safeStorage.set("zooCoins", String(next)); } catch(e) {}
+    try { updateCoinsViews(); } catch(e) {}
+    return next;
+}
+
+function addCoinsSafe(amount) {
+    const add = Math.max(0, Math.floor(Number(amount || 0)));
+    return setCoinsSafe((Number(coins) || 0) + add);
+}
+
+function spendCoinsSafe(amount) {
+    const price = Math.max(0, Math.floor(Number(amount || 0)));
+    if ((Number(coins) || 0) < price) return false;
+    setCoinsSafe((Number(coins) || 0) - price);
+    return true;
+}
+
+function unlockPuzzleStageSafe(stageId) {
+    if (!Number.isFinite(Number(stageId))) return false;
+    const next = Math.max(1, Math.min(puzzleStages.length, Number(stageId)));
+    const before = maxUnlockedPuzzleStage || 1;
+    maxUnlockedPuzzleStage = Math.max(before, next);
+    try {
+        safeStorage.set("zooMaxUnlockedPuzzleStage", String(maxUnlockedPuzzleStage));
+        safeStorage.set("zooMaxUnlockedPuzzleStageV2", String(maxUnlockedPuzzleStage));
+    } catch(e) {}
+    return maxUnlockedPuzzleStage > before;
+}
+
+function unlockMemoryLevelSafe(index) {
+    if (!Number.isFinite(Number(index))) return false;
+    const next = Math.max(0, Math.min(levels.length - 1, Number(index)));
+    const before = maxUnlockedLevel || 0;
+    maxUnlockedLevel = Math.max(before, next);
+    try { safeStorage.set("zooMaxUnlockedLevel", String(maxUnlockedLevel)); } catch(e) {}
+    return maxUnlockedLevel > before;
+}
+
+function unlockSpotDiffLevelSafe(index) {
+    if (!Number.isFinite(Number(index))) return false;
+    const next = Math.max(0, Math.min(spotDiffLevels.length - 1, Number(index)));
+    spotDiffUnlockedLevels = uniqueSortedSpotDiff([...(spotDiffUnlockedLevels || []), next]);
+    try { safeStorage.set('zooSpotDiffUnlockedLevels', spotDiffUnlockedLevels.join(',')); } catch(e) {}
+    return true;
+}
+
+function unlockColoringTemplateSafe(id) {
+    if (!id) return false;
+    coloringUnlockedTemplates = Array.from(new Set([...(coloringUnlockedTemplates || []), id]));
+    try { safeStorage.set("zooColoringUnlockedTemplates", JSON.stringify(coloringUnlockedTemplates)); } catch(e) {}
+    return true;
+}
+
+
+
 function applySkin() {
     const skin = skins.find(item => item.id === selectedSkin) || skins[0];
     document.documentElement.style.setProperty("--cardBackA", skin.colors[0]);
@@ -14094,14 +14154,12 @@ function buySpotDiffLevel(index) {
         return;
     }
     const onConfirm = () => {
-        coins -= price;
-        spotDiffUnlockedLevels.push(index);
-        spotDiffUnlockedLevels = uniqueSortedSpotDiff(spotDiffUnlockedLevels);
+        if (!spendCoinsSafe(price)) return;
+        unlockSpotDiffLevelSafe(index);
         spotDiffCurrentLevel = index;
         spotDiffFound = [];
         spotDiffCanPlay = true;
 
-        // Important: when purchase is opened from the victory popup, close the victory popup too.
         hideOverlay();
 
         saveSpotDiffProgress();
@@ -14117,14 +14175,15 @@ function completeSpotDiffLevel() {
     const level = getSpotDiffLevel();
     const alreadyDone = isSpotDiffLevelCompleted(spotDiffCurrentLevel);
 
-    // Match other mini-games: give coins on every successful completion.
     const reward = Number(level.reward || 18);
-    coins += reward;
+    addCoinsSafe(reward);
 
     if (!alreadyDone) {
         spotDiffCompleted.push(spotDiffCurrentLevel);
-        if (spotDiffCurrentLevel + 1 < spotDiffLevels.length) spotDiffUnlockedLevels.push(spotDiffCurrentLevel + 1);
     }
+
+    const nextIndex = spotDiffCurrentLevel + 1;
+    if (nextIndex < spotDiffLevels.length) unlockSpotDiffLevelSafe(nextIndex);
 
     updateTaskProgress('game', 1);
     spotDiffCompleted = uniqueSortedSpotDiff(spotDiffCompleted);
@@ -14237,6 +14296,10 @@ function restartSpotDiffLevel() {
 }
 function goNextSpotDiffLevel() {
     const next = Math.min(spotDiffCurrentLevel + 1, spotDiffLevels.length - 1);
+    if (!isSpotDiffLevelUnlocked(next) && isSpotDiffLevelCompleted(spotDiffCurrentLevel)) {
+        unlockSpotDiffLevelSafe(next);
+        saveSpotDiffProgress();
+    }
     if (!isSpotDiffLevelUnlocked(next)) { buySpotDiffLevel(next); return; }
 
     hideOverlay();
@@ -15322,9 +15385,11 @@ function winLevel() {
     const timeBonus = currentMode === "timed" ? Math.max(0, Math.floor(timeLeft / 5)) : 3;
     const reward = halfReward(config.reward + timeBonus + stars * 3);
 
-    coins += reward;
+    addCoinsSafe(reward);
     levelStars[levelIndex] = Math.max(levelStars[levelIndex] || 0, stars);
-    maxUnlockedLevel = Math.max(maxUnlockedLevel, Math.min(levelIndex + 1, levels.length - 1));
+
+    const nextIndex = Math.min(levelIndex + 1, levels.length - 1);
+    unlockMemoryLevelSafe(nextIndex);
 
     let newAnimals = [];
     config.unlock.forEach(key => {
@@ -15340,6 +15405,7 @@ function winLevel() {
 
     saveProgress();
     updateCoinsViews();
+    try { renderMap(); } catch(e) {}
 
     playSound("win");
     setTimeout(() => playSound("coin"), 380);
@@ -15362,7 +15428,10 @@ function winLevel() {
     modalStars.textContent = starString(stars);
     modalText.textContent = t('pairs.win_text', {reward, animal: animalInfo[newAnimalKey].name});
     modalButton.textContent = isLastLevel ? t('pairs.win_restart') : t('pairs.win_next');
-    modalButton.onclick = isLastLevel ? () => startLevel(0) : nextLevel;
+    modalButton.onclick = isLastLevel ? () => startLevel(0) : () => {
+        hideOverlay();
+        startLevel(nextIndex);
+    };
     hideOverlay();
     void overlay.offsetWidth;
     overlay.classList.add("show");
@@ -16748,7 +16817,7 @@ const puzzleStages = [
     { id: 10, rows: 6, cols: 6, label: "10 этап", short: "6x6", pieces: 36, reward: 110, unlockPrice: 285 }
 ];
 
-let maxUnlockedPuzzleStage = Number(safeStorage.get("zooMaxUnlockedPuzzleStageV2") || "1");
+let maxUnlockedPuzzleStage = Number(safeStorage.get("zooMaxUnlockedPuzzleStageV2") || safeStorage.get("zooMaxUnlockedPuzzleStage") || "1");
 if (!Number.isFinite(maxUnlockedPuzzleStage) || maxUnlockedPuzzleStage < 1) maxUnlockedPuzzleStage = 1;
 if (maxUnlockedPuzzleStage > puzzleStages.length) maxUnlockedPuzzleStage = puzzleStages.length;
 
@@ -16917,8 +16986,8 @@ function buyPuzzleStage(stageId) {
         playSound("wrong");
         return;
     }
-    coins -= stage.unlockPrice;
-    maxUnlockedPuzzleStage = Math.max(maxUnlockedPuzzleStage, stage.id);
+    if (!spendCoinsSafe(stage.unlockPrice)) return;
+    unlockPuzzleStageSafe(stage.id);
     applyPuzzleStage(stage, true);
     saveProgress();
     updateCoinsViews();
@@ -16951,8 +17020,9 @@ function buyPuzzleImage(id) {
         playSound("wrong");
         return;
     }
-    coins -= item.price;
+    if (!spendCoinsSafe(item.price)) return;
     unlockedPuzzleImages.push(id);
+    unlockedPuzzleImages = Array.from(new Set(unlockedPuzzleImages));
     puzzleCurrentImage = { id: item.key, label: item.label, src: animalImageSrc(item.key) };
     buildPuzzlePieces();
     shufflePuzzle(false);
@@ -17099,11 +17169,12 @@ function checkPuzzleWin() {
     const reward = halfReward(stage.reward + Math.max(0, 8 - Math.floor(puzzleMovesCount / Math.max(1, Math.ceil(stage.pieces / 6)))));
     let unlockedStageText = "";
     const nextStage = puzzleStages.find(item => item.id === stage.id + 1);
-    if (stage.id >= maxUnlockedPuzzleStage && nextStage) {
-        maxUnlockedPuzzleStage = nextStage.id;
-        unlockedStageText = ` Открыт следующий этап ${nextStage.short}!`;
+    if (nextStage) {
+        const didUnlock = unlockPuzzleStageSafe(nextStage.id);
+        if (didUnlock) unlockedStageText = ` Открыт следующий этап ${nextStage.short}!`;
     }
-    coins += reward;
+
+    addCoinsSafe(reward);
     puzzleCompleted++;
     updateTaskProgress("puzzle", 1);
     updateTaskProgress("play", 1);
@@ -17160,6 +17231,8 @@ function showPuzzleWinPop(reward, unlockedStageText = "") {
     if (oldToast) oldToast.remove();
 
     const stage = typeof getCurrentPuzzleStage === "function" ? getCurrentPuzzleStage() : null;
+    const nextStage = stage ? puzzleStages.find(item => item.id === stage.id + 1) : null;
+    const canGoNextStage = !!(nextStage && isPuzzleStageUnlocked(nextStage.id));
     const animalKey = (typeof puzzleCurrentImage !== "undefined" && puzzleCurrentImage && puzzleCurrentImage.animal) ? puzzleCurrentImage.animal : "lion";
 
     showUnifiedCompletionPopup({
@@ -17171,12 +17244,19 @@ function showPuzzleWinPop(reward, unlockedStageText = "") {
         text: `Картинка собрана. Награда: +${reward} монет.${unlockedStageText || ''}`,
         extra1: stage ? `🧩 ${stage.short || 'Этап'}` : '',
         extra2: `👣 Ходы: ${puzzleMovesCount}`,
-        primaryText: 'Следующий пазл ➜',
+        primaryText: canGoNextStage ? 'Следующий этап ➜' : 'Играть снова',
         primaryAction: () => {
             hideOverlay();
             try {
-                buildPuzzlePieces();
-                shufflePuzzle(false);
+                if (canGoNextStage) {
+                    applyPuzzleStage(nextStage, true);
+                    renderPuzzleStages();
+                    updatePuzzleUI();
+                    showPuzzleMessage(`Открыт ${nextStage.short}. Собери новый пазл 🧩`);
+                } else {
+                    buildPuzzlePieces();
+                    shufflePuzzle(false);
+                }
             } catch(e) {}
         }
     });
@@ -17844,10 +17924,8 @@ function finishZooBlockGame() {
     zooBlockGameOver = true;
     zooBlockBestScore = Math.max(zooBlockBestScore, zooBlockScore);
     zooBlockGamesPlayed++;
-    // Stage 4 fix: removed halfReward — Zoo Block now pays full score-based reward.
-    // Minimum 8 coins per game (was ~4), scales with score.
     const reward = Math.max(8, Math.floor(zooBlockScore / 75));
-    coins += reward;
+    addCoinsSafe(reward);
     updateTaskProgress("block", 1);
     updateTaskProgress("play", 1);
     const care = getPetCare(selectedMainPetKey || "lion");
@@ -18161,7 +18239,7 @@ function chooseShadowOption(animalId, button) {
         button.disabled = true;
         const add = Math.max(2, currentShadowLevel.difficulty.reward - (shadowHintUsed ? 2 : 0));
         shadowLevelReward += add;
-        coins += add;
+        addCoinsSafe(add);
         albumUnlocked = Array.from(new Set([...(albumUnlocked || []), animalId]));
         updateTaskProgress("shadow", 1);
         saveProgress();
@@ -18184,7 +18262,7 @@ function chooseShadowOption(animalId, button) {
                 ? Math.min(25, 5 + Math.floor(shadowPerfectStreak / 3) * 3 + Math.max(0, currentShadowLevel.targets.length - 1) * 2)
                 : 0;
             if (shadowComboBonus > 0) {
-                coins += shadowComboBonus;
+                addCoinsSafe(shadowComboBonus);
                 shadowLevelReward += shadowComboBonus;
             }
             safeStorage.set('zooShadowPerfectStreak', String(shadowPerfectStreak));
@@ -18270,6 +18348,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 function goNextShadowLevel() {
+    try { hideOverlay(); } catch(e) {}
     closeShadowCelebration();
     shadowLevelIndex += 1;
     saveProgress();
@@ -18796,9 +18875,8 @@ function purchaseColoringTemplate(id) {
         updateColoringHint(guideT('Не хватает монет для открытия этой раскраски 😿', 'Not enough coins to unlock this coloring page 😿'));
         return;
     }
-    coins -= item.price;
-    coloringUnlockedTemplates.push(id);
-    coloringUnlockedTemplates = Array.from(new Set(coloringUnlockedTemplates));
+    if (!spendCoinsSafe(item.price)) return;
+    unlockColoringTemplateSafe(id);
     coloringCurrentTemplateId = id;
     saveProgress();
     updateCoinsViews();
