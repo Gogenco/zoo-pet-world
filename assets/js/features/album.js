@@ -1,40 +1,31 @@
-// Feature module: Альбом животных (album screen).
-// Extracted verbatim from the main script during the Stage 6.1.7 RESET
-// architecture pilot — logic unchanged, only the location moved.
-// Loaded on demand by the openAlbum() stub in index.html (see loadScriptOnce).
-// Depends on shared globals defined in index.html: playSound, showScreen,
-// albumGrid, animalKeys, albumUnlocked, animalInfo, animalImageSrc.
-
-function openAlbum() {
-    playSound("click");
-    showScreen("albumScreen");
-}
-
-function renderAlbum() {
-    albumGrid.innerHTML = "";
-    Array.from(new Set(animalKeys.concat(["parrot"]))).forEach(key => {
-        const unlocked = albumUnlocked.includes(key);
-        const item = document.createElement("div");
-        item.className = unlocked ? "album-item" : "album-item locked";
-
-        const imgBox = document.createElement("div");
-        imgBox.className = "album-img";
-        const img = document.createElement("img");
-        img.src = animalImageSrc(key);
-        imgBox.appendChild(img);
-
-        const content = document.createElement("div");
-        const title = document.createElement("div");
-        title.className = "album-title";
-        title.textContent = unlocked ? animalInfo[key].name : "Не открыто";
-        const text = document.createElement("div");
-        text.className = "album-text";
-        text.textContent = unlocked ? animalInfo[key].fact : "Пройди уровни зоопарка, чтобы открыть эту карточку.";
-
-        content.appendChild(title);
-        content.appendChild(text);
-        item.appendChild(imgBox);
-        item.appendChild(content);
-        albumGrid.appendChild(item);
+/* Stage 4.9G-3C fallback album module */
+(function(){
+  window.renderAlbum = function(){
+    var grid = document.getElementById("albumGrid");
+    if (!grid) return;
+    var keys = [];
+    try { keys = Object.keys(animalInfo || {}); } catch(e) { keys = ["lion"]; }
+    grid.innerHTML = "";
+    keys.forEach(function(key){
+      var unlocked = Array.isArray(albumUnlocked) ? albumUnlocked.includes(key) : key === "lion";
+      var info = (animalInfo && animalInfo[key]) || {name:key, fact:""};
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "album-card" + (unlocked ? "" : " locked");
+      card.innerHTML = '<div class="album-img">' + (unlocked && typeof animalImageSrc === "function" ? '<img src="'+animalImageSrc(key)+'" alt=""/>' : '🔒') + '</div>'
+        + '<div class="album-name">' + (unlocked ? info.name : "Закрыто") + '</div>'
+        + '<div class="album-fact">' + (unlocked ? (info.fact || "") : "Открой животное в уровнях") + '</div>';
+      card.onclick = function(){
+        if (!unlocked) { try { playSound("wrong"); } catch(e) {} return; }
+        selectedMainPetKey = key;
+        selectedPetKey = key;
+        try { openPetRoom(); } catch(e) { showScreen("petRoomScreen"); }
+      };
+      grid.appendChild(card);
     });
-}
+  };
+  window.openAlbum = function(){
+    try { playSound("click"); } catch(e) {}
+    showScreen("albumScreen");
+  };
+})();

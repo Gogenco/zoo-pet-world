@@ -13570,29 +13570,43 @@ function showScreen(screenId, navOptions = {}) {
     try { cleanupFoodDrag(); } catch(e) {}
     clearInterval(timerId);
     hideOverlay();
-    screens.forEach(id => document.getElementById(id).classList.remove("show"));
-    document.getElementById(screenId).classList.add("show");
-    if (screenId === "mapScreen") renderMap();
-    if (screenId === "albumScreen") renderAlbum();
-    if (screenId === "petRoomScreen") renderPetRoom();
-    if (screenId === "puzzleScreen") renderPuzzleScreen();
-    if (screenId === "blockScreen") renderZooBlockScreen();
-    if (screenId === "coloringScreen") renderColoringScreen();
-    if (screenId === "spotDiffScreen") renderSpotDifferencesScreen();
-    if (screenId === "petsScreen") renderPets();
-    if (screenId === "shopScreen") renderShop();
-    if (screenId === "tasksScreen") renderTasks();
-    if (screenId === "profileScreen") renderProfile();
-    if (screenId === "achievementsScreen") renderAchievements();
-    if (screenId === "parentScreen") renderParentSettings();
-    if (screenId === "audioScreen") renderAudioSettings();
-    updateCoinsViews();
-    translatePageToEnglish();
-    try { applyI18nPlaceholders(); } catch(e) {}
-    hideGuideOverlay();
+    screens.forEach(id => {
+        const screen = document.getElementById(id);
+        if (screen) screen.classList.remove("show");
+    });
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) targetScreen.classList.add("show");
+
+    const safeRender = (fnName) => {
+        try {
+            if (typeof window[fnName] === "function") window[fnName]();
+        } catch (e) {
+            console.error("Screen render failed:", screenId, fnName, e);
+        }
+    };
+
+    if (screenId === "mapScreen") safeRender("renderMap");
+    if (screenId === "albumScreen") safeRender("renderAlbum");
+    if (screenId === "petRoomScreen") safeRender("renderPetRoom");
+    if (screenId === "puzzleScreen") safeRender("renderPuzzleScreen");
+    if (screenId === "blockScreen") safeRender("renderZooBlockScreen");
+    if (screenId === "coloringScreen") safeRender("renderColoringScreen");
+    if (screenId === "spotDiffScreen") safeRender("renderSpotDifferencesScreen");
+    if (screenId === "petsScreen") safeRender("renderPets");
+    if (screenId === "shopScreen") safeRender("renderShop");
+    if (screenId === "tasksScreen") safeRender("renderTasks");
+    if (screenId === "profileScreen") safeRender("renderProfile");
+    if (screenId === "achievementsScreen") safeRender("renderAchievements");
+    if (screenId === "parentScreen") safeRender("renderParentSettings");
+    if (screenId === "audioScreen") safeRender("renderAudioSettings");
+
+    try { updateCoinsViews(); } catch(e) {}
+    try { if (typeof translatePageToEnglish === "function") translatePageToEnglish(); } catch(e) {}
+    try { if (typeof applyI18nPlaceholders === "function") applyI18nPlaceholders(); } catch(e) {}
+    try { hideGuideOverlay(); } catch(e) {}
     setTimeout(() => {
-        refreshGuideHelpers(screenId);
-        maybeAutoStartGuide(screenId);
+        try { refreshGuideHelpers(screenId); } catch(e) {}
+        try { maybeAutoStartGuide(screenId); } catch(e) {}
     }, 180);
 }
 
@@ -16156,19 +16170,27 @@ function createCoins() {
 // work fine under file:// elsewhere in this codebase.
 const __loadedFeatureScripts = {};
 function loadScriptOnce(src, callback) {
+    const done = (typeof callback === "function") ? callback : function(){};
     const state = __loadedFeatureScripts[src];
-    if (state && state.status === "loaded") { callback(); return; }
-    if (state && state.status === "loading") { state.queue.push(callback); return; }
-    __loadedFeatureScripts[src] = { status: "loading", queue: [callback] };
+    if (state && state.status === "loaded") { done(); return; }
+    if (state && state.status === "loading") { state.queue.push(done); return; }
+    __loadedFeatureScripts[src] = { status: "loading", queue: [done] };
     const tag = document.createElement("script");
     tag.src = src;
     tag.onload = () => {
         __loadedFeatureScripts[src].status = "loaded";
-        __loadedFeatureScripts[src].queue.forEach(cb => cb());
+        __loadedFeatureScripts[src].queue.forEach(cb => {
+            try { cb(); } catch(e) { console.error("Feature callback failed:", src, e); }
+        });
         __loadedFeatureScripts[src].queue = [];
     };
     tag.onerror = () => {
         console.error("Feature module failed to load:", src);
+        __loadedFeatureScripts[src].status = "loaded";
+        __loadedFeatureScripts[src].queue.forEach(cb => {
+            try { cb(); } catch(e) { console.error("Feature fallback callback failed:", src, e); }
+        });
+        __loadedFeatureScripts[src].queue = [];
     };
     document.body.appendChild(tag);
 }
@@ -16304,7 +16326,7 @@ function renderPetRoom() {
 
     if (petRoomSubtitle) petRoomSubtitle.textContent = `${displayName}: ${animalInfo[selectedMainPetKey].fact}`;
     const reminderText = getPetReminderText(care, displayName);
-    if (petRoomSpeech) petRoomSpeech.textContent = reminderText || `${displayName} ${moodText}. ${t('btn.next')}?`;
+    if (petRoomSpeech) petRoomSpeech.textContent = reminderText || `${displayName} ${moodText}. ${(typeof t === 'function' ? t('btn.next') : 'дальше')}?`;
     if (petRoomReminder) {
         petRoomReminder.textContent = reminderText;
         petRoomReminder.classList.toggle("show", Boolean(reminderText));
