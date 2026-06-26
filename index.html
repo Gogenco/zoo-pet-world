@@ -10939,6 +10939,335 @@ body.guide-open {
     }
 }
 
+
+/* ===== Stage 4.9E — Pet Room responsive layout redesign ===== */
+
+/* Status/text is now OUTSIDE the room image, so it no longer blocks the room. */
+#petRoomScreen .pet-room-status-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
+    gap: 10px;
+    align-items: stretch;
+    margin: 8px 0 12px;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-room-bars {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    transform: none !important;
+    z-index: auto !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-bar {
+    min-height: 52px;
+    padding: 6px 7px;
+    border-radius: 16px;
+    box-shadow: 0 4px 0 rgba(245,158,11,.16);
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-bar-title {
+    margin-bottom: 4px;
+    font-size: 10px;
+    line-height: 1;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-track {
+    height: 8px;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-room-speech {
+    position: static !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 100%;
+    min-height: 52px;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px !important;
+    border-radius: 18px !important;
+    font-size: 13px !important;
+    line-height: 1.16;
+    text-align: center;
+    background: rgba(255,255,255,.93) !important;
+    box-shadow: 0 4px 0 rgba(124,58,237,.12), 0 8px 18px rgba(15,23,42,.08) !important;
+    z-index: auto !important;
+}
+
+/* Room canvas: stable coordinate system for JSON slots on all devices. */
+#petRoomScreen .pet-room-hero.stage49-room-scene {
+    width: 100%;
+    height: clamp(500px, 58vw, 720px) !important;
+    min-height: 0 !important;
+    max-height: 74vh;
+    margin: 0 auto;
+    background-size: 100% 100% !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    isolation: isolate;
+}
+
+/* Inside room: only visual scene + clickable decor. No text/status overlays. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-bars,
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-speech {
+    display: none !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-decor-layer {
+    z-index: 26 !important;
+    pointer-events: none !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-slot {
+    z-index: 27 !important;
+    pointer-events: auto !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage {
+    z-index: 10 !important;
+    bottom: 26px !important;
+    width: min(46vw, 260px) !important;
+    height: 210px !important;
+    pointer-events: none !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+    width: 168px !important;
+    height: 168px !important;
+    bottom: 12px !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-stage-shadow {
+    width: 112px !important;
+    bottom: 8px !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-voice-btn {
+    pointer-events: auto !important;
+    z-index: 32 !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    font-size: 0 !important;
+}
+
+#petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-voice-btn::after {
+    content: "🔊";
+    font-size: 23px;
+}
+
+/* Action buttons must not float over the room anymore. */
+#petRoomScreen .pet-room-actions {
+    margin-top: 12px !important;
+    z-index: 5 !important;
+}
+
+/* Better panel density on tablets/phones. */
+#petRoomScreen .pet-room-panel {
+    overflow: hidden;
+}
+
+@media (max-width: 920px) {
+    #petRoomScreen .pet-room-status-panel {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-room-bars {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-room-speech {
+        min-height: 40px;
+        font-size: 12px !important;
+        padding: 7px 10px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene {
+        height: min(62vh, 590px) !important;
+        min-height: 470px !important;
+    }
+}
+
+/* iPhone 13 Pro / small phones */
+@media (max-width: 620px) {
+    #petRoomScreen .card-panel.pet-room-panel {
+        padding: 12px !important;
+        border-radius: 26px !important;
+    }
+
+    #petRoomScreen .top-home-row {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    #petRoomScreen .top-home-row .home-chip {
+        min-height: 38px;
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    #petRoomScreen .title-row {
+        gap: 9px;
+        margin-bottom: 8px;
+    }
+
+    #petRoomScreen .title-row .logo {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+    }
+
+    #petRoomScreen .title-row h1 {
+        font-size: 25px;
+        line-height: .95;
+    }
+
+    #petRoomScreen .title-row .subtitle {
+        font-size: 12px;
+        line-height: 1.15;
+    }
+
+    #petRoomScreen .coins-box {
+        min-height: 38px;
+        padding: 7px 10px;
+        font-size: 13px;
+        border-radius: 16px;
+        margin-bottom: 6px;
+    }
+
+    #petRoomScreen .pet-room-decor-hint,
+    #petRoomScreen .pet-room-reminder {
+        margin: 5px 0;
+        padding: 7px 10px;
+        border-radius: 14px;
+        font-size: 11px;
+        line-height: 1.15;
+    }
+
+    #petRoomScreen .pet-room-status-panel {
+        margin: 7px 0 9px;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-room-bars {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-stat-bar {
+        min-height: 40px;
+        padding: 5px 6px;
+        border-radius: 13px;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-stat-bar-title {
+        font-size: 9px;
+        margin-bottom: 3px;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-stat-track {
+        height: 6px;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-room-speech {
+        min-height: 36px;
+        font-size: 11px !important;
+        padding: 6px 9px !important;
+        border-radius: 14px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene {
+        height: min(56vh, 500px) !important;
+        min-height: 420px !important;
+        border-radius: 24px !important;
+        background-size: 100% 100% !important;
+        background-position: center center !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage {
+        bottom: 16px !important;
+        width: 178px !important;
+        height: 150px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-room-stage .pet-stage-sprite {
+        width: 118px !important;
+        height: 118px !important;
+        bottom: 8px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .pet-stage-shadow {
+        width: 80px !important;
+        bottom: 6px !important;
+    }
+
+    #petRoomScreen .stage49-lock-badge {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 20px !important;
+        border-width: 3px !important;
+    }
+
+    #petRoomScreen .stage49-price {
+        min-width: 50px !important;
+        min-height: 21px !important;
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+        bottom: -7px !important;
+    }
+
+    #petRoomScreen .stage49-building-badge {
+        padding: 4px 6px !important;
+        border-radius: 12px !important;
+    }
+
+    #petRoomScreen .stage49-building-badge b {
+        font-size: 16px !important;
+    }
+
+    #petRoomScreen .stage49-building-badge small {
+        font-size: 9px !important;
+    }
+
+    #petRoomScreen .pet-room-actions {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        margin-top: 10px !important;
+    }
+
+    #petRoomScreen .pet-room-action {
+        min-height: 58px;
+        border-radius: 17px;
+        font-size: 10px;
+        padding: 6px 3px;
+    }
+
+    #petRoomScreen .pet-room-action span {
+        font-size: 22px;
+        margin-bottom: 3px;
+    }
+}
+
+/* Very small height phones */
+@media (max-width: 420px) and (max-height: 740px) {
+    #petRoomScreen .pet-room-hero.stage49-room-scene {
+        height: 395px !important;
+        min-height: 395px !important;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-room-speech {
+        display: none !important;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -11248,14 +11577,17 @@ body.guide-open {
         <div id="petRoomDecorHint" class="pet-room-decor-hint"></div>
         <div id="petRoomReminder" class="pet-room-reminder"></div>
 
+        <div class="pet-room-status-panel" aria-label="Статус питомца">
+            <div id="petRoomBars" class="pet-room-bars"></div>
+            <div id="petRoomSpeech" class="pet-room-speech">Привет! Я жду заботы 💚</div>
+        </div>
+
         <div class="pet-room-hero" id="petRoomHero">
             <div class="pet-room-window"></div>
             <div class="pet-room-plant"></div>
             <div class="pet-room-bed"></div>
             <div class="pet-room-toys">⚽ 🪢</div>
             <div id="petRoomDecorLayer" class="pet-room-decor-layer" aria-label="Pet room decor"></div>
-            <div id="petRoomBars" class="pet-room-bars"></div>
-            <div id="petRoomSpeech" class="pet-room-speech">Привет! Я жду заботы 💚</div>
             <div class="pet-room-bowl" aria-hidden="true"></div>
             <div class="pet-room-stage" id="petRoomStage">
                 <div id="petRoomAnimatedMount"></div>
