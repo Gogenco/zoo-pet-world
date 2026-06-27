@@ -1,0 +1,172 @@
+{
+  "roomId": "01_lion",
+  "roomName": "Lion — Savanna Lodge",
+  "roomSize": {
+    "w": 1448,
+    "h": 1086
+  },
+  "background": "assets/rooms/01_lion/room_clean.png",
+  "slots": [
+    {
+      "id": "wardrobe_left",
+      "price": 180,
+      "ghost": "assets/rooms/01_lion/ghosts/wardrobe_left_ghost.png",
+      "object": "assets/rooms/01_lion/objects/wardrobe_01.png",
+      "placementPx": {
+        "x": 165,
+        "y": 186,
+        "w": 259,
+        "h": 551
+      },
+      "placementNormalized": {
+        "x": 0.11395,
+        "y": 0.17127,
+        "w": 0.17887,
+        "h": 0.50737
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 20,
+      "layer": "furniture_back_left",
+      "note": "Высокий шкаф слева у стены"
+    },
+    {
+      "id": "media_cabinet_center",
+      "price": 140,
+      "ghost": "assets/rooms/01_lion/ghosts/center_cabinet_under_window_ghost.png",
+      "object": "assets/rooms/01_lion/objects/center_cabinet_01.png",
+      "placementPx": {
+        "x": 500,
+        "y": 486,
+        "w": 430,
+        "h": 170
+      },
+      "placementNormalized": {
+        "x": 0.3453,
+        "y": 0.44751,
+        "w": 0.29696,
+        "h": 0.15654
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 30,
+      "layer": "furniture_center",
+      "note": "Узкая низкая тумба под окном, ближе к стене"
+    },
+    {
+      "id": "armchair_right",
+      "price": 160,
+      "ghost": "assets/rooms/01_lion/ghosts/armchair_right_ghost.png",
+      "object": "assets/rooms/01_lion/objects/armchair_01.png",
+      "placementPx": {
+        "x": 888,
+        "y": 396,
+        "w": 298,
+        "h": 340
+      },
+      "placementNormalized": {
+        "x": 0.61326,
+        "y": 0.36464,
+        "w": 0.2058,
+        "h": 0.31308
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 40,
+      "layer": "furniture_right",
+      "note": "Кресло справа"
+    },
+    {
+      "id": "side_table_right",
+      "price": 95,
+      "ghost": "assets/rooms/01_lion/ghosts/side_table_right_ghost.png",
+      "object": "assets/rooms/01_lion/objects/side_table_lamp_01.png",
+      "placementPx": {
+        "x": 1170,
+        "y": 345,
+        "w": 235,
+        "h": 392
+      },
+      "placementNormalized": {
+        "x": 0.80801,
+        "y": 0.31768,
+        "w": 0.16229,
+        "h": 0.36096
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 50,
+      "layer": "furniture_front_right",
+      "note": "Тумба с лампой справа"
+    },
+    {
+      "id": "wall_shelf_top_right",
+      "price": 110,
+      "ghost": "assets/rooms/01_lion/ghosts/wall_shelf_top_right_ghost.png",
+      "object": "assets/rooms/01_lion/objects/wall_shelf_01.png",
+      "placementPx": {
+        "x": 996,
+        "y": 144,
+        "w": 368,
+        "h": 167
+      },
+      "placementNormalized": {
+        "x": 0.68785,
+        "y": 0.1326,
+        "w": 0.25414,
+        "h": 0.15378
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 10,
+      "layer": "wall_back_right",
+      "note": "Настенная полка сверху справа"
+    },
+    {
+      "id": "pet_bed_front_left",
+      "price": 125,
+      "ghost": "assets/rooms/01_lion/ghosts/pet_bed_front_left_ghost.png",
+      "object": "assets/rooms/01_lion/objects/pet_bed_01.png",
+      "placementPx": {
+        "x": 38,
+        "y": 772,
+        "w": 338,
+        "h": 205
+      },
+      "placementNormalized": {
+        "x": 0.02624,
+        "y": 0.71087,
+        "w": 0.23343,
+        "h": 0.18877
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 60,
+      "layer": "floor_front_left",
+      "note": "Лежанка снизу слева"
+    },
+    {
+      "id": "floor_rug_front_right",
+      "price": 90,
+      "ghost": "assets/rooms/01_lion/ghosts/floor_rug_front_right_ghost.png",
+      "object": "assets/rooms/01_lion/objects/floor_rug_01.png",
+      "placementPx": {
+        "x": 1036,
+        "y": 790,
+        "w": 362,
+        "h": 170
+      },
+      "placementNormalized": {
+        "x": 0.71547,
+        "y": 0.72744,
+        "w": 0.25,
+        "h": 0.15654
+      },
+      "fit": "contain",
+      "anchor": "top_left",
+      "zIndex": 55,
+      "layer": "floor_front_right",
+      "note": "Коврик снизу справа"
+    }
+  ]
+}
