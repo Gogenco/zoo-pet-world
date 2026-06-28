@@ -13788,6 +13788,24 @@ if (!Number.isFinite(maxUnlockedLevel)) maxUnlockedLevel = 0;
 maxUnlockedLevel = Math.max(0, Math.min(levels.length - 1, maxUnlockedLevel));
 let levelStars = safeJsonParse(safeStorage.get("zooLevelStars", "{}"), {});
 let albumUnlocked = safeJsonParse(safeStorage.get("zooAlbumUnlocked", '["lion"]'), ["lion"]);
+
+/* ===== Stage 4.9I1 QA — preview all locked sections without mutating purchase state ===== */
+const ZPW_QA_UNLOCK_ALL_SECTIONS = true;
+function zpwQaUnlockAllSections() { return !!ZPW_QA_UNLOCK_ALL_SECTIONS; }
+function zpwIsAlbumAnimalUnlocked(key) {
+    return zpwQaUnlockAllSections() || (Array.isArray(albumUnlocked) && albumUnlocked.includes(key));
+}
+function zpwIsFoodUnlocked(id) {
+    return zpwQaUnlockAllSections() || (Array.isArray(unlockedFoods) && unlockedFoods.includes(id));
+}
+function zpwIsPuzzleImageUnlocked(id) {
+    return zpwQaUnlockAllSections() || String(id || '').startsWith("custom_") || (Array.isArray(unlockedPuzzleImages) && unlockedPuzzleImages.includes(id));
+}
+function zpwQaNoteOnce() {
+    try { console.info("Stage 4.9I1 QA: locked sections are preview-unlocked. Purchase/save logic is not mutated."); } catch(e) {}
+}
+zpwQaNoteOnce();
+
 let animalNames = safeJsonParse(safeStorage.get("zooAnimalNames", "{}"), {});
 let animalFeedCount = safeJsonParse(safeStorage.get("zooAnimalFeedCount", "{}"), {});
 let unlockedFoods = safeJsonParse(safeStorage.get("zooUnlockedFoods", '["carrot","apple","banana"]'), ["carrot", "apple", "banana"]);
@@ -14191,7 +14209,7 @@ function closeAnimalCardGateModal(){
 function unlockAlbumAnimalForCard(animalId, finalPrice) {
     const id = animalId || "lion";
     const price = Math.max(0, Math.floor(Number(finalPrice || 0)));
-    if (Array.isArray(albumUnlocked) && albumUnlocked.includes(id)) {
+    if (zpwIsAlbumAnimalUnlocked(id)) {
         closeAnimalCardGateModal();
         openAnimalCard(id);
         return true;
@@ -14217,7 +14235,7 @@ function unlockAlbumAnimalForCard(animalId, finalPrice) {
 
 function openAnimalCardLockedPurchase(animalId) {
     const id = animalId || "lion";
-    if (Array.isArray(albumUnlocked) && albumUnlocked.includes(id)) {
+    if (zpwIsAlbumAnimalUnlocked(id)) {
         openAnimalCard(id);
         return;
     }
@@ -14307,7 +14325,7 @@ function sendAnimalCardState(animalId, type = "STATE") {
 
 function openAnimalCard(animalId = "lion") {
     const id = animalId || "lion";
-    if (Array.isArray(albumUnlocked) && !albumUnlocked.includes(id)) {
+    if (!zpwQaUnlockAllSections() && Array.isArray(albumUnlocked) && !albumUnlocked.includes(id)) {
         openAnimalCardLockedPurchase(id);
         return;
     }
@@ -15393,7 +15411,7 @@ function saveSpotDiffProgress() {
     saveProgress();
 }
 function isSpotDiffGuideSeen() { return safeStorage.get('zooSpotDiffGuideSeen', '0') === '1'; }
-function isSpotDiffLevelUnlocked(index) { return uniqueSortedSpotDiff(spotDiffUnlockedLevels).includes(index); }
+function isSpotDiffLevelUnlocked(index) { return zpwQaUnlockAllSections() || uniqueSortedSpotDiff(spotDiffUnlockedLevels).includes(index); }
 function isSpotDiffLevelCompleted(index) { return uniqueSortedSpotDiff(spotDiffCompleted).includes(index); }
 function getSpotDiffLevel() { return spotDiffLevels[spotDiffCurrentLevel] || spotDiffLevels[0]; }
 
@@ -16608,7 +16626,7 @@ function renderMap() {
     if (mapChip) mapChip.textContent = currentMode === 'timed' ? t('mode.timer_chip') : t('mode.calm_chip');
     mapList.innerHTML = "";
     levels.forEach((level, index) => {
-        const unlocked = index <= maxUnlockedLevel;
+        const unlocked = zpwQaUnlockAllSections() || index <= maxUnlockedLevel;
         const stars = levelStars[index] || 0;
         const item = document.createElement("div");
         item.className = "map-item";
@@ -17177,7 +17195,7 @@ function openAlbum() {
 function openPetRoom() {
     playSound("click");
     const preferred = selectedMainPetKey || playerProfile.favorite || "lion";
-    selectedMainPetKey = albumUnlocked.includes(preferred) ? preferred : (albumUnlocked[0] || "lion");
+    selectedMainPetKey = zpwIsAlbumAnimalUnlocked(preferred) ? preferred : (albumUnlocked[0] || "lion");
     selectedPetKey = selectedMainPetKey;
     showScreen("petRoomScreen");
 }
@@ -17285,7 +17303,7 @@ function renderPetRoomBars(care) {
 
 function renderPetRoom() {
     const fallback = albumUnlocked[0] || "lion";
-    if (!albumUnlocked.includes(selectedMainPetKey)) selectedMainPetKey = fallback;
+    if (!zpwIsAlbumAnimalUnlocked(selectedMainPetKey)) selectedMainPetKey = fallback;
     selectedPetKey = selectedMainPetKey;
 
     const care = getPetCare(selectedMainPetKey);
@@ -17586,7 +17604,7 @@ function saveAnimalName(key) {
 
 function openPetDetail(key) {
     // Старое отдельное окно деталей больше не открываем: теперь главный экран питомца — это и есть детали.
-    if (!albumUnlocked.includes(key)) {
+    if (!zpwIsAlbumAnimalUnlocked(key)) {
         playSound("wrong");
         return;
     }
@@ -18026,7 +18044,7 @@ function renderFoodRailInto(container, source = "detail") {
     }
 
     foodCatalog.forEach(food => {
-        const isUnlocked = unlockedFoods.includes(food.id);
+        const isUnlocked = zpwIsFoodUnlocked(food.id);
 
         const chip = document.createElement("button");
         chip.className = isUnlocked ? "food-chip unlocked" : "food-chip locked";
@@ -18071,7 +18089,7 @@ function buyFood(foodId) {
     const food = foodCatalog.find(item => item.id === foodId);
     if (!food) return;
 
-    if (unlockedFoods.includes(food.id)) {
+    if (zpwIsFoodUnlocked(food.id)) {
         showFoodToast(t('petroom.food_owned', {food: food.label}));
         return;
     }
@@ -18259,7 +18277,7 @@ function buyPet(key, price) {
 }
 
 function selectPetForRoom(key) {
-    if (!albumUnlocked.includes(key)) {
+    if (!zpwIsAlbumAnimalUnlocked(key)) {
         playSound("wrong");
         return;
     }
@@ -18275,10 +18293,10 @@ function renderPets() {
     updateCoinsViews();
 
     Array.from(new Set(animalKeys.concat(["parrot"]))).forEach((key, index) => {
-        const unlocked = albumUnlocked.includes(key);
+        const unlocked = zpwIsAlbumAnimalUnlocked(key);
         const selected = selectedMainPetKey === key;
         const meta = getPetUnlockMeta(key, index);
-        const levelReady = maxUnlockedLevel >= meta.requiredLevel;
+        const levelReady = zpwQaUnlockAllSections() || maxUnlockedLevel >= meta.requiredLevel;
         const item = document.createElement("div");
         item.id = `petCard_${key}`;
         item.className = unlocked ? "pet-card" : "pet-card locked";
@@ -18494,7 +18512,7 @@ function renderPuzzleScreen() {
 
 function ensurePuzzleStateIsUnlocked() {
     if (puzzleStageId > maxUnlockedPuzzleStage) applyPuzzleStage(getPuzzleStageById(maxUnlockedPuzzleStage), true);
-    if (!unlockedPuzzleImages.includes(puzzleCurrentImage.id) && !puzzleCurrentImage.id.startsWith("custom_")) {
+    if (!zpwIsPuzzleImageUnlocked(puzzleCurrentImage.id)) {
         const first = puzzleImageCatalog[0];
         puzzleCurrentImage = { id: first.key, label: first.label, src: animalImageSrc(first.key) };
         buildPuzzlePieces();
@@ -18503,7 +18521,7 @@ function ensurePuzzleStateIsUnlocked() {
 
 function isPuzzleStageUnlocked(stageOrId) {
     const id = typeof stageOrId === "number" ? stageOrId : stageOrId.id;
-    return id <= maxUnlockedPuzzleStage;
+    return zpwQaUnlockAllSections() || id <= maxUnlockedPuzzleStage;
 }
 
 function renderPuzzleStages() {
@@ -18533,7 +18551,7 @@ function renderPuzzleImageRail() {
     puzzleImageCatalog.forEach(item => {
         const info = animalInfo[item.key] || { name: item.label };
         const label = item.label || info.name || item.key;
-        const isUnlocked = unlockedPuzzleImages.includes(item.key);
+        const isUnlocked = zpwIsPuzzleImageUnlocked(item.key);
         const isActive = puzzleCurrentImage.id === item.key;
         const btn = document.createElement("button");
         btn.className = [
@@ -18605,7 +18623,7 @@ function buyPuzzleStage(stageId) {
 }
 
 function setPuzzleImage(id, label, src) {
-    if (!id.startsWith("custom_") && !unlockedPuzzleImages.includes(id)) {
+    if (!zpwIsPuzzleImageUnlocked(id)) {
         buyPuzzleImage(id);
         return;
     }
@@ -18619,7 +18637,7 @@ function setPuzzleImage(id, label, src) {
 function buyPuzzleImage(id) {
     const item = puzzleImageCatalog.find(entry => entry.key === id);
     if (!item) return;
-    if (unlockedPuzzleImages.includes(id)) {
+    if (zpwIsPuzzleImageUnlocked(id)) {
         setPuzzleImage(item.key, item.label, animalImageSrc(item.key));
         return;
     }
@@ -18758,7 +18776,7 @@ function updatePuzzleUI() {
     if (puzzleTitleText) puzzleTitleText.textContent = t('puzzle.assemble', {label: puzzleCurrentImage.label});
     if (puzzleProgressNote) {
         const nextStage = puzzleStages.find(item => item.id > maxUnlockedPuzzleStage);
-        const lockedCount = puzzleImageCatalog.filter(item => !unlockedPuzzleImages.includes(item.key)).length;
+        const lockedCount = puzzleImageCatalog.filter(item => !zpwIsPuzzleImageUnlocked(item.key)).length;
         puzzleProgressNote.innerHTML = nextStage
             ? `Открыто <strong>${maxUnlockedPuzzleStage}/${puzzleStages.length}</strong> этапов. Следующий ${nextStage.short}: собери текущий пазл или купи за ${nextStage.unlockPrice}🪙. Финал: 6x6. Закрытых картинок: ${lockedCount}.`
             : `Все <strong>${puzzleStages.length}/${puzzleStages.length}</strong> этапов открыты! Финальный уровень — 6x6. Закрытых картинок с животными: ${lockedCount}.`;
@@ -20505,7 +20523,7 @@ function renderColoringSizes() {
 }
 
 function isColoringTemplateUnlocked(id) {
-    return coloringUnlockedTemplates.includes(id);
+    return zpwQaUnlockAllSections() || coloringUnlockedTemplates.includes(id);
 }
 
 function purchaseColoringTemplate(id) {

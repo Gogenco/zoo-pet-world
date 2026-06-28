@@ -13,7 +13,7 @@
   }
 
   function isUnlocked(key){
-    return Array.isArray(albumUnlocked) ? albumUnlocked.includes(key) : key === "lion";
+    return (typeof zpwQaUnlockAllSections === "function" && zpwQaUnlockAllSections()) || (Array.isArray(albumUnlocked) ? albumUnlocked.includes(key) : key === "lion");
   }
 
   function openDiaryOrLock(key, unlocked){
