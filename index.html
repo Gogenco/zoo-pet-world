@@ -11644,6 +11644,15 @@ body.guide-open {
     opacity: 1 !important;
 }
 
+
+/* ===== Stage 4.9G7B — Locked object visual only: use real object image as translucent preview ===== */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-locked-object {
+    opacity: 0.45 !important;
+    filter: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -22948,13 +22957,18 @@ body.guide-open #guideFab { pointer-events: none !important; }
 
 
     function createRoomGhostObject(room, slot){
-        const ghostSrc = slot.ghostImage || (ROOM_OBJECT_DATA[room.roomId]?.objects?.[slot.id]?.ghost);
-        if (!ghostSrc) return null;
+        const roomObjects = ROOM_OBJECT_DATA[room.roomId] || ROOM_OBJECT_DATA['01_lion'];
+        const obj = roomObjects && roomObjects.objects ? roomObjects.objects[slot.id] : null;
+
+        const objectSrc = slot.objectImage || (obj && obj.file);
+        const fallbackGhostSrc = slot.ghostImage || (obj && obj.ghost);
+        const visualSrc = objectSrc || fallbackGhostSrc;
+        if (!visualSrc) return null;
 
         const coord = getRoomCoord(room);
         const bbox = slot.bbox || {x: slot.x - 80, y: slot.y - 80, w: 160, h: 160};
         const el = document.createElement('div');
-        el.className = 'stage49-room-ghost';
+        el.className = objectSrc ? 'stage49-room-ghost stage49-room-locked-object' : 'stage49-room-ghost';
         el.dataset.roomId = room.roomId;
         el.dataset.slotId = slot.id;
         el.setAttribute('aria-hidden', 'true');
@@ -22962,8 +22976,8 @@ body.guide-open #guideFab { pointer-events: none !important; }
         el.style.top = (bbox.y / coord.height * 100) + '%';
         el.style.width = (bbox.w / coord.width * 100) + '%';
         el.style.height = (bbox.h / coord.height * 100) + '%';
-        el.style.zIndex = String(Number(slot.zIndex || 1));
-        el.style.backgroundImage = `url("${ghostSrc}")`;
+        el.style.zIndex = String(Number(slot.zIndex || (obj && obj.zIndex) || 1));
+        el.style.backgroundImage = `url("${visualSrc}")`;
         return el;
     }
 
