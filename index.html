@@ -11653,6 +11653,231 @@ body.guide-open {
     box-shadow: none !important;
 }
 
+
+/* ===== Stage 4.9G7C — Room popup, prices near locks, tall wardrobe, wider status indicators ===== */
+
+/* 4) Status indicators: full width, not squeezed by speech bubble. */
+#petRoomScreen .pet-room-status-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin: 8px 0 10px !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-room-bars {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-bar {
+    min-width: 0 !important;
+    min-height: 58px !important;
+    padding: 7px 8px !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.96) !important;
+    box-shadow: 0 5px 0 rgba(245,158,11,.16), 0 10px 18px rgba(15,23,42,.06) !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-bar-title {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 2px !important;
+    margin-bottom: 5px !important;
+    font-size: 11px !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-bar-title span:first-child {
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-bar-title span:last-child {
+    font-size: 10px !important;
+    color: rgba(76,29,149,.62) !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-stat-track {
+    height: 10px !important;
+}
+
+#petRoomScreen .pet-room-status-panel .pet-room-speech {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 44px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.70) !important;
+    color: #4c1d95 !important;
+    box-shadow: 0 4px 0 rgba(124,58,237,.10), 0 8px 16px rgba(15,23,42,.06) !important;
+}
+
+/* 2) Price tags: same line as lock, beside the lock, not at the bottom of the slot. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-price {
+    top: 5px !important;
+    right: 34px !important;
+    bottom: auto !important;
+    min-height: 22px !important;
+    padding: 2px 7px !important;
+    font-size: 10px !important;
+    border-radius: 999px !important;
+    background: rgba(255,255,255,.88) !important;
+    border: 1px solid rgba(124,58,237,.22) !important;
+    box-shadow: 0 3px 8px rgba(15,23,42,.12) !important;
+}
+
+@media (max-width: 620px) {
+    #petRoomScreen .pet-room-status-panel .pet-room-bars {
+        gap: 6px !important;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-stat-bar {
+        min-height: 54px !important;
+        padding: 6px 5px !important;
+        border-radius: 16px !important;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-stat-bar-title {
+        font-size: 9.5px !important;
+    }
+
+    #petRoomScreen .pet-room-status-panel .pet-stat-bar-title span:last-child {
+        font-size: 8.5px !important;
+    }
+
+    #petRoomScreen .pet-room-hero.stage49-room-scene .stage49-mini-price {
+        top: 3px !important;
+        right: 26px !important;
+        min-height: 17px !important;
+        padding: 1px 5px !important;
+        font-size: 8px !important;
+    }
+}
+
+/* 3) Wardrobe: force tall wardrobe rendering inside its tall bbox. */
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-object[data-slot-id="wardrobe_left"],
+#petRoomScreen .pet-room-hero.stage49-room-scene .stage49-room-ghost[data-slot-id="wardrobe_left"] {
+    background-size: 100% 100% !important;
+}
+
+/* 1) Purchase popup in the same soft game style, with object image + lock. */
+.stage49-room-modal-overlay {
+    padding: 16px !important;
+    background: rgba(18, 31, 44, .48) !important;
+    backdrop-filter: blur(5px) !important;
+}
+
+.stage49-room-modal-card {
+    width: min(92vw, 470px) !important;
+    border-radius: 32px !important;
+    padding: 18px 18px 16px !important;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.98), rgba(255,255,255,0) 40%),
+        linear-gradient(180deg, #fffdf7 0%, #f0fdf4 55%, #ecfeff 100%) !important;
+    border: 4px solid rgba(255,255,255,.98) !important;
+    box-shadow:
+        0 20px 45px rgba(15,23,42,.28),
+        0 8px 0 rgba(124,58,237,.13) !important;
+}
+
+.stage49-room-modal-close {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+    right: 12px !important;
+    top: 12px !important;
+    background: #1f2937 !important;
+    color: #ffffff !important;
+    font-size: 28px !important;
+}
+
+.stage49-room-modal-icon {
+    width: 86px !important;
+    height: 86px !important;
+    margin: 4px auto 8px !important;
+    border-radius: 26px !important;
+    background: linear-gradient(135deg, #dbeafe, #bbf7d0) !important;
+    box-shadow: 0 8px 0 rgba(124,58,237,.14) !important;
+}
+
+.stage49-room-modal-object-icon {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.stage49-room-modal-object-icon img {
+    max-width: 92% !important;
+    max-height: 92% !important;
+    object-fit: contain !important;
+    opacity: .92 !important;
+    filter: drop-shadow(0 5px 4px rgba(15,23,42,.14)) !important;
+}
+
+.stage49-room-modal-lock {
+    position: absolute !important;
+    right: -8px !important;
+    bottom: -8px !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    background: rgba(76,29,149,.96) !important;
+    border: 2px solid rgba(255,255,255,.92) !important;
+    box-shadow: 0 5px 10px rgba(15,23,42,.22) !important;
+    font-size: 18px !important;
+}
+
+.stage49-room-modal-title {
+    margin: 2px auto 6px !important;
+    color: #4c1d95 !important;
+    font-size: clamp(28px, 5.5vw, 42px) !important;
+    line-height: .98 !important;
+    text-shadow: 0 3px 0 rgba(124,58,237,.10) !important;
+}
+
+.stage49-room-modal-subtitle {
+    margin: 0 auto 10px !important;
+    color: #334155 !important;
+    font-size: clamp(17px, 3.3vw, 21px) !important;
+    line-height: 1.15 !important;
+}
+
+.stage49-room-modal-resource-row {
+    gap: 10px !important;
+    margin: 10px auto 13px !important;
+}
+
+.stage49-room-resource-pill {
+    min-height: 50px !important;
+    border-radius: 18px !important;
+    padding: 7px 10px !important;
+    border: 2px solid rgba(76,29,149,.24) !important;
+    background: linear-gradient(180deg, #ffffff, #dbeafe) !important;
+    color: #111827 !important;
+    font-size: clamp(17px, 3.8vw, 24px) !important;
+    box-shadow: 0 5px 0 rgba(15,23,42,.13) !important;
+}
+
+.stage49-room-modal-actions.two {
+    grid-template-columns: 1fr 1fr !important;
+}
+
+.stage49-room-btn {
+    min-height: 56px !important;
+    border-radius: 20px !important;
+    font-size: clamp(18px, 4vw, 25px) !important;
+    box-shadow: 0 6px 0 rgba(15,23,42,.18) !important;
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -22545,11 +22770,17 @@ body.guide-open #guideFab { pointer-events: none !important; }
 
         const adBadge = cfg.adBadge ? `<div class="stage49-room-ad-badge">${cfg.adBadge}</div>` : '';
         const actionsClass = cfg.actions && cfg.actions.length === 2 ? 'two' : '';
+        const modalIcon = cfg.image
+            ? `<div class="stage49-room-modal-icon stage49-room-modal-object-icon">
+                    <img src="${cfg.image}" alt="" aria-hidden="true"/>
+                    <span class="stage49-room-modal-lock">${cfg.icon || '🔒'}</span>
+               </div>`
+            : `<div class="stage49-room-modal-icon">${cfg.icon || '🔒'}</div>`;
 
         overlay.innerHTML = `
             <div class="stage49-room-modal-card">
                 <button type="button" class="stage49-room-modal-close" data-role="close">×</button>
-                <div class="stage49-room-modal-icon">${cfg.icon || '🔒'}</div>
+                ${modalIcon}
                 <div class="stage49-room-modal-title">${cfg.title || ''}</div>
                 <div class="stage49-room-modal-subtitle">${cfg.subtitle || ''}</div>
                 ${resource}
@@ -22816,6 +23047,7 @@ body.guide-open #guideFab { pointer-events: none !important; }
 
         showStage49RoomModal({
             icon: '🔒',
+            image: slot.objectImage || (ROOM_OBJECT_DATA[room.roomId] && ROOM_OBJECT_DATA[room.roomId].objects && ROOM_OBJECT_DATA[room.roomId].objects[slot.id] && ROOM_OBJECT_DATA[room.roomId].objects[slot.id].file),
             title: 'Открыть?',
             subtitle: name,
             resources: [

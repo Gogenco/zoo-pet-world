@@ -24,7 +24,7 @@
         "w": 0.17887,
         "h": 0.50737
       },
-      "fit": "contain",
+      "fit": "stretch",
       "anchor": "top_left",
       "zIndex": 20,
       "layer": "furniture_back_left",
