@@ -29,6 +29,12 @@
         + '</div>';
       card.onclick = function(){
         if (!unlocked) { try { playSound("wrong"); } catch(e) {} return; }
+        if (key === "lion") {
+          if (typeof openAnimalCard === "function") {
+            openAnimalCard("lion");
+          }
+          return;
+        }
         selectedMainPetKey = key;
         selectedPetKey = key;
         try { openPetRoom(); } catch(e) { showScreen("petRoomScreen"); }
