@@ -11878,6 +11878,137 @@ body.guide-open {
     box-shadow: 0 6px 0 rgba(15,23,42,.18) !important;
 }
 
+
+
+/* ===== Stage 4.9H — Animal Card iframe overlay ===== */
+body.animal-card-open {
+    overflow: hidden !important;
+    touch-action: none;
+}
+.animal-card-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+    background: rgba(67, 31, 0, .38);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.animal-card-overlay.show {
+    display: flex;
+}
+.animal-card-shell {
+    position: relative;
+    width: min(100%, 470px);
+    height: min(100%, 920px);
+    max-height: calc(100dvh - max(20px, env(safe-area-inset-top)) - max(20px, env(safe-area-inset-bottom)));
+    border-radius: 30px;
+    overflow: hidden;
+    background: #fff8e7;
+    border: 3px solid rgba(255,255,255,.9);
+    box-shadow: 0 24px 80px rgba(67,31,0,.30), 0 8px 0 rgba(245,158,11,.24);
+}
+.animal-card-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #fff8e7;
+}
+.animal-card-close {
+    position: absolute;
+    z-index: 3;
+    top: max(10px, env(safe-area-inset-top));
+    right: 10px;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.94);
+    color: #4c1d95;
+    box-shadow: 0 6px 18px rgba(67,31,0,.16), 0 3px 0 rgba(245,158,11,.20);
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 1000;
+}
+.animal-card-title-chip {
+    position: absolute;
+    z-index: 3;
+    left: 12px;
+    top: max(12px, env(safe-area-inset-top));
+    max-width: calc(100% - 72px);
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.92);
+    color: #7c2d12;
+    box-shadow: 0 5px 16px rgba(67,31,0,.12);
+    font-size: 13px;
+    font-weight: 1000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.album-card,
+.album-card.locked {
+    width: 100%;
+    border: 2px solid rgba(255,255,255,.85);
+    cursor: pointer;
+}
+.album-card {
+    padding: 12px;
+    border-radius: 24px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 6px 0 rgba(245,158,11,.24);
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    gap: 12px;
+    align-items: center;
+    text-align: left;
+}
+.album-card.locked {
+    filter: grayscale(1);
+    opacity: .65;
+}
+.album-name {
+    font-weight: 1000;
+    color: #4c1d95;
+    margin-bottom: 4px;
+}
+.album-fact {
+    font-size: 13px;
+    opacity: .78;
+    font-weight: 700;
+    line-height: 1.3;
+}
+.animal-card-open-btn {
+    width: 100%;
+    margin-top: 9px;
+    border: 0;
+    border-radius: 16px;
+    padding: 10px 12px;
+    color: #3E2723;
+    background: linear-gradient(135deg, #FFD600, #FFAA00);
+    box-shadow: 0 4px 0 rgba(202,138,4,.25);
+    font-size: 13px;
+    font-weight: 1000;
+}
+@media (max-width: 520px) {
+    .animal-card-overlay { padding: 0; }
+    .animal-card-shell {
+        width: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+    }
+}
+
 </style>
 
 <!-- Stage 6.1.7 RESET: heavy inline data:image assets externalized into assets/inline. Base logic remains Stage 6.1.6. -->
@@ -12876,6 +13007,15 @@ body.guide-open {
     </div>
 </div>
 
+
+<div id="animalCardOverlay" class="animal-card-overlay" aria-hidden="true">
+    <div class="animal-card-shell" role="dialog" aria-modal="true" aria-label="Карточка льва">
+        <div id="animalCardTitleChip" class="animal-card-title-chip">🦁 Карточка льва</div>
+        <button id="animalCardClose" type="button" class="animal-card-close" aria-label="Закрыть">×</button>
+        <iframe id="animalCardFrame" class="animal-card-frame" title="Карточка льва" loading="lazy"></iframe>
+    </div>
+</div>
+
 <div id="overlay" class="overlay">
     <div class="modal">
         <div id="modalIcon" class="modal-icon">🎉</div>
@@ -13575,6 +13715,8 @@ let shadowLevelIndex = Number(safeStorage.get("zooShadowLevelIndex", "0") || "0"
 if (!Number.isFinite(shadowLevelIndex)) shadowLevelIndex = 0;
 let rareUnlocked = safeJsonParse(safeStorage.get("zooRareUnlocked", "[]"), []);
 let dailyProgress = safeJsonParse(safeStorage.get("zooDailyProgress", "{}"), {});
+let animalCardsState = safeJsonParse(safeStorage.get("zpw_animal_cards_state", "{}"), {});
+if (!animalCardsState || typeof animalCardsState !== "object" || Array.isArray(animalCardsState)) animalCardsState = {};
 let audioContext = null;
 let selectedPetKey = "lion";
 let currentDragGhost = null;
@@ -13793,6 +13935,7 @@ function saveProgress() {
     safeStorage.set("zooParentSettings", JSON.stringify(parentSettings));
     safeStorage.set("zooRareUnlocked", JSON.stringify(rareUnlocked));
     safeStorage.set("zooDailyProgress", JSON.stringify(dailyProgress));
+    safeStorage.set("zpw_animal_cards_state", JSON.stringify(animalCardsState || {}));
     safeStorage.set("zooPuzzleBestMoves", JSON.stringify(puzzleBestMoves));
     safeStorage.set("zooPuzzleCompleted", String(puzzleCompleted));
     safeStorage.set("zooUnlockedPuzzleImages", JSON.stringify(unlockedPuzzleImages));
@@ -13839,6 +13982,209 @@ function spendCoinsSafe(amount) {
     setCoinsSafe((Number(coins) || 0) - price);
     return true;
 }
+
+
+/* ===== Stage 4.9H — Animal Card parent bridge ===== */
+const ANIMAL_CARD_BRIDGE_SOURCE = "zpw-animal-card";
+const ANIMAL_CARD_GAME_SOURCE = "zpw-game";
+const ANIMAL_CARD_DEFAULT_REWARD_COINS = 10;
+let currentAnimalCardId = null;
+
+function getAnimalCardUiText(key) {
+    let lang = "ru";
+    try { lang = (typeof getCurrentLanguage === "function" ? getCurrentLanguage() : safeStorage.get("zooLanguage", "ru")) || "ru"; } catch(e) {}
+    const dict = {
+        ru: { title: "🦁 Карточка льва", close: "Закрыть", adUnavailable: "Реклама пока недоступна", rewardAd: "Реклама просмотрена" },
+        en: { title: "🦁 Lion Card", close: "Close", adUnavailable: "Rewarded ad is not available yet", rewardAd: "Ad watched" },
+        hy: { title: "🦁 Առյուծի քարտ", close: "Փակել", adUnavailable: "Գովազդը դեռ հասանելի չէ", rewardAd: "Գովազդը դիտված է" }
+    };
+    return (dict[lang] || dict.ru)[key] || (dict.ru[key] || key);
+}
+
+function getAnimalCardFrame() {
+    return document.getElementById("animalCardFrame");
+}
+
+function currentAnimalCardCoins() {
+    return Math.max(0, Math.floor(Number(coins || 0)));
+}
+
+function normalizeAnimalCardState(state) {
+    if (!state || typeof state !== "object" || Array.isArray(state)) return null;
+    return {
+        day: String(state.day || ""),
+        stage: Math.max(0, Math.floor(Number(state.stage || 0))),
+        questsDone: Math.max(0, Math.floor(Number(state.questsDone || 0))),
+        factsOpen: Math.max(0, Math.floor(Number(state.factsOpen || 0))),
+        stars: Math.max(0, Math.floor(Number(state.stars || 0))),
+        streak: Math.max(0, Math.floor(Number(state.streak || 0))),
+        rank: Math.max(0, Math.floor(Number(state.rank || 0))),
+        badges: Array.isArray(state.badges) ? state.badges.slice(0, 40) : [],
+        questAnswers: Array.isArray(state.questAnswers) ? state.questAnswers.slice(0, 80) : [],
+        factsBits: Math.max(0, Math.floor(Number(state.factsBits || 0)))
+    };
+}
+
+function getAnimalCardState(animalId) {
+    const id = animalId || "lion";
+    return normalizeAnimalCardState(animalCardsState && animalCardsState[id]) || null;
+}
+
+function saveAnimalCardState(animalId, state) {
+    const id = animalId || "lion";
+    const normalized = normalizeAnimalCardState(state);
+    if (!normalized) return null;
+    animalCardsState = animalCardsState && typeof animalCardsState === "object" && !Array.isArray(animalCardsState) ? animalCardsState : {};
+    animalCardsState[id] = normalized;
+    try { safeStorage.set("zpw_animal_cards_state", JSON.stringify(animalCardsState)); } catch(e) {}
+    try { saveProgress(); } catch(e) {}
+    return normalized;
+}
+
+function postAnimalCardMessage(payload) {
+    const frame = getAnimalCardFrame();
+    if (!frame || !frame.contentWindow) return;
+    const animalId = payload.animalId || currentAnimalCardId || "lion";
+    frame.contentWindow.postMessage(Object.assign({
+        source: ANIMAL_CARD_GAME_SOURCE,
+        animalId
+    }, payload, {
+        animalId
+    }), "*");
+}
+
+function sendAnimalCardState(animalId, type = "STATE") {
+    postAnimalCardMessage({
+        type,
+        animalId: animalId || currentAnimalCardId || "lion",
+        state: getAnimalCardState(animalId || currentAnimalCardId || "lion"),
+        coins: currentAnimalCardCoins()
+    });
+}
+
+function openAnimalCard(animalId = "lion") {
+    if (animalId !== "lion") return;
+    const overlay = document.getElementById("animalCardOverlay");
+    const frame = getAnimalCardFrame();
+    const closeBtn = document.getElementById("animalCardClose");
+    const title = document.getElementById("animalCardTitleChip");
+    if (!overlay || !frame) return;
+    currentAnimalCardId = animalId;
+    if (title) title.textContent = getAnimalCardUiText("title");
+    if (closeBtn) closeBtn.setAttribute("aria-label", getAnimalCardUiText("close"));
+    frame.src = "cards/lion/index.html";
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden", "false");
+    document.body.classList.add("animal-card-open", "zoo-modal-open");
+    try { playSound("click"); } catch(e) {}
+}
+
+function closeAnimalCard() {
+    const overlay = document.getElementById("animalCardOverlay");
+    const frame = getAnimalCardFrame();
+    if (overlay) {
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
+    }
+    if (frame) frame.src = "about:blank";
+    currentAnimalCardId = null;
+    document.body.classList.remove("animal-card-open", "zoo-modal-open");
+    try { playSound("click"); } catch(e) {}
+}
+
+function handleAnimalCardBridgeMessage(event) {
+    const data = event && event.data;
+    if (!data || data.source !== ANIMAL_CARD_BRIDGE_SOURCE) return;
+    const animalId = data.animalId || currentAnimalCardId || "lion";
+    if (animalId !== "lion") return;
+
+    if (data.type === "READY" || data.type === "GET_STATE") {
+        sendAnimalCardState(animalId, "STATE");
+        return;
+    }
+
+    if (data.type === "SAVE_STATE") {
+        const saved = saveAnimalCardState(animalId, data.state);
+        postAnimalCardMessage({ type: "STATE_SAVED", animalId, state: saved, coins: currentAnimalCardCoins() });
+        return;
+    }
+
+    if (data.type === "CLOSE") {
+        closeAnimalCard();
+        return;
+    }
+
+    if (data.type === "ADD_COINS") {
+        const amount = Math.max(0, Math.floor(Number(data.amount || 0)));
+        if (amount > 0) {
+            addCoinsSafe(amount);
+            try { saveProgress(); } catch(e) {}
+            try { updateCoinsViews(); } catch(e) {}
+        }
+        postAnimalCardMessage({ type: "COINS_UPDATED", animalId, success: true, amount, coins: currentAnimalCardCoins(), reason: data.reason || "animal_card" });
+        return;
+    }
+
+    if (data.type === "SPEND_COINS") {
+        const amount = Math.max(0, Math.floor(Number(data.amount || 0)));
+        const ok = amount <= 0 ? true : spendCoinsSafe(amount);
+        if (ok) {
+            try { saveProgress(); } catch(e) {}
+            try { updateCoinsViews(); } catch(e) {}
+        }
+        postAnimalCardMessage({
+            type: "SPEND_COINS_RESULT",
+            animalId,
+            success: ok,
+            amount,
+            reason: ok ? (data.reason || "animal_card") : "not_enough_coins",
+            coins: currentAnimalCardCoins()
+        });
+        return;
+    }
+
+    if (data.type === "WATCH_REWARDED_AD") {
+        // No global real rewarded-ad function exists in this HTML build. Keep the bridge explicit
+        // and avoid creating an isolated/fake ad economy inside the iframe card.
+        try { if (window.showCoinShortPopup) window.showCoinShortPopup(getAnimalCardUiText("adUnavailable")); } catch(e) {}
+        postAnimalCardMessage({
+            type: "REWARDED_AD_RESULT",
+            animalId,
+            success: false,
+            reason: "rewarded_ads_unavailable",
+            reward: 0,
+            coins: currentAnimalCardCoins()
+        });
+    }
+}
+
+window.addEventListener("message", handleAnimalCardBridgeMessage);
+window.openAnimalCard = openAnimalCard;
+window.closeAnimalCard = closeAnimalCard;
+
+
+(function bindAnimalCardOverlayControls(){
+    function bind(){
+        const overlay = document.getElementById("animalCardOverlay");
+        const closeBtn = document.getElementById("animalCardClose");
+        if (closeBtn && !closeBtn.dataset.boundAnimalCard) {
+            closeBtn.dataset.boundAnimalCard = "1";
+            closeBtn.addEventListener("click", function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                closeAnimalCard();
+            });
+        }
+        if (overlay && !overlay.dataset.boundAnimalCard) {
+            overlay.dataset.boundAnimalCard = "1";
+            overlay.addEventListener("click", function(event){
+                if (event.target === overlay) closeAnimalCard();
+            });
+        }
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind, { once: true });
+    else bind();
+})();
 
 function unlockPuzzleStageSafe(stageId) {
     if (!Number.isFinite(Number(stageId))) return false;
